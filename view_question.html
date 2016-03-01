@@ -1,108 +1,274 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>KnowUP! - Collaborative Q&A</title> 
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
+  <link rel="stylesheet" type="text/css" href="css/ink.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=message_noscript.php" />
+  </noscript>
+  <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+  <header id="header-container"> 
+    <nav id="header-menu" class="ink-navigation">  
+      <ul class="menu medium horizontal black">
+        <li id="nav_index">
+          <b><a href="index.php">KnowUP!&nbsp;<small class="white">collaborative Q&A</small></a></b>
+        </li>
+        <form class="ink-form all-20 small">
+          <div class="control-group">
+            <div class="control append-button" role="search">
+              <span><input type="text" name="name" id="name"></span>
+              <button class="ink-button"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </form>
+        <li id="nav_browse">
+          <a href="event_search.php"><i class="fa fa-search"></i>&nbsp;Read</a>
+        </li>
+        <li id="nav_events">
+          <a href="manage_events.php"><i class="fa fa-gears"></i>&nbsp;Answer</a>
+        </li>
+        <li id="nav_forum">
+          <a href="forum.php"><i class="fa fa-comment"></i>&nbsp;Notifications (0)</a>
+        </li>
+        <li id="nav_profile">
+          <a><i class="fa fa-user"></i>&nbsp;marques999</a>
+          <ul class="submenu">
+            <li class="half-vertical-padding align-center">
+              <img class="img-circle" src="img/10_small.png">
+            </li>
+            <li><a href="view_profile.php?id=<?=$_SESSION['userid']?>">Profile</a></li>
+            <li><a href="manage_invites.php">Messages</a></li>
+            <li><a href="logout.php">Logout</a></li>
+          </ul>
+          <!--  <a href="login.php"><i class="fa fa-user"></i>&nbsp;Login</a> -->
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="vertical-space">
+  </div>
+  <!-- BEGIN PAGE -->
+  <div class="ink-grid push-center all-66 large-80 medium-90 small-100 tiny-100">   
+    <!-- BEGIN QUESTION -->
+    <article class="align-justify" id="question">    
+      <!-- QUESTION TITLE -->
+      <h3 class="slab quarter-vertical-space half-top-padding">What are some realistic ways to get rich in 5 years?</h3>   
+      
+      <!-- QUESTION AUTHOR -->
+      <div class="quarter-vertical-space" class="author-panel">
+        <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+        <div class=" ink-dropdown half-padding" data-target="#my-menu-dropdown">    
+          <p class="no-margin"><b><a href="#">Barbie Barbarossa</a></b>
+          <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
+          <note class="medium">FEUP</note>
+        </div>
+      </div>
+      
+      <!-- QUESTION CONTENTS -->
+      <p class="medium no-margin">Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?</p>
+      
+      <!-- QUESTION INFORMATION -->
+      <p class="quarter-vertical-space">
+        <small>Enviada Terça-feira, 1 de Março de 2016</small>
+      </p>
 
-        <link rel="stylesheet" href="css/ink.css">
-		<link rel="stylesheet" href="css/font-awesome.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script type="text/javascript" src="js/holder.min.js"></script>
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
-<body >
-<div class="ink-grid push-center all-66 large-80 medium-90 small-100 tiny-100">
-	<!-- --------------------------------------------- -->
-	<div id ="contents" class="all-90 push-center">
-	
-	<article class="align-justify" id="question">
-		<h3 class="slab half-top-padding">What are some realistic ways to get rich in 5 years?</h3>
-		
-		<div class="quarter-vertical-space" id="author-panel">
-			<img class="quarter-padding push-left" src="holder.js/64x64/auto/ink" alt="">
-			<div class=" ink-dropdown half-padding" data-target="#my-menu-dropdown">		
-				<p class="no-margin"><b><a href="#">Barbie Barbarossa</a></b>
-				<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
-				<note class="medium">FEUP</note>
-			</div>
-		</div>
+      <!-- QUESTION ACTIONS -->
+      <div class="button-toolbar half-bottom-padding">
+        <div class="button-group">
+          <button class="ink-button medium black"><i class="fa fa-pencil"></i>&nbsp;Responder</button>
+          <button class="ink-button medium black"><i class="fa fa-plus"></i>&nbsp;Seguir <b>865</b></button>
+        </div>
+        <div class="button-group">
+          <button class="ink-button medium black"><i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;&nbsp;<b>7.2k</b></button>
+          <button class="ink-button medium black"><i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;&nbsp;<b>1.1k</b></button>
+        </div>
+        <div class="button-group">
+          <button class="ink-button medium black"><i class="fa fa-comment"></i>&nbsp;Comentários&nbsp;&nbsp;<b>0</b></button>
+        </div>
+      </div>
+      <b>Answers (4)</b>
+      <hr>
+    </article>
+    <!-- END QUESTION -->  
+   
+    <!-- BEGIN ANSWERS SECTION -->
+    <section id ="answers" class="push-center align-justify all-85">
+      
+      <!-- BEGIN ANSWER NO.1 -->
+      <article class="reply">  
+        
+        <!-- ANSWER AUTHOR -->
+        <div class="author-panel">
+          <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+          <div class="half-padding">    
+            <p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
+            <note class="medium">FEUP</note>
+          </div>
+        </div>
+        
+        <!-- ANSWER CONTENTS -->
+        <blockquote class="medium fw-300">Ainda assim, existem dúvidas a respeito de como a mobilidade dos capitais internacionais cumpre um papel essencial na formulação dos modos de operação convencionais.</blockquote>
+        <p class="medium">Não obstante, a expansão dos mercados mundiais auxilia a preparação e a composição dos modos de operação convencionais. Assim mesmo, a valorização de fatores subjetivos aponta para a melhoria das diversas correntes de pensamento. Caros amigos, a hegemonia do ambiente político oferece uma interessante oportunidade para verificação do remanejamento dos quadros funcionais. O empenho em analisar a complexidade dos estudos efetuados apresenta tendências no sentido de aprovar a manutenção do impacto na agilidade decisória. As experiências acumuladas demonstram que o aumento do diálogo entre os diferentes setores produtivos assume importantes posições no estabelecimento das diretrizes de desenvolvimento para o futuro. </p>
+        <p class="no-margin medium">“<b><i>We make money with what we know, we lose money because of what we don’t know, and we don’t know what we don’t know</i></b>.” </p>
+        
+        <!-- ANSWER INFORMATION -->
+        <p class="quarter-vertical-space">
+          <small>Enviada Terça-feira, 1 de Março de 2016</small>
+        </p>
+       
+        <!-- ANSWER ACTIONS -->
+        <div class="button-toolbar">
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;&nbsp;<b>7.2k</b></button>
+            <button class="ink-button medium black"><i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;&nbsp;<b>1.1k</b></button>
+          </div>
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-comment"></i>&nbsp;Comentários&nbsp;&nbsp;<b>5</b></button>
+          </div>
+        </div>
+        <hr>
+      </article>
+      <!-- END ANSWER NO.1 -->
 
-		<p class="medium">Most of the people give the same advice " Save and invest for years " i agree this is the best way to achieve this goal but i want to be able to enjoy a few things while i'm still young. I'm 25 now and want to hit around 200k USD  by the age of 30. What are the options?</p>
-		<div class="button-toolbar"id="vote">
-			<div class="button-group">
-				<button class="ink-button medium blue"><i class="fa fa-thumbs-up"></i>&nbsp;Upvote</button>
-				<button class="ink-button medium blue"><i class="fa fa-thumbs-down"></i>&nbsp;Downvote</button>
-			</div>
-			<div class="button-group">
-			<button class="ink-button medium blue"><i class="fa fa-comment"></i>&nbsp;Comments (5)</button>
-			</div>
-	</div>
-	</article>
-	
-	<hr>
-	
-	<div id ="contents2" class="push-center align-justify all-85">
-		<article id="reply">	
-			<div id="author-panel">
-				<img class="quarter-padding push-left" src="holder.js/64x64/auto/ink" alt="">
-				<div class="half-padding">		
-					<p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
-					<note class="medium">FEUP</note>
-				</div>
-			</div>
-			<blockquote class="medium fw-300">I am asked this question a lot. People are disillusioned and frustrated with the “safe” advice from financial professionals, family, and friends to “Save and invest throughout your lifetime.”</blockquote>
-			<p class="medium">Licensed Financial Service providers are required by law to provide this answer to the public because the public is not a “qualified investor.” According to <b><i>the Securities Act of 1933 </i></b>and defined in <b><i>Regulation D</i></b>, <i>accredited/qualified investors are classified as meeting certain criteria, such as having an annual income of at least $200,000 in each of the past two years ($300,000 for joint income) or a net worth of at least $1 million</i>. I know because I was a licensed financial services provider. I was required to give up my licenses in order to share with, and teach people the needed mindset, knowledge, and skills that I now share some of with you. </p>
-			<p class="medium">“<b><i>We make money with what we know, we lose money because of what we don’t know, and we don’t know what we don’t know</i></b>.” </p>
-			<hr>
-		</article>
-		
-		<article id="reply">	
-			<div id="author-panel">
-				<img class="quarter-padding push-left" src="holder.js/64x64/auto/ink" alt="">
-				<div class="half-padding">		
-					<p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
-					<note class="medium">FEUP</note>
-				</div>
-			</div>
-			<p class="medium">Society is not provided with the knowledge needed to achieve the real security, freedom and independence that only comes with wealth. Truth be told, most people have a warped misconception of what wealth is, and are unwilling to do what is required in order to become truly wealthy. Real wealth is power, the power to do what you want, when you want without worrying about the necessities of life. Real wealth is in having the power to control your life, and decide what it is you want to do, with the ability to do it. If you are serious about becoming wealthy, you must first decide to do what most are unwilling to do, and take control and responsibility of your life.</p>
-			<p class="medium">Financial Services professionals, family, friends, the education system, and churches will not tell you that your life is a business. That Your Life, is Your Business, and must be treated as a business in order to become wealthy. You will find that there are a number of wealthy entrepreneurs, and authors who share this mindset. An excellent book on the subject is “The Start-up of You” by Reid Hoffman and Ben Casnocha available on Amazon. You can also Google “life is a business” and you will find plenty of material on this subject form successful like minded writers.</p>
-			<hr>
-		</article>
-		
-		<article id="reply">	
-			<div id="author-panel">
-				<img class="quarter-padding push-left" src="holder.js/64x64/auto/ink" alt="">
-				<div class="half-padding">		
-					<p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
-					<note class="medium">FEUP</note>
-				</div>
-			</div>
-			<p class="medium">Once you accept that your life is a business and decide to manage your life as if you would a business, your next step is to build your coaching and mentoring team. This is critical to achieving your life goals, as well as achieving real security and freedom. For example, housing is an essential element to personal security. Yet most individuals and families are dependent upon their income to secure their housing. This course of action takes up 30-40% of income in either rent or mortgage payments. Perceived savings built in equity from a mortgage comes at the cost of interest paid over the lifetime of the mortgage. In addition, whether renting or owning property taxes must also be paid annually. Yes, renters pay the property tax on the home they are renting. However, it is an unrealized expense as the owner has it calculated and included in the monthly rents. </p>
-			<p class="medium">What most young 20 something do not know is that they can buy a 4-plex just as easy as a SFR (Single Family Residence). The difference is that if done correctly the rent from 3 of the 4 units will pay all expenses, i.e. mortgage, insurance, property taxes, maintenance, etc.. In addition, it will also add a small profit to monthly cash flow and allow you to keep the 30-40% of your earned income that would be going to pay the rent or mortgage in your pocket. The difference this makes may not seem significant, however it becomes painfully apparent during a recession/depression when people are losing their jobs, their source of income. Individuals who’s housing is dependent upon their earned income are among the first to lose their housing if they don’t find employment quickly. Whereas individuals who’s housing is based on their rental income, are a lot more secure having the security of rental income to pay the housing bills and keep food on the table.</p>
-			<p class="medium">Knowing how to manage your life/business and make strategies and investment choices that increase one’s net worth, income, wealth, security, and freedom requires the right mindset, coaches, and mentors to achieve this reality. I know because that was what I had to do to move forward and become wealthy and truly free. It also gives me the freedom to mentor and coach young entrepreneurs and help them develop both themselves, and their business. However, I can only do this with individuals who are dedicated to learning how to achieve their objectives and goals. This is true in every teaching &amp; learning situation, a mentor, coach, teacher, can only teach so long as the student is willing to learn. If you are not willing to learn than no one will be able to help you. Mentors, coaches, teachers, etc. will never be able to make you wealthy or poor. Only you can do that. What mentors, coaches, teachers, etc. can do is point you in the right direction and help you develop the skillsets needed to achieve your desired objective and goal. So choose your mentors, coaches, and advisors wisely and carefully.</p>
-			<hr>
-		</article>
-			<div id="ld_ecrtqg_128025">
-				<div class="ContentFooter AnswerFooter" id="__w2_FR1LQwl_content_footer">
-					<span id="ld_ecrtqg_128026">
-						<a class="answer_permalink" href="/What-are-some-realistic-ways-to-get-rich-in-5-years/answer/James-L-Roberts" action_mousedown="AnswerPermalinkClickthrough" id="__w2_wwiYgOV_link">Written Sat</a></span><span class="bullet"> &bull; </span><a class="AnswerVoterListModalLink VoterListModalLink" href="/api/mobile_expanded_voter_list?type=answer&amp;key=zPKkkewo3YA" id="__w2_gzQ4z6G_modal_link">View Upvotes</a><span id="ld_ecrtqg_128027"></span><span class="AnswerAttributionSection"><span class="bullet"> &bull; </span>Answer requested by
-					<div class="hover_menu hidden white_bg show_nub" id="__w2_zVuKRXP_menu">
-						<div class="hover_menu_contents" id="__w2_zVuKRXP_menu_contents"> </div>
-					</div><a class="user" href="/profile/Sathish-Vive" action_mousedown="UserLinkClickthrough" id="__w2_zVuKRXP_link">Sathish Vive</a><span class="and"> and </span>
-					<div class="hover_menu hidden white_bg show_nub" id="__w2_R9qxkIV_menu">
-						<div class="hover_menu_contents" id="__w2_R9qxkIV_menu_contents"> </div>
-					</div><a class="user" href="/profile/Tack-Sharp" action_mousedown="UserLinkClickthrough" id="__w2_R9qxkIV_link">Tack Sharp</a></span>
-				</div>
-			</div>
-		</article>
-	</div>
-	</div>
-	</div>
-</div>
+      <!-- BEGIN ANSWER NO.2 -->
+      <article class="reply">  
+        
+        <!-- ANSWER AUTHOR -->
+        <div class="author-panel">
+          <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+          <div class="half-padding">    
+            <p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
+            <note class="medium">FEUP</note>
+          </div>
+        </div>
+       
+        <!-- ANSWER CONTENTS -->
+        <p class="medium">Acima de tudo, é fundamental ressaltar que o entendimento das metas propostas agrega valor ao estabelecimento das direções preferenciais no sentido do progresso. Do mesmo modo, o consenso sobre a necessidade de qualificação faz parte de um processo de gerenciamento dos métodos utilizados na avaliação de resultados. Ainda assim, existem dúvidas a respeito de como o desenvolvimento contínuo de distintas formas de atuação pode nos levar a considerar a reestruturação da gestão inovadora da qual fazemos parte. Desta maneira, o surgimento do comércio virtual estende o alcance e a importância do sistema de participação geral. </p>
+        <p class="no-margin medium">Evidentemente, o início da atividade geral de formação de atitudes promove a alavancagem do retorno esperado a longo prazo. Percebemos, cada vez mais, que o julgamento imparcial das eventualidades representa uma abertura para a melhoria das novas proposições. Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se a determinação clara de objetivos ainda não demonstrou convincentemente que vai participar na mudança de alternativas às soluções ortodoxas. Pensando mais a longo prazo, a consolidação das estruturas estimula a padronização do investimento em reciclagem técnica. A certificação de metodologias que nos auxiliam a lidar com o fenômeno da Internet desafia a capacidade de equalização dos conhecimentos estratégicos para atingir a excelência.</p>
+        
+        <!-- ANSWER INFORMATION -->
+        <p class="quarter-vertical-space">
+          <small>Enviada Terça-feira, 1 de Março de 2016</small>
+        </p>
+
+        <!-- ANSWER ACTIONS -->
+        <div class="button-toolbar">
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;&nbsp;<b>7.2k</b></button>
+            <button class="ink-button medium black"><i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;&nbsp;<b>1.1k</b></button>
+          </div>
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-comment"></i>&nbsp;Comentários&nbsp;&nbsp;<b>5</b></button>
+          </div>
+        </div>
+        <hr>
+      </article>
+      <!-- END ANSWER NO.2 -->
+
+      <!-- BEGIN ANSWER NO.3 -->
+      <article class="reply">  
+        
+        <!-- ANSWER AUTHOR -->
+        <div class="author-panel">
+          <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+          <div class="half-padding">    
+            <p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
+            <note class="medium">FEUP</note>
+          </div>
+        </div>
+
+        <!-- ANSWER CONTENTS -->
+        <p class="medium">É importante questionar o quanto a competitividade nas transações comerciais acarreta um processo de reformulação e modernização dos relacionamentos verticais entre as hierarquias. O cuidado em identificar pontos críticos na adoção de políticas descentralizadoras exige a precisão e a definição de todos os recursos funcionais envolvidos. Todavia, a revolução dos costumes obstaculiza a apreciação da importância do fluxo de informações. A prática cotidiana prova que a estrutura atual da organização nos obriga à análise dos paradigmas corporativos.</p>
+        <p class="no-margin medium">Pensando mais a longo prazo, a consolidação das estruturas ainda não demonstrou convincentemente que vai participar na mudança do sistema de formação de quadros que corresponde às necessidades. Percebemos, cada vez mais, que o desafiador cenário globalizado desafia a capacidade de equalização das regras de conduta normativas. É importante questionar o quanto a competitividade nas transações comerciais acarreta um processo de reformulação e modernização dos relacionamentos verticais entre as hierarquias. Caros amigos, a adoção de políticas descentralizadoras pode nos levar a considerar a reestruturação dos índices pretendidos.</p>
+
+        <!-- ANSWER INFORMATION -->
+        <p class="quarter-vertical-space">
+          <small>Enviada Terça-feira, 1 de Março de 2016</small>
+        </p>
+
+        <!-- ANSWER ACTIONS -->
+        <div class="button-toolbar">
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;&nbsp;<b>7.2k</b></button>
+            <button class="ink-button medium black"><i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;&nbsp;<b>1.1k</b></button>
+          </div>
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-comment"></i>&nbsp;Comentários&nbsp;&nbsp;<b>5</b></button>
+          </div>
+        </div>
+        <hr>
+      </article>
+      <!-- END ANSWER NO.3 -->
+
+      <!-- BEGIN ANSWER NO.4 -->
+      <article class="reply">  
+        
+        <!-- ANSWER AUTHOR -->
+        <div class="author-panel">
+          <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+          <div class="half-padding">    
+            <p class="no-margin"><b><a href="yourmom.php">Barbie Barbarossa</a></b>&nbsp;<span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span></p>
+            <note class="medium">FEUP</note>
+          </div>
+        </div>
+           
+        <!-- ANSWER CONTENTS -->
+        <p class="no-margin medium">Knowing how to manage your life/business and make strategies and investment choices that increase one’s net worth, income, wealth, security, and freedom requires the right mindset, coaches, and mentors to achieve this reality. I know because that was what I had to do to move forward and become wealthy and truly free. It also gives me the freedom to mentor and coach young entrepreneurs and help them develop both themselves, and their business. However, I can only do this with individuals who are dedicated to learning how to achieve their objectives and goals. This is true in every teaching &amp; learning situation, a mentor, coach, teacher, can only teach so long as the student is willing to learn. If you are not willing to learn than no one will be able to help you. Mentors, coaches, teachers, etc. will never be able to make you wealthy or poor. Only you can do that. What mentors, coaches, teachers, etc. can do is point you in the right direction and help you develop the skillsets needed to achieve your desired objective and goal. So choose your mentors, coaches, and advisors wisely and carefully.</p>
+        
+        <!-- ANSWER INFORMATION -->
+        <p class="quarter-vertical-space">
+          <small>Enviada Terça-feira, 1 de Março de 2016</small>
+        </p>
+
+        <!-- ANSWER ACTIONS -->
+        <div class="button-toolbar">
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;&nbsp;<b>7.2k</b></button>
+            <button class="ink-button medium black"><i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;&nbsp;<b>1.1k</b></button>
+          </div>
+          <div class="button-group">
+            <button class="ink-button medium black"><i class="fa fa-comment"></i>&nbsp;Comentários&nbsp;&nbsp;<b>5</b></button>
+          </div>
+        </div>
+      </article>
+      <!-- END ANSWER NO.4 -->
+
+    </section>
+    <!-- END ANSWERS SECTION -->
+
+    </div>
+  </div>
+  <script>
+    $(function() {
+      $("ul#footer-links").hide();
+      $("#footer").hover(function() {
+        $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+      })
+    });
+  </script>
+  <footer id="footer" class="half-top-space clearfix">
+    <div class="ink-grid fw-regular">
+        <ul id="footer-links" class="unstyled small inline quarter-vertical-space">
+          <li><a href="about.php">About</a></li>
+          <li><a href="sitemap.php">Sitemap</a></li>
+          <li><a href="contacts.php">Contacts</a></li>
+        </ul>
+        <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+    </div>
+  </footer>
 </body>
 </html>
-<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->

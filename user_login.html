@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>KnowUP! - Collaborative Q&A</title>
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
+  <link rel="stylesheet" type="text/css" href="css/ink.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <noscript>
+  <meta http-equiv="refresh" content="0; url=message_noscript.php" />
+  </noscript>
+    <style>
+    body {
+      top: 25%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
+  <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<div class="ink-grid push-center all-40 large-60 medium-80 small-100 tiny-100">
+<form action="actions/action_login.php" method="post" class="ink-form ink-formvalidator">
+  <fieldset>
+    <legend class="align-center">Sign-In / Register</legend>
+    <div class="control-group required column-group half-gutters">
+      <label for="username" class="all-25 align-right">Username</label>
+      <div class="control append-symbol all-75">
+        <span>
+          <input name="username" type="text" data-rules="required" placeholder="Please enter your username">
+          <i class="fa fa-user"></i>
+        </span>
+      </div>
+    </div>
+    <div class="control-group required column-group half-gutters">
+      <label for="password" class="all-25 align-right">Password</label>
+      <div class="control append-symbol all-75">
+        <span>
+          <input name="password" id="password" type="password" data-rules="required" placeholder="Please enter your password">
+          <i class="fa fa-key"></i>
+        </span>
+      </div>
+    </div>
+    <div class="control-group column-group">
+      <div class="control push-center all-20">
+        <input type="submit" name="sub" value="Sign In &gt;" class="ink-button" />
+      </div>
+    </div>
+    <div class="control-group column-group">
+      <p class="align-center">Don't have an account?
+        <a href="register.php">Sign up here!</a>
+      </p>
+    </div>
+  </fieldset>
+</form>
+</div>
+  <script>
+    $(function() {
+      $("ul#footer-links").hide();
+      $("#footer").hover(function() {
+        $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+      })
+    });
+  </script>
+  <footer id="footer" class="half-top-space clearfix fixed">
+    <div class="ink-grid fw-regular">
+        <ul id="footer-links" class="unstyled small inline quarter-vertical-space">
+          <li><a href="about.php">About</a></li>
+          <li><a href="sitemap.php">Sitemap</a></li>
+          <li><a href="contacts.php">Contacts</a></li>
+        </ul>
+        <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+    </div>
+  </footer>
+</body>
+</html>

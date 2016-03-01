@@ -1,22 +1,27 @@
+footer {
+  background: #ccc;
+  clear: both;
+  bottom: 0;
+  width: 100%;
+}
 
+footer.fixed {
+  position: fixed;
+}
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: auto;
+  width: 100%;
+  z-index: 100;
+}
 
+small.white {
+  color: white;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.img-circle {
+  border-radius:50%
+}
