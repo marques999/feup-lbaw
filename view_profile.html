@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>KnowUP! - Collaborative Q&A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
@@ -17,82 +15,148 @@
   <meta http-equiv="refresh" content="0; url=message_noscript.php" />
   </noscript>
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/ink-all.min.js"></script>
+  <script type="text/javascript" src="js/autoload.min.js"></script>
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 </head>
 <body>
-<div class="ink-grid push-center all-80 large-90 medium-100 small-90 tiny-100">
-<div class="column-group gutters">
-
-  <!-- BEGIN USER AVATAR -->
-  <div class="all-30 large-40 medium-40 small-100 tiny-100">
-    <a href="update_profile.php?field=5">
-      <img class="half-padding" src="img/10.png"/>
-    </a>
-    <p class="align-center gutters quarter-vertical-space">
-      <a href="update_profile.php?field=1">
-        <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Alterar palavra-passe</button>
-      </a>
-    </p>
-    <p class="align-center gutters quarter-vertical-space">
-      <a href="delete_user.php?id=1">
-        <button class="ink-button black"><i class="fa fa-user-times"></i>&nbsp;Apagar conta</button>
-      </a>
-    </p>
-  </div>
-  <!-- END USER AVATAR -->
-
-  <!-- BEGIN PROFILE INFORMATION -->
-  <div class="column all-70 large-60 medium-60 small-100 tiny-100">
-  <h2 class="push-left">Diogo Marques</h2>
-  <img class="push-left half-padding" src="img/flags/pt.png"></img>
-  <div class="clear">
-    <p>
-    <a href="update_profile.php?field=2"><i class="fa fa-plus-circle"></i></a>marques999
-    </p>
-    <p class="no-margin">
-      <a href="update_profile.php?field=3"><i class="fa fa-plus-circle"></i></a>
-      <b>E-mail:</b>
-      <a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
-    </p>
-    <p class="no-margin">
-    <a href="update_profile.php?field=4"><i class="fa fa-plus-circle"></i></a>
-    <b>Localização: </b>Valongo, Portugal
-  </div>
-  <!-- END PROFILE INFORMATION -->
-
-  <!-- BEGIN ATTENDED EVENTS -->
-  <h4 class="half-top-space">Respostas (3)</h4>
-  <div class="bottom-space">
-    <div class="half-vertical-space all-100">
-      <img src="<?=events_getImage($currentEvent, 'small')?>"/>
-      <b class="quarter-space">
-        <a href="<?=events_viewEvent($currentEvent)?>">
-        <?=events_getName($currentEvent)?>
+  <header id="header-container">
+    <nav id="header-menu" class="ink-navigation">
+      <ul class="menu medium horizontal black">
+        <a href="index.html">
+          <li class="no-margin quarter-padding" id="nav_index">
+            <img src="img/header-256px.png">
+          </li>
         </a>
-      </b>
-    </div>
-    <p class="panel">Este utilizador ainda não respondeu a nenhuma pergunta :(</p>
+        <form class="ink-form all-20 medium">
+        <li class="control-group">   
+          <div class="control append-button" role="search">
+            <span><input type="text" name="name" id="name"></span>
+            <button class="ink-button"><i class="fa fa-search"></i></button>
+          </div>     
+        </li>
+        </form>
+        <li id="nav_browse"><a href="event_search.php"><i class="fa fa-search"></i>&nbsp;Read</a></li>
+        <li id="nav_events"><a href="manage_events.php"><i class="fa fa-gears"></i>&nbsp;Answer</a></li>
+        <li id="nav_forum"><a href="forum.php"><i class="fa fa-comment"></i>&nbsp;Notifications (0)</a></li>
+        <li id="nav_profile">
+          <a><i class="fa fa-user"></i>&nbsp;marques999</a>
+          <ul class="submenu">
+            <li class="half-vertical-padding">
+              <img class="img-circle push-center" src="holder.js/64x64/auto/ink">
+            </li>
+            <li><a href="view_profile.html">Profile</a></li>
+            <li><a href="manage_invites.php">Messages</a></li>
+            <li><a href="logout.php">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header> 
+  <div class="vertical-space">
   </div>
-  <!-- END ATTENDED EVENTS -->
-
-  <!-- BEGIN USER EVENTS -->
-  <h4 class="half-top-space">Perguntas (1)</h4>
-  <div class="half-vertical-space">
-    <div class="half-vertical-space all-100">
-      <a href="event_delete.php?id=<?=$currentEvent['idEvent']?>"><i class="fa fa-trash"></i>&nbsp;</a>
-      <img src="<?=events_getImage($currentEvent, 'small')?>"/>
-      <b class="quarter-space">
-        <a href="<?=events_viewEvent($currentEvent)?>">
-        <?=events_getName($currentEvent)?>
+  <div class="ink-grid push-center all-90 large-90 medium-100 small-90 tiny-100">
+    <div class="column-group all-100">
+     
+      <!-- BEGIN USER AVATAR -->
+      <div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
+        <a href="update_profile.php?field=5">
+          <img class="half-padding" src="js/holder.js/480x480"/>
         </a>
-      </b>
+        <p class="align-center quarter-vertical-space">
+          <a href="update_profile.php?field=1">
+            <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Alterar palavra-passe</button>
+          </a>
+        </p>
+        <p class="align-center quarter-vertical-space">
+          <a href="delete_user.php?id=1">
+            <button class="ink-button black"><i class="fa fa-user-times"></i>&nbsp;Apagar conta</button>
+          </a>
+        </p>
+      </div>
+      <!-- END USER AVATAR -->
+    
+      <div class="column top-padding all-70 large-60 medium-60 small-100 tiny-100">   
+      <div>
+        <p class="no-margin">
+          <h2 class="slab">marques999</h2>
+          <img class="quarter-padding" src="img/flags/pt.png"></img>
+        </p>
+        <p>Diogo Marques</p>
+      </div>
+      
+      <div class="ink-tabs top" data-prevent-url-change="true">
+        <ul class="tabs-nav">
+        <li><a class="tabs-tab" href="#profile">Perfil</a></li>
+          <li><a class="tabs-tab" href="#home">Perguntas (<b>3</b>)</a></li>
+          <li><a class="tabs-tab" href="#news">Respostas (<b>13</b>)</a></li>
+        </ul>
+        
+        <!-- BEGIN PROFILE INFORMATION -->
+        <div id="profile" class="tabs-content">
+          <p class="no-margin">
+            <a href="update_profile.php?field=3"><i class="fa fa-plus-circle"></i></a>
+            <b>E-mail:</b>
+            <a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
+          </p>
+          <p class="no-margin">
+          <a href="update_profile.php?field=4"><i class="fa fa-plus-circle"></i></a>
+          <b>Localização: </b>Valongo, Portugal
+        </div>
+        <!-- END PROFILE INFORMATION -->
+       
+        <!-- BEGIN ATTENDED EVENTS -->
+        <div id="home" class="tabs-content">
+        <table class="ink-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>John</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Will</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Steve</td>
+    </tr>
+  </tbody>
+</table>
+          <div class="half-vertical-space all-100">
+            <img src="<?=events_getImage($currentEvent, 'small')?>"/>
+            <b class="quarter-space">
+              <a href="<?=events_viewEvent($currentEvent)?>">
+              <?=events_getName($currentEvent)?>
+              </a>
+            </b>
+          </div>
+          <p class="panel">Este utilizador ainda não respondeu a nenhuma pergunta :(</p>
+        </div>
+        <!-- END ATTENDED EVENTS -->
+
+        <div id="news" class="tabs-content">
+          <div class="half-vertical-space all-100">
+            <a href="event_delete.php?id=<?=$currentEvent['idEvent']?>"><i class="fa fa-trash"></i>&nbsp;</a>
+            <img src="<?=events_getImage($currentEvent, 'small')?>"/>
+            <b class="quarter-space">
+              <a href="<?=events_viewEvent($currentEvent)?>">
+              <?=events_getName($currentEvent)?>
+              </a>
+            </b>
+          </div>
+          <p class="panel">Este utilizador ainda não submeteu nenhuma pergunta :(</p>
+        </div>
+      </div>
     </div>
-    <p class="panel">Este utilizador ainda não submeteu nenhuma pergunta :(</p>
   </div>
-  </div>
-  <!-- END USER EVENTS -->
-</div>
 </div>
   <script>
     $(function() {

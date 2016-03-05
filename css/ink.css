@@ -5433,7 +5433,9 @@ th {
 .ink-navigation {
   overflow: visible;
 }
+
 .ink-navigation ul {
+
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -5782,17 +5784,19 @@ th {
   border-right: none;
 }
 .ink-navigation ul.menu.horizontal li {
+  margin-top: 0.5em;
   float: left;
   position: relative;
 }
 .ink-navigation ul.menu.horizontal li a {
-  padding: 0.5em 1em;
+  padding: 0.6em 1.0em;
   display: block;
-  line-height: 1.7;
+  line-height: 1.5em;
 }
 .ink-navigation ul.menu.horizontal li .control {
-  margin-top: .3em;
+  padding: 0 0.5em;
 }
+
 .ink-navigation ul.menu.horizontal li ul.submenu {
   min-width: 100%;
   left: 0;
@@ -5803,6 +5807,12 @@ th {
 .ink-navigation ul.menu.horizontal li ul.submenu li {
   float: none;
 }
+
+.ink-navigation ul.menu.horizontal li ul.submenu li a {
+  line-height: 2.0em;
+  padding: 0.5em 1.0em;
+}
+
 .ink-navigation ul.menu.horizontal li ul.submenu li .flyout {
   position: absolute;
   top: 0;

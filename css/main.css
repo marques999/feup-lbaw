@@ -25,3 +25,22 @@ small.white {
 .img-circle {
   border-radius:50%
 }
+
+.search-box {
+  padding:0;
+  margin:0;
+  margin-top: 0.5em;
+}
+
+.ul-header
+{
+  padding: 0.5em;
+}
+
+.ink-navigation img {
+  max-width:100%; 
+  max-height:100%;
+  margin:0;
+  height:2.5em;
+  display:block;
+}

@@ -2,64 +2,41 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
   <title>KnowUP! - Collaborative Q&A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <noscript>
-    <meta http-equiv="refresh" content="0; url=template/noscript.php" />
-  </noscript>
   <style>
     body {
-      margin: 0 auto;
       top: 15%;
       width: 100%;
       position: absolute;
     }
   </style>
-  <script type="text/javascript" src="js/holder.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 </head>
 <body>
-  <div class="ink-grid push-center all-66 large-80 medium-90 small-100 tiny-100">
-    <p class="vertical-space align-center">
-      <img src="img/homer-excited.png">
-    </p>
-    <h1 class="align-center">Page Not Found</h1>
-    <p class="align-center">Sorry, but the page you were trying to view does not exist.</p>
-    <form class="ink-form align-center horizontal-space " action="#" method="get">
-      <div class="control">
-        <label for="query">Find a question:</label>
-        <input type="text" id="query" name="query">
-        <input class="ink-button blue" type="submit" value="Search">
+  <div class="ink-grid push-center xlarge-40 large-60 medium-80 all-100">
+    <div class="column double-horizontal-padding vertical-space">
+      <img src="img/header.png">
+    </div>
+    <h1 class="slab align-center">Página não encontrada</h1>
+    <p class="align-center">Pedimos desculpa, mas a página que tentou visualizar não existe.</p>
+    <form class="ink-form medium" action="#" method="get">
+      <div class="control-group all-15">
+      </div>
+      <div class="control-group all-70">
+        <div class="control append-button" role="search">
+          <span>
+            <input type="text" name="name" id="name">
+          </span>
+          <button class="ink-button">Pesquisar</button>
+        </div>
       </div>
     </form>
   </div>
-  <script>
-    $(function() {
-      $("ul#footer-links").hide();
-      $("#footer").hover(function() {
-        $("ul#footer-links").stop(!0, !0).slideToggle("fast");
-      })
-    });
-  </script>
-  <footer id="footer" class="half-top-space clearfix fixed">
-    <div class="ink-grid fw-regular">
-        <ul id="footer-links" class="unstyled small inline quarter-vertical-space">
-          <li><a href="about.php">About</a></li>
-          <li><a href="sitemap.php">Sitemap</a></li>
-          <li><a href="contacts.php">Contacts</a></li>
-        </ul>
-        <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
-    </div>
-  </footer>
 </body>
 </html>
