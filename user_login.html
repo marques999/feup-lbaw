@@ -1,84 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>KnowUP! - Collaborative Q&A</title>
-<link rel="shortcut icon" href="img/favicon.ico">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="css/font-roboto.css">
-<link rel="stylesheet" type="text/css" href="css/ink.css">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<noscript>
-<meta http-equiv="refresh" content="0; url=message_noscript.php" />
-</noscript>
-  <style>
-  body {
-    top: 15%;
-    width: 100%;
-    position: absolute;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+  <title>KnowUP! - Collaborative Q&A</title>
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
+  <link rel="stylesheet" type="text/css" href="css/ink.css">
+  <link rel="stylesheet" type="text/css" href="css/other.css">
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
 <body>
-<div class="ink-grid push-center xlarge-40 large-60 medium-80 all-100">
-  <div class="column double-horizontal-padding vertical-space">
-    <img src="img/header.png">
+  <div id="responsive-bg">
+    <img src="img/DSCF2597.png" alt="">
   </div>
-  <form action="#" method="post" class="ink-form ink-formvalidator">
-    <fieldset>
-      <legend class="slab align-center">Sign-In</legend>
-      <div class="control-group required column-group half-gutters">
-        <label for="username" class="all-25 align-right">Username</label>
-        <div class="control append-symbol all-75">
-          <span>
-            <input name="username" type="text" data-rules="required" placeholder="Por favor introduza aqui a sua alcunha">
-            <i class="fa fa-user"></i>
-          </span>
-        </div>
-      </div>
-      <div class="control-group required column-group half-gutters">
-        <label for="password" class="all-25 align-right">Password</label>
-        <div class="control append-symbol all-75">
-          <span>
-            <input name="password" id="password" type="password" data-rules="required" placeholder="Por favor introduza aqui a sua password">
-            <i class="fa fa-key"></i>
-          </span>
-        </div>
-      </div>
-      <div class="column-group half-horizontal-gutters">
-        <div class="control-group xlarge-25 large-20 all-15">    
-        </div>
-        <div class="control-group xlarge-20 all-25">
-          <div class="control append-symbol">
+  <div class="ink-grid overlay half-vertical-padding push-center xlarge-45 large-60 medium-80 all-100">
+    <div class="column double-horizontal-padding half-vertical-space">
+      <img src="img/header.png" alt="">
+    </div>
+    <form action="#" method="post" class="ink-form ink-formvalidator">
+      <fieldset>
+        <legend class="slab align-center">Sign-In</legend>
+        <div class="control-group column-group half-gutters">
+          <label for="username" class="all-25 align-right">Username</label>
+          <div class="control append-symbol all-75">
             <span>
-              <input type="submit" name="submit" value="Validar" class="ink-button" />
-              <i class="fa fa-check"></i>
+              <input name="username" id="username" type="text" data-rules="required" placeholder="Por favor introduza aqui a sua alcunha">
+              <i class="fa fa-user"></i>
             </span>
           </div>
         </div>
-        <div class="control-group xlarge-33 medium-45 all-40">
-          <div class="control append-symbol">
+        <div class="control-group column-group half-gutters">
+          <label for="password" class="all-25 align-right">Password</label>
+          <div class="control append-symbol all-75">
             <span>
-              <input type="reset" name="reset" value="Recuperar Password" class="ink-button" />
-              <i class="fa fa-exclamation-triangle"></i>
+              <input name="password" id="password" type="password" data-rules="required" placeholder="Por favor introduza aqui a sua password">
+              <i class="fa fa-key"></i>
             </span>
           </div>
         </div>
-      </div>
-      <div class="control-group column-group">
-        <p class="align-center no-margin">Não se encontra registado?
-          <a href="register.php">Registe-se aqui!</a>
-        </p>
-      </div>
-    </fieldset>
-  </form>
+        <div class="column-group half-horizontal-gutters">
+          <div class="control-group xlarge-25 large-20 all-15">    
+          </div>
+          <div class="control-group xlarge-20 all-25">
+            <div class="control append-symbol">
+              <span>
+                <input type="submit" name="submit" value="Validar" class="ink-button black"/>
+                <i class="fa fa-check"></i>
+              </span>
+            </div>
+          </div>
+          <div class="control-group xlarge-33 medium-45 all-40">
+            <div class="control append-symbol">
+              <span>
+                <input type="reset" name="reset" value="Recuperar Password" class="ink-button black"/>
+                <i class="fa fa-exclamation-triangle"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="control-group column-group">
+          <p class="align-center no-margin">Não se encontra registado?
+            <a href="user_register.html">Registe-se aqui!</a>
+          </p>
+        </div>
+      </fieldset>
+    </form>
   </div>
 </body>
 </html>

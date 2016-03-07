@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
   <title>KnowUP! - Collaborative Q&A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <noscript>
-  <meta http-equiv="refresh" content="0; url=message_noscript.php" />
-  </noscript>
   <script type="text/javascript" src="js/holder.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.min.js"></script>
 </head>
 <body>
   <header id="header-container">
@@ -26,7 +23,7 @@
       <ul class="menu medium horizontal black">
         <a href="index.html">
           <li class="no-margin quarter-padding" id="nav_index">
-            <img src="img/header-256px.png">
+            <img src="img/header-256px.png" alt="">
           </li>
         </a>
         <form class="ink-form all-20 medium">
@@ -44,7 +41,7 @@
           <a><i class="fa fa-user"></i>&nbsp;marques999</a>
           <ul class="submenu">
             <li class="half-vertical-padding">
-              <img class="img-circle push-center" src="holder.js/64x64/auto/ink">
+              <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
             </li>
             <li><a href="view_profile.html">Profile</a></li>
             <li><a href="manage_invites.php">Messages</a></li>
@@ -62,7 +59,7 @@
       <!-- BEGIN USER AVATAR -->
       <div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
         <a href="update_profile.php?field=5">
-          <img class="half-padding" src="js/holder.js/480x480"/>
+          <img class="half-padding" src="js/holder.js/480x480" alt="">
         </a>
         <p class="align-center quarter-vertical-space">
           <a href="update_profile.php?field=1">
@@ -81,7 +78,7 @@
       <div>
         <p class="no-margin">
           <h2 class="slab">marques999</h2>
-          <img class="quarter-padding" src="img/flags/pt.png"></img>
+          <img class="quarter-padding" src="img/flags/pt.png" alt="">
         </p>
         <p>Diogo Marques</p>
       </div>
@@ -97,45 +94,43 @@
         <div id="profile" class="tabs-content">
           <p class="no-margin">
             <a href="update_profile.php?field=3"><i class="fa fa-plus-circle"></i></a>
-            <b>E-mail:</b>
-            <a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
+            <b>E-mail:</b><a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
           </p>
           <p class="no-margin">
-          <a href="update_profile.php?field=4"><i class="fa fa-plus-circle"></i></a>
-          <b>Localização: </b>Valongo, Portugal
+            <a href="update_profile.php?field=4"><i class="fa fa-plus-circle"></i></a>
+            <b>Localização: </b>Valongo, Portugal
+          </p>
         </div>
         <!-- END PROFILE INFORMATION -->
        
         <!-- BEGIN ATTENDED EVENTS -->
         <div id="home" class="tabs-content">
         <table class="ink-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>John</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Will</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Steve</td>
-    </tr>
-  </tbody>
-</table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Will</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Steve</td>
+            </tr>
+          </tbody>
+        </table>
           <div class="half-vertical-space all-100">
-            <img src="<?=events_getImage($currentEvent, 'small')?>"/>
+            <img src="js/holder.js/100x64" alt="">
             <b class="quarter-space">
-              <a href="<?=events_viewEvent($currentEvent)?>">
-              <?=events_getName($currentEvent)?>
-              </a>
+              <a href="#">Pergunta Fácil</a>
             </b>
           </div>
           <p class="panel">Este utilizador ainda não respondeu a nenhuma pergunta :(</p>
@@ -144,12 +139,10 @@
 
         <div id="news" class="tabs-content">
           <div class="half-vertical-space all-100">
-            <a href="event_delete.php?id=<?=$currentEvent['idEvent']?>"><i class="fa fa-trash"></i>&nbsp;</a>
-            <img src="<?=events_getImage($currentEvent, 'small')?>"/>
+            <a href="#"><i class="fa fa-trash"></i>&nbsp;</a>
+            <img src="js/holder.js/100x64" alt="">
             <b class="quarter-space">
-              <a href="<?=events_viewEvent($currentEvent)?>">
-              <?=events_getName($currentEvent)?>
-              </a>
+              <a href="#">Pergunta Fácil</a>
             </b>
           </div>
           <p class="panel">Este utilizador ainda não submeteu nenhuma pergunta :(</p>
