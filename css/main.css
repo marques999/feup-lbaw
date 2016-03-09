@@ -10,7 +10,7 @@ footer.fixed {
 }
 
 header {
-  position: fixed;
+  position: static;
   top: 0;
   left: 0;
   height: auto;
@@ -26,21 +26,44 @@ small.white {
   border-radius:50%
 }
 
-.search-box {
-  padding:0;
-  margin:0;
-  margin-top: 0.5em;
-}
-
-.ul-header
-{
-  padding: 0.5em;
-}
-
 .ink-navigation img {
-  max-width:100%; 
-  max-height:100%;
-  margin:0;
   height:2.5em;
-  display:block;
+  margin: 0;
+  padding: 0;
+}
+
+div.message {
+  border-radius: 2px;
+  -webkit-box-shadow: #dddddd 0 1px 1px 0;
+  -moz-box-shadow: #dddddd 0 1px 1px 0;
+  box-shadow: #dddddd 0 1px 1px 0;
+  padding: 1em;
+  border: 1px solid #BBB;
+  background-color: #FFF;
+}
+
+.ink-search input {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  padding: 8px 6px;
+  border: 1px solid #c6c6c6;
+  background: #FFF;
+  vertical-align: middle;
+}
+
+.ink-search .control-group {
+  line-height: 1.0em;
+  margin-bottom: 0;
+  margin-top: 0.75em;
+ }
+
+.ink-navigation ul.menu.horizontal li.header-image a {
+  padding: 0.2em;
+  margin: 0;
+  display: block;
 }

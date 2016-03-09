@@ -10,24 +10,22 @@
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
-  <link rel="stylesheet" type="text/css" href="css/other-fit.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-<div id="responsive-bg">
-<img src="img/DSCF2597.png" alt="">
-</div>
   <div class="overlay">
-    <div class="ink-grid push-center half-vertical-padding xlarge-55 large-70 medium-80 all-100">
+    <div class="ink-grid push-center bottom-padding half-vertical-padding xlarge-55 large-70 medium-80 all-100">
       <div class="all-10 vertical-space">
       </div>
       <div class="align-center all-80 double-horizontal-padding half-bottom-space">
         <img src="img/header.png" alt="">
       </div>
       <div class="column all-100">
-        <form action="actions/action_create_user.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator">
+        <form action="actions/action_create_user.php" method="post" enctype="multipart/form-data" class="ink-form medium ink-formvalidator">
           <fieldset>
             <legend class="align-center">Registar Conta</legend>
             
@@ -138,5 +136,23 @@
     <div class="vertical-space">
     </div>
   </div>
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+      <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+        <li><a href="about.php">About</a></li>
+        <li><a href="sitemap.php">Sitemap</a></li>
+        <li><a href="contacts.php">Contacts</a></li>
+      </ul>
+      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+  </div>
+</footer>
 </body>
 </html>

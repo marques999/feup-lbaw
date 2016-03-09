@@ -5,47 +5,47 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-  <title>KnowUP! - Collaborative Q&A</title>
+  <title>KnowUP! - Collaborative Q&amp;A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
   <header id="header-container">
     <nav id="header-menu" class="ink-navigation">
-      <ul class="menu medium horizontal black">
-        <a href="index.html">
-          <li class="no-margin quarter-padding" id="nav_index">
+      <ul class="menu medium horizontal black">    
+        <li class="no-margin" id="nav_index">
+          <a href="index.html">
             <img src="img/header-256px.png" alt="">
-          </li>
-        </a>
-        <form class="ink-form all-20 medium">
-        <li class="control-group">   
-          <div class="control append-button" role="search">
-            <span><input type="text" name="name" id="name"></span>
-            <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>     
+          </a>
         </li>
+        <form class="ink-form ink-search all-20 medium">
+          <div class="control-group">   
+            <div class="control append-button" role="search">
+              <span><input type="text" name="name" id="name"></span>
+              <button class="ink-button"><i class="fa fa-search"></i></button>
+            </div>     
+          </div>
         </form>
-        <li id="nav_browse"><a href="event_search.php"><i class="fa fa-search"></i>&nbsp;Read</a></li>
-        <li id="nav_events"><a href="manage_events.php"><i class="fa fa-gears"></i>&nbsp;Answer</a></li>
-        <li id="nav_forum"><a href="forum.php"><i class="fa fa-comment"></i>&nbsp;Notifications (0)</a></li>
+        <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
+        <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
+        <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
         <li id="nav_profile">
-          <a><i class="fa fa-user"></i>&nbsp;marques999</a>
-          <ul class="submenu">
+          <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+          <ul class="submenu fw-600">
             <li class="half-vertical-padding">
               <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
             </li>
             <li><a href="view_profile.html">Profile</a></li>
-            <li><a href="manage_invites.php">Messages</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+            <li><a href="action_logout.html">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -53,8 +53,8 @@
   </header> 
   <div class="vertical-space">
   </div>
-  <div class="ink-grid push-center all-90 large-90 medium-100 small-90 tiny-100">
-    <div class="column-group all-100">
+  <div class="ink-grid double-bottom-padding push-center all-90 medium-100 tiny-100">
+    <div class="column-group">
      
       <!-- BEGIN USER AVATAR -->
       <div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
@@ -151,23 +151,23 @@
     </div>
   </div>
 </div>
-  <script>
-    $(function() {
-      $("ul#footer-links").hide();
-      $("#footer").hover(function() {
-        $("ul#footer-links").stop(!0, !0).slideToggle("fast");
-      })
-    });
-  </script>
-  <footer id="footer" class="half-top-space clearfix fixed">
-    <div class="ink-grid fw-regular">
-        <ul id="footer-links" class="unstyled small inline quarter-vertical-space">
-          <li><a href="about.php">About</a></li>
-          <li><a href="sitemap.php">Sitemap</a></li>
-          <li><a href="contacts.php">Contacts</a></li>
-        </ul>
-        <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
-    </div>
-  </footer>
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+      <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+        <li><a href="about.php">About</a></li>
+        <li><a href="sitemap.php">Sitemap</a></li>
+        <li><a href="contacts.php">Contacts</a></li>
+      </ul>
+      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+  </div>
+</footer>
 </body>
 </html>

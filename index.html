@@ -5,17 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>KnowUP! - Collaborative Q&A</title> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+  <title>KnowUP! - Collaborative Q&amp;A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <noscript>
-    <meta http-equiv="refresh" content="0; url=template/noscript.php" />
-  </noscript>
   <style>
     body {
       padding-top: 50px;
@@ -25,42 +21,43 @@
   <script type="text/javascript" src="js/holder.min.js"></script>
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/ink-all.min.js"></script>
+  <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
   <body>
   <header id="header-container">
-    <nav id="header-menu" class="ink-navigation">
-      <ul class="menu medium horizontal black">
-        <a href="index.html">
-          <li class="no-margin quarter-padding" id="nav_index">
-            <img src="img/header-256px.png">
+  <nav id="header-menu" class="ink-navigation">
+    <ul class="menu medium horizontal black">
+      <a href="index.html">
+        <li class="no-margin quarter-padding" id="nav_index">
+          <img src="img/header-256px.png" alt="">
+        </li>
+      </a>
+      <form class="ink-form all-20 medium">
+      <li class="control-group">   
+        <div class="control append-button" role="search">
+          <span><input type="text" name="name" id="name"></span>
+          <button class="ink-button"><i class="fa fa-search"></i></button>
+        </div>     
+      </li>
+      </form>
+      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
+      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
+      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
+      <li id="nav_profile">
+        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+        <ul class="submenu">
+          <li class="half-vertical-padding">
+            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
           </li>
-        </a>
-        <form class="ink-form all-20 medium">
-        <li class="control-group">   
-          <div class="control append-button" role="search">
-            <span><input type="text" name="name" id="name"></span>
-            <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>     
-        </li>
-        </form>
-        <li id="nav_browse"><a href="event_search.php"><i class="fa fa-search"></i>&nbsp;Read</a></li>
-        <li id="nav_events"><a href="manage_events.php"><i class="fa fa-gears"></i>&nbsp;Answer</a></li>
-        <li id="nav_forum"><a href="forum.php"><i class="fa fa-comment"></i>&nbsp;Notifications (0)</a></li>
-        <li id="nav_profile">
-          <a><i class="fa fa-user"></i>&nbsp;marques999</a>
-          <ul class="submenu">
-            <li class="half-vertical-padding">
-              <img class="img-circle push-center" src="holder.js/64x64/auto/ink">
-            </li>
-            <li><a href="view_profile.html">Profile</a></li>
-            <li><a href="manage_invites.php">Messages</a></li>
-            <li><a href="logout.php">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
+          <li><a href="view_profile.html">Profile</a></li>
+          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header> 
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
@@ -97,7 +94,6 @@
     </footer>
   </div>
 
-    <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
