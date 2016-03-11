@@ -12,119 +12,177 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
-    <ul class="menu medium horizontal black">    
+
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
       <li class="no-margin" id="nav_index">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
       </li>
       <form class="ink-form ink-search all-20 medium">
-        <div class="control-group">   
+        <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="name" id="name"></span>
             <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>     
+          </div>
         </div>
       </form>
-      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-      <li id="nav_profile">
-        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
         <ul class="submenu fw-600">
-          <li class="half-vertical-padding">
-            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-          </li>
-          <li><a href="view_profile.html">Profile</a></li>
-          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
           <li><a href="action_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
-</header> 
+</header>
+
+
+<!-- PÁGINA -->
 <div class="ink-grid double-bottom-padding push-center all-75 large-85 medium-95 small-100 tiny-100">
-  <h5 class="slab half-vertical-space">
-    <a href="view_messages.html">Private Messages</a>&nbsp;&gt;&nbsp;mellus
-  </h5>
-  <div class="message column-group half-vertical-space">
-    <div class="column all-15 medium-20 small-25 tiny-25">
-      <b class="no-margin"><a href="view_profile.html">marques999</a></b>
-      <p class="medium no-margin">FEUP</p>
-      <img class="img-circle half-vertical-space" src="holder.js/64x64/auto/ink" alt="">
-    </div>
-    <div class="column all-85 medium-80 small-75 tiny-75">
-      <div class="message-header">
-        <b>Lorem ipsum dolor sit amet</b>
-        <p class="slab">
-          <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 21:24</small>
-        </p>
-      </div>
-      <div class="message-content half-bottom-space">
-        <p class="medium half-vertical-space">
-        Vestibulum quis placerat metus. In <b>pharetra metus</b> vel tincidunt feugiat. Ut vulputate sem vitae velit <em>sagittis</em> congue. Mauris blandit felis sed velit eleifend semper.
-        </p>
-        <p class="medium half-vertical-space">
-        Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
-        </p>
-      </div>
-      <div class="message-buttons quarter-vertical-padding align-right">
-        <small>
-          <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Reply</a>
-        </small>
-        <small>
-          <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Quote</a>
-        </small>
-      </div>
-    </div>
+<h5 class="slab half-vertical-space">
+  <a href="view_messages.html">Private Messages</a>&nbsp;&gt;&nbsp;mellus
+</h5>
+
+
+<!-- PRIVATE MESSAGES: mensagem 1 -->
+<div class="message column-group half-vertical-space">
+  <div class="column all-15 medium-20 small-25 tiny-25">
+    <b class="no-margin"><a href="view_profile.html">marques999</a></b>
+    <p class="medium no-margin">FEUP</p>
+    <img class="img-circle half-vertical-space" src="holder.js/64x64/auto/ink" alt="">
   </div>
-  <div id="last-message" class="message column-group half-vertical-space">
-    <div class="column all-15 medium-20 small-25 tiny-25">
-      <b class="no-margin"><a href="view_profile.html">mellus</a></b>
-      <p class="medium no-margin">FEUP</p>
-      <img class="img-circle half-vertical-space" src="holder.js/64x64/auto/ink" alt="">
-      <p class="small"><b>Last Online:</b> Wednesday, 09/03/2016 17:55</p>
+  <div class="column all-85 medium-80 small-75 tiny-75">
+    <div class="message-header">
+      <b>Lorem ipsum dolor sit amet</b>
+      <p class="slab">
+        <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 21:24</small>
+      </p>
     </div>
-    <div class="column all-85 medium-80 small-75 tiny-75">
-      <div class="message-header">
-        <b>RE: Lorem ipsum dolor sit amet</b>
-        <p class="slab">
-          <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 22:55</small>
-        </p>
-      </div>
-      <div class="message-content half-bottom-space">
-        <p class="half-vertical-space">
-        <small class="no-margin">marques999 wrote:</small>
-        <blockquote class="no-margin medium fw-300">
-        Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
-        </blockquote>
-        </p>
-        <p class="medium half-vertical-space">
-        Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget <b>odio tempus</b> libero consequat vehicula placerat non nibh. Nulla a condimentum felis. Pellentesque quis laoreet tellus. Donec euismod, tellus non porta varius, mauris libero faucibus lectus, in vulputate est massa feugiat nulla.
-        </p>
-        <p class="medium half-vertical-space">
-        Nulla dignissim nisi tortor, et rutrum <em>lacus</em> sollicitudin in. Nulla at lectus volutpat lectus rutrum pellentesque. Suspendisse tempor cursus mauris, at vehicula nisi volutpat quis. Fusce ut mi sapien. Cras nec semper dui, a aliquet orci.
-        </p>
-      </div>
-      <div class="message-buttons quarter-vertical-padding align-right">
-        <small>
-          <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Reply</a>
-        </small>
-        <small>
-          <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Quote</a>
-        </small>
-      </div>
+    <div class="message-content half-bottom-space">
+      <p class="medium half-vertical-space">
+      Vestibulum quis placerat metus. In <b>pharetra metus</b> vel tincidunt feugiat. Ut vulputate sem vitae velit <em>sagittis</em> congue. Mauris blandit felis sed velit eleifend semper.
+      </p>
+      <p class="medium half-vertical-space">
+      Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
+      </p>
+    </div>
+    <div class="message-buttons quarter-vertical-padding align-right">
+      <small>
+        <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Reply</a>
+      </small>
+      <small>
+        <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Quote</a>
+      </small>
     </div>
   </div>
 </div>
+
+
+<!-- PRIVATE MESSAGES: mensagem 2 -->
+<div id="last-message" class="message column-group half-vertical-space">
+  <div class="column all-15 medium-20 small-25 tiny-25">
+    <b class="no-margin"><a href="view_profile.html">mellus</a></b>
+    <p class="medium no-margin">FEUP</p>
+    <img class="img-circle half-vertical-space" src="holder.js/64x64/auto/ink" alt="">
+    <p class="small"><b>Last Online:</b> Wednesday, 09/03/2016 17:55</p>
+  </div>
+  <div class="column all-85 medium-80 small-75 tiny-75">
+    <div class="message-header">
+      <b>RE: Lorem ipsum dolor sit amet</b>
+      <p class="slab">
+        <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 22:55</small>
+      </p>
+    </div>
+    <div class="message-content half-bottom-space">
+      <p class="half-vertical-space">
+      <small class="no-margin">marques999 wrote:</small>
+      <blockquote class="no-margin medium fw-300">
+      Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
+      </blockquote>
+      </p>
+      <p class="medium half-vertical-space">
+      Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget <b>odio tempus</b> libero consequat vehicula placerat non nibh. Nulla a condimentum felis. Pellentesque quis laoreet tellus. Donec euismod, tellus non porta varius, mauris libero faucibus lectus, in vulputate est massa feugiat nulla.
+      </p>
+      <p class="medium half-vertical-space">
+      Nulla dignissim nisi tortor, et rutrum <em>lacus</em> sollicitudin in. Nulla at lectus volutpat lectus rutrum pellentesque. Suspendisse tempor cursus mauris, at vehicula nisi volutpat quis. Fusce ut mi sapien. Cras nec semper dui, a aliquet orci.
+      </p>
+    </div>
+    <div class="message-buttons quarter-vertical-padding align-right">
+      <small>
+        <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Reply</a>
+      </small>
+      <small>
+        <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Quote</a>
+      </small>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();

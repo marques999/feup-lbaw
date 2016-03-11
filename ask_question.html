@@ -11,19 +11,20 @@
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="js/holder.min.js"></script>
   <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="js/ink-all.min.js"></script>
+  <script type="text/javascript" src="js/autoload.min.js"></script>
   <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
   <script>
- 
-
-  $(function() { 
-      CKEDITOR.editorConfig = function( config ) {
-  config.language = 'pt';
-  config.skin = 'office2013'
-  config.uiColor = '#F7B42C';
-  config.height = 400;
-  config.toolbarGroups = [
+  $(function() {
+    CKEDITOR.editorConfig = function( config ) {
+      config.language = 'pt';
+      config.skin = 'office2013'
+      config.uiColor = '#F7B42C';
+      config.height = 400;
+      config.toolbarGroups = [
     { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
     { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -41,7 +42,7 @@
 
   config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
 
-  
+
   };
     CKEDITOR.replace('description');
 
@@ -51,118 +52,169 @@
 <body>
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
-    <ul class="menu medium horizontal black">    
+
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
       <li class="no-margin" id="nav_index">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
       </li>
       <form class="ink-form ink-search all-20 medium">
-        <div class="control-group">   
+        <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="name" id="name"></span>
             <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>     
+          </div>
         </div>
       </form>
-      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-      <li id="nav_profile">
-        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
         <ul class="submenu fw-600">
-          <li class="half-vertical-padding">
-            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-          </li>
-          <li><a href="view_profile.html">Profile</a></li>
-          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
           <li><a href="action_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
-</header> 
-<div class="ink-grid push-center bottom-padding">
+</header>
+
+<!-- PÁGINA -->
+<div class="ink-grid">
 <div class="column-group half-top-padding">
-  <form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator all-60 medium-60 small-100 tiny-100">
-    <fieldset>
-      <legend class="align-center">Ask Question</legend>
-
-      <!-- BEGIN EVENT NAME -->
-      <div class="control-group required column-group half-gutters">
-        <label for="name" class="all-20 align-right">Título:</label>
-        <div class="control all-80">
-          <input name="name" id="name" type="text" data-rules="required|text[true,true]" placeholder="Please enter the event name">
-        </div>
-      </div>
-      <!-- END EVENT NAME -->
 
 
-      <!-- BEGIN EVENT DESCRIPTION -->
-      <div class="control-group required column-group half-gutters">
-        <label for="description" class="all-20 align-right">Mensagem:</label>
-        <div class="control all-80">
-          <textarea name="description" id="description" rows="8" cols="60" data-rules="required" placeholder="Please enter the event description"></textarea>
-        </div>
-      </div>
-      <!-- END EVENT DESCRIPTION -->
+<!-- NOVA PERGUNTA: formulário -->
+<form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator all-60 medium-60 small-100 tiny-100">
+<fieldset>
+<legend class="align-center">Ask Question</legend>
 
-      <!-- BEGIN EVENT CATEGORU -->
-      <div class="control-group required column-group half-gutters">
-        <label for="location" class="all-20 align-right">Categoria:</label>
-        <div class="control append-symbol all-60">
-          <select>
-            <optgroup label="Faculdade de Ciências">
-                <option>Arqueologia</option>
-                  <option>Ciência da Informação</option>
-                  <option>Ciências da Comunicação</option>
-                  <option>Ciências da Linguagem</option>
-                  <option>Estudos Portugueses</option>
-                  <option>Filosofia</option>
-                  <option>Geografia</option>
-                  <option>História</option>
-                </optgroup>
-            <optgroup label="Faculdade de Engenharia">
-                    <option>Bioengenharia</option>
-                    <option>Engenharia Ambiente</option>
-                    <option>Engenharia Civil</option>
-                    <option>Engenharia Eletrotécnica</option>
-                    <option>Engenharia Informática</option>
-                    <option>Engenharia Industrial e Gestão</option>
-                    <option>Engenharia Mecânica</option>
-                    <option>Engenharia Metalúrgica</option>
-                    <option>Engenharia Química</option>
-                </optgroup>
-          </select>
-        </div>
-        <ul class="control no-margin unstyled all-20">
-          <li>
-            <input type="checkbox" id="private" name="private" value="0">
-            <label for="private">Private</label>
-          </li>
-        </ul>
-      </div>
-      <!-- END EVENT DESCRIPTION -->
 
-      <!-- BEGIN SUBMIT BUTTONS -->
-      <div class="control-group column-group half-gutters">
-            <div class="align-center">
-              <button class="ink-button medium black" type="submit">Submeter</button>
-              <button class="ink-button medium black" type="reset">Limpar</button>
-            </div>
-      </div>
-      <!-- END SUBMIT BUTTONS -->
-    </fieldset>
-  </form>
-  <div class="column-group padding all-40 small-100 tiny-100">
-    <b>Question rules:</b>
-    <ul>
-    <li>Escolha sempre a categoria mais adequada à sua pergunta.</li>
-    <li>b</li>
-    </ul>
+<!-- PERGUNTA: titulo -->
+<div class="control-group required column-group half-gutters">
+  <label for="name" class="all-20 align-right">Título:</label>
+  <div class="control all-80">
+    <input name="name" id="name" type="text" data-rules="required|text[true,true]" placeholder="Please enter the event name">
   </div>
 </div>
+
+
+<!-- PERGUNTA: texto -->
+<div class="control-group required column-group half-gutters">
+  <label for="description" class="all-20 align-right">Mensagem:</label>
+  <div class="control all-80">
+    <textarea name="description" id="description" rows="8" cols="60" data-rules="required" placeholder="Please enter the event description"></textarea>
+  </div>
 </div>
+
+
+<!-- PERGUNTA: categoria -->
+<div class="control-group required column-group half-gutters">
+  <label for="location" class="all-20 align-right">Categoria:</label>
+  <div class="control append-symbol all-80">
+    <select>
+      <optgroup label="Faculdade de Ciências">
+        <option>Arqueologia</option>
+        <option>Ciência da Informação</option>
+        <option>Ciências da Comunicação</option>
+        <option>Ciências da Linguagem</option>
+        <option>Estudos Portugueses</option>
+        <option>Filosofia</option>
+        <option>Geografia</option>
+        <option>História</option>
+      </optgroup>
+      <optgroup label="Faculdade de Engenharia">
+        <option>Bioengenharia</option>
+        <option>Engenharia Ambiente</option>
+        <option>Engenharia Civil</option>
+        <option>Engenharia Eletrotécnica</option>
+        <option>Engenharia Informática</option>
+        <option>Engenharia Industrial e Gestão</option>
+        <option>Engenharia Mecânica</option>
+        <option>Engenharia Metalúrgica</option>
+        <option>Engenharia Química</option>
+      </optgroup>
+    </select>
+  </div>
+</div>
+
+
+<!-- PERGUNTA: button group -->
+<div class="control-group column-group half-gutters">
+  <div class="align-center">
+    <button class="ink-button medium black" type="submit">Submeter</button>
+    <button class="ink-button medium black" type="reset">Limpar</button>
+  </div>
+</div>
+</fieldset>
+</form>
+
+
+<!-- PERGUNTA: regras -->
+<div class="column-group padding all-40 small-100 tiny-100">
+  <b>Question rules:</b>
+  <ul>
+  <li>Escolha sempre a categoria mais adequada à sua pergunta.</li>
+  <li>b</li>
+  </ul>
+</div>
+</div>
+</div>
+
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();
@@ -173,12 +225,15 @@
 </script>
 <footer id="footer" class="clearfix medium fixed">
   <div class="ink-grid">
-      <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
-        <li><a href="about.php">About</a></li>
-        <li><a href="sitemap.php">Sitemap</a></li>
-        <li><a href="contacts.php">Contacts</a></li>
-      </ul>
-      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
   </div>
 </footer>
 </body>

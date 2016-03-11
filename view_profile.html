@@ -12,144 +12,348 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-  <header id="header-container">
-    <nav id="header-menu" class="ink-navigation">
-      <ul class="menu medium horizontal black">    
-        <li class="no-margin" id="nav_index">
-          <a href="index.html">
-            <img src="img/header-256px.png" alt="">
-          </a>
-        </li>
-        <form class="ink-form ink-search all-20 medium">
-          <div class="control-group">   
-            <div class="control append-button" role="search">
-              <span><input type="text" name="name" id="name"></span>
-              <button class="ink-button"><i class="fa fa-search"></i></button>
-            </div>     
-          </div>
-        </form>
-        <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-        <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-        <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-        <li id="nav_profile">
-          <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
-          <ul class="submenu fw-600">
-            <li class="half-vertical-padding">
-              <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-            </li>
-            <li><a href="view_profile.html">Profile</a></li>
-            <li><b><a href="view_messages.html">Messages (3)</a></b></li>
-            <li><a href="action_logout.html">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </header> 
-  <div class="vertical-space">
-  </div>
-  <div class="ink-grid double-bottom-padding push-center all-90 medium-100 tiny-100">
-    <div class="column-group">
-     
-      <!-- BEGIN USER AVATAR -->
-      <div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
-        <a href="update_profile.php?field=5">
-          <img class="half-padding" src="js/holder.js/480x480" alt="">
-        </a>
-        <p class="align-center quarter-vertical-space">
-          <a href="update_profile.php?field=1">
-            <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Alterar palavra-passe</button>
-          </a>
-        </p>
-        <p class="align-center quarter-vertical-space">
-          <a href="delete_user.php?id=1">
-            <button class="ink-button black"><i class="fa fa-user-times"></i>&nbsp;Apagar conta</button>
-          </a>
-        </p>
-      </div>
-      <!-- END USER AVATAR -->
-    
-      <div class="column top-padding all-70 large-60 medium-60 small-100 tiny-100">   
-      <div>
-        <p class="no-margin">
-          <h2 class="slab">marques999</h2>
-          <img class="quarter-padding" src="img/flags/pt.png" alt="">
-        </p>
-        <p>Diogo Marques</p>
-      </div>
-      
-      <div class="ink-tabs top" data-prevent-url-change="true">
-        <ul class="tabs-nav">
-        <li><a class="tabs-tab" href="#profile">Perfil</a></li>
-          <li><a class="tabs-tab" href="#home">Perguntas (<b>3</b>)</a></li>
-          <li><a class="tabs-tab" href="#news">Respostas (<b>13</b>)</a></li>
-        </ul>
-        
-        <!-- BEGIN PROFILE INFORMATION -->
-        <div id="profile" class="tabs-content">
-          <p class="no-margin">
-            <a href="update_profile.php?field=3"><i class="fa fa-plus-circle"></i></a>
-            <b>E-mail:</b><a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
-          </p>
-          <p class="no-margin">
-            <a href="update_profile.php?field=4"><i class="fa fa-plus-circle"></i></a>
-            <b>Localização: </b>Valongo, Portugal
-          </p>
-        </div>
-        <!-- END PROFILE INFORMATION -->
-       
-        <!-- BEGIN ATTENDED EVENTS -->
-        <div id="home" class="tabs-content">
-        <table class="ink-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>John</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Will</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Steve</td>
-            </tr>
-          </tbody>
-        </table>
-          <div class="half-vertical-space all-100">
-            <img src="js/holder.js/100x64" alt="">
-            <b class="quarter-space">
-              <a href="#">Pergunta Fácil</a>
-            </b>
-          </div>
-          <p class="panel">Este utilizador ainda não respondeu a nenhuma pergunta :(</p>
-        </div>
-        <!-- END ATTENDED EVENTS -->
+<header id="header-container">
+  <nav id="header-menu" class="ink-navigation">
 
-        <div id="news" class="tabs-content">
-          <div class="half-vertical-space all-100">
-            <a href="#"><i class="fa fa-trash"></i>&nbsp;</a>
-            <img src="js/holder.js/100x64" alt="">
-            <b class="quarter-space">
-              <a href="#">Pergunta Fácil</a>
-            </b>
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <p class="panel">Este utilizador ainda não submeteu nenhuma pergunta :(</p>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
+      <li class="no-margin" id="nav_index">
+        <a href="index.html">
+          <img src="img/header-256px.png" alt="">
+        </a>
+      </li>
+      <form class="ink-form ink-search all-20 medium">
+        <div class="control-group">
+          <div class="control append-button" role="search">
+            <span><input type="text" name="name" id="name"></span>
+            <button class="ink-button"><i class="fa fa-search"></i></button>
+          </div>
         </div>
-      </div>
+      </form>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- PÁGINA -->
+<div class="ink-grid">
+<div class="column-group half-gutters">
+
+
+<!-- UTILIZADOR: informações-->
+<div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
+<h2 class="slab no-margin">marques999</h2>
+<p class="no-margin">Diogo Marques</p>
+<a href="update_profile.php?field=5">
+  <img class="half-vertical-space" src="holder.js/480x480/auto/ink" alt="">
+</a>
+
+
+<!-- UTILIZADOR: faculdade -->
+<p class="no-margin">
+  <a class="ink-tooltip" href="#"
+    data-tip-text="Alterar instituição de ensino" data-tip-color="black">
+    <i class="fa fa-plus-circle"></i>
+  </a>
+  <b>Faculdade:&nbsp;</b>FEUP
+    <a href="https://sigarra.up.pt/feup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+</p>
+
+
+<!-- UTILIZADOR: endereço e-mail -->
+<p class="no-margin">
+  <a class="ink-tooltip" href="#"
+    data-tip-text="Alterar e-mail" data-tip-color="black">
+    <i class="fa fa-plus-circle"></i>
+  </a>
+  <b>E-mail:</b>
+  <a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
+</p>
+
+
+<!-- UTILIZADOR: localização -->
+<p class="no-margin">
+  <a class="ink-tooltip" href="#"
+    data-tip-text="Alterar localização" data-tip-color="black">
+    <i class="fa fa-plus-circle"></i>
+  </a>
+  <b>Localização:&nbsp;</b>Valongo, Portugal
+</p>
+</div>
+
+
+<!-- BEGIN E-MAIL MODAL -->
+<div class="ink-shade fade">
+  <div id="myModal" class="ink-modal fade" data-trigger="#myModalTrigger1" data-width="75%" data-height="33%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+    <div class="modal-body" id="modalContent">
+      <form action="actions/action_update_user.php" method="post" enctype="multipart/form-data" class="ink-form push-center medium ink-formvalidator">
+        <fieldset>
+          <legend class="align-center">Alterar E-mail</legend>
+          <div class="control-group required column-group half-gutters">
+            <label for="email" class="all-20 align-right">E-mail:</label>
+            <div class="control append-symbol all-70">
+              <span>
+              <input type="text" name="email" value="<?=$thisUser['email']?>" data-rules="required|email">
+              <i class="fa fa-envelope-o"></i>
+              </span>
+            </div>
+          </div>
+          <div class="align-center">
+            <button class="ink-button" type="submit">Update</button>
+            <button class="ink-button" onclick="history.go(-1)" type="reset">Cancel</button>
+          </div>
+        </fieldset>
+      </form>
     </div>
   </div>
+</div>
+<a href="#" id="myModalTrigger1" class="ink-button">Open example modal</a>
+<!-- BEGIN E-MAIL MODAL -->
+
+<div class="column all-70 large-60 medium-60 small-100 tiny-100">
+
+<!-- BEGIN PROFILE TABS -->
+<div class="ink-tabs top" data-prevent-url-change="true">
+  <ul class="tabs-nav">
+    <li><a class="tabs-tab" href="#profile">Perfil</a></li>
+    <li><a class="tabs-tab" href="#home">Perguntas (<strong>3</strong>)</a></li>
+    <li><a class="tabs-tab" href="#news">Respostas (<strong>13</strong>)</a></li>
+  </ul>
+<!-- END PROFILE TABS -->
+
+<!-- BEGIN PROFILE BUTTONS -->
+<div id="profile">
+  <p class="align-center quarter-vertical-space">
+    <a href="update_profile.php?field=1">
+      <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Alterar palavra-passe</button>
+    </a>
+    <a href="delete_user.html">
+      <button class="ink-button black"><i class="fa fa-user-times"></i></button>
+    </a>
+  </p>
+</div>
+<!-- END PROFILE BUTTONS -->
+
+<!-- BEGIN QUESTIONS SECTION -->
+<div id="home" class="tabs-content">
+  <table class="ink-table alternating hover">
+    <thead>
+      <th style="width:50%">Pergunta</th>
+      <th style="width:25%">Pontuação</th>
+      <th style="width:25%">Respostas</th>
+    </thead>
+    <tbody>
+      <tr class="notification-row">
+        <td class="medium">
+          <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
+          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">52</h3>
+          <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="notification-row">
+        <td class="medium">
+          <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
+          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">6</h3>
+          <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+   <button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr class="notification-row">
+        <td class="medium">
+           <b>Which is the worst food in the world?</b>
+          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">-21</h3>
+          <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+            <button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- END QUESTIONS SECTION -->
+
+<!-- BEGIN ANSWERS SECTION -->
+<div id="news" class="tabs-content">
+  <table class="ink-table alternating hover">
+    <thead>
+      <th style="width:50%">Resposta</th>
+      <th style="width:25%">Pontuação</th>
+      <th style="width:25%">Acções</th>
+    </thead>
+    <tbody>
+      <tr class="notification-row">
+        <td class="medium">
+          <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
+          <p class="quarter-vertical-space">
+            Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.
+            <a href="ver mais">&gt; ver mais &lt;</a>
+          </p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">52</h3>
+          <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+            <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+              <i class="fa fa-external-link"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr class="notification-row">
+        <td class="medium">
+          <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
+          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">6</h3>
+          <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+            <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+              <i class="fa fa-external-link"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr class="notification-row">
+        <td class="medium">
+           <b>Which is the worst food in the world?</b>
+          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+        </td>
+        <td class="align-center">
+          <h3 class="quarter-vertical-space">-21</h3>
+          <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+        </td>
+        <td>
+          <div class="button-group">
+             <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+              <i class="fa fa-reply"></i>
+            </a>
+            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+              <i class="fa fa-external-link"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <script>
   $(function() {

@@ -12,18 +12,16 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
   <script>
-  $(function() {
+  var numberNotifications = 5;
+  $(function(){
     $("button.dismiss").click(function(){
-      var notificationsBadge = $("#notifications-badge");
-      var numberNotifications = +notificationsBadge.text() - 1;
-      //------------------------------------------------------
       $(this).parent().parent().parent().remove();
-      notificationsBadge.text(numberNotifications);
+      numberNotifications--;
       if (numberNotifications <= 0) {
         $("table").replaceWith("<p>You have no pending notifications :(</p>");
       }
@@ -31,158 +29,213 @@
   });
   </script>
 </head>
-<body>
+<body class="ink-drawer">
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
-    <ul class="menu medium horizontal black">    
+
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
       <li class="no-margin" id="nav_index">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
       </li>
       <form class="ink-form ink-search all-20 medium">
-        <div class="control-group">   
+        <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="name" id="name"></span>
             <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>     
+          </div>
         </div>
       </form>
-      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-      <li id="nav_profile">
-        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
         <ul class="submenu fw-600">
-          <li class="half-vertical-padding">
-            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-          </li>
-          <li><a href="view_profile.html">Profile</a></li>
-          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
           <li><a href="action_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
-</header> 
+</header>
+
+
+<!-- PÁGINA -->
 <div class="ink-grid bottom-padding">
-  <h3 class="half-top-padding">Notifications<span id="notifications-badge" class="ink-badge black">5</span></h3>
-  <table class="ink-table alternating hover">
-    <thead>
-      <th style="width:50%">Last Event</th>
-      <th style="width:25%">Author</th>
-      <th style="width:25%">Actions</th>
-    </thead>
-    <tbody>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">new answer!</span></b>
-          <p class="quarter-vertical-space"><strong>mellus answered:</strong> Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td>
-          <i class="fa fa-user"></i>
-          <a href="view_profile.html">mellus</a>
-          <p><small>Tuesday, 01/03/2016 16:09</small></p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">new answer!</span></b>
-          <p class="quarter-vertical-space"><strong>darklord commented:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td> 
-        <td>
-          <i class="fa fa-user"></i>
-          <a href="view_profile.html">darklord</a>
-          <p><small>Tuesday, 01/03/2016 16:09</small></p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-           <b>Which is the worst food in the world?<span class="ink-badge black">new comment!</span></b>
-          <p class="quarter-vertical-space"><strong>marques999 commented:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td>
-          <i class="fa fa-user"></i>
-          <a href="view_profile.html">marques999</a>
-          <p><small>Sunday, 06/12/2015 20:01</small></p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>Which is the worst food in the world?<span class="ink-badge black">new answer!</span></b>
-          <p class="quarter-vertical-space"><strong>marques999 answered:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td>
-          <i class="fa fa-user"></i>
-          <a href="view_profile.html">darklord</a>
-          <p><small>Saturday, 05/12/2015 00:45</small></p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
-          <p class="quarter-vertical-space"><b>best answer:</b>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td>
-          <i class="fa fa-user"></i>
-          <a href="view_profile.html">utilizador1</a>
-          <p><small>Wednesday, 02/12/2015 23:32</small></p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-   <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<h3 class="half-top-padding">Notifications</h3>
+
+
+<!-- TABELA -->
+<table class="ink-table alternating hover">
+  <thead>
+    <th style="width:50%">Last Event</th>
+    <th style="width:25%">Author</th>
+    <th style="width:25%">Actions</th>
+  </thead>
+  <tbody>
+    <tr class="notification-row">
+      <td class="medium">
+        <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">new answer!</span></b>
+        <p class="quarter-vertical-space"><strong>mellus answered:</strong> Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+      </td>
+      <td>
+        <i class="fa fa-user"></i>
+        <a href="view_profile.html">mellus</a>
+        <p><small>Tuesday, 01/03/2016 16:09</small></p>
+      </td>
+      <td>
+        <div class="button-group">
+          <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+            <i class="fa fa-reply"></i>
+          </a>
+          <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="notification-row">
+      <td class="medium">
+        <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">new answer!</span></b>
+        <p class="quarter-vertical-space"><strong>darklord commented:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+      </td>
+      <td>
+        <i class="fa fa-user"></i>
+        <a href="view_profile.html">darklord</a>
+        <p><small>Tuesday, 01/03/2016 16:09</small></p>
+      </td>
+      <td>
+        <div class="button-group">
+          <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+            <i class="fa fa-reply"></i>
+          </a>
+          <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="notification-row">
+      <td class="medium">
+         <b>Which is the worst food in the world?<span class="ink-badge black">new comment!</span></b>
+        <p class="quarter-vertical-space"><strong>marques999 commented:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+      </td>
+      <td>
+        <i class="fa fa-user"></i>
+        <a href="view_profile.html">marques999</a>
+        <p><small>Sunday, 06/12/2015 20:01</small></p>
+      </td>
+      <td>
+        <div class="button-group">
+          <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+            <i class="fa fa-reply"></i>
+          </a>
+          <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="notification-row">
+      <td class="medium">
+        <b>Which is the worst food in the world?<span class="ink-badge black">new answer!</span></b>
+        <p class="quarter-vertical-space"><strong>marques999 answered:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+      </td>
+      <td>
+        <i class="fa fa-user"></i>
+        <a href="view_profile.html">darklord</a>
+        <p><small>Saturday, 05/12/2015 00:45</small></p>
+      </td>
+      <td>
+        <div class="button-group">
+          <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+            <i class="fa fa-reply"></i>
+          </a>
+          <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+    <tr class="notification-row">
+      <td class="medium">
+        <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
+        <p class="quarter-vertical-space"><b>best answer:</b>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+      </td>
+      <td>
+        <i class="fa fa-user"></i>
+        <a href="view_profile.html">utilizador1</a>
+        <p><small>Wednesday, 02/12/2015 23:32</small></p>
+      </td>
+      <td>
+        <div class="button-group">
+          <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+            <i class="fa fa-reply"></i>
+          </a>
+ <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </div>
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();

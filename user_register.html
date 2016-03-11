@@ -5,137 +5,154 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-  <title>KnowUP! - Collaborative Q&A</title>
+  <title>KnowUP! - Collaborative Q&amp;A</title>
   <link rel="shortcut icon" href="img/favicon.ico">
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
+  <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-  <div class="overlay">
-    <div class="ink-grid push-center bottom-padding half-vertical-padding xlarge-55 large-70 medium-80 all-100">
-      <div class="all-10 vertical-space">
-      </div>
-      <div class="align-center all-80 double-horizontal-padding half-bottom-space">
-        <img src="img/header.png" alt="">
-      </div>
-      <div class="column all-100">
-        <form action="actions/action_create_user.php" method="post" enctype="multipart/form-data" class="ink-form medium ink-formvalidator">
-          <fieldset>
-            <legend class="align-center">Registar Conta</legend>
-            
-            <!-- USERNAME -->
-            <div class="control-group column-group half-gutters required">
-              <label for="username" class="all-25 align-right">Username</label>
-              <div class="control append-symbol all-70">
-                <span>
-                  <input name="username" id="username" type="text" data-rules="required|alpha_numeric" placeholder="Por favor introduza um username">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-            </div>
 
-            <!-- PASSWORD -->
-            <div class="control-group column-group half-gutters required">
-              <label for="password" class="all-25 align-right">Password</label>
-              <div class="control append-symbol all-70">
-                <span>
-                  <input name="password" id="password" type="password" data-rules="required|alpha_numeric|min_length[8]" placeholder="Por favor introduza uma palavra-chave">
-                  <i class="fa fa-key"></i>
-                </span>
-              </div>
-            </div>
 
-            <!-- E-MAIL -->
-            <div class="control-group column-group half-gutters required">
-              <label for="email" class="all-25 align-right">E-mail:</label>
-              <div class="control append-symbol all-45">
-                <span>
-                  <input type="text" id="email" name="email" data-rules="required|email">
-                  <i class="fa fa-envelope-o"></i>
-                </span>
-              </div>
-              <div class="control all-25">
-                <select name="country" id="country" data-rules="required">
-                  <option value="fcup">FADEUP</option>
-                  <option value="fcup">FAUP</option>
-                  <option value="fcup">FBAUP</option>
-                  <option value="fcup">FCUP</option>
-                  <option value="fcup">FCNAUP</option>
-                  <option value="fdup">FDUP</option>
-                  <option value="fdup">FEP</option>
-                  <option value="feup" selected>FEUP</option>
-                  <option value="ffup">FFUP</option>
-                  <option value="fdup">FLUP</option>
-                  <option value="fmup">FMUP</option>
-                  <option value="fdup">FMDUP</option>
-                  <option value="fdup">FPCEUP</option>
-                  <option value="fdup">ICBAS</option>
-                </select>
-              </div>
-            </div>
+<!-- REGISTO: formulário -->
+<div class="ink-grid push-center bottom-padding xlarge-55 large-70 medium-80 all-100">
+<div class="column-group half-gutters">
 
-            <!-- FIRST & LAST NAME -->
-            <div class="control-group column-group half-gutters required">
-              <label for="first-name" class="all-25 align-right">Nome:</label>
-              <div class="control all-35">
-                <input type="text" id="first-name" name="first-name" data-rules="required">
-                <p class="tip">Primeiro Nome</p>
-              </div>
-              <div class="control all-35">
-                <input type="text" id="last-name" name="last-name" data-rules="required">
-                <p class="tip">Último Nome</p>
-              </div>
-            </div>
 
-            <!-- LOCATION -->
-            <div class="control-group column-group half-gutters">
-              <label for="location" class="all-25 align-right">Localização:</label>
-              <div class="control all-35">
-                <input type="text" id="location" name="location">
-              </div>
-              <div class="control all-35">
-                <select name="country" id="country-list">
-                  <option value="es">Espanha</option>
-                  <option value="fr">França</option>
-                  <option value="gr">Grécia</option>
-                  <option value="pt" selected>Portugal</option>
-                  <option value="uk">Reino Unido</option>
-                </select>
-              </div>
-            </div>
+<!-- REGISTO: logótipo -->
+<div class="column horizontal-padding half-vertical-space">
+  <div class="all-75 push-center">
+    <img src="img/header.png" alt="">
+  </div>
+</div>
 
-            <!-- AVATAR -->
-            <div class="control-group column-group half-gutters">
-              <label for="image" class="all-25 align-right">Avatar:</label>
-              <input type="hidden" name="idUser" value="<?=$nextId?>">
-              <div class="control all-70 no-margin">
-                <div class="input-file">
-                  <input type="file" name="image" id="image">
-                </div>
-                <div class="ink-alert basic">
-                  <p class="medium"><b>NOTA:</b> tamanho da imagem não deve exceder 200kB!</p>
-                </div>
-              </div>
-            </div>
 
-            <!-- FORM BUTTONS -->
-            <div class="align-center">
-              <button class="ink-button black" type="submit">Submeter</button>
-              <button class="ink-button black" type="reset">Limpar</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
+<!-- REGISTO: formulário -->
+<div class="column all-100">
+<form action="actions/action_create_user.php" method="post" enctype="multipart/form-data" class="ink-form medium ink-formvalidator">
+<fieldset>
+<legend class="align-center">Registar Conta</legend>
+
+
+<!-- REGISTO: username -->
+<div class="control-group column-group half-gutters required">
+  <label for="username" class="all-25 align-right">Username</label>
+  <div class="control append-symbol all-70">
+    <span>
+      <input name="username" id="username" type="text" data-rules="required|alpha_numeric" placeholder="Por favor introduza um username">
+      <i class="fa fa-user"></i>
+    </span>
+  </div>
+</div>
+
+
+<!-- REGISTO: password -->
+<div class="control-group column-group half-gutters required">
+  <label for="password" class="all-25 align-right">Password</label>
+  <div class="control append-symbol all-70">
+    <span>
+      <input name="password" id="password" type="password" data-rules="required|alpha_numeric|min_length[8]" placeholder="Por favor introduza uma palavra-chave">
+      <i class="fa fa-key"></i>
+    </span>
+  </div>
+</div>
+
+
+<!-- REGISTO: endereço e-mail / faculdade -->
+<div class="control-group column-group half-gutters required">
+  <label for="email" class="all-25 align-right">E-mail:</label>
+  <div class="control append-symbol all-45">
+    <span>
+      <input type="text" id="email" name="email" data-rules="required|email">
+      <i class="fa fa-envelope-o"></i>
+    </span>
+  </div>
+  <div class="control all-25">
+    <select name="country" id="country" data-rules="required">
+      <option value="fcup">FADEUP</option>
+      <option value="fcup">FAUP</option>
+      <option value="fcup">FBAUP</option>
+      <option value="fcup">FCUP</option>
+      <option value="fcup">FCNAUP</option>
+      <option value="fdup">FDUP</option>
+      <option value="fdup">FEP</option>
+      <option value="feup" selected>FEUP</option>
+      <option value="ffup">FFUP</option>
+      <option value="fdup">FLUP</option>
+      <option value="fmup">FMUP</option>
+      <option value="fdup">FMDUP</option>
+      <option value="fdup">FPCEUP</option>
+      <option value="fdup">ICBAS</option>
+    </select>
+  </div>
+</div>
+
+
+<!-- REGISTO: primeiro & último nome -->
+<div class="control-group column-group half-gutters required">
+  <label for="first-name" class="all-25 align-right">Nome:</label>
+  <div class="control all-35">
+    <input type="text" id="first-name" name="first-name" data-rules="required">
+    <p class="tip">Primeiro Nome</p>
+  </div>
+  <div class="control all-35">
+    <input type="text" id="last-name" name="last-name" data-rules="required">
+    <p class="tip">Último Nome</p>
+  </div>
+</div>
+
+
+<!-- REGISTO: localização -->
+<div class="control-group column-group half-gutters">
+  <label for="location" class="all-25 align-right">Localização:</label>
+  <div class="control all-35">
+    <input type="text" id="location" name="location">
+  </div>
+  <div class="control all-35">
+    <select name="country" id="country-list">
+      <option value="es">Espanha</option>
+      <option value="fr">França</option>
+      <option value="gr">Grécia</option>
+      <option value="pt" selected>Portugal</option>
+      <option value="uk">Reino Unido</option>
+    </select>
+  </div>
+</div>
+
+
+<!-- REGISTO: avatar -->
+<div class="control-group column-group half-gutters">
+  <label for="image" class="all-25 align-right">Avatar:</label>
+  <div class="control all-70 no-margin">
+    <div class="input-file">
+      <input type="file" name="image" id="image">
     </div>
-    <div class="vertical-space">
+    <div class="ink-alert basic">
+      <p class="medium"><b>NOTA:</b> tamanho da imagem não deve exceder 200kB!</p>
     </div>
   </div>
+</div>
+
+
+<!-- REGISTO: button group -->
+<div class="align-center bottom-padding">
+  <button class="ink-button black" type="submit">Submeter</button>
+  <button class="ink-button black" type="reset">Limpar</button>
+</div>
+
+
+<!-- FOOTER -->
+</fieldset>
+</form>
+</div>
+</div>
+</div>
 <script>
   $(function() {
     $("ul#footer-links").hide();

@@ -12,15 +12,50 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
-    <ul class="menu medium horizontal black">
+
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
+          <li><a href="action_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
       <li class="no-margin" id="nav_index">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
@@ -34,112 +69,142 @@
           </div>
         </div>
       </form>
-      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-      <li id="nav_profile">
-        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
         <ul class="submenu fw-600">
-          <li class="half-vertical-padding">
-            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-          </li>
-          <li><a href="view_profile.html">Profile</a></li>
-          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html">My Profile</a></li>
+          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
+          <li><a href="view_messages.html">My Questions</a></li>
+          <li><a href="view_messages.html">My Answers</a></li>
           <li><a href="action_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
 </header>
+
+
+<!-- PÁGINA -->
 <div class="ink-grid">
-  <h3 class="quarter-bottom-space half-top-padding">Categorias</h3>
-  <div class="column-group half-gutters">
-    <div class="column all-25 medium-33 small-50 tiny-50">
-      <dl>
-        <dt>Faculdade de Ciências
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Arquitectura Paisagista</a></dd>
-        <dd><a href="#">Astronomia</a></dd>
-        <dd><a href="#">Biologia</a></dd>
-        <dd><a href="#">Bioquímica</a></dd>
-        <dd><a href="#">Ciências de Computadores</a></dd>
-        <dd><a href="#">Ciências de Engenharia</a></dd>
-        <dd><a href="#">Ciências do Ambiente</a></dd>
-        <dd><a href="#">Engenharia Física</a></dd>
-        <dd><a href="#">Engenharia de Redes</a></dd>
-        <dd><a href="#">Física</a></dd>
-        <dd><a href="#">Geologia</a></dd>
-        <dd><a href="#">Matemática</a></dd>
-        <dd><a href="#">Química</a></dd>
-      </dl>
-    </div>
-    <div class="column all-25 medium-33 small-50 tiny-50">
-      <dl>
-        <dt>Faculdade de Direito
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Ciências Forenses</a></dd>
-        <dd><a href="#">Criminologia</a></dd>
-        <dd><a href="#">Direito</a></dd>
-        <dt class="top-space">Faculdade de Engenharia
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Bioengenharia</a></dd>
-        <dd><a href="#">Engenharia Ambiente</a></dd>
-        <dd><a href="#">Engenharia Civil</a></dd>
-        <dd><a href="#">Engenharia Eletrotécnica</a></dd>
-        <dd><a href="#">Engenharia Informática</a></dd>
-        <dd><a href="#">Engenharia Industrial e Gestão</a></dd>
-        <dd><a href="#">Engenharia Mecânica</a></dd>
-        <dd><a href="#">Engenharia Metalúrgica</a></dd>
-        <dd><a href="#">Engenharia Química</a></dd>
-      </dl>
-    </div>
-    <div class="column all-25 medium-33 small-50 tiny-50">
-      <dl>
-        <dt>Faculdade de Medicina
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Anatomia</a></dd>
-        <dd><a href="#">Cirurgias</a></dd>
-        <dd><a href="#">Cuidados Paliativos</a></dd>
-        <dd><a href="#">Epidemologia</a></dd>
-        <dd><a href="#">Neurobiologia</a></dd>
-        <dd><a href="#">Psiquiatria</a></dd>
-        <dt class="top-space">Faculdade de Desporto
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Ciências do Desporto</a></dd>
-        <dd><a href="#">Educação Física</a></dd>
-        <dd><a href="#">Fisioterapia</a></dd>
-        <dd><a href="#">Gerontologia</a></dd>
-        <dd><a href="#">Gestão Desportiva</a></dd>
-      </dl>
-    </div>
-    <div class="column all-25 medium-33 small-50 tiny-50">
-      <dl>
-        <dt>Faculdade de Letras
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Arqueologia</a></dd>
-        <dd><a href="#">Ciência da Informação</a></dd>
-        <dd><a href="#">Ciências da Comunicação</a></dd>
-        <dd><a href="#">Ciências da Linguagem</a></dd>
-        <dd><a href="#">Estudos Portugueses</a></dd>
-        <dd><a href="#">Filosofia</a></dd>
-        <dd><a href="#">Geografia</a></dd>
-        <dd><a href="#">História</a></dd>
-        <dd><a href="#">História da Arte</a></dd>
-        <dt class="top-space">Faculdade de Farmácia
-          <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
-        </dt>
-        <dd><a href="#">Ciências Farmacêuticas</a></dd>
-        <dd><a href="#">Química Farmacêutica</a></dd>
-        <dd><a href="#">Tecnologia Farmacêutica</a></dd>
-      </dl>
-    </div>
-  </div>
+<h3 class="quarter-bottom-space half-top-padding">Categorias</h3>
+<div class="column-group half-gutters">
+
+
+<!-- CATEGORIAS: primeira coluna -->
+<div class="column all-25 medium-33 small-50 tiny-50">
+  <dl>
+    <dt>Faculdade de Ciências
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Arquitectura Paisagista</a></dd>
+    <dd><a href="#">Astronomia</a></dd>
+    <dd><a href="#">Biologia</a></dd>
+    <dd><a href="#">Bioquímica</a></dd>
+    <dd><a href="#">Ciências de Computadores</a></dd>
+    <dd><a href="#">Ciências de Engenharia</a></dd>
+    <dd><a href="#">Ciências do Ambiente</a></dd>
+    <dd><a href="#">Engenharia Física</a></dd>
+    <dd><a href="#">Engenharia de Redes</a></dd>
+    <dd><a href="#">Física</a></dd>
+    <dd><a href="#">Geologia</a></dd>
+    <dd><a href="#">Matemática</a></dd>
+    <dd><a href="#">Química</a></dd>
+  </dl>
+</div>
+
+
+<!-- CATEGORIAS: segunda coluna -->
+<div class="column all-25 medium-33 small-50 tiny-50">
+  <dl>
+    <dt>Faculdade de Direito
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Ciências Forenses</a></dd>
+    <dd><a href="#">Criminologia</a></dd>
+    <dd><a href="#">Direito</a></dd>
+    <dt class="top-space">Faculdade de Engenharia
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Bioengenharia</a></dd>
+    <dd><a href="#">Engenharia Ambiente</a></dd>
+    <dd><a href="#">Engenharia Civil</a></dd>
+    <dd><a href="#">Engenharia Eletrotécnica</a></dd>
+    <dd><a href="#">Engenharia Informática</a></dd>
+    <dd><a href="#">Engenharia Industrial e Gestão</a></dd>
+    <dd><a href="#">Engenharia Mecânica</a></dd>
+    <dd><a href="#">Engenharia Metalúrgica</a></dd>
+    <dd><a href="#">Engenharia Química</a></dd>
+  </dl>
+</div>
+
+
+<!-- CATEGORIAS: terceira coluna -->
+<div class="column all-25 medium-33 small-50 tiny-50">
+  <dl>
+    <dt>Faculdade de Medicina
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Anatomia</a></dd>
+    <dd><a href="#">Cirurgias</a></dd>
+    <dd><a href="#">Cuidados Paliativos</a></dd>
+    <dd><a href="#">Epidemologia</a></dd>
+    <dd><a href="#">Neurobiologia</a></dd>
+    <dd><a href="#">Psiquiatria</a></dd>
+    <dt class="top-space">Faculdade de Desporto
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Ciências do Desporto</a></dd>
+    <dd><a href="#">Educação Física</a></dd>
+    <dd><a href="#">Fisioterapia</a></dd>
+    <dd><a href="#">Gerontologia</a></dd>
+    <dd><a href="#">Gestão Desportiva</a></dd>
+  </dl>
+</div>
+
+
+<!-- CATEGORIAS: quarta coluna -->
+<div class="column all-25 medium-33 small-50 tiny-50">
+  <dl>
+    <dt>Faculdade de Letras
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Arqueologia</a></dd>
+    <dd><a href="#">Ciência da Informação</a></dd>
+    <dd><a href="#">Ciências da Comunicação</a></dd>
+    <dd><a href="#">Ciências da Linguagem</a></dd>
+    <dd><a href="#">Estudos Portugueses</a></dd>
+    <dd><a href="#">Filosofia</a></dd>
+    <dd><a href="#">Geografia</a></dd>
+    <dd><a href="#">História</a></dd>
+    <dd><a href="#">História da Arte</a></dd>
+    <dt class="top-space">Faculdade de Farmácia
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+    </dt>
+    <dd><a href="#">Ciências Farmacêuticas</a></dd>
+    <dd><a href="#">Química Farmacêutica</a></dd>
+    <dd><a href="#">Tecnologia Farmacêutica</a></dd>
+  </dl>
+</div>
+
+
+<!-- FOOTER-->
+</div>
 </div>
 </body>
 </html>
