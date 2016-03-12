@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/other.css">
   <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
@@ -26,42 +25,41 @@
     </div>
     <form action="#" method="post" class="ink-form ink-formvalidator">
       <fieldset>
-        <legend class="slab align-center">Sign-In</legend>
+        <legend class="slab align-center">Autenticação</legend>
         <div class="control-group column-group half-gutters">
-          <label for="username" class="all-25 align-right">Username</label>
+          <label for="username" class="all-25 align-right">Username:</label>
           <div class="control append-symbol all-75">
             <span>
-              <input name="username" id="username" type="text" data-rules="required" placeholder="Por favor introduza aqui a sua alcunha">
+              <input name="username" id="username" type="text" data-rules="required" placeholder="Por favor introduza aqui o seu username...">
               <i class="fa fa-user"></i>
             </span>
           </div>
         </div>
         <div class="control-group column-group half-gutters">
-          <label for="password" class="all-25 align-right">Password</label>
+          <label for="password" class="all-25 align-right">Password:</label>
           <div class="control append-symbol all-75">
             <span>
-              <input name="password" id="password" type="password" data-rules="required" placeholder="Por favor introduza aqui a sua password">
+              <input name="password" id="password" type="password" data-rules="required" placeholder="Por favor introduza aqui a sua password...">
               <i class="fa fa-key"></i>
             </span>
           </div>
         </div>
         <div class="column-group half-horizontal-gutters">
-          <div class="control-group xlarge-25 large-20 all-15">
+          <div class="control-group all-15 small-5 tiny-5">
           </div>
-          <div class="control-group xlarge-20 all-20">
+          <div class="control-group all-25 small-30 tiny-30">
             <div class="control append-symbol">
               <span>
-                <button type="submit" name="submit" class="ink-button black">
-                  Validar&nbsp;&nbsp;<i class="fa fa-check"></i>
-                </button>
+                <input class="ink-button black" type="submit" id="submit" name="submit" value="Validar">
+                <i class="fa fa-check"></i>
               </span>
             </div>
           </div>
-          <div class="control-group xlarge-33 medium-45 all-40">
+          <div class="control-group all-45 small-60 tiny-60">
             <div class="control append-symbol">
               <span>
-                <button type="reset" name="reset" class="ink-button black">
-                Recuperar Password&nbsp;&nbsp;<i class="fa fa-exclamation-triangle"></i>
+                <input class="ink-button black" type="button" id="reset" name="reset" value="Recuperar Password">
+                <i class="fa fa-exclamation-triangle"></i>
                 </span>
               </span>
             </div>
