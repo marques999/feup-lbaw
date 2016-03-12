@@ -17,7 +17,7 @@
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
-<body>
+<body class="ink-drawer">
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
 
@@ -46,10 +46,10 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -88,11 +88,11 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -101,110 +101,145 @@
 
 
 <!-- PÁGINA -->
-<div class="ink-grid">
-<h3 class="quarter-bottom-space half-top-padding">Categorias</h3>
+<div class="ink-grid bottom-padding">
+<h3 class="quarter-bottom-space half-top-padding">Categories</h3>
 <div class="column-group half-gutters">
 
 
 <!-- CATEGORIAS: primeira coluna -->
-<div class="column all-25 medium-33 small-50 tiny-50">
+<div class="column all-25 small-50 tiny-50">
   <dl>
     <dt>Faculdade de Ciências
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/fcup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Arquitectura Paisagista</a></dd>
-    <dd><a href="#">Astronomia</a></dd>
-    <dd><a href="#">Biologia</a></dd>
-    <dd><a href="#">Bioquímica</a></dd>
-    <dd><a href="#">Ciências de Computadores</a></dd>
-    <dd><a href="#">Ciências de Engenharia</a></dd>
-    <dd><a href="#">Ciências do Ambiente</a></dd>
-    <dd><a href="#">Engenharia Física</a></dd>
-    <dd><a href="#">Engenharia de Redes</a></dd>
-    <dd><a href="#">Física</a></dd>
-    <dd><a href="#">Geologia</a></dd>
-    <dd><a href="#">Matemática</a></dd>
-    <dd><a href="#">Química</a></dd>
+    <dd><a href="list_questions.html">Arquitectura Paisagista</a></dd>
+    <dd><a href="list_questions.html">Astronomia</a></dd>
+    <dd><a href="list_questions.html">Biologia</a></dd>
+    <dd><a href="list_questions.html">Bioquímica</a></dd>
+    <dd><a href="list_questions.html">Ciências de Computadores</a></dd>
+    <dd><a href="list_questions.html">Ciências de Engenharia</a></dd>
+    <dd><a href="list_questions.html">Ciências do Ambiente</a></dd>
+    <dd><a href="list_questions.html">Engenharia Física</a></dd>
+    <dd><a href="list_questions.html">Engenharia de Redes</a></dd>
+    <dd><a href="list_questions.html">Física</a></dd>
+    <dd><a href="list_questions.html">Geologia</a></dd>
+    <dd><a href="list_questions.html">Matemática</a></dd>
+    <dd><a href="list_questions.html">Química</a></dd>
   </dl>
 </div>
 
 
 <!-- CATEGORIAS: segunda coluna -->
-<div class="column all-25 medium-33 small-50 tiny-50">
+<div class="column all-25 small-50 tiny-50">
   <dl>
     <dt>Faculdade de Direito
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/fdup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Ciências Forenses</a></dd>
-    <dd><a href="#">Criminologia</a></dd>
-    <dd><a href="#">Direito</a></dd>
+    <dd><a href="list_questions.html">Ciências Forenses</a></dd>
+    <dd><a href="list_questions.html">Criminologia</a></dd>
+    <dd><a href="list_questions.html">Direito</a></dd>
     <dt class="top-space">Faculdade de Engenharia
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Bioengenharia</a></dd>
-    <dd><a href="#">Engenharia Ambiente</a></dd>
-    <dd><a href="#">Engenharia Civil</a></dd>
-    <dd><a href="#">Engenharia Eletrotécnica</a></dd>
-    <dd><a href="#">Engenharia Informática</a></dd>
-    <dd><a href="#">Engenharia Industrial e Gestão</a></dd>
-    <dd><a href="#">Engenharia Mecânica</a></dd>
-    <dd><a href="#">Engenharia Metalúrgica</a></dd>
-    <dd><a href="#">Engenharia Química</a></dd>
+    <dd><a href="list_questions.html">Bioengenharia</a></dd>
+    <dd><a href="list_questions.html">Engenharia Ambiente</a></dd>
+    <dd><a href="list_questions.html">Engenharia Civil</a></dd>
+    <dd><a href="list_questions.html">Engenharia Eletrotécnica</a></dd>
+    <dd><a href="list_questions.html">Engenharia Informática</a></dd>
+    <dd><a href="list_questions.html">Engenharia Industrial e Gestão</a></dd>
+    <dd><a href="list_questions.html">Engenharia Mecânica</a></dd>
+    <dd><a href="list_questions.html">Engenharia Metalúrgica</a></dd>
+    <dd><a href="list_questions.html">Engenharia Química</a></dd>
   </dl>
 </div>
 
 
 <!-- CATEGORIAS: terceira coluna -->
-<div class="column all-25 medium-33 small-50 tiny-50">
+<div class="column all-25 small-50 tiny-50">
   <dl>
     <dt>Faculdade de Medicina
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/fmup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Anatomia</a></dd>
-    <dd><a href="#">Cirurgias</a></dd>
-    <dd><a href="#">Cuidados Paliativos</a></dd>
-    <dd><a href="#">Epidemologia</a></dd>
-    <dd><a href="#">Neurobiologia</a></dd>
-    <dd><a href="#">Psiquiatria</a></dd>
+    <dd><a href="list_questions.html">Anatomia</a></dd>
+    <dd><a href="list_questions.html">Cirurgias</a></dd>
+    <dd><a href="list_questions.html">Cuidados Paliativos</a></dd>
+    <dd><a href="list_questions.html">Epidemologia</a></dd>
+    <dd><a href="list_questions.html">Neurobiologia</a></dd>
+    <dd><a href="list_questions.html">Psiquiatria</a></dd>
     <dt class="top-space">Faculdade de Desporto
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/fadeup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Ciências do Desporto</a></dd>
-    <dd><a href="#">Educação Física</a></dd>
-    <dd><a href="#">Fisioterapia</a></dd>
-    <dd><a href="#">Gerontologia</a></dd>
-    <dd><a href="#">Gestão Desportiva</a></dd>
+    <dd><a href="list_questions.html">Ciências do Desporto</a></dd>
+    <dd><a href="list_questions.html">Educação Física</a></dd>
+    <dd><a href="list_questions.html">Fisioterapia</a></dd>
+    <dd><a href="list_questions.html">Gerontologia</a></dd>
+    <dd><a href="list_questions.html">Gestão Desportiva</a></dd>
   </dl>
 </div>
 
 
 <!-- CATEGORIAS: quarta coluna -->
-<div class="column all-25 medium-33 small-50 tiny-50">
+<div class="column all-25 small-50 tiny-50">
   <dl>
     <dt>Faculdade de Letras
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/flup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Arqueologia</a></dd>
-    <dd><a href="#">Ciência da Informação</a></dd>
-    <dd><a href="#">Ciências da Comunicação</a></dd>
-    <dd><a href="#">Ciências da Linguagem</a></dd>
-    <dd><a href="#">Estudos Portugueses</a></dd>
-    <dd><a href="#">Filosofia</a></dd>
-    <dd><a href="#">Geografia</a></dd>
-    <dd><a href="#">História</a></dd>
-    <dd><a href="#">História da Arte</a></dd>
+    <dd><a href="list_questions.html">Arqueologia</a></dd>
+    <dd><a href="list_questions.html">Ciência da Informação</a></dd>
+    <dd><a href="list_questions.html">Ciências da Comunicação</a></dd>
+    <dd><a href="list_questions.html">Ciências da Linguagem</a></dd>
+    <dd><a href="list_questions.html">Estudos Portugueses</a></dd>
+    <dd><a href="list_questions.html">Filosofia</a></dd>
+    <dd><a href="list_questions.html">Geografia</a></dd>
+    <dd><a href="list_questions.html">História</a></dd>
+    <dd><a href="list_questions.html">História da Arte</a></dd>
     <dt class="top-space">Faculdade de Farmácia
-      <a href="https://sigarra.up.pt/feup/pt/web_page.inicial"><i class="fa fa-external-link"></i></a>
+      <a href="https://sigarra.up.pt/ffup/pt/web_page.inicial">
+        <i class="fa fa-external-link"></i>
+      </a>
     </dt>
-    <dd><a href="#">Ciências Farmacêuticas</a></dd>
-    <dd><a href="#">Química Farmacêutica</a></dd>
-    <dd><a href="#">Tecnologia Farmacêutica</a></dd>
+    <dd><a href="list_questions.html">Ciências Farmacêuticas</a></dd>
+    <dd><a href="list_questions.html">Química Farmacêutica</a></dd>
+    <dd><a href="list_questions.html">Tecnologia Farmacêutica</a></dd>
   </dl>
 </div>
-
-
-<!-- FOOTER-->
 </div>
 </div>
+
+
+<!-- FOOTER -->
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
+  </div>
+</footer>
 </body>
 </html>

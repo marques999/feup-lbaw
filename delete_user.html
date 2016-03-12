@@ -12,27 +12,50 @@
   <link rel="stylesheet" type="text/css" href="css/ink.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script type="text/javascript" src="js/holder.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-  <script>
-  var numberNotifications = 5;
-  $(function() {
-    $("button.dismiss").click(function(){
-      $(this).parent().parent().parent().remove();
-      numberNotifications--;
-      if (numberNotifications <= 0) {
-        $("table").replaceWith("<p>You have no pending notifications :(</p>");
-      }
-    });
-  });
-  </script>
 </head>
-<body>
+<body class="ink-drawer">
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
-    <ul class="menu medium horizontal black">
+
+    <!-- RESPONSIVE MENU (small) -->
+    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+      <li id="header-drawer" class="hide-all show-tiny show-small">
+        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+      </li>
+      <li id="header-notifications" class="medium">
+        <a href="view_notifications.html">
+          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+        </a>
+      </li>
+      <li id="header-messages" class="medium">
+        <a href="view_messages.html">
+          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+        </a>
+      </li>
+
+      <li class="medium" id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span>marques999</span>
+        </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- RESPONSIVE MENU (large) -->
+    <ul class="menu medium horizontal black hide-small hide-tiny">
       <li class="no-margin" id="nav_index">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
@@ -46,23 +69,38 @@
           </div>
         </div>
       </form>
-      <li id="nav_browse"><a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a></li>
-      <li id="nav_events"><a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a></li>
-      <li id="nav_forum"><a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a></li>
-      <li id="nav_profile">
-        <a><i class="fa fa-user"></i>&nbsp;marques999<span class="ink-badge red">3</span></a>
+      <li id="nav_browse">
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+      </li>
+      <li id="nav_events">
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+      </li>
+      <li id="header-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+      </li>
+      <li id="header-profile">
+        <a href="view_profile.html">
+          <i class="fa fa-user"></i>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
+        </a>
         <ul class="submenu fw-600">
-          <li class="half-vertical-padding">
-            <img class="img-circle push-center" src="holder.js/64x64/auto/ink" alt="">
-          </li>
-          <li><a href="view_profile.html">Profile</a></li>
-          <li><b><a href="view_messages.html">Messages (3)</a></b></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
 </header>
+
+
+<!-- PÁGINA -->
 <div class="ink-grid push-center all-50 large-70 medium-80 small-100 tiny-100">
 <div class="column all-100 ink-alert block error">
 	<h4>Delete Account</h4>
@@ -73,10 +111,10 @@
 			<div class="control all-25">
 			</div>
 			<div class="control all-25">
-			<input type="button" class="ink-button" value="Sim">
+			 <input type="button" class="ink-button" value="Sim">
 			</div>
 			<div class="control all-25">
-			<input type="button" class="ink-button" value="Não">
+			 <input type="button" class="ink-button" value="Não">
 			</div>
 		</div>
 	</form>

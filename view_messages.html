@@ -17,7 +17,7 @@
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
-<body>
+<body class="ink-drawer">
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
 
@@ -46,10 +46,10 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -88,16 +88,19 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
   </nav>
 </header>
+
+
+<!-- PÁGINA -->
 <div class="ink-grid bottom-padding">
 <h3 class="half-top-padding">Private Messages<span class="ink-badge black">3 <small>unread</small></span></h3>
 <table class="ink-table alternating hover">
@@ -248,6 +251,9 @@
   </tbody>
 </table>
 </div>
+
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();

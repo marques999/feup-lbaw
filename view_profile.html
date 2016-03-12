@@ -17,7 +17,7 @@
   <script type="text/javascript" src="js/ink-all.min.js"></script>
   <script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
-<body>
+<body class="ink-drawer">
 <header id="header-container">
   <nav id="header-menu" class="ink-navigation">
 
@@ -46,10 +46,10 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -88,11 +88,11 @@
           <div class="half-padding align-center">
            <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
           </div>
-          <li><a href="view_profile.html">My Profile</a></li>
-          <li><b><a href="view_profile.html">My Messages (3)</a></b></li>
-          <li><a href="view_messages.html">My Questions</a></li>
-          <li><a href="view_messages.html">My Answers</a></li>
-          <li><a href="action_logout.html">Logout</a></li>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -117,10 +117,10 @@
 <!-- UTILIZADOR: faculdade -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Alterar instituição de ensino" data-tip-color="black">
+    data-tip-text="Change school" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
-  <b>Faculdade:&nbsp;</b>FEUP
+  <b>School:&nbsp;</b>FEUP
     <a href="https://sigarra.up.pt/feup/pt/web_page.inicial">
       <i class="fa fa-external-link"></i>
     </a>
@@ -130,7 +130,7 @@
 <!-- UTILIZADOR: endereço e-mail -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Alterar e-mail" data-tip-color="black">
+    data-tip-text="Change e-mail address" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
   <b>E-mail:</b>
@@ -141,10 +141,10 @@
 <!-- UTILIZADOR: localização -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Alterar localização" data-tip-color="black">
+    data-tip-text="Change location" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
-  <b>Localização:&nbsp;</b>Valongo, Portugal
+  <b>Location:&nbsp;</b>Valongo, Portugal
 </p>
 </div>
 
@@ -180,11 +180,11 @@
 <div class="column all-70 large-60 medium-60 small-100 tiny-100">
 
 <!-- BEGIN PROFILE TABS -->
-<div class="ink-tabs top" data-prevent-url-change="true">
+<div class="ink-tabs top">
   <ul class="tabs-nav">
-    <li><a class="tabs-tab" href="#profile">Perfil</a></li>
-    <li><a class="tabs-tab" href="#home">Perguntas (<strong>3</strong>)</a></li>
-    <li><a class="tabs-tab" href="#news">Respostas (<strong>13</strong>)</a></li>
+    <li><a class="tabs-tab" href="#profile">Profile</a></li>
+    <li><a class="tabs-tab" href="#questions">Questions (<strong>3</strong>)</a></li>
+    <li><a class="tabs-tab" href="#answers">Answers (<strong>13</strong>)</a></li>
   </ul>
 <!-- END PROFILE TABS -->
 
@@ -192,7 +192,7 @@
 <div id="profile">
   <p class="align-center quarter-vertical-space">
     <a href="update_profile.php?field=1">
-      <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Alterar palavra-passe</button>
+      <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Change password</button>
     </a>
     <a href="delete_user.html">
       <button class="ink-button black"><i class="fa fa-user-times"></i></button>
@@ -202,12 +202,12 @@
 <!-- END PROFILE BUTTONS -->
 
 <!-- BEGIN QUESTIONS SECTION -->
-<div id="home" class="tabs-content">
+<div id="questions" class="tabs-content">
   <table class="ink-table alternating hover">
     <thead>
-      <th style="width:50%">Pergunta</th>
-      <th style="width:25%">Pontuação</th>
-      <th style="width:25%">Respostas</th>
+      <th style="width:50%">Question</th>
+      <th style="width:25%">Score</th>
+      <th style="width:25%">Actions</th>
     </thead>
     <tbody>
       <tr class="notification-row">
@@ -277,12 +277,12 @@
 <!-- END QUESTIONS SECTION -->
 
 <!-- BEGIN ANSWERS SECTION -->
-<div id="news" class="tabs-content">
+<div id="answers" class="tabs-content">
   <table class="ink-table alternating hover">
     <thead>
-      <th style="width:50%">Resposta</th>
-      <th style="width:25%">Pontuação</th>
-      <th style="width:25%">Acções</th>
+      <th style="width:50%">Question</th>
+      <th style="width:25%">Score</th>
+      <th style="width:25%">Actions</th>
     </thead>
     <tbody>
       <tr class="notification-row">
@@ -355,6 +355,9 @@
 </div>
 </div>
 </div>
+
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();
@@ -365,12 +368,15 @@
 </script>
 <footer id="footer" class="clearfix medium fixed">
   <div class="ink-grid">
-      <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
-        <li><a href="about.php">About</a></li>
-        <li><a href="sitemap.php">Sitemap</a></li>
-        <li><a href="contacts.php">Contacts</a></li>
-      </ul>
-      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
   </div>
 </footer>
 </body>
