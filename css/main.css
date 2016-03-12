@@ -237,3 +237,7 @@ div.message {
   color: white;
   text-decoration: none;
 }
+
+a.black {
+  color: #404040;
+}
