@@ -96,10 +96,10 @@
           </div>
         </div>
       </form>
-      <li id="nav-ask" class="active">
+      <li id="nav-ask">
         <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
       </li>
-      <li id="nav-answer">
+      <li id="nav-answer" class="active">
         <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
       </li>
       <li id="nav-notifications">
@@ -126,111 +126,117 @@
   </nav>
 </header>
 
-
 <!-- PÁGINA -->
-<div class="ink-grid">
-<div class="column-group half-top-padding">
+<div class="ink-grid bottom-padding push-center all-100 xlarge-66 large-80 medium-90">
 
 
-<!-- NOVA PERGUNTA: formulário -->
-<form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator all-60 medium-60 small-100 tiny-100">
+<!-- PERGUNTA -->
+<article id="question">
+
+
+<!-- PERGUNTA: título -->
+<h3 class="slab quarter-vertical-space half-top-padding">Why does Linux seem much faster than Windows?</h3>
+
+
+<!-- PERGUNTA: tags -->
+<p class="half-vertical-space">
+  <span class="ink-badge feup"><a href="hub.html">FEUP</a></span>
+  <span class="ink-badge feup-alternative"><a href="list_questions.html">Engenharia Informática</a></span>
+</p>
+
+
+<!-- PERGUNTA: autor -->
+<div class="author-panel quarter-vertical-space">
+  <div class="ink-dropdown" data-target="#my-menu-dropdown" data-hover-open="0.2" data-dismiss-after="0.2">
+    <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
+    <ul id="my-menu-dropdown" class="dropdown-menu vertical-space">
+      <li class="heading">marques999</li>
+      <li class="separator-above">
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+      </li>
+      <li class="disabled">
+        <a href="#"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+      </li>
+    </ul>
+  </div>
+  <div class="half-padding">
+    <p class="no-margin">
+      <b><a href="view_profile.html">Diogo Marques</a></b>
+      <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
+    </p>
+    <p class="medium no-margin">FEUP</p>
+  </div>
+</div>
+
+
+<!-- PERGUNTA: conteúdo -->
+<p class="medium no-margin align-justify">
+Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?
+</p>
+
+
+<!-- PERGUNTA: informações -->
+<p class="quarter-vertical-space">
+  <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
+  <a class="ink-toggle medium black" data-target="#question-comments">
+    <strong>5</strong>&nbsp;Comments
+  </a>
+</p>
+
+
+<!-- PERGUNTA: comentários -->
+<div id="question-comments" class="message half-vertical-space medium hide-all">
+  <div class="column half-vertical-space">
+    <img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt="">
+    <a href="view_profile.html">Pedro Melo</a>
+    <small>Thursday, 10/03/2016 17:34</small>
+    <p class="fw-medium">Lorem</p>
+  </div>
+  <div class="column half-vertical-space">
+    <img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt="">
+    <a href="view_profile.html">Diogo Marques</a>
+    <small>Thursday, 10/03/2016 17:42</small>
+    <p class="fw-medium">Lorem ipsum</p>
+  </div>
+  <div class="column half-vertical-space">
+    <img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt="">
+    <a href="view_profile.html">Diogo Marques</a>
+    <small>Thursday, 10/03/2016 17:44</small>
+    <p class="fw-medium">Lorem ipsum dolor</p>
+  </div>
+  <div class="column half-vertical-space">
+    <img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt="">
+    <a href="view_profile.html">Vitor Esteves</a>
+    <small>Thursday, 10/03/2016 17:59</small>
+    <p class="fw-medium">Lorem ipsum dolor sit</p>
+  </div>
+  <div class="column half-vertical-space no-margin">
+    <img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt="">
+    <a href="view_profile.html">Diogo Marques</a>
+    <small>Thursday, 10/03/2016 18:03</small>
+    <p class="fw-medium">Lorem ipsum dolor sit amet</p>
+  </div>
+</div>
+</article>
+
+
+<!-- RESPOSTA formulário -->
+<section id="reply-form" class="push-center half-vertical-space all-85 small-100 tiny-100">
+<form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator">
 <fieldset>
-<legend class="align-center">Fazer Pergunta</legend>
+<legend class="align-center">Responder</legend>
 
 
-<!-- PERGUNTA: titulo -->
+<!-- RESPOSTA: mensagem -->
 <div class="control-group column-group quarter-gutters">
-  <label for="question" class="all-20 small-25 tiny-25 align-right">Pergunta:</label>
-  <div class="control all-80 small-75 tiny-75">
-    <input name="question" id="question" type="text" data-rules="required|text[true,true]" placeholder="Por favor escreva a sua pergunta aqui...">
-  </div>
-</div>
-
-
-<!-- PERGUNTA: categorias -->
-<div class="control-group column-group quarter-gutters">
-  <label for="location" class="all-20 small-25 tiny-25 align-right">Categoria:</label>
-  <div class="control append-symbol all-80 small-75 tiny-75">
-    <select data-rules="required">
-      <option>--> Por favor escolha uma opção...</option>
-      <optgroup label="Faculdade de Ciências">
-        <option>Arquitectura Paisagista</option>
-        <option>Astronomia</option>
-        <option>Biologia</option>
-        <option>Bioquímica</option>
-        <option>Ciências de Computadores</option>
-        <option>Ciências de Engenharia</option>
-        <option>Ciências do Ambiente</option>
-        <option>Engenharia Física</option>
-        <option>Engenharia de Redes</option>
-        <option>Física</option>
-        <option>Geologia</option>
-        <option>Matemática</option>
-        <option>Química</option>
-      </optgroup>
-      <optgroup label="Faculdade de Desporto">
-        <option>Ciências do Desporto</option>
-        <option>Educação Física</option>
-        <option>Fisioterapia</option>
-        <option>Gerontologia</option>
-        <option>Gestão Desportiva</option>
-      </optgroup>
-      <optgroup label="Faculdade de Direito">
-        <option>Ciências Forenses</option>
-        <option>Criminologia</option>
-        <option>Direito</option>
-      </optgroup>
-      <optgroup label="Faculdade de Engenharia">
-        <option>Bioengenharia</option>
-        <option>Engenharia Ambiente</option>
-        <option>Engenharia Civil</option>
-        <option>Engenharia Eletrotécnica</option>
-        <option>Engenharia Informática</option>
-        <option>Engenharia Industrial e Gestão</option>
-        <option>Engenharia Mecânica</option>
-        <option>Engenharia Metalúrgica</option>
-        <option>Engenharia Química</option>
-      </optgroup>
-      <optgroup label="Faculdade de Farmárcia">
-        <option>Ciências Farmacêuticas</option>
-        <option>Química Farmacêutica</option>
-        <option>Tecnologia Farmacêutica</option>
-      </optgroup>
-      <optgroup label="Faculdade de Letras">
-        <option>Arqueologia</option>
-        <option>Ciência da Informação</option>
-        <option>Ciências da Comunicação</option>
-        <option>Ciências da Linguagem</option>
-        <option>Estudos Portugueses</option>
-        <option>Filosofia</option>
-        <option>Geografia</option>
-        <option>História</option>
-        <option>História da Arte</option>
-      </optgroup>
-      <optgroup label="Faculdade de Medicina">s
-        <option>Anatomia</option>
-        <option>Cirurgias</option>
-        <option>Cuidados Paliativos</option>
-        <option>Epidemologia</option>
-        <option>Neurobiologia</option>
-        <option>Psiquiatria</option>
-      </optgroup>
-    </select>
-  </div>
-</div>
-
-
-<!-- PERGUNTA: mensagem -->
-<div class="control-group column-group quarter-gutters">
-  <label for="text" class="all-20 small-25 tiny-25 align-right">Mensagem:</label>
-  <div class="control all-80 small-75 tiny-75">
+  <div class="control">
     <textarea name="text" id="text" rows="8" cols="60">
     </textarea>
   </div>
 </div>
 
 
-<!-- PERGUNTA: button group -->
+<!-- RESPOSTA: button group -->
 <div class="control-group column-group quarter-gutters">
   <div class="align-center">
     <button class="ink-button medium black" type="submit">
@@ -243,25 +249,7 @@
 </div>
 </fieldset>
 </form>
-
-
-<!-- PERGUNTA: regras -->
-<div class="column-group padding all-40 small-100 tiny-100">
-  <b>Normas de utilização:</b>
-  <ul class="half-vertical-space">
-  <li>O cuidado em identificar pontos críticos na necessidade de renovação processual prepara-nos para enfrentar situações atípicas decorrentes do sistema de participação geral.</li>
-  <li>Por outro lado, a estrutura atual da organização auxilia a preparação e a composição dos procedimentos normalmente adotados.</li>
-  <li>A nível organizacional, o desafiador cenário globalizado garante a contribuição de um grupo importante na determinação das novas proposições.</li>
-  <li>A prática cotidiana prova que o desenvolvimento contínuo de distintas formas de atuação nos obriga à análise de alternativas às soluções ortodoxas.</li>
-  </ul>
-  <div class="control-group quarter-gutters">
-    <div class="control required">
-      <input id="terms" name="terms" type="checkbox" class="ink-button medium black" type="reset" value="" >
-      <label for="terms">Aceito as normas de utilização deste serviço</label>
-    </div>
-  </div>
-</div>
-</div>
+</section>
 </div>
 
 

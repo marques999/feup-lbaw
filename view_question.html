@@ -23,21 +23,20 @@
 
     <!-- RESPONSIVE MENU (small) -->
     <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-      <li id="header-drawer" class="hide-all show-tiny show-small">
+      <li id="nav-drawer" class="hide-all show-tiny show-small">
         <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
       </li>
-      <li id="header-notifications" class="medium">
+      <li id="nav-notifications" class="medium">
         <a href="view_notifications.html">
           <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
         </a>
       </li>
-      <li id="header-messages" class="medium">
+      <li id="nav-messages" class="medium">
         <a href="view_messages.html">
           <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
         </a>
       </li>
-
-      <li class="medium" id="header-profile">
+      <li id="nav-profile" class="medium">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span>marques999</span>
@@ -56,7 +55,7 @@
 
     <!-- RESPONSIVE MENU (large) -->
     <ul class="menu medium horizontal black hide-small hide-tiny">
-      <li class="no-margin" id="nav_index">
+      <li id="nav-home" class="no-margin">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
@@ -69,16 +68,16 @@
           </div>
         </div>
       </form>
-      <li id="nav_browse">
+      <li id="nav-ask">
         <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
       </li>
-      <li id="nav_events">
+      <li id="nav-answer" class="active">
         <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
       </li>
-      <li id="header-notifications">
+      <li id="nav-notifications">
         <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
       </li>
-      <li id="header-profile">
+      <li id="nav-profile">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span class="current-user">marques999</span>
@@ -109,7 +108,14 @@
 
 
 <!-- PERGUNTA: título -->
-<h3 class="slab quarter-vertical-space half-top-padding">Why does Linux seem much faster than Windows?</h3>
+<h3 class="slab half-top-padding quarter-vertical-space ">Why does Linux seem much faster than Windows?</h3>
+
+
+<!-- PERGUNTA: tags -->
+<p class="half-vertical-space">
+  <span class="ink-badge feup"><a href="hub.html">FEUP</a></span>
+  <span class="ink-badge feup-alternative"><a href="list_questions.html">Engenharia Informática</a></span>
+</p>
 
 
 <!-- PERGUNTA: autor -->
@@ -119,16 +125,16 @@
     <ul id="my-menu-dropdown" class="dropdown-menu vertical-space">
       <li class="heading">marques999</li>
       <li class="separator-above">
-        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;Ver Perfil</a>
       </li>
       <li class="disabled">
-        <a href="#"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+        <a href="#"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Enviar Mensagem</a>
       </li>
     </ul>
   </div>
   <div class="half-padding">
     <p class="no-margin">
-      <b><a href="view_profile.html">Diogo Marques</a></b>
+      <strong><a href="view_profile.html">Diogo Marques</a></strong>
       <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
     </p>
     <p class="medium no-margin">FEUP</p>
@@ -145,7 +151,7 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <p class="quarter-vertical-space">
   <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
   <a class="ink-toggle medium black" data-target="#question-comments">
-    <strong>5</strong>&nbsp;Comments
+    <strong>5</strong>&nbsp;Comentários
   </a>
 </p>
 
@@ -198,21 +204,21 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <!-- PERGUNTA: button group -->
 <div class="button-toolbar half-bottom-padding">
   <div class="button-group">
+    <a href="reply.html#reply-form" class="ink-button medium black">
+      <i class="fa fa-pencil"></i>&nbsp;Responder
+    </a>
     <button class="ink-button medium black">
-      <i class="fa fa-pencil"></i>&nbsp;Answer
-    </button>
-    <button class="ink-button medium black">
-      <i class="fa fa-feed"></i>&nbsp;Follow&nbsp;
+      <i class="fa fa-feed"></i>&nbsp;Seguir&nbsp;
       <strong>865</strong>
     </button>
   </div>
   <div class="button-group">
     <button class="ink-button medium black">
-      <i class="fa fa-thumbs-up"></i>&nbsp;Upvote&nbsp;
+      <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
       <strong>7.2k</strong>
     </button>
     <button class="ink-button medium black">
-      <i class="fa fa-thumbs-down"></i>&nbsp;Downvote&nbsp;
+      <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
       <strong>1.1k</strong>
     </button>
   </div>
@@ -237,19 +243,19 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
     <ul id="answer1-dropdown" class="dropdown-menu vertical-space">
       <li class="heading">mellus</li>
       <li class="separator-above">
-        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;Ver Perfil</a>
       </li>
       <li>
         <a href="#"><i class="fa fa-flag"></i>&nbsp;&nbsp;Report User</a>
       </li>
       <li>
-        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Enviar Mensagem</a>
       </li>
     </ul>
   </div>
   <div class="half-padding">
     <p class="no-margin">
-      <b><a href="view_profile.html">Pedro Melo</a></b>
+      <strong><a href="view_profile.html">Pedro Melo</a></strong>
       <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
     </p>
     <p class="medium no-margin">FEUP</p>
@@ -275,7 +281,7 @@ Não obstante, a expansão dos mercados mundiais auxilia a preparação e a comp
 <p class="quarter-vertical-space">
   <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
   <a class="ink-toggle medium black" data-target="#reply1-comments">
-    <strong>2</strong>&nbsp;Comments
+    <strong>2</strong>&nbsp;Comentários
   </a>
 </p>
 
@@ -310,11 +316,11 @@ Não obstante, a expansão dos mercados mundiais auxilia a preparação e a comp
 <!-- RESPOSTA 1: button group -->
 <div class="button-toolbar button-group">
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-up"></i>&nbsp;Upvote&nbsp;
+    <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
     <strong>7.2k</strong>
   </button>
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-down"></i>&nbsp;Downvote&nbsp;
+    <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
     <strong>1.1k</strong>
   </button>
 </div>
@@ -333,19 +339,19 @@ Não obstante, a expansão dos mercados mundiais auxilia a preparação e a comp
     <ul id="answer2-dropdown" class="dropdown-menu vertical-space">
       <li class="heading">darklord</li>
       <li class="separator-above">
-        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;Ver Perfil</a>
       </li>
       <li>
         <a href="#"><i class="fa fa-flag"></i>&nbsp;&nbsp;Report User</a>
       </li>
       <li>
-        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Enviar Mensagem</a>
       </li>
     </ul>
   </div>
   <div class="half-padding">
     <p class="no-margin">
-      <b><a href="view_profile.html">Vitor Esteves</a></b>
+      <strong><a href="view_profile.html">Vitor Esteves</a></strong>
       <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
     </p>
     <p class="medium">FEUP</p>
@@ -367,7 +373,7 @@ Evidentemente, o início da atividade geral de formação de atitudes promove a 
 <p class="quarter-vertical-space">
   <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
   <a class="ink-toggle medium black" data-target="#reply2-comments">
-    <strong>0</strong>&nbsp;Comments
+    <strong>0</strong>&nbsp;Comentários
   </a>
 </p>
 
@@ -393,11 +399,11 @@ Evidentemente, o início da atividade geral de formação de atitudes promove a 
 <!-- RESPOSTA 2: button group -->
 <div class="button-toolbar button-group">
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-up"></i>&nbsp;Upvote&nbsp;
+    <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
     <strong>7.2k</strong>
   </button>
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-down"></i>&nbsp;Downvote&nbsp;
+    <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
     <strong>1.1k</strong>
   </button>
 </div>
@@ -416,19 +422,19 @@ Evidentemente, o início da atividade geral de formação de atitudes promove a 
     <ul id="answer3-dropdown" class="dropdown-menu vertical-space">
       <li class="heading">mellus</li>
       <li class="separator-above">
-        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;Ver Perfil</a>
       </li>
       <li>
         <a href="#"><i class="fa fa-flag"></i>&nbsp;&nbsp;Report User</a>
       </li>
       <li>
-        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Enviar Mensagem</a>
       </li>
     </ul>
   </div>
   <div class="half-padding">
     <p class="no-margin">
-      <b><a href="view_profile.html">Pedro Melo</a></b>
+      <strong><a href="view_profile.html">Pedro Melo</a></strong>
       <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
     </p>
     <p class="medium">FEUP</p>
@@ -450,7 +456,7 @@ Pensando mais a longo prazo, a consolidação das estruturas ainda não demonstr
 <p class="quarter-vertical-space">
   <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
   <a class="ink-toggle medium black" data-target="#reply3-comments">
-    <strong>1</strong>&nbsp;Comment
+    <strong>1</strong>&nbsp;Comentário
   </a>
 </p>
 
@@ -479,11 +485,11 @@ Pensando mais a longo prazo, a consolidação das estruturas ainda não demonstr
 <!-- RESPOSTA 3: button group -->
 <div class="button-toolbar button-group">
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-up"></i>&nbsp;Upvote&nbsp;
+    <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
     <strong>7.2k</strong>
   </button>
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-down"></i>&nbsp;Downvote&nbsp;
+    <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
     <strong>1.1k</strong>
   </button>
 </div>
@@ -502,19 +508,19 @@ Pensando mais a longo prazo, a consolidação das estruturas ainda não demonstr
     <ul id="answer4-dropdown" class="dropdown-menu vertical-space">
       <li class="heading">darklord</li>
       <li class="separator-above">
-        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;View Profile</a>
+        <a href="view_profile.html"><i class="fa fa-user"></i>&nbsp;&nbsp;Ver Perfil</a>
       </li>
       <li>
         <a href="#"><i class="fa fa-flag"></i>&nbsp;&nbsp;Report User</a>
       </li>
       <li>
-        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Send Message</a>
+        <a href="view_thread.html"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Enviar Mensagem</a>
       </li>
     </ul>
   </div>
   <div class="half-padding">
     <p class="no-margin">
-      <b><a href="view_profile.html">Vitor Esteves</a></b>
+      <strong><a href="view_profile.html">Vitor Esteves</a></strong>
       <span class="small">Tech Blogger, Author, Software Developer, Amateur Singer-Songwriter</span>
     </p>
     <p class="medium">FEUP</p>
@@ -532,7 +538,7 @@ Knowing how to manage your life/business and make strategies and investment choi
 <p class="quarter-vertical-space">
   <small>Enviada Terça-feira, 1 de Março de 2016&nbsp;|&nbsp;</small>
   <a class="ink-toggle medium black" data-target="#reply4-comments">
-    <strong>0</strong>&nbsp;Comments
+    <strong>0</strong>&nbsp;Comentários
   </a>
 </p>
 
@@ -558,11 +564,11 @@ Knowing how to manage your life/business and make strategies and investment choi
 <!-- RESPOSTA 4: button group -->
 <div class="button-toolbar button-group">
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-up"></i>&nbsp;Upvote&nbsp;
+    <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
     <strong>7.2k</strong>
   </button>
   <button class="ink-button medium black">
-    <i class="fa fa-thumbs-down"></i>&nbsp;Downvote&nbsp;
+    <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
     <strong>1.1k</strong>
   </button>
 </div>

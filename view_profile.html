@@ -23,21 +23,20 @@
 
     <!-- RESPONSIVE MENU (small) -->
     <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-      <li id="header-drawer" class="hide-all show-tiny show-small">
+      <li id="nav-drawer" class="hide-all show-tiny show-small">
         <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
       </li>
-      <li id="header-notifications" class="medium">
+      <li id="nav-notifications" class="medium">
         <a href="view_notifications.html">
           <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
         </a>
       </li>
-      <li id="header-messages" class="medium">
+      <li id="nav-messages" class="medium">
         <a href="view_messages.html">
           <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
         </a>
       </li>
-
-      <li class="medium" id="header-profile">
+      <li id="nav-profile" class="medium active">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span>marques999</span>
@@ -56,7 +55,7 @@
 
     <!-- RESPONSIVE MENU (large) -->
     <ul class="menu medium horizontal black hide-small hide-tiny">
-      <li class="no-margin" id="nav_index">
+      <li id="nav-home" class="no-margin">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
@@ -69,16 +68,16 @@
           </div>
         </div>
       </form>
-      <li id="nav_browse">
+      <li id="nav-ask">
         <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
       </li>
-      <li id="nav_events">
+      <li id="nav-answer">
         <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
       </li>
-      <li id="header-notifications">
+      <li id="nav-notifications">
         <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
       </li>
-      <li id="header-profile">
+      <li id="nav-profile" class="active">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span class="current-user">marques999</span>
@@ -153,7 +152,7 @@
 <div class="ink-shade fade">
   <div id="myModal" class="ink-modal fade" data-trigger="#myModalTrigger1" data-width="75%" data-height="33%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
     <div class="modal-body" id="modalContent">
-      <form action="actions/action_update_user.php" method="post" enctype="multipart/form-data" class="ink-form push-center medium ink-formvalidator">
+      <form action="#" method="post" enctype="multipart/form-data" class="ink-form push-center medium ink-formvalidator">
         <fieldset>
           <legend class="align-center">Alterar E-mail</legend>
           <div class="control-group required column-group half-gutters">

@@ -23,21 +23,20 @@
 
     <!-- RESPONSIVE MENU (small) -->
     <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-      <li id="header-drawer" class="hide-all show-tiny show-small">
+      <li id="nav-drawer" class="hide-all show-tiny show-small">
         <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
       </li>
-      <li id="header-notifications" class="medium">
+      <li id="nav-notifications" class="medium">
         <a href="view_notifications.html">
           <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
         </a>
       </li>
-      <li id="header-messages" class="medium">
+      <li id="nav-messages" class="medium active">
         <a href="view_messages.html">
           <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
         </a>
       </li>
-
-      <li class="medium" id="header-profile">
+      <li id="nav-profile" class="medium">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span>marques999</span>
@@ -56,7 +55,7 @@
 
     <!-- RESPONSIVE MENU (large) -->
     <ul class="menu medium horizontal black hide-small hide-tiny">
-      <li class="no-margin" id="nav_index">
+      <li id="nav-home" class="no-margin">
         <a href="index.html">
           <img src="img/header-256px.png" alt="">
         </a>
@@ -69,16 +68,16 @@
           </div>
         </div>
       </form>
-      <li id="nav_browse">
+      <li id="nav-ask">
         <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
       </li>
-      <li id="nav_events">
+      <li id="nav-answer">
         <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
       </li>
-      <li id="header-notifications">
+      <li id="nav-notifications">
         <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
       </li>
-      <li id="header-profile">
+      <li id="nav-profile" class="active">
         <a href="view_profile.html">
           <i class="fa fa-user"></i>
           <span class="current-user">marques999</span>
@@ -102,13 +101,13 @@
 
 <!-- PÁGINA -->
 <div class="ink-grid bottom-padding">
-<h3 class="half-top-padding">Private Messages<span class="ink-badge black">3 <small>unread</small></span></h3>
+<h3 class="half-top-padding">Mensagens Privadas<span class="ink-badge black">3 <small>não lidas</small></span></h3>
 <table class="ink-table alternating hover">
   <thead>
-    <th style="width:25%">Thread</th>
-    <th>Messages</th>
-    <th>Last Message</th>
-    <th style="width:20%">Author</th>
+    <th style="width:25%">Conversas</th>
+    <th>Mensagens</th>
+    <th>Última Mensagem</th>
+    <th style="width:20%">Autor</th>
   </thead>
   <tbody>
     <tr>
