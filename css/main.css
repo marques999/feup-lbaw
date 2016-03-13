@@ -247,10 +247,20 @@ a.tabs-black {
   text-decoration: none;
 }
 
-h3.positive-score {
+.positive-score {
   color: #009800;
 }
 
-h3.negative-score {
+.negative-score {
   color: #f00000;
+}
+
+span.highlight {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background: #ffd500;
+  color: #404040;
 }

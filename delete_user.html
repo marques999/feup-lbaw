@@ -1,101 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-  <title>KnowUP! - Collaborative Q&amp;A</title>
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
-  <link rel="stylesheet" type="text/css" href="css/ink.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script type="text/javascript" src="js/holder.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/ink-all.min.js"></script>
-  <script type="text/javascript" src="js/autoload.min.js"></script>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&amp;A</title>
+<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="css/ink.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script type="text/javascript" src="js/holder.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="js/ink-all.min.js"></script>
+<script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
+
+
+<!-- NAVEGAÇÃO -->
 <body class="ink-drawer">
 <header id="header-container">
-  <nav id="header-menu" class="ink-navigation">
+<nav id="header-menu" class="ink-navigation">
 
-    <!-- RESPONSIVE MENU (small) -->
-    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-      <li id="nav-drawer" class="hide-all show-tiny show-small">
-        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
-      </li>
-      <li id="nav-notifications" class="medium">
-        <a href="view_notifications.html">
-          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
-        </a>
-      </li>
-      <li id="nav-messages" class="medium">
-        <a href="view_messages.html">
-          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
-        </a>
-      </li>
-      <li id="nav-profile" class="medium active">
-        <a href="view_profile.html">
-          <i class="fa fa-user"></i>
-          <span>marques999</span>
-        </a>
-        <ul class="submenu fw-600">
-          <div class="half-padding align-center">
-           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
-          </div>
-          <li><a href="view_profile.html#profile">My Profile</a></li>
-          <li><a href="view_profile.html#questions">My Questions</a></li>
-          <li><a href="view_profile.html#answers">My Answers</a></li>
-          <li><a href="user_logout.html">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
 
-    <!-- RESPONSIVE MENU (large) -->
-    <ul class="menu medium horizontal black hide-small hide-tiny">
-      <li id="nav-home" class="no-margin">
-        <a href="index.html">
-          <img src="img/header-256px.png" alt="">
-        </a>
-      </li>
-      <form class="ink-form ink-search all-20 medium">
-        <div class="control-group">
-          <div class="control append-button" role="search">
-            <span><input type="text" name="name" id="name"></span>
-            <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>
-        </div>
-      </form>
-      <li id="nav-ask">
-        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
-      </li>
-      <li id="nav-answer">
-        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
-      </li>
-      <li id="nav-notifications">
-        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
-      </li>
-      <li id="nav-profile" class="active">
-        <a href="view_profile.html">
-          <i class="fa fa-user"></i>
-          <span class="current-user">marques999</span>
-          <span class="ink-badge red">3</span>
-        </a>
-        <ul class="submenu fw-600">
-          <div class="half-padding align-center">
-           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
-          </div>
-          <li><a href="view_profile.html#profile">My Profile</a></li>
-          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
-          <li><a href="view_profile.html#questions">My Questions</a></li>
-          <li><a href="view_profile.html#answers">My Answers</a></li>
-          <li><a href="user_logout.html">Logout</a></li>
-        </ul>
-      </li>
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="medium">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-messages" class="medium">
+    <a href="view_messages.html">
+      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+    </a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      <span>marques999</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><a href="view_profile.html#profile">My Profile</a></li>
+      <li><a href="view_profile.html#questions">As minhas perguntas</a></li>
+      <li><a href="view_profile.html#answers">As minhas respostas</a></li>
+      <li><a href="user_logout.html">Logout</a></li>
     </ul>
-  </nav>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
+    <a href="index_user.html">
+      <img src="img/header-256px.png" alt="">
+    </a>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="ask_question.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar
+    </a>
+  </li>
+  <li id="nav-answer">
+    <a href="categories.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i>
+      Notificações<span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      marques999</span><span class="ink-badge red">3</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
+      <li><a href="view_profile.html#profile">Gerir perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
 </header>
 
 
@@ -119,6 +132,9 @@
 	</form>
 </div>
 </div>
+
+
+<!-- FOOTER -->
 <script>
   $(function() {
     $("ul#footer-links").hide();
@@ -129,12 +145,15 @@
 </script>
 <footer id="footer" class="clearfix medium fixed">
   <div class="ink-grid">
-      <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
-        <li><a href="about.php">About</a></li>
-        <li><a href="sitemap.php">Sitemap</a></li>
-        <li><a href="contacts.php">Contacts</a></li>
-      </ul>
-      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
   </div>
 </footer>
 </body>

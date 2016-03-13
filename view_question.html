@@ -1,142 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-  <title>KnowUP! - Collaborative Q&amp;A</title>
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="css/font-roboto.css">
-  <link rel="stylesheet" type="text/css" href="css/ink.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-  <script type="text/javascript" src="js/holder.min.js"></script>
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="js/ink-all.min.js"></script>
-  <script type="text/javascript" src="js/autoload.min.js"></script>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&amp;A</title>
+<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="css/ink.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script type="text/javascript" src="js/holder.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="js/ink-all.min.js"></script>
+<script type="text/javascript" src="js/autoload.min.js"></script>
 </head>
+
+
+<!-- NAVEGAÇÃO -->
 <body class="ink-drawer">
 <header id="header-container">
-  <nav id="header-menu" class="ink-navigation">
+<nav id="header-menu" class="ink-navigation">
 
-    <!-- RESPONSIVE MENU (small) -->
-    <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-      <li id="nav-drawer" class="hide-all show-tiny show-small">
-        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
-      </li>
-      <li id="nav-notifications" class="medium">
-        <a href="view_notifications.html">
-          <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
-        </a>
-      </li>
-      <li id="nav-messages" class="medium">
-        <a href="view_messages.html">
-          <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
-        </a>
-      </li>
-      <li id="nav-profile" class="medium">
-        <a href="view_profile.html">
-          <i class="fa fa-user"></i>
-          <span>marques999</span>
-        </a>
-        <ul class="submenu fw-600">
-          <div class="half-padding align-center">
-           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
-          </div>
-          <li><a href="view_profile.html#profile">My Profile</a></li>
-          <li><a href="view_profile.html#questions">My Questions</a></li>
-          <li><a href="view_profile.html#answers">My Answers</a></li>
-          <li><a href="user_logout.html">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
 
-    <!-- RESPONSIVE MENU (large) -->
-    <ul class="menu medium horizontal black hide-small hide-tiny">
-      <li id="nav-home" class="no-margin">
-        <a href="index.html">
-          <img src="img/header-256px.png" alt="">
-        </a>
-      </li>
-      <form class="ink-form ink-search all-20 medium">
-        <div class="control-group">
-          <div class="control append-button" role="search">
-            <span><input type="text" name="name" id="name"></span>
-            <button class="ink-button"><i class="fa fa-search"></i></button>
-          </div>
-        </div>
-      </form>
-      <li id="nav-ask">
-        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
-      </li>
-      <li id="nav-answer" class="active">
-        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
-      </li>
-      <li id="nav-notifications">
-        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
-      </li>
-      <li id="nav-profile">
-        <a href="view_profile.html">
-          <i class="fa fa-user"></i>
-          <span class="current-user">marques999</span>
-          <span class="ink-badge red">3</span>
-        </a>
-        <ul class="submenu fw-600">
-          <div class="half-padding align-center">
-           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
-          </div>
-          <li><a href="view_profile.html#profile">My Profile</a></li>
-          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
-          <li><a href="view_profile.html#questions">My Questions</a></li>
-          <li><a href="view_profile.html#answers">My Answers</a></li>
-          <li><a href="user_logout.html">Logout</a></li>
-        </ul>
-      </li>
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="medium">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-messages" class="medium">
+    <a href="view_messages.html">
+      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+    </a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      <span>marques999</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><a href="view_profile.html#profile">My Profile</a></li>
+      <li><a href="view_profile.html#questions">As minhas perguntas</a></li>
+      <li><a href="view_profile.html#answers">As minhas respostas</a></li>
+      <li><a href="user_logout.html">Logout</a></li>
     </ul>
-  </nav>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
+    <a href="index_user.html">
+      <img src="img/header-256px.png" alt="">
+    </a>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="ask_question.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar
+    </a>
+  </li>
+  <li id="nav-answer">
+    <a href="categories.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i>
+      Notificações<span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      marques999</span><span class="ink-badge red">3</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
+      <li><a href="view_profile.html#profile">Gerir perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
 </header>
 
 
 <!-- PÁGINA -->
-<div class="ink-grid column-group gutters">
+<div class="ink-grid column-group gutters bottom-padding">
 
 
-<!-- BARRA LATERAL (relacionados) -->
+<!-- PAINEL LATERAL -->
 <div class="column all-20 medium-25 small-100 tiny-100">
-  <nav class="ink-navigation medium vertical-padding">
-      <h5 class="slab half-vertical-space">
-        <i class="fa fa-institution"></i>&nbsp;FEUP
-      </h5>
-      <ul class="menu vertical white">
-          <li><a href="list_questions.html">Engenharia Civil</a></li>
-          <li class="active"><a href="list_questions.html">Engenharia Informática</a></li>
-          <li><a href="list_questions.html">Engenharia Mecânica</a></li>
-          <li><a href="list_questions.html">Engenharia Química</a></li>
-          <li class="heading"><a href="hub.html">ver mais...</a></li>
-      </ul>
-      <h5 class="slab half-vertical-space">
-        <i class="fa fa-exchange"></i>&nbsp;Relacionadas
-      </h5>
-      <ul class="menu vertical white">
-        <li><a href="view_question.html">"Which is the worst food in the world?" -- <small>mellus</small></a></li>
-        <li><a href="view_question.html">What is the best comment in source code that you have ever encountered? -- <small>darklord</small></a></li>
-        <li><a href="view_question.html">Who is considered to be the best programmer of all time? -- <small>marques999</small></a></li>
-      </ul>
-  </nav>
+<nav class="ink-navigation medium vertical-padding">
+
+
+<!-- PAINEL LATERAL: categorias relacionadas -->
+<h5 class="slab half-vertical-space">
+  <i class="fa fa-institution"></i>&nbsp;FEUP
+</h5>
+<ul class="menu vertical white">
+    <li><a href="list_questions.html">Engenharia Civil</a></li>
+    <li class="active"><a href="list_questions.html">Engenharia Informática</a></li>
+    <li><a href="list_questions.html">Engenharia Mecânica</a></li>
+    <li><a href="list_questions.html">Engenharia Química</a></li>
+    <li class="heading"><a href="hub.html">ver mais...</a></li>
+</ul>
+
+
+<!-- PAINEL LATERAL: perguntas relacionadas -->
+<h5 class="slab half-vertical-space">
+  <i class="fa fa-exchange"></i>&nbsp;Relacionadas
+</h5>
+<ul class="menu vertical white">
+  <li><a href="view_question.html">"Which is the worst food in the world?" -- <small>mellus</small></a></li>
+  <li><a href="view_question.html">What is the best comment in source code that you have ever encountered? -- <small>darklord</small></a></li>
+  <li><a href="view_question.html">Who is considered to be the best programmer of all time? -- <small>marques999</small></a></li>
+</ul>
+
+
+<!-- PAINEL LATERAL: gestão da página -->
+<h5 class="slab half-vertical-space">
+  <i class="fa fa-cog"></i>&nbsp;Gestão
+</h5>
+<ul class="menu vertical white">
+  <li><a href="#">Editar pergunta</a></li>
+  <li><a href="#">Apagar pergunta</a></li>
+</ul>
+</nav>
 </div>
 
 
-<!-- VISTA DE PERGUNTA -->
+<!-- PAINEL CENTRAL -->
 <div class="column all-80 medium-75 small-100 tiny-100">
 
 
-<!-- PERGUNTA -->
-<article id="question">
-
-
 <!-- PERGUNTA: título -->
+<article class="question">
 <h3 class="slab half-top-padding quarter-vertical-space ">Why does Linux seem much faster than Windows?</h3>
 
 
@@ -171,6 +197,7 @@
     <p class="medium no-margin">FEUP</p>
   </div>
 </div>
+
 
 <!-- PERGUNTA: conteúdo -->
 <p class="medium no-margin align-justify">
@@ -298,14 +325,12 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <blockquote class="medium align-justify fw-300">
 Ainda assim, existem dúvidas a respeito de como a mobilidade dos capitais internacionais cumpre um papel essencial na formulação dos modos de operação convencionais.
 </blockquote>
-
 <p class="medium align-justify">
 Não obstante, a expansão dos mercados mundiais auxilia a preparação e a composição dos modos de operação convencionais. Assim mesmo, a valorização de fatores subjetivos aponta para a melhoria das diversas correntes de pensamento. Caros amigos, a hegemonia do ambiente político oferece uma interessante oportunidade para verificação do remanejamento dos quadros funcionais. O empenho em analisar a complexidade dos estudos efetuados apresenta tendências no sentido de aprovar a manutenção do impacto na agilidade decisória. As experiências acumuladas demonstram que o aumento do diálogo entre os diferentes setores produtivos assume importantes posições no estabelecimento das diretrizes de desenvolvimento para o futuro.
 </p>
-
-<p class="no-margin medium align-justify">
-“<b><i>We make money with what we know, we lose money because of what we don’t know, and we don’t know what we don’t know</i></b>.”
-</p>
+<p class="no-margin medium align-justify"><strong><em>
+“We make money with what we know, we lose money because of what we don’t know, and we don’t know what we don’t know.”
+</em></strong></p>
 
 
 <!-- RESPOSTA 1: informações -->
@@ -394,7 +419,6 @@ Não obstante, a expansão dos mercados mundiais auxilia a preparação e a comp
 <p class="medium align-justify">
 Acima de tudo, é fundamental ressaltar que o entendimento das metas propostas agrega valor ao estabelecimento das direções preferenciais no sentido do progresso. Do mesmo modo, o consenso sobre a necessidade de qualificação faz parte de um processo de gerenciamento dos métodos utilizados na avaliação de resultados. Ainda assim, existem dúvidas a respeito de como o desenvolvimento contínuo de distintas formas de atuação pode nos levar a considerar a reestruturação da gestão inovadora da qual fazemos parte. Desta maneira, o surgimento do comércio virtual estende o alcance e a importância do sistema de participação geral.
 </p>
-
 <p class="no-margin medium align-justify">
 Evidentemente, o início da atividade geral de formação de atitudes promove a alavancagem do retorno esperado a longo prazo. Percebemos, cada vez mais, que o julgamento imparcial das eventualidades representa uma abertura para a melhoria das novas proposições. Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se a determinação clara de objetivos ainda não demonstrou convincentemente que vai participar na mudança de alternativas às soluções ortodoxas. Pensando mais a longo prazo, a consolidação das estruturas estimula a padronização do investimento em reciclagem técnica. A certificação de metodologias que nos auxiliam a lidar com o fenômeno da Internet desafia a capacidade de equalização dos conhecimentos estratégicos para atingir a excelência.
 </p>
@@ -621,14 +645,17 @@ Knowing how to manage your life/business and make strategies and investment choi
     })
   });
 </script>
-<footer id="footer" class="half-top-space clearfix">
-  <div class="ink-grid fw-regular">
-      <ul id="footer-links" class="unstyled small inline quarter-vertical-space">
-        <li><a href="about.php">About</a></li>
-        <li><a href="sitemap.php">Sitemap</a></li>
-        <li><a href="contacts.php">Contacts</a></li>
-      </ul>
-      <p class="note medium no-margin half-vertical-padding"><i class="fa fa-copyright"></i> 2016 Diogo Marques, Pedro Melo, Vitor Esteves</p>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
   </div>
 </footer>
 </body>
