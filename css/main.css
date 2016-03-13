@@ -241,3 +241,16 @@ div.message {
 a.black {
   color: #404040;
 }
+
+a.tabs-black {
+  color: #404040;
+  text-decoration: none;
+}
+
+h3.positive-score {
+  color: #009800;
+}
+
+h3.negative-score {
+  color: #f00000;
+}

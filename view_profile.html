@@ -60,7 +60,7 @@
           <img src="img/header-256px.png" alt="">
         </a>
       </li>
-      <form class="ink-form ink-search all-20 medium">
+      <form action="list_results.html" class="ink-form ink-search all-20 medium">
         <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="name" id="name"></span>
@@ -69,13 +69,13 @@
         </div>
       </form>
       <li id="nav-ask">
-        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Perguntar</a>
       </li>
       <li id="nav-answer">
-        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Responder</a>
       </li>
       <li id="nav-notifications">
-        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notificações<span class="ink-badge red">5</span></a>
       </li>
       <li id="nav-profile" class="active">
         <a href="view_profile.html">
@@ -100,263 +100,306 @@
 
 
 <!-- PÁGINA -->
-<div class="ink-grid">
-<div class="column-group half-gutters">
+<div class="ink-grid column-group half-gutters">
 
 
-<!-- UTILIZADOR: informações-->
+<!-- PERFIL: painel lateral -->
 <div class="column half-padding all-30 large-40 medium-40 small-100 tiny-100">
-<h2 class="slab no-margin">marques999</h2>
-<p class="no-margin">Diogo Marques</p>
-<a href="update_profile.php?field=5">
-  <img class="half-vertical-space" src="holder.js/480x480/auto/ink" alt="">
-</a>
 
 
-<!-- UTILIZADOR: faculdade -->
+<!-- PERFIL: informações do utilizador (bandeira) -->
+<div class="half-padding push-right">
+  <img src="img/flags/pt.png" alt="Portugal">
+</div>
+
+
+<!-- PERFIL: informações do utilizador (username, nome completo, avatar) -->
+<div>
+  <h2 class="slab no-margin">marques999</h2>
+  <p class="no-margin">Diogo Marques</p>
+  <a href="update_profile.php?field=5">
+    <img class="half-vertical-space" src="holder.js/480x480/auto/ink" alt="">
+  </a>
+</div>
+
+
+<!-- PERFIL: informações do utilizador (instituição) -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Change school" data-tip-color="black">
+    data-tip-text="Alterar instituição" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
-  <b>School:&nbsp;</b>FEUP
+  <b>Instituição:</b>
+    <a href="hub.html">FEUP</a>
     <a href="https://sigarra.up.pt/feup/pt/web_page.inicial">
       <i class="fa fa-external-link"></i>
     </a>
 </p>
 
 
-<!-- UTILIZADOR: endereço e-mail -->
+<!-- PERFIL: informações do utilizador (endereço e-mail) -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Change e-mail address" data-tip-color="black">
+    data-tip-text="Alterar endereço de e-mail" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
   <b>E-mail:</b>
-  <a href="mailto:up201305642@fe.up.pt">up201305642@fe.up.pt</a>
+  <a href="mailto:up2013056@fe.up.pt">up201305642@fe.up.pt</a>
 </p>
 
 
-<!-- UTILIZADOR: localização -->
+<!-- PERFIL: informações do utilizador (localização) -->
 <p class="no-margin">
   <a class="ink-tooltip" href="#"
-    data-tip-text="Change location" data-tip-color="black">
+    data-tip-text="Alterar localização" data-tip-color="black">
     <i class="fa fa-plus-circle"></i>
   </a>
-  <b>Location:&nbsp;</b>Valongo, Portugal
+  <b>Localização:&nbsp;</b>Valongo, Portugal
 </p>
 </div>
 
 
-<!-- BEGIN E-MAIL MODAL -->
-<div class="ink-shade fade">
-  <div id="myModal" class="ink-modal fade" data-trigger="#myModalTrigger1" data-width="75%" data-height="33%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
-    <div class="modal-body" id="modalContent">
-      <form action="#" method="post" enctype="multipart/form-data" class="ink-form push-center medium ink-formvalidator">
-        <fieldset>
-          <legend class="align-center">Alterar E-mail</legend>
-          <div class="control-group required column-group half-gutters">
-            <label for="email" class="all-20 align-right">E-mail:</label>
-            <div class="control append-symbol all-70">
-              <span>
-              <input type="text" name="email" value="<?=$thisUser['email']?>" data-rules="required|email">
-              <i class="fa fa-envelope-o"></i>
-              </span>
-            </div>
-          </div>
-          <div class="align-center">
-            <button class="ink-button" type="submit">Update</button>
-            <button class="ink-button" onclick="history.go(-1)" type="reset">Cancel</button>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-</div>
-<a href="#" id="myModalTrigger1" class="ink-button">Open example modal</a>
-<!-- BEGIN E-MAIL MODAL -->
-
+<!-- PERFIL: painel central -->
 <div class="column all-70 large-60 medium-60 small-100 tiny-100">
 
-<!-- BEGIN PROFILE TABS -->
+
+<!-- PERFIL: separadores -->
 <div class="ink-tabs top">
-  <ul class="tabs-nav">
-    <li><a class="tabs-tab" href="#profile">Profile</a></li>
-    <li><a class="tabs-tab" href="#questions">Questions (<strong>3</strong>)</a></li>
-    <li><a class="tabs-tab" href="#answers">Answers (<strong>13</strong>)</a></li>
-  </ul>
-<!-- END PROFILE TABS -->
+<ul class="tabs-nav">
+  <li><a class="tabs-tab tabs-black" href="#profile">Perfil</a></li>
+  <li><a class="tabs-tab tabs-black" href="#questions">Perguntas 
+    <strong>3</strong>
+  </a></li>
+  <li><a class="tabs-tab tabs-black" href="#answers">Respostas
+    <strong>13</strong>
+  </a></li>
+</ul>
 
-<!-- BEGIN PROFILE BUTTONS -->
-<div id="profile">
-  <p class="align-center quarter-vertical-space">
-    <a href="update_profile.php?field=1">
-      <button class="ink-button black"><i class="fa fa-key"></i>&nbsp;Change password</button>
-    </a>
-    <a href="delete_user.html">
-      <button class="ink-button black"><i class="fa fa-user-times"></i></button>
-    </a>
-  </p>
+
+<!-- PERFIL: informações (grupo, início de ssessão) -->
+<div class="half-horizontal-padding" id="profile">
+<div class="column-group half-gutters">
+  <div class="column all-25">
+    <p class="half-vertical-space">
+      <strong>Grupo:</strong>
+    </p>
+    <p class="half-vertical-space">
+      <strong>Membro desde:</strong>
+    </p>
+    <p class="half-vertical-space">
+      <strong>Último inicio de sessão:</strong>
+    </p>
+  </div>
+  <div class="column all-75">
+    <p class="half-vertical-space">Moderadores</p>
+    <p class="half-vertical-space">Wednesday, 02/12/2015 23:34</p>
+    <p class="half-vertical-space">Wednesday, 02/12/2015 23:34</p>
+  </div>
 </div>
-<!-- END PROFILE BUTTONS -->
 
-<!-- BEGIN QUESTIONS SECTION -->
+
+<!-- PERFIL: gestão (palavra-passe, bio) -->
+<div class="column-group half-gutters">
+  <div class="column all-25 medium-40 small-30 tiny-40">
+    <p class="half-vertical-space">
+      <strong>Palavra-passe:</strong>
+    </p>
+    <p class="vertical-space">
+      <strong>Sobre mim:</strong>
+    </p>
+  </div>
+  <div class="column all-40 large-60 small-50 tiny-40">
+    <p class="vertical-space">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</p>
+    <p class="vertical-space medium">Lorem ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet</p>
+  </div>
+  <div class="column all-15">
+    <p class="align-center vertical-space">
+      <a class="ink-button small" href="#">
+      <i class="fa fa-edit"></i>&nbsp;Alterar</a>
+    </p>
+    <p class="align-center vertical-space">
+      <a class="ink-button small" href="#">
+      <i class="fa fa-edit"></i>&nbsp;Alterar</a>
+    </p>
+  </div>
+</div>
+</div>
+
+
+<!-- PERFIL: grelha de perguntas -->
 <div id="questions" class="tabs-content">
-  <table class="ink-table alternating hover">
-    <thead>
-      <th style="width:50%">Question</th>
-      <th style="width:25%">Score</th>
-      <th style="width:25%">Actions</th>
-    </thead>
-    <tbody>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
-          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">52</h3>
-          <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
-          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">6</h3>
-          <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-   <button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-           <b>Which is the worst food in the world?</b>
-          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">-21</h3>
-          <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
-              <i class="fa fa-close"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!-- END QUESTIONS SECTION -->
+<table class="ink-table alternating hover">
+<thead>
+  <th style="width:50%">Pergunta</th>
+  <th style="width:25%">Pontuação</th>
+  <th style="width:25%">Acções</th>
+</thead>
+<tbody>
 
-<!-- BEGIN ANSWERS SECTION -->
+
+<!-- PERGUNTA 1 -->
+<tr class="notification-row">
+  <td class="medium">
+    <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
+    <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space positive-score">56</h3>
+    <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+      <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Dismiss" data-tip-color="black">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+    </div>
+  </td>
+</tr>
+
+
+<!-- PERGUNTA 2 -->
+<tr class="notification-row">
+  <td class="medium">
+    <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;fechada</span></b>
+    <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space positive-score">6</h3>
+    <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+<button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  </td>
+</tr>
+
+
+<!-- PERGUNTA 3 -->
+<tr class="notification-row">
+  <td class="medium">
+     <b>Which is the worst food in the world?</b>
+    <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space negative-score">-21</h3>
+    <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="View Reply" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+      <button class="all-50 ink-button ink-tooltip medium" data-tip-text="Dismiss" data-tip-color="black">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<!-- PERFIL: grelha de respostas -->
 <div id="answers" class="tabs-content">
-  <table class="ink-table alternating hover">
-    <thead>
-      <th style="width:50%">Question</th>
-      <th style="width:25%">Score</th>
-      <th style="width:25%">Actions</th>
-    </thead>
-    <tbody>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
-          <p class="quarter-vertical-space">
-            Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.
-            <a href="ver mais">&gt; ver mais &lt;</a>
-          </p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">52</h3>
-          <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
-              <i class="fa fa-external-link"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-          <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;closed</span></b>
-          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">6</h3>
-          <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-            <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
-              <i class="fa fa-external-link"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-      <tr class="notification-row">
-        <td class="medium">
-           <b>Which is the worst food in the world?</b>
-          <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
-        </td>
-        <td class="align-center">
-          <h3 class="quarter-vertical-space">-21</h3>
-          <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-        </td>
-        <td>
-          <div class="button-group">
-             <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
-              <i class="fa fa-reply"></i>
-            </a>
-            <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
-              <i class="fa fa-external-link"></i>
-            </a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-</div>
-</div>
+<table class="ink-table alternating hover">
+<thead>
+  <th style="width:50%">Pergunta</th>
+  <th style="width:25%">Pontuação</th>
+  <th style="width:25%">Acções</th>
+</thead>
+<tbody>
+
+
+<!-- RESPOSTA 1 -->
+<tr class="notification-row">
+  <td class="medium">
+    <b>Why does Linux seem much faster than Windows?<span class="ink-badge green"><i class="fa fa-smile-o"></i>&nbsp;popular</span></b>
+    <p class="quarter-vertical-space">
+      Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.
+      <a href="ver mais">&gt; ver mais &lt;</a>
+    </p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space positive-score">56</h3>
+    <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+      <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+        <i class="fa fa-external-link"></i>
+      </a>
+    </div>
+  </td>
+</tr>
+
+
+<!-- RESPOSTA 2 -->
+<tr class="notification-row">
+  <td class="medium">
+    <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;fechada</span></b>
+    <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space positive-score">6</h3>
+    <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+      <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+        <i class="fa fa-external-link"></i>
+      </a>
+    </div>
+  </td>
+</tr>
+
+
+<!-- RESPOSTA 3 -->
+<tr class="notification-row">
+  <td class="medium">
+     <b>Which is the worst food in the world?</b>
+    <p class="quarter-vertical-space">Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+  </td>
+  <td class="align-center">
+    <h3 class="quarter-vertical-space negative-score">-21</h3>
+    <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  </td>
+  <td>
+    <div class="button-group">
+       <a class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Responder" data-tip-color="black">
+        <i class="fa fa-reply"></i>
+      </a>
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver Resposta" data-tip-color="black">
+        <i class="fa fa-external-link"></i>
+      </a>
+    </div>
+  </td>
+</tr>
+</tbody>
+</table>
 
 
 <!-- FOOTER -->
+</div>
+</div>
+</div>
+</div>
 <script>
   $(function() {
     $("ul#footer-links").hide();

@@ -24,7 +24,7 @@
     <!-- RESPONSIVE MENU (small) -->
     <ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
       <li id="nav-drawer" class="hide-all show-tiny show-small">
-        <button class="half-horizontal-space quarter-vertical-padding ink-button black fa fa-bars left-drawer-trigger"></button>
+        <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
       </li>
       <li id="nav-notifications" class="medium">
         <a href="view_notifications.html">
@@ -37,10 +37,19 @@
         </a>
       </li>
       <li id="nav-profile" class="medium">
-        <a href="user_login.html">
+        <a href="view_profile.html">
           <i class="fa fa-user"></i>
-          <span>Visitante</span>
+          <span>marques999</span>
         </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
+        </ul>
       </li>
     </ul>
 
@@ -60,19 +69,30 @@
         </div>
       </form>
       <li id="nav-ask">
-        <a href="message_guest.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
+        <a href="ask_question.html"><i class="fa fa-comment-o"></i>&nbsp;Ask</a>
       </li>
       <li id="nav-answer">
-        <a href="message_guest.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
+        <a href="categories.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Answer</a>
       </li>
-      <li id="nav-notifications" class="disabled">
-        <a href="#"><i class="fa fa-bell-o"></i>&nbsp;Notifications</a>
+      <li id="nav-notifications">
+        <a href="view_notifications.html"><i class="fa fa-bell-o"></i>&nbsp;Notifications<span class="ink-badge red">5</span></a>
       </li>
       <li id="nav-profile">
-        <a href="user_login.html">
+        <a href="view_profile.html">
           <i class="fa fa-user"></i>
-          <span>Visitante</span>
+          <span class="current-user">marques999</span>
+          <span class="ink-badge red">3</span>
         </a>
+        <ul class="submenu fw-600">
+          <div class="half-padding align-center">
+           <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+          </div>
+          <li><a href="view_profile.html#profile">My Profile</a></li>
+          <li><b><a href="view_messages.html">My Messages (3)</a></b></li>
+          <li><a href="view_profile.html#questions">My Questions</a></li>
+          <li><a href="view_profile.html#answers">My Answers</a></li>
+          <li><a href="user_logout.html">Logout</a></li>
+        </ul>
       </li>
     </ul>
   </nav>
@@ -83,35 +103,69 @@
 <div class="ink-grid column-group gutters bottom-padding">
 
 
-<!-- HOME: barra lateral -->
+<!-- HUB: painel lateral -->
 <div class="column all-20 medium-25 small-100 tiny-100">
   <nav class="ink-navigation medium vertical-padding">
-      <h5 class="slab half-vertical-space">
-        <i class="fa fa-hashtag"></i>&nbsp;Categorias
-      </h5>
-      <ul class="menu vertical white">
-          <li><a href="list_questions.html">Ciências Forenses</a></li>
-          <li><a href="list_questions.html">Engenharia Física</a></li>
-          <li><a href="list_questions.html">Engenharia Informática</a></li>
-          <li><a href="list_questions.html">Estudos Portugueses</a></li>
-          <li class="heading"><a href="categories.html">ver mais...</a></li>
-      </ul>
-      <h5 class="slab half-vertical-space">
-        <i class="fa fa-line-chart"></i>&nbsp;Populares
-      </h5>
-      <ul class="menu vertical white">
-       <li class="active"><a href="categories.html">Neste momento</a></li>
-        <li><a href="#">Últimas 24h</a></li>
-        <li><a href="#">Últimas 48h</a></li>
-        <li><a href="#">Última semana</a></li>
-        <li><a href="#">Último mês</a></li>
-      </ul>
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-institution"></i>&nbsp;Instituições
+    </h5>
+    <ul class="menu vertical white">
+      <li><a href="hub.html">FCUP</a></li>
+      <li><a href="hub.html">FEUP</a></li>
+    </ul>
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-exchange"></i>&nbsp;Relacionadas
+    </h5>
+    <ul class="menu vertical white">
+      <li><a href="list_questions.html">Ciências Forenses</a></li>
+      <li><a href="list_questions.html">Engenharia Física</a></li>
+      <li><a href="list_questions.html">Engenharia Informática</a></li>
+      <li><a href="list_questions.html">Estudos Portugueses</a></li>
+    </ul>
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-line-chart"></i>&nbsp;Populares
+    </h5>
+    <ul class="menu vertical white">
+     <li class="active"><a href="categories.html">Neste momento</a></li>
+      <li><a href="#">Últimas 24h</a></li>
+      <li><a href="#">Últimas 48h</a></li>
+      <li><a href="#">Última semana</a></li>
+      <li><a href="#">Último mês</a></li>
+    </ul>
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-cog"></i>&nbsp;Gestão
+    </h5>
+    <ul class="menu vertical white">
+      <li><a href="ask_Question.html">Nova pergunta</a></li>
+      <li><a href="#">
+        <sup><strong>(Admin)</strong></sup>
+        Editar categoria
+      </a></li>
+      <li><a href="#">
+        <sup><strong>(Admin)</strong></sup>
+        Apagar categoria</a></li>
+    </ul>
   </nav>
 </div>
 
 
-<!-- HOME: perguntas mais recentes -->
-<div class="column all-80 medium-75 small-100 tiny-100">
+<!-- HUB: painel central -->
+<div class="column half-top-padding all-80 medium-75 small-100 tiny-100">
+
+
+<!-- HUB: informações da categoria -->
+<div class="column-group quarter-gutters message">
+  <div class="column all-75 medium-65 quarter-top-padding">
+    <h4 class="quarter-vertical-space slab">Engenharia Informática</h4>
+    <p><i class="fa fa-institution"></i>&nbsp;FCUP&nbsp;&bull;&nbsp;FEUP</p>
+    <p class="medium quarter-vertical-space">
+O ensino da Engenharia Informática e Computação foi concebido na FEUP como requerendo um ciclo de formação e aprendizagem completo de cinco anos integrados, correspondendo aos 1º e 2º ciclos da implementação do Processo de Bolonha e conferindo de imediato o grau de Mestre.
+    </p>
+  </div>
+  <div class="column all-25 medium-35 quarter-padding">
+    <img src="img/question-marks.png" alt="">
+  </div>
+</div>
 
 
 <!-- PERGUNTA 1 -->
@@ -123,7 +177,7 @@
 
 <!-- PERGUNTA 1: pontuação -->
 <div class="align-center quarter-padding push-right">
-  <h3 class="quarter-vertical-space">56</h3>
+  <h3 class="quarter-vertical-space positive-score">56</h3>
   <p class="medium">(&nbsp;64&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;8&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
 </div>
 
@@ -146,6 +200,7 @@
   </div>
 </div>
 
+    
 
 <!-- PERGUNTA 1: conteúdo -->
 <p class="medium no-margin align-justify">
@@ -156,7 +211,7 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <!-- PERGUNTA 1:: button group -->
 <div class="button-toolbar quarter-top-padding">
   <div class="button-group small">
-    <a class="ink-button black" href="message_guest.html">
+    <a class="ink-button black" href="reply.html#reply-form">
       <i class="fa fa-pencil"></i>&nbsp;Responder
     </a>
     <button class="ink-button black">
@@ -182,14 +237,15 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <!-- PERGUNTA 2 -->
 <article id="question">
 <h4 class="slab quarter-vertical-space">
-  <a class="black" href="view_question.html">Which is the worst food in the world?</a>
+  <a class="black" href="view_question.html">What is the best comment in source code that you have ever encountered?</a>
+  <span class="ink-badge black small"><i class="fa fa-check"></i>&nbsp;fechada</span>
 </h4>
 
 
 <!-- PERGUNTA 2: pontuação -->
 <div class="align-center quarter-padding push-right">
-  <h3 class="quarter-vertical-space">-21</h3>
-  <p class="medium">(&nbsp;2&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;23&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
+  <h3 class="quarter-vertical-space positive-score">6</h3>
+  <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
 </div>
 
 
@@ -221,73 +277,7 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
 <!-- PERGUNTA 2: button group -->
 <div class="button-toolbar quarter-top-padding">
   <div class="button-group small">
-    <a class="ink-button black" href="message_guest.html">
-      <i class="fa fa-pencil"></i>&nbsp;Responder
-    </a>
-    <button class="ink-button black">
-      <i class="fa fa-feed"></i>&nbsp;Seguir&nbsp;
-      <strong>865</strong>
-    </button>
-  </div>
-  <div class="button-group small">
-    <button class="ink-button black">
-      <i class="fa fa-thumbs-up"></i>&nbsp;Gosto&nbsp;
-      <strong>7.2k</strong>
-    </button>
-    <button class="ink-button black">
-      <i class="fa fa-thumbs-down"></i>&nbsp;Não gosto&nbsp;
-      <strong>1.1k</strong>
-    </button>
-  </div>
-</div>
-<hr>
-</article>
-
-
-<!-- PERGUNTA 3 -->
-<article id="question">
-<h4 class="slab quarter-vertical-space">
-  <a class="black" href="view_question.html">What is the best comment in source code that you have ever encountered?</a>
-  <span class="ink-badge black small"><i class="fa fa-check"></i>&nbsp;fechada</span>
-</h4>
-
-
-<!-- PERGUNTA 3: pontuação -->
-<div class="align-center quarter-padding push-right">
-  <h3 class="quarter-vertical-space">6</h3>
-  <p class="medium">(&nbsp;7&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;1&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp;)</p>
-</div>
-
-
-<!-- PERGUNTA 3: autor -->
-<div class="author-panel quarter-vertical-space">
-  <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
-  <div class="half-padding">
-    <p class="no-margin">
-      <a href="view_profile.html"><strong>Diogo Marques</strong></a>
-      <span class="small">FEUP</span>
-    </p>
-    <p class="medium no-margin">
-      <small>Terça-feira, 1 de Março de 2016</small>
-      &bull;
-      <span class="medium">
-        <strong>4</strong>&nbsp;Respostas
-      </span>
-    </p>
-  </div>
-</div>
-
-
-<!-- PERGUNTA 3: conteúdo -->
-<p class="medium no-margin align-justify">
-Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?
-</p>
-
-
-<!-- PERGUNTA 3: button group -->
-<div class="button-toolbar quarter-top-padding">
-  <div class="button-group small">
-    <a class="ink-button black" href="message_guest.html">
+    <a class="ink-button black" href="reply.html#reply-form">
       <i class="fa fa-pencil"></i>&nbsp;Responder
     </a>
     <button class="ink-button black">
