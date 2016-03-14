@@ -22,6 +22,7 @@ $(function(){
   $("button.dismiss").click(function(){
     $(this).parent().parent().parent().remove();
     numberNotifications--;
+    $("#number-notifications").text(numberNotifications);
     if (numberNotifications <= 0) {
       $("table").replaceWith("<p>You have no pending notifications :(</p>");
     }
@@ -61,10 +62,10 @@ $(function(){
       <div class="half-padding align-center">
        <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
       </div>
-      <li><a href="view_profile.html#profile">My Profile</a></li>
-      <li><a href="view_profile.html#questions">As minhas perguntas</a></li>
-      <li><a href="view_profile.html#answers">As minhas respostas</a></li>
-      <li><a href="user_logout.html">Logout</a></li>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
     </ul>
   </li>
 </ul>
@@ -113,7 +114,7 @@ $(function(){
        <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
       </div>
       <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
-      <li><a href="view_profile.html#profile">Gerir perfil</a></li>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
       <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
       <li><a href="view_profile.html#answers">Gerir respostas</a></li>
       <li><a href="user_logout.html">Terminar sessão</a></li>
@@ -126,13 +127,13 @@ $(function(){
 
 <!-- PÁGINA -->
 <div class="ink-grid bottom-padding">
-<h3 class="half-top-padding">Notificações</h3>
+<h3 class="half-top-padding">Notificações<span class="ink-badge black"><span id="number-notifications">5</span><span class="small fw-300">&nbsp;não lidas</span></span></h3>
 
 
 <!-- LISTA DE NOTIFICAÇÕES -->
 <table class="ink-table alternating hover">
 <thead>
-  <th style="width:50%">Actividade</th>
+  <th style="width:50%">Pergunta</th>
   <th style="width:25%">Autor</th>
   <th style="width:25%">Acções</th>
 </thead>
@@ -142,8 +143,11 @@ $(function(){
 <!-- MENSAGEM 1 -->
 <tr class="notification-row">
   <td class="medium">
-    <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">nova resposta!</span></b>
-    <p class="quarter-vertical-space"><strong>mellus respondeu:</strong> Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+    <b><a class="black" href="view_question.html">Porque é o Linux parece ser mais rápido que o Windows?</a><span class="ink-badge black">nova resposta!</span></b>
+    <p class="quarter-vertical-space">
+      <strong>mellus respondeu:</strong>
+      O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais.
+    </p>
   </td>
   <td>
     <i class="fa fa-user"></i>
@@ -152,7 +156,7 @@ $(function(){
   </td>
   <td>
     <div class="button-group">
-      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver pergunta" data-tip-color="black">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver resposta" data-tip-color="black">
         <i class="fa fa-reply"></i>
       </a>
       <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Ignorar" data-tip-color="black">
@@ -167,8 +171,11 @@ $(function(){
 <!-- MENSAGEM 2 -->
 <tr class="notification-row">
   <td class="medium">
-    <b>Why does Linux seem much faster than Windows?<span class="ink-badge black">nova resposta!</span></b>
-    <p class="quarter-vertical-space"><strong>darklord comentou:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+    <b><a class="black" href="view_question.html">Porque é o Linux parece ser mais rápido que o Windows?</a><span class="ink-badge black">nova resposta!</span></b>
+    <p class="quarter-vertical-space">
+      <strong>darklord comentou:</strong>
+      O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais.
+    </p>
   </td>
   <td>
     <i class="fa fa-user"></i>
@@ -177,7 +184,7 @@ $(function(){
   </td>
   <td>
     <div class="button-group">
-      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver pergunta" data-tip-color="black">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver comentário" data-tip-color="black">
         <i class="fa fa-reply"></i>
       </a>
       <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Ignorar" data-tip-color="black">
@@ -191,8 +198,11 @@ $(function(){
 <!-- MENSAGEM 3 -->
 <tr class="notification-row">
   <td class="medium">
-     <b>Which is the worst food in the world?<span class="ink-badge black">novo comentário!</span></b>
-    <p class="quarter-vertical-space"><strong>marques999 comentou:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+    <b><a class="black" href="view_question.html">Que país tem a pior gastronomia na vossa opinião?</a><span class="ink-badge black">novo comentário!</span></b>
+    <p class="quarter-vertical-space">
+      <strong>marques999 comentou:</strong>
+      O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais.
+    </p>
   </td>
   <td>
     <i class="fa fa-user"></i>
@@ -201,7 +211,7 @@ $(function(){
   </td>
   <td>
     <div class="button-group">
-      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver pergunta" data-tip-color="black">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver comentário" data-tip-color="black">
         <i class="fa fa-reply"></i>
       </a>
       <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Ignorar" data-tip-color="black">
@@ -215,8 +225,11 @@ $(function(){
 <!-- MENSAGEM 4 -->
 <tr class="notification-row">
   <td class="medium">
-    <b>Which is the worst food in the world?<span class="ink-badge black">nova resposta!</span></b>
-    <p class="quarter-vertical-space"><strong>marques999 respondeu:</strong>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+    <b><a class="black" href="view_question.html">Que país tem a pior gastronomia na vossa opinião?</a><span class="ink-badge black">nova resposta!</span></b>
+    <p class="quarter-vertical-space">
+      <strong>marques999 respondeu:</strong>
+      O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais.
+    </p>
   </td>
   <td>
     <i class="fa fa-user"></i>
@@ -225,7 +238,7 @@ $(function(){
   </td>
   <td>
     <div class="button-group">
-      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver pergunta" data-tip-color="black">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver resposta" data-tip-color="black">
         <i class="fa fa-reply"></i>
       </a>
       <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Ignorar" data-tip-color="black">
@@ -239,8 +252,11 @@ $(function(){
 <!-- MENSAGEM 5 -->
 <tr class="notification-row">
   <td class="medium">
-    <b>What is the best comment in source code that you have ever encountered?<span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;fechada</span></b>
-    <p class="quarter-vertical-space"><b>melhor resposta:</b>&nbsp;Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget odio tempus libero consequat vehicula placerat non nibh.</p>
+    <b><a class="black" href="view_question.html">Qual foi o comentário mais hilariante que encontraram em código?</a><span class="ink-badge black"><i class="fa fa-check"></i>&nbsp;fechada</span></b>
+    <p class="quarter-vertical-space">
+      <strong>melhor resposta:</strong>
+      O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais.
+    </p>
   </td>
   <td>
     <i class="fa fa-user"></i>
@@ -249,7 +265,7 @@ $(function(){
   </td>
   <td>
     <div class="button-group">
-      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver pergunta" data-tip-color="black">
+      <a href="view_question.html" class="all-50 ink-button ink-tooltip medium" data-tip-text="Ver resposta" data-tip-color="black">
         <i class="fa fa-reply"></i>
       </a>
 <button class="all-50 ink-button ink-tooltip medium dismiss" data-tip-text="Ignorar" data-tip-color="black">
