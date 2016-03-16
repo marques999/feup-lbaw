@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&amp;A</title>
+<link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="../css/ink.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/holder.min.js"></script>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="../js/ink-all.min.js"></script>
+<script type="text/javascript" src="../js/autoload.min.js"></script>
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script>
+$(function() {
+  CKEDITOR.editorConfig = function(config) {
+    config.language = 'pt';
+    config.height = 400;
+    config.toolbarGroups = [
+      {name: 'clipboard', groups: ['clipboard', 'undo']},
+      {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+      {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+      {name: 'links', groups: ['links']},
+      {name: 'insert', groups: ['insert']},
+      {name: 'forms', groups: ['forms']},
+      {name: 'tools', groups: ['tools']},
+      {name: 'document', groups: ['mode', 'document', 'doctools']},
+      {name: 'others', groups: ['others']},
+      {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+      {name: 'styles', groups: ['styles']},
+      {name: 'colors', groups: ['colors']},
+      {name: 'about', groups: ['about']}
+    ];
+
+    config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
+  };
+
+  CKEDITOR.replace('text');
+});
+</script>
+</head>
+
+
+<!-- NAVEGAÇÃO -->
+<body class="ink-drawer">
+<header id="header-container">
+<nav id="header-menu" class="ink-navigation">
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="medium">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-messages" class="medium">
+    <a href="view_messages.html">
+      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+    </a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      <span>marques999</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
+      </div>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
+    <a href="index_user.html">
+      <img src="../img/header-256px.png" alt="">
+    </a>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="ask_question.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar
+    </a>
+  </li>
+  <li id="nav-answer">
+    <a href="categories.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i>
+      Notificações<span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      marques999</span><span class="ink-badge red">3</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
+      </div>
+      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
+</header>
+
+
+<!-- PÁGINA -->
+<div class="ink-grid bottom-padding push-center all-75 large-85 medium-95 small-100 tiny-100">
+<h5 class="slab half-top-padding">
+  <a href="view_messages.html">Mensagens Privadas</a>&nbsp;&gt;&nbsp;mellus
+</h5>
+
+
+<!-- MENSAGEM 1 -->
+<div class="message column-group half-vertical-space">
+
+
+<!-- MENSAGEM 1: painel esquerdo (informações autor) -->
+<div class="column all-15 medium-20 small-25 tiny-25">
+  <b class="no-margin"><a href="view_profile.html">marques999</a></b>
+  <p class="medium no-margin">FEUP</p>
+  <img class="img-circle half-vertical-space" src="holder.../js/64x64/auto/ink" alt="">
+</div>
+
+
+<!-- MENSAGEM 1: painel direito (conteúdo) -->
+<div class="column all-85 medium-80 small-75 tiny-75">
+
+
+<!-- MENSAGEM 1: cabeçalho -->
+<div class="message-header">
+  <b>Lorem ipsum dolor sit amet</b>
+  <p class="slab">
+    <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 21:24</small>
+  </p>
+</div>
+
+
+<!-- MENSAGEM 1: conteúdo -->
+<div class="message-content half-bottom-space">
+  <p class="medium half-vertical-space">
+  Vestibulum quis placerat metus. In <b>pharetra metus</b> vel tincidunt feugiat. Ut vulputate sem vitae velit <em>sagittis</em> congue. Mauris blandit felis sed velit eleifend semper.
+  </p>
+  <p class="medium half-vertical-space">
+  Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
+  </p>
+</div>
+
+
+<!-- MENSAGEM 1: buton group -->
+<div class="message-buttons quarter-vertical-padding align-right">
+  <small>
+    <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Responder</a>
+  </small>
+  <small>
+    <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Citação</a>
+  </small>
+</div>
+</div>
+</div>
+
+
+<!-- MENSAGEM 2 -->
+<div id="last-message" class="message column-group half-vertical-space">
+
+
+<!-- MENSAGEM 2: painel esquerdo (informações autor) -->
+<div class="column all-15 medium-20 small-25 tiny-25">
+  <b class="no-margin"><a href="view_profile.html">mellus</a></b>
+  <p class="medium no-margin">FEUP</p>
+  <img class="img-circle half-vertical-space" src="holder.../js/64x64/auto/ink" alt="">
+  <p class="small"><b>Last Online:</b> Wednesday, 09/03/2016 17:55</p>
+</div>
+
+
+<!-- MENSAGEM 2: painel direito (conteúdo) -->
+<div class="column all-85 medium-80 small-75 tiny-75">
+
+
+<!-- MENSAGEM 2: cabeçalho -->
+<div class="message-header">
+  <b>RE: Lorem ipsum dolor sit amet</b>
+  <p class="slab">
+    <small><i class="fa fa-calendar"></i>&nbsp;01/03/2016 22:55</small>
+  </p>
+</div>
+
+
+<!-- MENSAGEM 2: corpo -->
+<div class="message-content half-bottom-space">
+  <p class="half-vertical-space">
+  <small class="no-margin">marques999 wrote:</small>
+  <blockquote class="no-margin medium fw-300">
+  Nullam suscipit, lectus non congue ultricies, lectus <a href="#">mauris efficitur</a> ex, nec tempor turpis arcu et ex. Maecenas porta posuere turpis et dapibus. Phasellus ac aliquam eros, nec rutrum dolor. Aliquam ac vestibulum eros.
+  </blockquote>
+  </p>
+  <p class="medium half-vertical-space">
+  Cras suscipit purus vel nibh mattis, eu feugiat purus porttitor. Nulla eget <b>odio tempus</b> libero consequat vehicula placerat non nibh. Nulla a condimentum felis. Pellentesque quis laoreet tellus. Donec euismod, tellus non porta varius, mauris libero faucibus lectus, in vulputate est massa feugiat nulla.
+  </p>
+  <p class="medium half-vertical-space">
+  Nulla dignissim nisi tortor, et rutrum <em>lacus</em> sollicitudin in. Nulla at lectus volutpat lectus rutrum pellentesque. Suspendisse tempor cursus mauris, at vehicula nisi volutpat quis. Fusce ut mi sapien. Cras nec semper dui, a aliquet orci.
+  </p>
+</div>
+
+
+<!-- MENSAGEM 2: button group -->
+<div class="message-buttons quarter-vertical-padding align-right">
+  <small>
+    <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Responder</a>
+  </small>
+  <small>
+    <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Citação</a>
+  </small>
+</div>
+</div>
+</div>
+
+
+<!-- PRIVATE MESSAGE: formulário -->
+<div class="message half-top-space bottom-space">
+<form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator medium half-vertical-padding">
+
+
+<!-- PRIVATE MESSAGE: assunto -->
+<div class="control-group required column-group half-gutters">
+  <label for="subject" class="all-15 align-right fw-700">Assunto:</label>
+  <div class="control all-80">
+    <input name="subject" id="subject" type="text" data-rules="required|text[true,true]" placeholder="Por favor indique o assunto da sua mensagem...">
+  </div>
+</div>
+
+
+<!-- PRIVATE MESSAGE: mensagem -->
+<div class="control-group required column-group half-gutters ">
+  <label for="message" class="all-15 align-right fw-700">Mensagem:</label>
+  <div class="control all-80">
+    <textarea name="message" id="message" rows="8" cols="60" data-rules="required" placeholder="Por favor escreva aqui a sua mensagem..."></textarea>
+  </div>
+</div>
+
+
+<!-- PRIVATE MESSAGE: botões -->
+<div class="control-group column-group half-gutters no-margin">
+  <div class="align-center">
+    <button class="ink-button black" type="submit">
+      <i class="fa fa-pencil"></i>
+      Reply
+    </button>
+    <button class="ink-button black" type="reset">
+      <i class="fa fa-eraser"></i>
+      Clear
+    </button>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+</form>
+</div>
+</div>
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
+  </div>
+</footer>
+</body>
+</html>

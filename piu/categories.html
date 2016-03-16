@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&amp;A</title>
+<link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="../css/ink.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/holder.min.js"></script>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="../js/ink-all.min.js"></script>
+<script type="text/javascript" src="../js/autoload.min.js"></script>
+</head>
+
+
+<!-- NAVEGAÇÃO -->
+<body class="ink-drawer">
+<header id="header-container">
+<nav id="header-menu" class="ink-navigation">
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="medium">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-messages" class="medium">
+    <a href="view_messages.html">
+      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+    </a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      <span>marques999</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
+      </div>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
+    <a href="index_user.html">
+      <img src="../img/header-256px.png" alt="">
+    </a>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="ask_question.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar
+    </a>
+  </li>
+  <li id="nav-answer">
+    <a href="categories.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i>
+      Notificações<span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      marques999</span><span class="ink-badge red">3</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
+      </div>
+      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
+</header>
+
+
+<!-- PÁGINA -->
+<div class="ink-grid bottom-padding">
+<h3 class="quarter-bottom-space half-top-padding">Categorias</h3>
+<div class="column-group half-gutters">
+
+
+<!-- CATEGORIAS: primeira coluna -->
+<div class="column all-25 small-50 tiny-50">
+<dl>
+  <dt>
+    <a href="hub.html">Faculdade de Ciências</a>
+    <a href="https://sigarra.up.pt/fcup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Arquitectura Paisagista</a></dd>
+  <dd><a href="list_questions.html">Astronomia</a></dd>
+  <dd><a href="list_questions.html">Biologia</a></dd>
+  <dd><a href="list_questions.html">Bioquímica</a></dd>
+  <dd><a href="list_questions.html">Ciências de Computadores</a></dd>
+  <dd><a href="list_questions.html">Ciências de Engenharia</a></dd>
+  <dd><a href="list_questions.html">Ciências do Ambiente</a></dd>
+  <dd><a href="list_questions.html">Engenharia Física</a></dd>
+  <dd><a href="list_questions.html">Engenharia de Redes</a></dd>
+  <dd><a href="list_questions.html">Física</a></dd>
+  <dd><a href="list_questions.html">Geologia</a></dd>
+  <dd><a href="list_questions.html">Matemática</a></dd>
+  <dd><a href="list_questions.html">Química</a></dd>
+</dl>
+</div>
+
+
+<!-- CATEGORIAS: segunda coluna -->
+<div class="column all-25 small-50 tiny-50">
+<dl>
+  <dt>
+    <a href="hub.html">Faculdade de Direito</a>
+    <a href="https://sigarra.up.pt/fdup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Ciências Forenses</a></dd>
+  <dd><a href="list_questions.html">Criminologia</a></dd>
+  <dd><a href="list_questions.html">Direito</a></dd>
+  <dt class="top-space">
+    <a href="hub.html">Faculdade de Engenharia</a>
+    <a href="https://sigarra.up.pt/feup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Bioengenharia</a></dd>
+  <dd><a href="list_questions.html">Engenharia Ambiente</a></dd>
+  <dd><a href="list_questions.html">Engenharia Civil</a></dd>
+  <dd><a href="list_questions.html">Engenharia Eletrotécnica</a></dd>
+  <dd><a href="list_questions.html">Engenharia Informática</a></dd>
+  <dd><a href="list_questions.html">Engenharia Industrial e Gestão</a></dd>
+  <dd><a href="list_questions.html">Engenharia Mecânica</a></dd>
+  <dd><a href="list_questions.html">Engenharia Metalúrgica</a></dd>
+  <dd><a href="list_questions.html">Engenharia Química</a></dd>
+</dl>
+</div>
+
+
+<!-- CATEGORIAS: terceira coluna -->
+<div class="column all-25 small-50 tiny-50">
+<dl>
+  <dt>
+    <a href="hub.html">Faculdade de Medicina</a>
+    <a href="https://sigarra.up.pt/fmup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Anatomia</a></dd>
+  <dd><a href="list_questions.html">Cirurgias</a></dd>
+  <dd><a href="list_questions.html">Cuidados Paliativos</a></dd>
+  <dd><a href="list_questions.html">Epidemologia</a></dd>
+  <dd><a href="list_questions.html">Neurobiologia</a></dd>
+  <dd><a href="list_questions.html">Psiquiatria</a></dd>
+  <dt class="top-space">
+    <a href="hub.html">Faculdade de Desporto</a>
+    <a href="https://sigarra.up.pt/fadeup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Ciências do Desporto</a></dd>
+  <dd><a href="list_questions.html">Educação Física</a></dd>
+  <dd><a href="list_questions.html">Fisioterapia</a></dd>
+  <dd><a href="list_questions.html">Gerontologia</a></dd>
+  <dd><a href="list_questions.html">Gestão Desportiva</a></dd>
+</dl>
+</div>
+
+
+<!-- CATEGORIAS: quarta coluna -->
+<div class="column all-25 small-50 tiny-50">
+<dl>
+  <dt>
+    <a href="hub.html">Faculdade de Letras</a>
+    <a href="https://sigarra.up.pt/flup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Arqueologia</a></dd>
+  <dd><a href="list_questions.html">Ciência da Informação</a></dd>
+  <dd><a href="list_questions.html">Ciências da Comunicação</a></dd>
+  <dd><a href="list_questions.html">Ciências da Linguagem</a></dd>
+  <dd><a href="list_questions.html">Estudos Portugueses</a></dd>
+  <dd><a href="list_questions.html">Filosofia</a></dd>
+  <dd><a href="list_questions.html">Geografia</a></dd>
+  <dd><a href="list_questions.html">História</a></dd>
+  <dd><a href="list_questions.html">História da Arte</a></dd>
+  <dt class="top-space">
+    <a href="hub.html">Faculdade de Farmácia</a>
+    <a href="https://sigarra.up.pt/ffup/pt/web_page.inicial">
+      <i class="fa fa-external-link"></i>
+    </a>
+  </dt>
+  <dd><a href="list_questions.html">Ciências Farmacêuticas</a></dd>
+  <dd><a href="list_questions.html">Química Farmacêutica</a></dd>
+  <dd><a href="list_questions.html">Tecnologia Farmacêutica</a></dd>
+</dl>
+</div>
+
+
+<!-- FOOTER -->
+</div>
+</div>
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
+  </div>
+</footer>
+</body>
+</html>

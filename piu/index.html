@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&amp;A</title>
+<link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="../css/ink.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/holder.min.js"></script>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="../js/ink-all.min.js"></script>
+<script type="text/javascript" src="../js/autoload.min.js"></script>
+</head>
+
+
+<!-- NAVEGAÇÃO -->
+<body class="ink-drawer">
+<header id="header-container">
+<nav id="header-menu" class="ink-navigation">
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="disabled medium">
+    <a href="#"><i class="fa fa-bell-o"></i>0</a>
+  </li>
+  <li id="nav-messages" class="disabled medium">
+    <a href="#"><i class="fa fa-envelope-o"></i>0</a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="user_login.html"><i class="fa fa-user"></i>Visitante</a>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
+    <a href="index.html">
+      <img src="../img/header-256px.png" alt="">
+    </a>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="message_guest.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar</a>
+  </li>
+  <li id="nav-answer">
+    <a href="message_guest.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications" class="disabled">
+    <a href="#">
+      <i class="fa fa-bell-o"></i>
+      Notificações
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="user_login.html">
+      <i class="fa fa-user"></i>
+      Visitante
+    </a>
+  </li>
+</ul>
+</nav>
+</header>
+
+
+<!-- PÁGINA -->
+<div class="ink-grid column-group gutters bottom-padding">
+
+
+<!-- HOME: barra lateral -->
+<div class="column all-20 medium-25 small-100 tiny-100">
+  <nav class="ink-navigation medium vertical-padding">
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-hashtag"></i>&nbsp;Categorias
+    </h5>
+    <ul class="menu vertical white">
+        <li><a href="list_questions.html">Ciências Forenses</a></li>
+        <li><a href="list_questions.html">Engenharia Física</a></li>
+        <li><a href="list_questions.html">Engenharia Informática</a></li>
+        <li><a href="list_questions.html">Estudos Portugueses</a></li>
+        <li class="heading"><a href="categories.html">ver mais...</a></li>
+    </ul>
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-line-chart"></i>&nbsp;Populares
+    </h5>
+    <ul class="menu vertical white">
+      <li class="active"><a href="#">Neste momento</a></li>
+      <li><a href="#">Últimas 24h</a></li>
+      <li><a href="#">Últimas 48h</a></li>
+      <li><a href="#">Última semana</a></li>
+      <li><a href="#">Último mês</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+<!-- HOME: perguntas mais recentes -->
+<div class="column half-top-padding all-80 medium-75 small-100 tiny-100">
+
+
+<!-- PERGUNTA 1 -->
+<article class="question">
+<h5 class="slab quarter-vertical-space">
+  <a class="black" href="view_question.html">Porque é o Linux parece ser mais rápido que o Windows?</a>
+</h5>
+
+
+<!-- PERGUNTA 1: autor -->
+<div class="condensed author-panel quarter-vertical-space">
+  <div>
+    <p class="no-margin">
+      <a class="medium" href="view_profile.html">Diogo Marques</a>
+      &bull;
+      <small>Terça-feira, 1 de Março de 2016</small>
+      &bull;
+      <span class="medium">
+        <strong>4</strong>&nbsp;respostas
+      </span>
+      &bull;
+      <span class="medium">
+        <strong class="positive-score">56</strong>&nbsp;pontos
+      </span>
+    </p>
+  </div>
+</div>
+
+
+<!-- PERGUNTA 1: conteúdo -->
+<p class="medium no-margin align-justify">
+Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?
+</p>
+</article>
+<hr>
+
+
+<!-- PERGUNTA 2 -->
+<article class="question">
+<h5 class="slab quarter-vertical-space">
+  <a class="black" href="view_question.html">Que país tem a pior gastronomia na vossa opinião?</a>
+</h5>
+
+
+<!-- PERGUNTA 2: autor -->
+<div class="condensed author-panel quarter-vertical-space">
+  <div>
+    <p class="no-margin">
+      <a class="medium" href="view_profile.html">Diogo Marques</a>
+      &bull;
+      <small>Terça-feira, 1 de Março de 2016</small>
+      &bull;
+      <span class="medium">
+        <strong>4</strong>&nbsp;respostas
+      </span>
+      &bull;
+      <span class="medium">
+        <strong class="negative-score">-21</strong>&nbsp;pontos
+      </span>
+    </p>
+  </div>
+</div>
+
+
+<!-- PERGUNTA 2: conteúdo -->
+<p class="medium no-margin align-justify">
+Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?
+</p>
+</article>
+<hr>
+
+
+<!-- PERGUNTA 3 -->
+<article class="question">
+<h5 class="slab quarter-vertical-space">
+  <a class="black" href="view_question.html">Qual foi o comentário mais hilariante que encontraram em código?</a>
+  <small class="ink-badge black"><i class="fa fa-check"></i>&nbsp;fechada</small>
+</h5>
+
+
+<!-- PERGUNTA 3: autor -->
+<div class="condensed author-panel quarter-vertical-space">
+  <div>
+    <p class="no-margin">
+      <a class="medium" href="view_profile.html">Diogo Marques</a>
+      &bull;
+      <small>Terça-feira, 1 de Março de 2016</small>
+      &bull;
+      <span class="medium">
+        <strong>4</strong>&nbsp;respostas
+      </span>
+      &bull;
+      <span class="medium">
+        <strong class="positive-score">6</strong>&nbsp;pontos
+      </span>
+    </p>
+  </div>
+</div>
+
+
+<!-- PERGUNTA 3: conteúdo -->
+<p class="medium no-margin align-justify">
+Desta maneira, a percepção das dificuldades promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais. O incentivo ao avanço tecnológico, assim como a execução dos pontos do programa representa uma abertura para a melhoria das novas proposições. Neste sentido, a expansão dos mercados mundiais estimula a padronização das condições inegavelmente apropriadas?
+</p>
+
+
+<!-- FOOTER -->
+</article>
+</div>
+</div>
+<script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+</script>
+<footer id="footer" class="clearfix medium fixed">
+  <div class="ink-grid">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+      <i class="fa fa-copyright"></i>
+      2016 Diogo Marques, Pedro Melo, Vitor Esteves
+    </p>
+  </div>
+</footer>
+</body>
+</html>
