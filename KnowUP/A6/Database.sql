@@ -1,153 +1,154 @@
 BEGIN TRANSACTION;
-CREATE TABLE `Moderadores` (
-	`idModerador`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idUtilizador`	INTEGER UNIQUE,
-	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUser)
-);
-CREATE TABLE `Mensagens` (
-	`idThread`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idAutor`	INTEGER NOT NULL,
-	`content`	TEXT NOT NULL,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUser)
-);
-CREATE TABLE "Administradores" (
-	`idAdministrador`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idUtilizador`	INTEGER UNIQUE,
+CREATE TABLE "VotosPerguntas" (
+	`idPergunta`		INTEGER NOT NULL,
+	`idUtilizador`		INTEGER NOT NULL,
+	`valor`				INTEGER DEFAULT 1 CHECK(valor = - 1 OR valor = 1),
+	PRIMARY KEY(idPergunta, idUtilizador),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta),
 	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador)
 );
-INSERT INTO "Administradores" VALUES(1,1);
 CREATE TABLE "VotosRespostas" (
-	`idResposta`	INTEGER NOT NULL UNIQUE,
-	`idUtilizador`	INTEGER NOT NULL,
-	`score`	INTEGER DEFAULT 1 CHECK(score = - 1 OR score = 1),
-	PRIMARY KEY(idResposta,idUtilizador),
-	FOREIGN KEY(`idResposta`) REFERENCES Respostas ( idResposta ),
-	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores ( idUtilizador )
-);
-CREATE TABLE "VotosPerguntas" (
-	`idPergunta`	INTEGER NOT NULL,
-	`idUtilizador`	INTEGER NOT NULL,
-	`score`	INTEGER DEFAULT 1 CHECK(score = - 1 OR score = 1),
-	PRIMARY KEY(idPergunta,idUtilizador),
-	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas ( idPergunta ),
-	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores ( idUtilizador )
-);
-CREATE TABLE "Threads" (
-	`idUtilizador1`	INTEGER,
-	`idUtilizador2`	INTEGER,
-	`lastMessage`	INTEGER NOT NULL UNIQUE,
-	PRIMARY KEY(idUtilizador1,idUtilizador2),
-	FOREIGN KEY(`idUtilizador1`) REFERENCES Utilizadores ( idUtilizador ),
-	FOREIGN KEY(`idUtilizador2`) REFERENCES Utilizadores ( idUtilizador ),
-	FOREIGN KEY(`lastMessage`) REFERENCES Mensagens ( idMensagem )
-);
-CREATE TABLE "Respostas" (
-	`idResposta`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idPergunta`	INTEGER NOT NULL,
-	`idAutor`	INTEGER NOT NULL,
-	`content`	TEXT NOT NULL,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp > 0),
-	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas ( idPergunta ),
-	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores ( idUtilizador )
-);
-INSERT INTO "Respostas" VALUES(1,0,0,'',NULL);
-CREATE TABLE "Followers" (
-	`idMembro`	INTEGER,
-	`idPergunta`	INTEGER,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	PRIMARY KEY(idMembro,idPergunta),
-	FOREIGN KEY(`idMembro`) REFERENCES Utilizadores ( idUtilizador ),
-	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas ( idPergunta )
-);
-CREATE TABLE "ComentariosRespostas" (
-	`idCR`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idResposta`	INTEGER NOT NULL,
-	`idAutor`	INTEGER NOT NULL,
-	`content`	TEXT NOT NULL,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	FOREIGN KEY(`idResposta`) REFERENCES Respostas ( idResposta ),
-	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores ( idUtilizador )
-);
-CREATE TABLE "ComentariosPerguntas" (
-	`idCP`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idPergunta`	INTEGER NOT NULL,
-	`idAutor`	INTEGER NOT NULL,
-	`content`	TEXT NOT NULL,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas ( idPergunta ),
-	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores ( idUtilizador )
-);
-CREATE TABLE `Categorias` (
-	`idCategoria`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idBest`	INTEGER,
-	`nome`	TEXT NOT NULL UNIQUE,
-	FOREIGN KEY(`idBest`) REFERENCES Perguntas(idPergunta)
-);
-CREATE TABLE "Faculdades" (
-	`idFaculdade`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`name`	TEXT NOT NULL UNIQUE,
-	`shorthand`	TEXT NOT NULL UNIQUE,
-	`address`	TEXT,
-	`website`	TEXT
-);
-INSERT INTO "Faculdades" VALUES(1,'Faculdade de Engenharia da Universidade do Porto','FEUP',NULL,'https://sigarra.up.pt/feup/pt/web_page.inicial');
-INSERT INTO "Faculdades" VALUES(2,'Faculdade de Economia da Universidade do Porto','FEP',NULL,'https://sigarra.up.pt/fep/pt/web_page.inicial');
-INSERT INTO "Faculdades" VALUES(3,'Faculdade de Medicina','FMUP',NULL,'https://sigarra.up.pt/fmup/pt/web_page.inicial');
-INSERT INTO "Faculdades" VALUES(4,'Faculdade de Desporto da Universidade do Porto','FADEUP',NULL,'https://sigarra.up.pt/fadeup/pt/web_page.inicial');
-INSERT INTO "Faculdades" VALUES(5,'Faculdade de Direito da Universidade do Porto','FDUP',NULL,'https://sigarra.up.pt/fdup/pt/web_page.inicial');
-INSERT INTO "Faculdades" VALUES(6,'Faculdade de Ciências da Universidade do Porto','FCUP',NULL,'https://sigarra.up.pt/fcup/pt/web_page.inicial');
-CREATE TABLE `CategoriasFaculdade` (
-	`idCategoria`	INTEGER NOT NULL,
-	`idFaculdade`	INTEGER NOT NULL,
-	PRIMARY KEY(idCategoria,idFaculdade),
-	FOREIGN KEY(`idCategoria`) REFERENCES Categorias(idCategoria),
-	FOREIGN KEY(`idFaculdade`) REFERENCES Faculdades(idFaculdade)
+	`idResposta`		INTEGER NOT NULL,
+	`idUtilizador`		INTEGER NOT NULL,
+	`valor`				INTEGER DEFAULT 1 CHECK(valor = - 1 OR valor = 1),
+	PRIMARY KEY(idResposta, idUtilizador),
+	FOREIGN KEY(`idResposta`) REFERENCES Respostas(idResposta),
+	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador)
 );
 CREATE TABLE "Utilizadores" (
-	`idUtilizador`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idFaculdade`	INTEGER NOT NULL,
-	`username`	TEXT NOT NULL UNIQUE,
-	`avatar`	TEXT NOT NULL UNIQUE,
-	`email`	TEXT NOT NULL UNIQUE,
-	`firstName`	TEXT,
-	`lastName`	TEXT,
-	`lastSession`	INTEGER DEFAULT 0 CHECK(lastSession >= 0),
-	`active`	INTEGER DEFAULT 1 CHECK(active = 0 OR active = 1),
-	FOREIGN KEY(`idFaculdade`) REFERENCES Faculdades ( idFaculdade )
+	`idUtilizador` 		INTEGER PRIMARY KEY AUTOINCREMENT,
+	`idInstituicao`		INTEGER NOT NULL,
+	`username`			TEXT NOT NULL UNIQUE,
+	`password`			TEXT,
+	`email`				TEXT NOT NULL UNIQUE,
+	`primeiroNome`		TEXT,
+	`ultimoNome`		TEXT,
+	`ultimaSessao`		INTEGER DEFAULT 0 CHECK(ultimaSessao >= 0),
+	`ativo`				INTEGER DEFAULT 1 CHECK(ativo = 0 OR ativo = 1),
+	FOREIGN KEY(`idInstituicao`) REFERENCES Instituicoes(idInstituicao)
 );
-INSERT INTO "Utilizadores" VALUES(1,1,'marques999','','xmarques999@hotmail.com','Diogo','Marques',0,1);
+CREATE TABLE "Administradores" (
+	`idAdministrador`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idUtilizador`		INTEGER NOT NULL UNIQUE,
+	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador)
+);
+CREATE TABLE "Moderadores" (
+	`idModerador`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idUtilizador`		INTEGER NOT NULL UNIQUE,
+	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador)
+);
+CREATE TABLE "Seguidores" (
+	`idUtilizador`		INTEGER NOT NULL,
+	`idPergunta`		INTEGER NOT NULL,
+	`dataInicio`		INTEGER DEFAULT 0 CHECK(dataInicio >= 0),
+	`dataAcesso`		INTEGER DEFAULT 0 CHECK(dataAcesso >= 0),
+	PRIMARY KEY(idUtilizador, idPergunta),
+	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta)
+);
+CREATE TABLE "Respostas" (
+	`idResposta`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idPergunta`		INTEGER NOT NULL,
+	`idAutor`			INTEGER NOT NULL,
+	`descricao`			TEXT NOT NULL,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora > 0),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta),
+	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUtilizador)
+);
 CREATE TABLE "Perguntas" (
-	`idPergunta`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`idCategoria`	INTEGER NOT NULL,
-	`idAutor`	INTEGER NOT NULL,
-	`title`	TEXT NOT NULL,
-	`content`	TEXT,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	`active`	INTEGER DEFAULT 1 CHECK(active = 0 OR active = 1),
-	FOREIGN KEY(`idCategoria`) REFERENCES Categorias ( idCategoria ),
-	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores ( idUser )
+	`idPergunta`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idCategoria`		INTEGER NOT NULL,
+	`idAutor`			INTEGER NOT NULL,
+	`titulo`			TEXT NOT NULL,
+	`descricao`			TEXT,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora >= 0),
+	`numVisualizacoes`	INTEGER DEFAULT 0 CHECK(numVisualizacoes >= 0),
+	`numRespostas`		INTEGER DEFAULT 0 CHECK(numRespostas >= 0),
+	`votosPositivos`	INTEGER DEFAULT 0 CHECK(votosPositivos >= 0),
+	`votosNegativos`	INTEGER DEFAULT 0 CHECK(votosNegativos >= 0),
+	`ativa`				INTEGER DEFAULT 1 CHECK(ativa = 0 OR ativa = 1),
+	FOREIGN KEY(`idCategoria`) REFERENCES Categorias(idCategoria),
+	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUtilizador)
 );
-CREATE TABLE `MelhoresRespostas` (
-	`idPergunta`	INTEGER,
-	`idResposta`	INTEGER,
-	`timestamp`	INTEGER DEFAULT 0 CHECK(timestamp >= 0),
-	PRIMARY KEY(idPergunta,idResposta),
-	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas (idPergunta),
-	FOREIGN KEY(`idResposta`) REFERENCES Respostas (idResposta)
+CREATE TABLE `Notificacoes` (
+	`idNotificacao`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idPergunta`		INTEGER NOT NULL,
+	`idAutor`			INTEGER NOT NULL,
+	`descricao`			TEXT NOT NULL,
+	`tipo`				INTEGER NOT NULL,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora >= 0),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta),
+	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUtilizador)
 );
-DELETE FROM sqlite_sequence;
-INSERT INTO "sqlite_sequence" VALUES('Administradores',1);
-INSERT INTO "sqlite_sequence" VALUES('Respostas',1);
-INSERT INTO "sqlite_sequence" VALUES('ComentariosRespostas',0);
-INSERT INTO "sqlite_sequence" VALUES('ComentariosPerguntas',0);
-INSERT INTO "sqlite_sequence" VALUES('Faculdades',6);
-INSERT INTO "sqlite_sequence" VALUES('Utilizadores',1);
-INSERT INTO "sqlite_sequence" VALUES('Perguntas',0);
-CREATE VIEW usersView
-AS SELECT Utilizadores.* FROM Utilizadores
-left outer join Administradores 
-       on Administradores.idUtilizador = Utilizadores.idUtilizador
- left outer join Moderadores 
-       on Moderadores.idUtilizador = Utilizadores.idUtilizador;
+CREATE TABLE "Mensagens" (
+	`idMensagem`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idConversa`		INTEGER NOT NULL,
+	`idUtilizador`		INTEGER NOT NULL,
+	`titulo`			TEXT,
+	`mensagem`			TEXT NOT NULL,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora >= 0),
+	FOREIGN KEY(`idConversa`) REFERENCES Conversas(idConversa),
+	FOREIGN KEY(`idUtilizador`) REFERENCES Utilizadores(idUtilizador)
+);
+CREATE TABLE "MelhoresRespostas" (
+	`idPergunta`		INTEGER NOT NULL,
+	`idResposta`		INTEGER NOT NULL,
+	PRIMARY KEY(idPergunta, idResposta),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta),
+	FOREIGN KEY(`idResposta`) REFERENCES Respostas(idResposta)
+);
+CREATE TABLE "Instituicoes" (
+	`idInstituicao`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`numPerguntas`		INTEGER DEFAULT 0 CHECK(numPerguntas >= 0),
+	`name`				TEXT NOT NULL UNIQUE,
+	`sigla`				TEXT NOT NULL UNIQUE,
+	`morada`			TEXT,
+	`contacto`			INTEGER,
+	`website`			TEXT
+);
+CREATE TABLE "Conversas" (
+	`idUtilizador1`		INTEGER NOT NULL,
+	`idUtilizador2`		INTEGER NOT NULL,
+	`ultimaMensagem`	INTEGER NOT NULL,
+	PRIMARY KEY(idUtilizador1, idUtilizador2),
+	FOREIGN KEY(`idUtilizador1`) REFERENCES Utilizadores(idUtilizador),
+	FOREIGN KEY(`idUtilizador2`) REFERENCES Utilizadores(idUtilizador),
+	FOREIGN KEY(`ultimaMensagem`) REFERENCES Mensagens(idMensagem)
+);
+CREATE TABLE "ComentariosRespostas" (
+	`idCR`				INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idResposta`		INTEGER NOT NULL,
+	`idAutor`			INTEGER NOT NULL,
+	`descricao`			TEXT NOT NULL,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora >= 0),
+	FOREIGN KEY(`idResposta`) REFERENCES Respostas(idResposta),
+	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUtilizador)
+);
+CREATE TABLE "ComentariosPerguntas" (
+	`idCP`				INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idPergunta`		INTEGER NOT NULL,
+	`idAutor`			INTEGER NOT NULL,
+	`descricao`			TEXT NOT NULL,
+	`dataHora`			INTEGER DEFAULT 0 CHECK(dataHora >= 0),
+	FOREIGN KEY(`idPergunta`) REFERENCES Perguntas(idPergunta),
+	FOREIGN KEY(`idAutor`) REFERENCES Utilizadores(idUtilizador)
+);
+CREATE TABLE "CategoriasInstituicao" (
+	`idCategoria`		INTEGER NOT NULL,
+	`idInstituicao`		INTEGER NOT NULL,
+	PRIMARY KEY(idCategoria, idInstituicao),
+	FOREIGN KEY(`idCategoria`) REFERENCES Categorias(idCategoria),
+	FOREIGN KEY(`idInstituicao`) REFERENCES Instituicoes(idInstituicao)
+);
+CREATE TABLE "Categorias" (
+	`idCategoria`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`numPerguntas`		INTEGER DEFAULT 0 CHECK(numPerguntas >= 0),
+	`nome`				TEXT NOT NULL UNIQUE
+);
+INSERT INTO `Instituicoes` VALUES (1,NULL,'Faculdade de Engenharia da Universidade do Porto','FEUP',NULL,NULL,'https://sigarra.up.pt/feup/pt/web_page.inicial');
+INSERT INTO `Instituicoes` VALUES (2,NULL,'Faculdade de Economia da Universidade do Porto','FEP',NULL,NULL,'https://sigarra.up.pt/fep/pt/web_page.inicial');
+INSERT INTO `Instituicoes` VALUES (3,NULL,'Faculdade de Medicina','FMUP',NULL,NULL,'https://sigarra.up.pt/fmup/pt/web_page.inicial');
+INSERT INTO `Instituicoes` VALUES (4,NULL,'Faculdade de Desporto da Universidade do Porto','FADEUP',NULL,NULL,'https://sigarra.up.pt/fadeup/pt/web_page.inicial');
+INSERT INTO `Instituicoes` VALUES (5,NULL,'Faculdade de Direito da Universidade do Porto','FDUP',NULL,NULL,'https://sigarra.up.pt/fdup/pt/web_page.inicial');
+INSERT INTO `Instituicoes` VALUES (6,NULL,'Faculdade de Ciências da Universidade do Porto','FCUP',NULL,NULL,'https://sigarra.up.pt/fcup/pt/web_page.inicial');
 COMMIT;
