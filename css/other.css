@@ -41,3 +41,12 @@ body {
   top: 4.0em;
   margin: 0 auto;
 }
+
+.huge-button {
+  font-size: 5.0em;
+}
+
+h4 {
+  color: white;
+  font-weight: 400;
+}
