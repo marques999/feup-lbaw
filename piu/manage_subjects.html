@@ -19,146 +19,180 @@
 </head>
 
 
+<!-- PÁGINA -->
+<body>
+<div class="ink-grid">
+
+
 <!-- NAVEGAÇÃO -->
-<body class="ink-drawer">
-<header id="header-container">
-<nav id="header-menu" class="ink-navigation">
-
-
-<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
-<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
-  <li id="nav-drawer" class="hide-all show-tiny show-small">
-    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
-  </li>
-  <li id="nav-notifications" class="medium">
-    <a href="view_notifications.html">
-      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
-    </a>
-  </li>
-  <li id="nav-messages" class="medium">
-    <a href="view_messages.html">
-      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
-    </a>
-  </li>
-  <li id="nav-profile" class="medium">
-    <a href="view_profile.html">
-      <i class="fa fa-user"></i>
-      <span>marques999</span>
-    </a>
-    <ul class="submenu fw-600">
-      <div class="half-padding align-center">
-       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
-      </div>
-      <li><a href="view_profile.html#profile">Perfil</a></li>
-      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
-      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
-      <li><a href="user_logout.html">Terminar sessão</a></li>
-    </ul>
-  </li>
-</ul>
-
-
-<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
-<ul class="menu medium horizontal black hide-small hide-tiny">
-  <li id="nav-home" class="no-margin">
+<div class="column-group half-vertical-space">
+  <div class="column all-20 large-25 medium-33 small-50 tiny-50">
     <a href="index_user.html">
       <img src="../img/header-256px.png" alt="">
     </a>
-  </li>
-  <form action="list_results.html" class="ink-form ink-search all-20 medium">
-    <div class="control-group">
-      <div class="control append-button" role="search">
-        <span><input type="text" name="name" id="name"></span>
-        <button class="ink-button"><i class="fa fa-search"></i></button>
-      </div>
-    </div>
-  </form>
-  <li id="nav-ask">
-    <a href="ask_question.html">
-      <i class="fa fa-comment-o"></i>
-      Perguntar
-    </a>
-  </li>
-  <li id="nav-answer">
-    <a href="categories.html">
-      <i class="fa fa-pencil-square-o"></i>
-      Responder
-    </a>
-  </li>
-  <li id="nav-notifications">
-    <a href="view_notifications.html">
-      <i class="fa fa-bell-o"></i>
-      Notificações<span class="ink-badge red">5</span>
-    </a>
-  </li>
-  <li id="nav-profile">
-    <a href="view_profile.html">
-      <i class="fa fa-user"></i>
-      marques999</span><span class="ink-badge red">3</span>
-    </a>
-    <ul class="submenu fw-600">
-      <div class="half-padding align-center">
-       <img class="img-circle" src="holder.../js/64x64/auto/ink" alt="">
-      </div>
-      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
-      <li><a href="view_profile.html#profile">Perfil</a></li>
-      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
-      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
-      <li><a href="user_logout.html">Terminar sessão</a></li>
-    </ul>
-  </li>
-</ul>
-</nav>
-</header>
-
-
-<!-- PÁGINA -->
-<div class="ink-grid bottom-padding">
-<div class="message half-top-space all-100">
- <h5 class="slab no-margin">
-    <i class="fa-cog fa"></i>
-    <a href="manage.html" class="black">Administração</a>
-    <strong>&gt;</strong>
-    <a href="manage_subjects.html" class="black">Gerir Categorias</a>
-  </h5>
+  </div>
+  <div class="column quarter-vertical-padding">
+    <h5 class="quarter-vertical-space">KnowUP! - Collaborative Q&A</h5>
+    <p>segunda-feira, 21 de Março de 2016</p>
+  </div>
+  <div class="message half-bottom-space">
+   <h5 class="slab no-margin">
+      <i class="fa-cog fa"></i>
+      <a href="manage.html" class="black">Administração</a>
+      <strong>&gt;</strong>
+      <a href="manage_subjects.html" class="black">Gerir Categorias</a>
+    </h5>
+  </div>
 </div>
+  <p><small>
+  <a href="event_create.php" class="ink-button"><i class="fa fa-plus"></i> Nova instituição</a>
+  </small></p>
+<div class="ink-tabs left" data-prevent-url-change="true">
+    <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+    <ul class="tabs-nav">
+        <li><a class="tabs-tab" href="#home2">FCUP</a></li>
+        <li><a class="tabs-tab" href="#news2">FEUP</a></li>
+                <li><a class="tabs-tab" href="#news2">FDUP</a></li>
+                        <li><a class="tabs-tab" href="#news2">FLUP</a></li>
+                                <li><a class="tabs-tab" href="#news2">FMUP</a></li>
+                                        <li><a class="tabs-tab" href="#news2">FEUP</a></li>
+    </ul>
+
+    <!-- Now just place your content -->
+    <div id="home2" class="tabs-content">
+        <h2 class="fw-400">Faculdade de Ciências da Universidade do Porto</h2>
+        <h4 class="fw-400 condensed">Categorias <strong>(3)</strong></h4>
+        <table class="ink-table alternating hover">
+<tbody>
+
+    <tr>
+      <td>
+        <a href="list_questions.html">Arquitectura Paisagista</a>
+        <br>
+        <small href="#">editar</small>
+        <small href="#">apagar</small>
+      </td>
+      <td>
+        <a href="list_questions.html">Astronomia</a>
+        <br>
+        <small href="#">editar</small>
+        <small href="#">apagar</small>
+      </td>
+      <td><a href="list_questions.html">Biologia</a>
+        <br>
+        <small href="#">editar</small>
+        <small href="#">apagar</small>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="list_questions.html">Bioquímica</a>
+        <br>
+        <small href="#">editar</small>
+        <small href="#">apagar</small>
+      </td>
+    <td>
+      <a href="list_questions.html">Ciências de Computadores</a>
+      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small>
+    </td>
+    <td>
+    <a href="list_questions.html">Ciências de Engenharia</a>
+      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small>
+    </td>
+  </tr>
+  <tr>
+ <td><a href="list_questions.html">Ciências do Ambiente</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+  <td><a href="list_questions.html">Engenharia Física</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+   <td><a href="list_questions.html">Engenharia de Redes</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+</tr>
+<tr>
+  <td><a href="list_questions.html">Física</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+  <td><a href="list_questions.html">Geologia</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+  <td><a href="list_questions.html">Matemática</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td>
+</tr>
+  <td><a href="list_questions.html">Química</a>      <br>
+      <small href="#">editar</small>
+      <small href="#">apagar</small></td></tr>
+</tbody>
+</table>
+    </div>
+    <div id="news2" class="tabs-content">
+        <h1 class="fw-300">News2</h1>
+        <p>
+            News is the communication of selected[1] information on current events. It is shared in various ways: among individuals and small groups (such as by word of mouth or news2letters); with wider audiences (such as by publishing, either in print or online, or broadcasting, such as on television or radio); or in ways that blend those traits (such as when social media sharing starts among individuals but goes viral).
+        </p>
+    </div>
+</div>
+
+<div class="column-group gutters">
+<div class="column all-25 medium-100 small-100 tiny-100">
+  <h3 class="slab half-vertical-space">Instituições</h3>
+
+  <ul class="column-group unstyled">
+  <li class="all-50 small-100 tiny-100">
+  <div class="panel half-right-space">
+    <div class="all-100 quarter-vertical-space">
+      <b class="half-vertical-space">
+        <a href="view_event.php?id=<?=$eventId?>">FEUP</a>
+        <br>
+        <small>Faculdade de Engenharia da Universidade do Porto</small>
+      </b>
+       </div>
+      <div class="push-right">
+        <small><a href="event_update.php?id=<?=$eventId?>" class="ink-button"><i class="fa fa-pencil"></i></a></small>
+        <small><a href="event_delete.php?id=<?=$eventId?>" class="ink-button"><i class="fa fa-remove"></i></a></small>
+      </div>
+
+  </div>
+  </li>
+  <?}?>
+  </ul>
+</div>
+<div class="column all-50 medium-100 small-100 tiny-100">
+  <h3 class="slab half-vertical-space">Categorias</h3>
+
+
+  <!-- CATEGORIAS: primeira coluna -->
 <div class="column-group half-gutters">
-
-
-<!-- CATEGORIAS: primeira coluna -->
-<div class="column all-25 small-50 tiny-50">
+<div class="column all-50  small-50 tiny-50">
 <dl>
-  <dt>
-    <a href="hub.html">Faculdade de Ciências</a>
-    <a href="https://sigarra.up.pt/fcup/pt/web_page.inicial">
-      <i class="fa fa-external-link"></i>
+  <dt>Faculdade de Ciências
+  <small>
+    <a href="event_create.php"><i class="fa fa-plus"></i>
+      nova categoria
     </a>
+  </small>
   </dt>
-  <dd><a href="list_questions.html">Arquitectura Paisagista</a></dd>
-  <dd><a href="list_questions.html">Astronomia</a></dd>
-  <dd><a href="list_questions.html">Biologia</a></dd>
-  <dd><a href="list_questions.html">Bioquímica</a></dd>
-  <dd><a href="list_questions.html">Ciências de Computadores</a></dd>
-  <dd><a href="list_questions.html">Ciências de Engenharia</a></dd>
-  <dd><a href="list_questions.html">Ciências do Ambiente</a></dd>
-  <dd><a href="list_questions.html">Engenharia Física</a></dd>
-  <dd><a href="list_questions.html">Engenharia de Redes</a></dd>
-  <dd><a href="list_questions.html">Física</a></dd>
-  <dd><a href="list_questions.html">Geologia</a></dd>
-  <dd><a href="list_questions.html">Matemática</a></dd>
-  <dd><a href="list_questions.html">Química</a></dd>
+
 </dl>
 </div>
 
 
 <!-- CATEGORIAS: segunda coluna -->
-<div class="column all-25 small-50 tiny-50">
+<div class="column all-50  small-50 tiny-50">
 <dl>
-  <dt>
-    <a href="hub.html">Faculdade de Direito</a>
-    <a href="https://sigarra.up.pt/fdup/pt/web_page.inicial">
-      <i class="fa fa-external-link"></i>
+  <dt>Faculdade de Ciências
+  <small>
+    <a href="event_create.php"><i class="fa fa-plus"></i>
+      nova categoria
     </a>
+  </small>
   </dt>
   <dd><a href="list_questions.html">Ciências Forenses</a></dd>
   <dd><a href="list_questions.html">Criminologia</a></dd>
@@ -183,7 +217,7 @@
 
 
 <!-- CATEGORIAS: terceira coluna -->
-<div class="column all-25 small-50 tiny-50">
+<div class="column all-50  small-50 tiny-50">
 <dl>
   <dt>
     <a href="hub.html">Faculdade de Medicina</a>
@@ -213,7 +247,6 @@
 
 
 <!-- CATEGORIAS: quarta coluna -->
-<div class="column all-25 small-50 tiny-50">
 <dl>
   <dt>
     <a href="hub.html">Faculdade de Letras</a>
@@ -241,6 +274,41 @@
   <dd><a href="list_questions.html">Tecnologia Farmacêutica</a></dd>
 </dl>
 </div>
+  <ul class="stage column-group unstyled">
+  <li class="all-50 medium-33 small-50 tiny-50">
+  <div class="panel half-right-space">
+    <img class="all-100" src="<?=events_getImage($currentEvent, 'medium')?>"/>
+    <div class="all-100 half-vertical-space">
+      <b class="half-vertical-space">
+        <a href="view_event.php?id=<?=$eventId?>">
+          <?=events_getName($currentEvent)?>
+        </a>
+      </b>
+      <p class="quarter-bottom-space">
+        <small class="quarter-bottom-space slab"><i class="fa fa-calendar"></i>
+          <?=events_getDate($currentEvent)?>
+        </small>
+      </p>
+      <p class="half-bottom-space">
+        <small class="half-right-space"><i class="fa fa-check-circle"></i>
+          <?=$currentParticipants['count']?>
+        </small>
+        <small><i class="fa fa-question-circle"></i>
+          <?=$currentInvited['count']?>
+        </small>
+      </p>
+    </div>
+  </div>
+  </li>
+  <?}?>
+  </ul>
+  <?}else{?>
+    <p class="panel">You have no upcoming events :(</p>
+  <?}?>
+</div>
+</div>
+
+
 
 
 <!-- FOOTER -->

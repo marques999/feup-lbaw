@@ -264,3 +264,11 @@ span.highlight {
   background: #ffd500;
   color: #404040;
 }
+
+.ink-navigation ul.pills li a {
+  text-decoration: none;
+}
+
+.ink-navigation ul.pills li.active a {
+  text-decoration: none;
+}
