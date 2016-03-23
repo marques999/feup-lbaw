@@ -5,7 +5,7 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<title>KnowUP! - Collaborative Q&amp;A</title>
+<title>KnowUP! - Collaborative Q&A</title>
 <link rel="shortcut icon" href="../img/favicon.ico">
 <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
@@ -14,7 +14,6 @@
 <script type="text/javascript" src="../js/chart.min.js"></script>
 <script type="text/javascript" src="../js/chartHelper.js"></script>
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="../js/modernizr-2.8.3.min.js"></script>
 <script>
 var schoolDatabase = {
   "FEUP" : [ 69, 86, 91, 103, 46, 75 ],
@@ -78,9 +77,10 @@ $(function() {
 </script>
 </head>
 
+
 <!-- PÁGINA -->
 <body>
-<div class="ink-grid">
+<div class="ink-grid push-center">
 
 
 <!-- NAVEGAÇÃO -->
@@ -90,11 +90,11 @@ $(function() {
       <img src="../img/header-256px.png" alt="">
     </a>
   </div>
-  <div class="column quarter-vertical-padding">
+  <div class="column all-80 large-75 medium-66 small-50 tiny-50 quarter-padding">
     <h5 class="quarter-vertical-space">KnowUP! - Collaborative Q&A</h5>
     <p>segunda-feira, 21 de Março de 2016</p>
   </div>
-  <div class="message half-bottom-space">
+  <div class="message all-100 half-bottom-space">
    <h5 class="slab no-margin">
       <i class="fa-cog fa"></i>
       <a href="manage.html" class="black">Administração</a>
@@ -121,50 +121,53 @@ $(function() {
   <canvas id="myChart" width="500" height="400"></canvas>
   <table class="ink-table quarter-vertical-space alternating hover">
     <thead>
-      <th style="width:40%">Utilizador</th>
-      <th style="width:20%">#Perguntas</th>
-      <th style="width:40%">Última Pergunta</th>
-    </thead>
-      <tbody class="align-center">
-    <tr>
-      <td class="align-left medium">
-        <i class="fa fa-user"></i>
-        <a href="view_profile.html">marques999</a>
-      </td>
-      <td>20</td>
-      <td>
-        <small>18/03/2016 12:37</small>
-      </td>
-    </tr>
-        <tr>
-      <td class="align-left medium">
-        <i class="fa fa-user"></i>
-        <a href="view_profile.html">darklord</a>
-      </td>
-      <td>7</td>
-      <td>
-        <small>20/03/2016 14:42</small>
-      </td>
-    </tr>
       <tr>
-      <td class="align-left medium">
-        <i class="fa fa-user"></i>
-        <a href="view_profile.html">mellus</a>
-      </td>
-      <td>5</td>
-      <td>
-        <small>17/03/2016 08:14</small>
-      </td>
-    </tr>
-        <tr>
-      <td class="align-left medium">
-        <i class="fa fa-user"></i>
-        <a href="view_profile.html">admin</a>
-      </td>
-      <td>3</td>
-      <td>
-        <small>15/03/2016 02:20</small>
-      </td>
+        <th style="width:40%">Utilizador</th>
+        <th style="width:20%">#Perguntas</th>
+        <th style="width:40%">Última Pergunta</th>
+      </tr>
+    </thead>
+    <tbody class="align-center">
+      <tr>
+        <td class="align-left medium">
+          <i class="fa fa-user"></i>
+          <a href="view_profile.html">marques999</a>
+        </td>
+        <td>20</td>
+        <td>
+          <small>18/03/2016 12:37</small>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-left medium">
+          <i class="fa fa-user"></i>
+          <a href="view_profile.html">darklord</a>
+        </td>
+        <td>7</td>
+        <td>
+          <small>20/03/2016 14:42</small>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-left medium">
+          <i class="fa fa-user"></i>
+          <a href="view_profile.html">mellus</a>
+        </td>
+        <td>5</td>
+        <td>
+          <small>17/03/2016 08:14</small>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-left medium">
+          <i class="fa fa-user"></i>
+          <a href="view_profile.html">admin</a>
+        </td>
+        <td>3</td>
+        <td>
+          <small>15/03/2016 02:20</small>
+        </td>
+      </tr>
       <tr>
         <td class="align-left medium">
           <i class="fa fa-user"></i>
@@ -175,8 +178,7 @@ $(function() {
           <small>15/03/2016 21:19</small>
         </td>
       </tr>
-    </tr>
-  </tbody>
+    </tbody>
   </table>
 </div>
 
@@ -187,9 +189,11 @@ $(function() {
   <canvas id="myChart2" width="500" height="400"></canvas>
   <table class="ink-table quarter-vertical-space alternating hover">
     <thead>
-      <th style="width:40%">Utilizador</th>
-      <th style="width:20%">#Respostas</th>
-      <th style="width:40%">Última Resposta</th>
+      <tr>
+        <th style="width:40%">Utilizador</th>
+        <th style="width:20%">#Respostas</th>
+        <th style="width:40%">Última Resposta</th>
+      </tr>
     </thead>
     <tbody class="align-center">
       <tr>
@@ -253,9 +257,11 @@ $(function() {
   <canvas id="myChart3" width="500" height="400"></canvas>
   <table class="ink-table quarter-vertical-space alternating hover">
     <thead>
-      <th style="width:40%">Utilizador</th>
-      <th style="width:20%">#Sessões</th>
-      <th style="width:40%">Última Sessão</th>
+      <tr>
+        <th style="width:40%">Utilizador</th>
+        <th style="width:20%">#Sessões</th>
+        <th style="width:40%">Última Sessão</th>
+      </tr>
     </thead>
     <tbody class="align-center">
       <tr>
@@ -319,9 +325,11 @@ $(function() {
   <canvas id="myChart4" width="400" height="200"></canvas>
   <table class="ink-table quarter-vertical-space alternating hover">
     <thead>
-      <th style="width:35%">Categoria</th>
-      <th style="width:15%">#Perguntas</th>
-      <th style="width:40%">Última Pergunta</th>
+      <tr>
+        <th style="width:35%">Categoria</th>
+        <th style="width:15%">#Perguntas</th>
+        <th style="width:40%">Última Pergunta</th>
+      </tr>
     </thead>
     <tbody class="align-center">
       <tr>
@@ -395,9 +403,11 @@ $(function() {
   <canvas id="myChart5" width="400" height="200"></canvas>
   <table class="ink-table quarter-vertical-space alternating hover">
     <thead>
-      <th style="width:30%">Instituição</th>
-      <th style="width:20%">#Perguntas</th>
-      <th style="width:50%">Última Pergunta</th>
+      <tr>
+        <th style="width:30%">Instituição</th>
+        <th style="width:20%">#Perguntas</th>
+        <th style="width:50%">Última Pergunta</th>
+      </tr>
     </thead>
     <tbody class="align-center">
       <tr>
@@ -469,7 +479,9 @@ $(function() {
   </table>
 </div>
 
+
 <!-- FOOTER -->
+</div>
 </div>
 </body>
 </html>

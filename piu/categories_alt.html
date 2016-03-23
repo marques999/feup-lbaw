@@ -1,55 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-  <title>KnowUP! - Collaborative Q&A</title>
-  <link rel="shortcut icon" href="../img/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
-  <link rel="stylesheet" type="text/css" href="../css/ink.css">
-  <link rel="stylesheet" type="text/css" href="../css/main.css">
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>KnowUP! - Collaborative Q&A</title>
+<link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="../css/font-roboto.css">
+<link rel="stylesheet" type="text/css" href="../css/ink.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/holder.min.js"></script>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/modernizr-2.8.3.min.js"></script>
+<script type="text/javascript" src="../js/ink-all.min.js"></script>
+<script type="text/javascript" src="../js/autoload.min.js"></script>
 </head>
 
 
-<!-- PÁGINA -->
-<body>
-<div class="ink-grid push-center">
-
-
 <!-- NAVEGAÇÃO -->
-<div class="column-group half-top-space quarter-bottom-space">
-  <div class="column all-20 large-25 medium-33 small-50 tiny-50">
+<body class="ink-drawer">
+<header id="header-container">
+<nav id="header-menu" class="ink-navigation">
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (tiny/small) -->
+<ul class="menu horizontal black push-left hide-all show-small show-tiny small-push-center tiny-push-center">
+  <li id="nav-drawer" class="hide-all show-tiny show-small">
+    <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
+  </li>
+  <li id="nav-notifications" class="medium">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-messages" class="medium">
+    <a href="view_messages.html">
+      <i class="fa fa-envelope-o"></i><span class="ink-badge red">3</span>
+    </a>
+  </li>
+  <li id="nav-profile" class="medium">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      <span>marques999</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<!-- NAVEGAÇÃO RESPONSIVE (medium/large/xlarge) -->
+<ul class="menu medium horizontal black hide-small hide-tiny">
+  <li id="nav-home" class="no-margin">
     <a href="index_user.html">
       <img src="../img/header-256px.png" alt="">
     </a>
-  </div>
-  <div class="column all-80 large-75 medium-66 small-50 tiny-50 quarter-padding">
-    <h5 class="quarter-vertical-space">KnowUP! - Collaborative Q&A</h5>
-    <p>segunda-feira, 21 de Março de 2016</p>
-  </div>
-  <div class="message all-100 half-bottom-space">
-   <h5 class="slab no-margin">
-      <i class="fa-cog fa"></i>
-      <a href="manage.html" class="black">Administração</a>
-      <strong>&gt;</strong>
-      <a href="manage_subjects.html" class="black">Gerir Categorias</a>
-    </h5>
-  </div>
-</div>
+  </li>
+  <form action="list_results.html" class="ink-form ink-search all-20 medium">
+    <div class="control-group">
+      <div class="control append-button" role="search">
+        <span><input type="text" name="name" id="name"></span>
+        <button class="ink-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <li id="nav-ask">
+    <a href="ask_question.html">
+      <i class="fa fa-comment-o"></i>
+      Perguntar
+    </a>
+  </li>
+  <li id="nav-answer">
+    <a href="categories.html">
+      <i class="fa fa-pencil-square-o"></i>
+      Responder
+    </a>
+  </li>
+  <li id="nav-notifications">
+    <a href="view_notifications.html">
+      <i class="fa fa-bell-o"></i>
+      Notificações<span class="ink-badge red">5</span>
+    </a>
+  </li>
+  <li id="nav-profile">
+    <a href="view_profile.html">
+      <i class="fa fa-user"></i>
+      marques999</span><span class="ink-badge red">3</span>
+    </a>
+    <ul class="submenu fw-600">
+      <div class="half-padding align-center">
+       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      </div>
+      <li><b><a href="view_messages.html">Mensagens (3)</a></b></li>
+      <li><a href="view_profile.html#profile">Perfil</a></li>
+      <li><a href="view_profile.html#questions">Gerir perguntas</a></li>
+      <li><a href="view_profile.html#answers">Gerir respostas</a></li>
+      <li><a href="user_logout.html">Terminar sessão</a></li>
+    </ul>
+  </li>
+</ul>
+</nav>
+</header>
 
 
-<!-- TÍTULO -->
-<div class="column-group">
+<!-- PÁGINA -->
+<div class="ink-grid push-center">
+
+
+<!-- TITULO -->
+<div class="column-group half-top-space">
   <div class="column all-80 medium-70 small-60 tiny-50">
-    <h3 class="condensed">Instituições
-      <span class="fw-300 medium">(8)</span>
-    </h3>
+    <h3 class="condensed">Instituições <span class="fw-300 medium">(8)</span></h3>
   </div>
-  <div class="column all-20 medium-30 small-40 tiny-50 align-right">
-   <a href="#" class="ink-button medium"><i class="fa fa-plus"></i>&nbsp;Adicionar instituição</a>
+  <div class="column medium all-20 medium-30 small-40 tiny-50 align-right">
+   <a href="categories.html" class="ink-button"><i class="fa fa-sitemap"></i>&nbsp;Categorias</a>
   </div>
 </div>
   
@@ -68,17 +141,22 @@
         <small>FCUP</small>
       </b>
       <p class="no-margin">
-        <small><i class="fa fa-user"></i>&nbsp;5 membros</small>
+        <small>
+          <i class="fa fa-user"></i>
+          5 membros
+        </small>
       </p>
       <p class="no-margin">
-        <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
+        <small>
+          <i class="fa fa-question-circle"></i>
+          24 perguntas
+        </small>
       </p>
-      <p class="half-bottom-space">
-        <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
+      <p class="no-margin">
+        <small>
+          <i class="fa fa-eye"></i>
+          591 visualizações
+        </small>
       </p>
     </div>
   </div>
@@ -100,12 +178,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -127,12 +201,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -154,12 +224,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -181,12 +247,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -208,12 +270,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -235,12 +293,8 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
@@ -262,16 +316,15 @@
       <p class="no-margin">
         <small><i class="fa fa-question-circle"></i>&nbsp;24 perguntas</small>
       </p>
-      <p class="half-bottom-space">
+      <p class="no-margin">
         <small><i class="fa fa-eye"></i>&nbsp;591 visualizações</small>
-      </p>
-      <p class="no-margin align-center">
-         <small><button class="ink-button"><i class="fa fa-pencil-square-o"></i>&nbsp;Editar</button></small>
-         <small><button class="ink-button"><i class="fa fa-close"></i>&nbsp;Apagar</button></small>
       </p>
     </div>
   </div>
 </div>
+
+
+<!-- FOOTER -->
 </div>
 </div>
 </body>
