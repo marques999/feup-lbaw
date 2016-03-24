@@ -1,0 +1,274 @@
+footer {
+  background: #ccc;
+  clear: both;
+  bottom: 0;
+  width: 100%;
+}
+
+footer.fixed {
+  position: fixed;
+}
+
+header {
+  position: static;
+  top: 0;
+  left: 0;
+  height: auto;
+  width: 100%;
+  z-index: 100;
+}
+
+small.white {
+  color: white;
+}
+
+.img-circle {
+  border-radius:50%
+}
+
+.ink-navigation img {
+  height:2.5em;
+  margin: 0;
+  padding: 0;
+}
+
+div.message {
+  border-radius: 2px;
+  -webkit-box-shadow: #dddddd 0 1px 1px 0;
+  -moz-box-shadow: #dddddd 0 1px 1px 0;
+  box-shadow: #dddddd 0 1px 1px 0;
+  padding: 1em;
+  border: 1px solid #BBB;
+  background-color: #FFF;
+}
+
+.ink-search input {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  padding: 8px 6px;
+  border: 1px solid #c6c6c6;
+  background: #FFF;
+  vertical-align: middle;
+}
+
+.ink-search .control-group {
+  line-height: 1.0em;
+  margin-bottom: 0;
+  margin-top: 0.75em;
+ }
+
+.ink-navigation ul.menu.horizontal li.header-image a {
+  padding: 0.2em;
+  margin: 0;
+  display: block;
+}
+
+/*-------------------
+  FADEUP
+--------------------*/
+
+.ink-badge.fadeup {
+  background-color: #783f04;
+}
+
+.ink-badge.fadeup:hover {
+  background-color: #a05306;
+}
+
+.ink-badge.fadeup-alternative {
+  background-color: #783f04;
+}
+
+.ink-badge.fadeup-alternative:hover {
+  background-color: #a05306;
+}
+
+/*-------------------
+  FCUP
+--------------------*/
+
+.ink-badge.fcup {
+  background-color: #6fa8dc;
+}
+
+.ink-badge.fcup:hover {
+  background-color: #82c4ff;
+}
+
+.ink-badge.fcup-alternative {
+  background-color: #6fa8dc;
+}
+
+.ink-badge.fcup-alternative:hover {
+  background-color: #82c4ff;
+}
+
+/*-------------------
+  FDUP
+--------------------*/
+
+.ink-badge.fdup {
+  background-color: #e50000;
+}
+
+.ink-badge.fdup:hover {
+  background-color: #ff0000;
+}
+
+.ink-badge.fdup-alternative {
+  background-color: #e50000;
+}
+
+.ink-badge.fdup-alternative:hover {
+  background-color: #ff0000;
+}
+
+/*-------------------
+  FEUP
+--------------------*/
+
+.ink-badge.feup {
+  background-color: #8c2d19;
+}
+
+.ink-badge.feup:hover {
+  background-color: #b23820;
+}
+
+.ink-badge.feup-alternative {
+   background-color: #8c2d19; 
+}
+
+.ink-badge.feup-alternative:hover {
+  background-color: #b23820; 
+}
+
+/*-------------------
+  FFUP
+--------------------*/
+
+.ink-badge.ffup {
+  background-color: #800080;
+}
+
+.ink-badge.ffup:hover {
+  background-color: #a300a3;
+}
+
+.ink-badge.ffup-alternative {
+  background-color: #800080;
+}
+
+.ink-badge.ffup-alternative:hover {
+  background-color: #a300a3;
+}
+
+/*-------------------
+  FMUP
+--------------------*/
+
+.ink-badge.fmup {
+  background-color: #e5e500;
+}
+
+.ink-badge.fmup:hover {
+  background-color: #ffff00;
+}
+
+.ink-badge.fmup-alternative {
+  background-color: #e5e500;
+}
+
+.ink-badge.fmup-alternative:hover {
+ background-color: #ffff00;
+}
+
+/*-------------------
+  FMDUP
+--------------------*/
+
+.ink-badge.fmdup {
+  background-color: #e5e500;
+}
+
+.ink-badge.fmdup:hover {
+  background-color: #ffff00;
+}
+
+.ink-badge.fmdup-alternative {
+  background-color: #e5b830;
+}
+
+.ink-badge.fmdup-alternative:hover {
+ background-color: #ffcc35;
+}
+
+/*-------------------
+  ICBAS
+--------------------*/
+
+.ink-badge.icbas {
+  background-color: #e5e500;
+}
+
+.ink-badge.icbas:hover {
+  background-color: #ffff00;
+}
+
+.ink-badge.icbas-alternative {
+  background-color: #6fa8dc;
+}
+
+.ink-badge.icbas-alternative:hover {
+  background-color: #82c4ff;
+}
+
+
+/*-------------------
+  MISC
+--------------------*/
+
+.ink-badge > a {
+  color: white;
+  text-decoration: none;
+}
+
+a.black {
+  color: #404040;
+}
+
+a.tabs-black {
+  color: #404040;
+  text-decoration: none;
+}
+
+.positive-score {
+  color: #009800;
+}
+
+.negative-score {
+  color: #f00000;
+}
+
+span.highlight {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background: #ffd500;
+  color: #404040;
+}
+
+.ink-navigation ul.pills li a {
+  text-decoration: none;
+}
+
+.ink-navigation ul.pills li.active a {
+  text-decoration: none;
+}

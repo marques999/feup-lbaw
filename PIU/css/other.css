@@ -1,0 +1,62 @@
+#responsive-bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+
+#responsive-bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+.overlay {
+  margin: 0 auto;
+  background-color: #121111;
+  opacity: 0.75;
+  color: white;
+}
+
+.slab {
+  color: white;
+}
+
+hr {
+  border-style: dashed;
+  border-color: #333333;
+  border-width: 1px;
+}
+
+.ink-form fieldset legend {
+  font-size: 1.438em;
+  font-weight: 700;
+  width: 100%;
+  border-bottom: 2px dashed #222;
+}
+
+body {
+  width: 100%;
+  position: fixed;
+  top: 4.0em;
+  margin: 0 auto;
+}
+
+.huge-button {
+  font-size: 5.0em;
+}
+
+h2 {
+  color: #dddddd;
+}
+
+h4 {
+  color: #dddddd;
+  font-weight: 400;
+}
