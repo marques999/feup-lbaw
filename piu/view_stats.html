@@ -29,39 +29,32 @@ var subjectDatabase = {
   "Engenharia Informática" : [ 26, 6, 15, 24, 14, 3],
   "Geografia" : [15, 3, 18, 26, 11, 24]
 }
-var userDatabase = [
-  {
+var userDatabase = [{
     username: "marques999",
     numberAnswers: 2,
     numberQuestions: 4,
     numberLogins: 20
-  },
-  {
+  },{
     username: "miserioso",
     numberAnswers: 1,
     numberQuestions: 5,
     numberLogins: 41
-  },
-  {
+  },{
     username: "mellus",
     numberAnswers: 9,
     numberQuestions: 3,
     numberLogins: 5
-  },
-  {
+  },{
     username: "darklord",
     numberAnswers: 4,
     numberQuestions: 2,
     numberLogins: 7
-  },
-  {
+  },{
     username: "admin",
     numberAnswers: 2,
     numberQuestions: 1,
     numberLogins: 3
-  }
-];
-
+}];
 $(function() {
   var myPieChart1 = generateQuestionsChart("myChart", userDatabase);
   var myPieChart2 = generateAnswersChart("myChart2", userDatabase);
@@ -80,7 +73,7 @@ $(function() {
 
 <!-- PÁGINA -->
 <body>
-<div class="ink-grid push-center">
+<div class="ink-grid">
 
 
 <!-- NAVEGAÇÃO -->

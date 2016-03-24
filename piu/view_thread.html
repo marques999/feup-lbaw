@@ -41,7 +41,7 @@ $(function() {
     config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
   };
 
-  CKEDITOR.replace('text');
+  CKEDITOR.replace('message');
 });
 </script>
 </head>
@@ -141,10 +141,15 @@ $(function() {
 
 
 <!-- PÁGINA -->
-<div class="ink-grid bottom-padding push-center all-75 large-85 medium-95 small-100 tiny-100">
-<h5 class="slab half-top-padding">
-  <a href="view_messages.html">Mensagens Privadas</a>&nbsp;&gt;&nbsp;mellus
-</h5>
+<div class="ink-grid push-center all-75 large-85 medium-95 small-100 tiny-100">
+<div class="message all-100 half-vertical-space">
+ <h5 class="slab no-margin">
+    <i class="fa-envelope fa"></i>
+    <a href="view_messages.html" class="black">Mensagens Privadas</a>
+    <strong>&gt;</strong>
+    <a href="view_thread.html" class="black">Pedro Melo</a>
+  </h5>
+</div>
 
 
 <!-- MENSAGEM 1 -->
@@ -253,7 +258,8 @@ $(function() {
 
 
 <!-- PRIVATE MESSAGE: formulário -->
-<div class="message half-top-space bottom-space">
+<hr>
+<div class="half-vertical-space half-bottom-padding">
 <form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator medium half-vertical-padding">
 
 
@@ -276,15 +282,15 @@ $(function() {
 
 
 <!-- PRIVATE MESSAGE: botões -->
-<div class="control-group column-group half-gutters no-margin">
+<div class="control-group half-gutters">
   <div class="align-center">
     <button class="ink-button black" type="submit">
       <i class="fa fa-pencil"></i>
-      Reply
+      Responder
     </button>
     <button class="ink-button black" type="reset">
       <i class="fa fa-eraser"></i>
-      Clear
+      Apagar
     </button>
   </div>
 </div>

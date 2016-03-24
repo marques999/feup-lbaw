@@ -47,9 +47,9 @@ var pieChartOptions = {
 };
 //-------------------------------------------------------------
 function generateQuestionsChart(canvasNode, userDatabase) {
-  
+
   var questionsData = [];
-  
+
   for (var i = 0; i < userDatabase.length; i++) {
     questionsData[i] = {
       value: userDatabase[i]["numberQuestions"],
@@ -65,7 +65,7 @@ function generateQuestionsChart(canvasNode, userDatabase) {
 function generateAnswersChart(canvasNode, userDatabase) {
 
   var answersData = [];
-  
+
   for (var i = 0; i < userDatabase.length; i++) {
     answersData[i] = {
       value: userDatabase[i]["numberAnswers"],
@@ -81,7 +81,7 @@ function generateAnswersChart(canvasNode, userDatabase) {
 function generateLoginChat(canvasNode, userDatabase) {
 
   var loginData = [];
-  
+
   for (var i = 0; i < userDatabase.length; i++) {
     loginData[i] = {
       value: userDatabase[i]["numberLogins"],

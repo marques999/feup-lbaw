@@ -37,10 +37,8 @@ $(function() {
       {name: 'colors', groups: ['colors']},
       {name: 'about', groups: ['about']}
     ];
-
     config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
   };
-
   CKEDITOR.replace('text');
 });
 </script>
@@ -141,15 +139,12 @@ $(function() {
 
 
 <!-- PÁGINA -->
-<div class="ink-grid bottom-padding push-center all-100 xlarge-66 large-80 medium-90">
+<div class="ink-grid vertical-padding all-100 xlarge-66 large-80 medium-90">
 
 
-<!-- PERGUNTA: título -->
-<article id="question">
-<h3 class="slab quarter-vertical-space half-top-padding">Porque é o Linux parece ser mais rápido que o Windows?</h3>
-
-
-<!-- RESPOSTA 1: autor -->
+<!-- PERGUNTA: autor -->
+<div class="half-bottom-space">
+<h3 class="slab quarter-vertical-space">Porque é o Linux parece ser mais rápido que o Windows?</h3>
 <div class="author-panel quarter-vertical-space">
   <img class="img-circle push-left quarter-padding" src="holder.js/64x64/auto/ink" alt="">
   <div class="half-padding">
@@ -210,42 +205,36 @@ Desta maneira, a percepção das dificuldades promove a alavancagem do sistema d
     <p class="fw-medium">Lorem ipsum dolor sit amet</p>
   </div>
 </div>
-</article>
-
-
-<!-- RESPOSTA formulário -->
-<section id="reply-form" class="push-center half-vertical-space all-85 small-100 tiny-100">
-<form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator">
-<fieldset>
-<legend class="align-center">Responder</legend>
-
-
-<!-- RESPOSTA: mensagem -->
-<div class="control-group column-group quarter-gutters">
-  <div class="control">
-    <textarea name="text" id="text" rows="8" cols="60">
-    </textarea>
-  </div>
 </div>
 
 
-<!-- RESPOSTA: button group -->
-<div class="control-group column-group quarter-gutters">
-  <div class="align-center">
-    <button class="ink-button medium black" type="submit">
-      <i class="fa fa-check"></i>&nbsp;Submeter
-    </button>
-    <button class="ink-button medium black" type="reset">
-      <i class="fa fa-eraser"></i>&nbsp;Limpar
-    </button>
-  </div>
+<!-- RESPOSTA formulário -->
+<div id="reply-form">
+  <form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator">
+    <fieldset>
+      <legend class="align-center">Responder</legend>
+      <div class="control-group column-group">
+        <div class="control">
+          <textarea name="text" id="text" rows="8" cols="60">
+          </textarea>
+        </div>
+      </div>
+      <div class="control-group ">
+        <div class="control align-center">
+          <button class="ink-button medium black" type="submit">
+            <i class="fa fa-check"></i>&nbsp;Submeter
+          </button>
+          <button class="ink-button medium black" type="reset">
+            <i class="fa fa-eraser"></i>&nbsp;Limpar
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
 </div>
 
 
 <!-- FOOTER -->
-</fieldset>
-</form>
-</section>
 </div>
 <script>
   $(function() {
