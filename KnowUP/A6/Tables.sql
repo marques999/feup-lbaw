@@ -5,10 +5,10 @@ CREATE SCHEMA knowUP;
 /*                VotosPerguntas              */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.VotosPerguntas" (
-	`idPergunta`	integer		NOT NULL,
-	`idAutor`		integer		NOT NULL,
-	`valor`			integer		DEFAULT 0	CHECK(valor = 1 OR valor = -1)
+CREATE TABLE knowUP.VotosPerguntas (
+	idPergunta	integer		NOT NULL,
+	idAutor		integer		NOT NULL,
+	valor		integer		DEFAULT 0	CHECK(valor = 1 OR valor = -1)
 );
 
 ALTER TABLE knowUP.VotosPerguntas ADD CONSTRAINT PK_VotosPerguntas
@@ -24,10 +24,10 @@ ALTER TABLE knowUP.VotosPerguntas ADD CONSTRAINT FK_VotosPerguntas_idPergunta
 /*                VotosRespostas              */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.VotosRespostas" (
-	`idResposta`	integer		NOT NULL,
-	`idAutor`		integer		NOT NULL,
-	`valor`			integer		DEFAULT 0	CHECK(valor = 1 OR valor = -1)
+CREATE TABLE knowUP.VotosRespostas (
+	idResposta	integer		NOT NULL,
+	idAutor		integer		NOT NULL,
+	valor		integer		DEFAULT 0	CHECK(valor = 1 OR valor = -1)
 );
 
 ALTER TABLE knowUP.VotosRespostas ADD CONSTRAINT PK_VotosRespostas
@@ -43,16 +43,18 @@ ALTER TABLE knowUP.VotosRespostas ADD CONSTRAINT FK_VotosRespostas_idResposta
 /*                 Utilizadores               */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.Utilizadores" (
-	`idUtilizador` 		SERIAL		NOT NULL,
-	`idInstituicao`		integer		NOT NULL,
-	`username`			text		NOT NULL,
-	`password`			text		NULL,
-	`email`				text		NOT NULL,
-	`primeiroNome`		text		NULL,
-	`ultimoNome`		text		NULL,
-	`ultimaSessao`		integer		DEFAULT 0,
-	`ativo`				boolean		DEFAULT true,
+CREATE TABLE knowUP.Utilizadores (
+	idUtilizador 		SERIAL		NOT NULL,
+	idInstituicao		integer		NOT NULL,
+	username			text		NOT NULL,
+	password			text		NULL,
+	email				text		NOT NULL,
+	primeiroNome		text		NULL,
+	ultimoNome			text		NULL,
+	localizacao			text		NULL,
+	codigoPais			text		NULL,
+	ultimaSessao		integer		DEFAULT 0,
+	ativo				boolean		DEFAULT true,
 	CONSTRAINT UK_Utilizadores_Username		UNIQUE (username),
 	CONSTRAINT UK_Utilizadores_Email		UNIQUE (email)
 );
@@ -69,9 +71,9 @@ ALTER TABLE knowUP.Utilizadores ADD CONSTRAINT FK_Utilizadores_UltimaSessao
 /*               Administradores              */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.Administradores" (
-	`idAdministrador`	serial		NOT NULL,
-	`idUtilizador`		integer		NOT NULL,
+CREATE TABLE knowUP.Administradores (
+	idAdministrador		serial		NOT NULL,
+	idUtilizador		integer		NOT NULL,
 	CONSTRAINT UK_Administradores_idUtilizador	UNIQUE (idUtilizador)
 );
 
@@ -85,9 +87,9 @@ ALTER TABLE knowUP.Administradores ADD CONSTRAINT FK_Administradores_idUtilizado
 /*                 Moderadores                */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.Moderadores" (
-	`idModerador`		serial		NOT NULL,
-	`idUtilizador`		integer		NOT NULL,
+CREATE TABLE knowUP.Moderadores (
+	idModerador		serial		NOT NULL,
+	idUtilizador	integer		NOT NULL,
 	CONSTRAINT UK_Moderadores_idUtilizador	UNIQUE (idUtilizador)
 );
 
@@ -101,11 +103,11 @@ ALTER TABLE knowUP.Moderadores ADD CONSTRAINT FK_Moderadores_idUtilizador
 /*                  Seguidores                */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.Seguidores" (
-	`idSeguidor`	integer		NOT NULL,
-	`idPergunta`	integer		NOT NULL,
-	`dataInicio`	integer		DEFAULT 0	CHECK(dataInicio >= 0),
-	`dataAcesso`	integer		DEFAULT 0	CHECK(dataAcesso >= 0)
+CREATE TABLE knowUP.Seguidores (
+	idSeguidor	integer		NOT NULL,
+	idPergunta	integer		NOT NULL,
+	dataInicio	integer		DEFAULT 0	CHECK(dataInicio >= 0),
+	dataAcesso	integer		DEFAULT 0	CHECK(dataAcesso >= 0)
 );
 
 ALTER TABLE knowUP.Seguidores ADD CONSTRAINT PK_Seguidores
@@ -121,12 +123,12 @@ ALTER TABLE knowUP.Seguidores ADD CONSTRAINT FK_Seguidores_idPergunta
 /*                  Respostas                 */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.Respostas" (
-	`idResposta`	serial		NOT NULL,
-	`idPergunta`	integer		NOT NULL,
-	`idAutor`		integer		NOT NULL,
-	`descricao`		text		NOT NULL,
-	`dataHora`		timestamp	DEFAULT current_timestamp
+CREATE TABLE knowUP.Respostas (
+	idResposta	serial		NOT NULL,
+	idPergunta	integer		NOT NULL,
+	idAutor		integer		NOT NULL,
+	descricao	text		NOT NULL,
+	dataHora	timestamp	DEFAULT current_timestamp
 );
 
 ALTER TABLE knowUP.Respostas ADD CONSTRAINT PK_Respostas
@@ -142,15 +144,15 @@ ALTER TABLE knowUP.Respostas ADD CONSTRAINT FK_Respostas_idAutor
 /*                  Perguntas                 */
 /*--------------------------------------------*/
 
-CREATE TABLE "Perguntas" (
-	`idPergunta`		serial		NOT NULL,
-	`idCategoria`		integer		NOT NULL,
-	`idAutor`			integer		NOT NULL,
-	`titulo`			text		NOT NULL,
-	`descricao`			text		NULL,
-	`dataHora`			timestamp	DEFAULT current_timestamp,
-	`visualizacoes`		integer		DEFAULT 0 CHECK(numVisualizacoes >= 0),
-	`ativa`				boolean		DEFAULT true
+CREATE TABLE knowUP.Perguntas (
+	idPergunta		serial		NOT NULL,
+	idCategoria		integer		NOT NULL,
+	idAutor			integer		NOT NULL,
+	titulo			text		NOT NULL,
+	descricao		text		NULL,
+	dataHora		timestamp	DEFAULT current_timestamp,
+	visualizacoes	integer		DEFAULT 0 CHECK(numVisualizacoes >= 0),
+	ativa			boolean		DEFAULT true
 );
 
 ALTER TABLE knowUP.Perguntas ADD CONSTRAINT PK_Perguntas
@@ -166,13 +168,13 @@ ALTER TABLE knowUP.Perguntas ADD CONSTRAINT FK_Perguntas_idAutor
 /*                 Notificações               */
 /*--------------------------------------------*/
 
-CREATE TABLE `Notificacoes` (
-	`idNotificacao`		serial				NOT NULL,
-	`idPergunta`		integer				NOT NULL,
-	`idAutor`			integer				NOT NULL,
-	`descricao`			text				NOT NULL,
-	`tipo`				TipoContribuicao	NOT NULL,
-	`dataHora`			timestamp			DEFAULT current_timestamp
+CREATE TABLE knowUP.Notificacoes (
+	idNotificacao	serial				NOT NULL,
+	idPergunta		integer				NOT NULL,
+	idAutor			integer				NOT NULL,
+	descricao		text				NOT NULL,
+	tipo			TipoContribuicao	NOT NULL,
+	dataHora		timestamp			DEFAULT current_timestamp
 );
 
 ALTER TABLE knowUP.Notificacoes ADD CONSTRAINT PK_Notificacoes
@@ -188,13 +190,13 @@ ALTER TABLE knowUP.Notificacoes ADD CONSTRAINT FK_Notificacoes_idAutor
 /*                   Mensagens                */
 /*--------------------------------------------*/
 
-CREATE TABLE "Mensagens" (
-	`idMensagem`		serial		NOT NULL,
-	`idRemetente`		integer		NOT NULL,
-	`idDestinatario`	integer		NOT NULL,
-	`titulo`			text		NULL,
-	`mensagem`			text		NOT NULL,
-	`dataHora`			timestamp	DEFAULT current_timestamp
+CREATE TABLE knowUP.Mensagens (
+	idMensagem		serial		NOT NULL,
+	idRemetente		integer		NOT NULL,
+	idDestinatario	integer		NOT NULL,
+	titulo			text		NULL,
+	mensagem		text		NOT NULL,
+	dataHora		timestamp	DEFAULT current_timestamp
 );
 
 ALTER TABLE knowUP.Mensagens ADD CONSTRAINT PK_Mensagens
@@ -212,13 +214,13 @@ ALTER TABLE knowUP.Mensagens ADD CONSTRAINT CK_Mensagens_AutoresDiferentes
 /*                 Instituições               */
 /*--------------------------------------------*/
 
-CREATE TABLE "Instituicoes" (
-	`idInstituicao`		serial		NOT NULL,
-	`nome`				text		NOT NULL,
-	`sigla`				text		NOT NULL,
-	`morada`			text		NULL,
-	`contacto`			integer		NULL,
-	`website`			text		NULL,
+CREATE TABLE knowUP.Instituicoes (
+	idInstituicao	serial		NOT NULL,
+	nome			text		NOT NULL,
+	sigla			text		NOT NULL,
+	morada			text		NULL,
+	contacto		text		NULL,
+	website			text		NULL,
 	CONSTRAINT UK_Instituicoes_Nome		UNIQUE (nome),
 	CONSTRAINT UK_Instituicoes_Sigla	UNIQUE (sigla)
 );
@@ -230,12 +232,12 @@ ALTER TABLE knowUP.Instituicoes ADD CONSTRAINT PK_Instituicoes
 /*             ComentariosRespostas           */
 /*--------------------------------------------*/
 
-CREATE TABLE "knowUP.ComentariosRespostas" (
-	`idComentario`	serial		NOT NULL,
-	`idResposta`	integer		NOT NULL,
-	`idAutor`		integer		NOT NULL,
-	`descricao`		text		NOT NULL,
-	`dataHora`		timestamp	DEFAULT current_timestamp
+CREATE TABLE knowUP.ComentariosRespostas (
+	idComentario	serial		NOT NULL,
+	idResposta		integer		NOT NULL,
+	idAutor			integer		NOT NULL,
+	descricao		text		NOT NULL,
+	dataHora		timestamp	DEFAULT current_timestamp
 );
 
 ALTER TABLE knowUP.ComentariosRespostas ADD CONSTRAINT PK_ComentariosRespostas
@@ -251,12 +253,12 @@ ALTER TABLE knowUP.ComentariosRespostas ADD CONSTRAINT FK_ComentariosRespostas_i
 /*             ComentariosPerguntas           */
 /*--------------------------------------------*/
 
-CREATE TABLE "ComentariosPerguntas" (
-	`idComentario`	serial		NOT NULL,
-	`idPergunta`	integer		NOT NULL,
-	`idAutor`		integer		NOT NULL,
-	`descricao`		text		NOT NULL,
-	`dataHora`		timestamp	DEFAULT current_timestamp
+CREATE TABLE knowUP.ComentariosPerguntas (
+	idComentario	serial		NOT NULL,
+	idPergunta		integer		NOT NULL,
+	idAutor			integer		NOT NULL,
+	descricao		text		NOT NULL,
+	dataHora		timestamp	DEFAULT current_timestamp
 );
 
 ALTER TABLE knowUP.ComentariosPerguntas ADD CONSTRAINT PK_ComentariosPerguntas
@@ -272,9 +274,9 @@ ALTER TABLE knowUP.ComentariosPerguntas ADD CONSTRAINT FK_ComentariosPerguntas_i
 /*            CategoriasInstituicao           */
 /*--------------------------------------------*/
 
-CREATE TABLE "CategoriasInstituicao" (
-	`idCategoria`		INTEGER NOT NULL,
-	`idInstituicao`		INTEGER NOT NULL,
+CREATE TABLE knowUP.CategoriasInstituicao (
+	idCategoria		INTEGER NOT NULL,
+	idInstituicao	INTEGER NOT NULL,
 );
 
 ALTER TABLE knowUP.CategoriasInstituicao ADD CONSTRAINT PK_CategoriasInstituicao
@@ -290,9 +292,9 @@ ALTER TABLE knowUP.CategoriasInstituicao ADD CONSTRAINT FK_CategoriasInstituicao
 /*                 Categorias                 */
 /*--------------------------------------------*/
 
-CREATE TABLE "Categorias" (
-	`idCategoria`		serial		NOT NULL,
-	`nome`				text		NOT NULL UNIQUE,
+CREATE TABLE knowUP.Categorias (
+	idCategoria		serial		NOT NULL,
+	nome			text		NOT NULL UNIQUE,
 	CONSTRAINT UK_Categorias_Nome	UNIQUE (nome)
 );
 
