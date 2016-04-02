@@ -36,7 +36,7 @@ ALTER TABLE knowUP.Instituicao ADD CONSTRAINT UK_Instituicao_Sigla
 	UNIQUE (sigla);
 
 /*--------------------------------------------*/
-/*             CategoriaInstituicao           */
+/*            CategoriaInstituicao            */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.CategoriaInstituicao (
@@ -54,7 +54,7 @@ ALTER TABLE knowUP.CategoriaInstituicao ADD CONSTRAINT FK_CategoriaInstituicao_i
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*                  Utilizador                */
+/*                 Utilizador                 */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Utilizador (
@@ -128,7 +128,7 @@ CREATE TABLE knowUP.Pergunta (
 	titulo			text		NOT NULL,
 	descricao		text		NULL,
 	dataHora		timestamp	DEFAULT current_timestamp,
-	visualizacoes	integer		DEFAULT 0 
+	visualizacoes	integer		DEFAULT 0
 	ativa			boolean		DEFAULT true
 );
 
@@ -180,7 +180,7 @@ ALTER TABLE knowUP.Resposta ADD CONSTRAINT FK_Resposta_idContribuicao
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*                   Seguidor                 */
+/*                  Seguidor                  */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Seguidor (
@@ -200,7 +200,7 @@ ALTER TABLE knowUP.Seguidor ADD CONSTRAINT FK_Seguidor_idPergunta
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*              ComentarioResposta            */
+/*             ComentarioResposta             */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.ComentarioResposta (
@@ -219,7 +219,7 @@ ALTER TABLE knowUP.ComentarioResposta ADD CONSTRAINT FK_ComentarioResposta_idAut
 	ON DELETE SET NULL;
 
 /*--------------------------------------------*/
-/*              ComentarioPergunta            */
+/*             ComentarioPergunta             */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.ComentarioPergunta (
@@ -238,13 +238,13 @@ ALTER TABLE knowUP.ComentarioPergunta ADD CONSTRAINT FK_ComentarioPergunta_idAut
 	ON DELETE SET NULL;
 
 /*--------------------------------------------*/
-/*                 VotoPergunta               */
+/*                VotoPergunta                */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.VotoPergunta (
 	idPergunta	integer		NOT NULL,
 	idAutor		integer		NOT NULL,
-	valor		integer		DEFAULT 0	
+	valor		integer		DEFAULT 0
 );
 
 ALTER TABLE knowUP.VotoPergunta ADD CONSTRAINT CK_Valor
@@ -259,7 +259,7 @@ ALTER TABLE knowUP.VotoPergunta ADD CONSTRAINT FK_VotoPergunta_idPergunta
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*                 VotoResposta               */
+/*                VotoResposta                */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.VotoResposta (
@@ -299,7 +299,7 @@ ALTER TABLE knowUP.Notificacao ADD CONSTRAINT FK_Notificacao_idContribuicao
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*                   Mensagem                 */
+/*                  Mensagem                  */
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Mensagem (
