@@ -1,22 +1,36 @@
 <?
-  include('templates/header.php');
-  include('templates/navigation_guest.php');
-  require_once('prototype/questions.php');
-?>
+  require_once (__DIR__ . '/vendor/autoload.php');
+ 
+  $__BASE__ = "/~up201305642/knowup";
 
-<div class="ink-grid column-group gutters bottom-padding">
+  use Respect\Rest\Router;
+  use Respect\Rest\Routable;
+  use Respect\Rest\Request;
 
-<?
-  include('templates/sidebar_guest.php');
-?>
+  $r3 = new Router($__BASE__);
 
-<div class="column half-top-padding all-80 medium-75 small-100 tiny-100">
-  <?printQuestionSmall($question1, false);?>
-  <?printQuestionSmall($question2, false);?>
-  <?printQuestionSmall($question3, true);?>
-</div>
-</div>
+  $r3->get('/', function() {
+    require_once('views/homepage.php');
+  });
 
-<?
-  include('templates/footer.php');
+  $r3->get('/view/*', function($idPergunta) {
+    require_once(__DIR__ . "/views/pergunta.php");
+  });
+
+  $r3->get('/hub/*', function($nomeInstituicao) {
+    require_once(__DIR__ . "/views/instituicao.php");
+  });
+
+  $r3->get('/profile/*', function($idUtilizador) {
+    require_once(__DIR__ . "/views/perfil.php");
+  });
+
+  $r3->get('/category/*', function($idCategoria) {
+    require_once(__DIR__ . "/views/categoria.php");
+  });
+
+  $r3->get('/flags/*', function($imageName) {
+    header('Content-type: image/png');
+    return fopen("img/flags/{$imageName}.png", 'r');
+  });
 ?>

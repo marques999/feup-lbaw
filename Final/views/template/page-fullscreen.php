@@ -1,0 +1,1 @@
+<div class="ink-grid column-group push-center gutters bottom-padding">
