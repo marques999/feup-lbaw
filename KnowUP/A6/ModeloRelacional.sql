@@ -55,12 +55,12 @@ ALTER TABLE knowUP.Instituicao ADD CONSTRAINT UK_Instituicao_Sigla
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.CategoriaInstituicao (
-    idCategoria     integer     NOT NULL,
-    idInstituicao   integer     NOT NULL
+    idInstituicao   integer     NOT NULL,
+    idCategoria     integer     NOT NULL
 );
 
 ALTER TABLE knowUP.CategoriaInstituicao ADD CONSTRAINT PK_CategoriaInstituicao
-    PRIMARY KEY (idCategoria, idInstituicao);
+    PRIMARY KEY (idInstituicao, idCategoria);
 ALTER TABLE knowUP.CategoriaInstituicao ADD CONSTRAINT FK_CategoriaInstituicao_idCategoria
     FOREIGN KEY (idCategoria) REFERENCES knowUP.Categoria(idCategoria)
     ON DELETE CASCADE;
@@ -102,16 +102,13 @@ ALTER TABLE knowUP.Utilizador ADD CONSTRAINT FK_Utilizador_idInstituicao
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Administrador (
-    idAdministrador     serial      NOT NULL,
-    idUtilizador        integer     NOT NULL
+    idAdministrador        integer     NOT NULL
 );
 
 ALTER TABLE knowUP.Administrador ADD CONSTRAINT PK_Administrador
     PRIMARY KEY (idAdministrador);
-ALTER TABLE knowUP.Administrador ADD CONSTRAINT UK_Administrador_idUtilizador
-    UNIQUE (idUtilizador);
-ALTER TABLE knowUP.Administrador ADD CONSTRAINT FK_Administrador_idUtilizador
-    FOREIGN KEY (idUtilizador) REFERENCES knowUP.Utilizador(idUtilizador)
+ALTER TABLE knowUP.Administrador ADD CONSTRAINT FK_Administrador_idAdministrador
+    FOREIGN KEY (idAdministrador) REFERENCES knowUP.Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -119,16 +116,13 @@ ALTER TABLE knowUP.Administrador ADD CONSTRAINT FK_Administrador_idUtilizador
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Moderador (
-    idModerador     serial      NOT NULL,
-    idUtilizador    integer     NOT NULL
+    idModerador     integer      NOT NULL,
 );
 
 ALTER TABLE knowUP.Moderador ADD CONSTRAINT PK_Moderador
     PRIMARY KEY (idModerador);
-ALTER TABLE knowUP.Moderador ADD CONSTRAINT UK_Moderador_idUtilizador
-    UNIQUE (idUtilizador);
-ALTER TABLE knowUP.Moderador ADD CONSTRAINT FK_Moderador_idUtilizador
-    FOREIGN KEY (idUtilizador) REFERENCES knowUP.Utilizador(idUtilizador)
+ALTER TABLE knowUP.Moderador ADD CONSTRAINT FK_Moderador_idModerador
+    FOREIGN KEY (idModerador) REFERENCES knowUP.Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -179,9 +173,8 @@ ALTER TABLE knowUP.Contribuicao ADD CONSTRAINT FK_Contribuicao_idAutor
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.Resposta (
-    idResposta      serial      NOT NULL,
+    idResposta      integer     NOT NULL,
     idPergunta      integer     NOT NULL,
-    idContribuicao  integer     NOT NULL,
     melhorResposta  boolean     DEFAULT false
 );
 
@@ -190,8 +183,8 @@ ALTER TABLE knowUP.Resposta ADD CONSTRAINT PK_Resposta
 ALTER TABLE knowUP.Resposta ADD CONSTRAINT FK_Resposta_idPergunta
     FOREIGN KEY (idPergunta) REFERENCES knowUP.Pergunta(idPergunta)
     ON DELETE CASCADE;
-ALTER TABLE knowUP.Resposta ADD CONSTRAINT FK_Resposta_idContribuicao
-    FOREIGN KEY (idContribuicao) REFERENCES knowUP.Contribuicao(idContribuicao)
+ALTER TABLE knowUP.Resposta ADD CONSTRAINT FK_Resposta_idResposta
+    FOREIGN KEY (idResposta) REFERENCES knowUP.Contribuicao(idContribuicao)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -219,18 +212,17 @@ ALTER TABLE knowUP.Seguidor ADD CONSTRAINT FK_Seguidor_idPergunta
 /*--------------------------------------------*/
 
 CREATE TABLE knowUP.ComentarioPergunta (
-    idComentario    serial      NOT NULL,
+    idComentario    integer     NOT NULL
     idPergunta      integer     NOT NULL,
-    idContribuicao  integer     NOT NULL
 );
 
 ALTER TABLE knowUP.ComentarioPergunta ADD CONSTRAINT PK_ComentarioPergunta
     PRIMARY KEY (idComentario);
+ALTER TABLE knowUP.ComentarioPergunta ADD CONSTRAINT FK_ComentarioPergunta_idComentario
+    FOREIGN KEY (idComentario) REFERENCES knowUP.Contribuicao(idContribuicao)
+    ON DELETE CASCADE;
 ALTER TABLE knowUP.ComentarioPergunta ADD CONSTRAINT FK_ComentarioPergunta_idPergunta
     FOREIGN KEY (idPergunta) REFERENCES knowUP.Pergunta(idPergunta)
-    ON DELETE CASCADE;
-ALTER TABLE knowUP.ComentarioPergunta ADD CONSTRAINT FK_ComentarioPergunta_idContribuicao
-    FOREIGN KEY (idContribuicao) REFERENCES knowUP.Contribuicao(idContribuicao)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/

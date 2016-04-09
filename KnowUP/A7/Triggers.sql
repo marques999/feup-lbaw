@@ -1,26 +1,27 @@
-CREATE FUNCTION knowUP.apagarVoto() RETURNS trigger AS $decrementVotes$
+CREATE FUNCTION apagarVoto() RETURNS trigger AS $decrementVotes$
 	BEGIN
 		IF new.valor = 1
-			THEN UPDATE knowUP.Perguntas SET
+			THEN UPDATE Perguntas SET
 				votosPositivos = votosPositivos - 1,
 				pontuacao = pontuacao - 1
 			WHERE new.contribuicaoID = contribuicaoID;
 		ELSE IF new.valor = -1
-			THEN UPDATE knowUP.Perguntas SET
+			THEN UPDATE Perguntas SET
 				votosNegativos = votosNegativos - 1,
 				pontuacao = pontuacao + 1
 			WHERE new.contribuicaoID = contribuicaoID;
 		END IF;
 		return new;
 	END;
-$decrementVotes$ LANGUAGE plpgsql;
+
+$apagarVoto$ LANGUAGE plpgsql;
 
 CREATE TRIGGER incrementarVotosPergunta
-	AFTER INSERT ON knowUP.VotosPergunta
+	AFTER INSERT ON VotoPergunta
 	FOR EACH ROW
 	EXECUTE PROCEDURE knowUP.incrementVotes();
 CREATE TRIGGER incrementarVotosResposta
-	AFTER INSERT ON knowUP.incrementVotes();
+	AFTER INSERT ON VotoResposta
 	FOR EACH ROW
 	EXECUTE PROCEDURE knowUP.incrementVotes();
 
