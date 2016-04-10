@@ -366,7 +366,7 @@ INSERT INTO Contribuicao
 VALUES(13, 5, '<blockquote cite="http://pt.stackoverflow.com/tags/ascii/info"> ASCII (acrónimo para American Standard Code for Information Interchange, que em português significa "Código Padrão Americano para o Intercâmbio de Informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.', '2016-01-10 21:14:22');
 
 INSERT INTO Contribuicao
-VALUES(14, 7, 'Preciso de fazer algum <em>include<em> para usar no meu codigo em C++?','2016-01-11 09:54:09');
+VALUES(14, 6, 'Preciso de fazer algum <em>include<em> para usar no meu codigo em C++?','2016-01-11 09:54:09');
 
 INSERT INTO Contribuicao
 VALUES(15, 8, 'Tendo em conta a minha experiência em uso de todo o tipo de lápis, aconselho cera para ambientes rurais, e normal para ambientes urbanos. Cabe agora a ti descobrir que paisagem queres pintar exatamente.', '2015-12-24 22:22:22');
@@ -388,25 +388,17 @@ VALUES(19, 7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:41:1
 /*--------------------------------------------*/
 
 INSERT INTO Resposta VALUES(1, 1, true);
-
 INSERT INTO Resposta VALUES(3, 4, true);
-INSERT INTO Resposta VALUES(11, 4, false);
-
 INSERT INTO Resposta VALUES(4, 6, false);
 INSERT INTO Resposta VALUES(5, 6, false);
 INSERT INTO Resposta VALUES(6, 6, false);
 INSERT INTO Resposta VALUES(7, 6, false);
-INSERT INTO Resposta VALUES(8, 6, false);
 INSERT INTO Resposta VALUES(10, 6, true);
-
 INSERT INTO Resposta VALUES(13, 7, false);
 INSERT INTO Resposta VALUES(14, 7, false);
-
 INSERT INTO Resposta VALUES(15, 8, true);
-
 INSERT INTO Resposta VALUES(16, 9, false);
 INSERT INTO Resposta VALUES(17, 9, false);
-
 INSERT INTO Resposta VALUES(18, 10, false);
 
 /*--------------------------------------------*/
@@ -417,13 +409,16 @@ INSERT INTO Resposta VALUES(18, 10, false);
 /*             ComentarioPergunta             */
 /*--------------------------------------------*/
 
+INSERT INTO ComentarioPergunta VALUES(8, 6);
+INSERT INTO ComentarioPergunta VALUES(9, 6);
+
 /*--------------------------------------------*/
 /*             ComentarioResposta             */
 /*--------------------------------------------*/
 
 INSERT INTO ComentarioResposta VALUES(2, 1);
-INSERT INTO ComentarioResposta VALUES(9, 6);
-INSERT INTO ComentarioResposta VALUES(12, 6);
+INSERT INTO ComentarioResposta VALUES(11, 10);
+INSERT INTO ComentarioResposta VALUES(12, 10);
 INSERT INTO ComentarioResposta VALUES(19, 10);
 
 /*--------------------------------------------*/
@@ -433,7 +428,6 @@ INSERT INTO ComentarioResposta VALUES(19, 10);
 INSERT INTO VotoPergunta VALUES(1, 4, 1);
 INSERT INTO VotoPergunta VALUES(1, 5, 1);
 INSERT INTO VotoPergunta VALUES(1, 8, 1);
-
 INSERT INTO VotoPergunta VALUES(3, 2, -1);
 INSERT INTO VotoPergunta VALUES(3, 3, -1);
 INSERT INTO VotoPergunta VALUES(3, 4, -1);
@@ -441,116 +435,75 @@ INSERT INTO VotoPergunta VALUES(3, 5, -1);
 INSERT INTO VotoPergunta VALUES(3, 6, -1);
 INSERT INTO VotoPergunta VALUES(3, 7, -1);
 INSERT INTO VotoPergunta VALUES(3, 8, -1);
-
 INSERT INTO VotoPergunta VALUES(4, 2, -1);
 INSERT INTO VotoPergunta VALUES(4, 3, 1);
 INSERT INTO VotoPergunta VALUES(4, 4, 1);
 INSERT INTO VotoPergunta VALUES(4, 7, 1);
 INSERT INTO VotoPergunta VALUES(4, 8, -1);
-
 INSERT INTO VotoPergunta VALUES(5, 3, -1);
 INSERT INTO VotoPergunta VALUES(5, 4, -1);
 INSERT INTO VotoPergunta VALUES(5, 7, -1);
 INSERT INTO VotoPergunta VALUES(5, 8, 1);
-
 INSERT INTO VotoPergunta VALUES(6, 2, 1);
 INSERT INTO VotoPergunta VALUES(6, 3, 1);
 INSERT INTO VotoPergunta VALUES(6, 4, 1);
 INSERT INTO VotoPergunta VALUES(6, 5, 1);
 INSERT INTO VotoPergunta VALUES(6, 6, -1);
 INSERT INTO VotoPergunta VALUES(6, 8, 1);
-
 INSERT INTO VotoPergunta VALUES(7, 2, -1);
 INSERT INTO VotoPergunta VALUES(7, 3, -1);
 INSERT INTO VotoPergunta VALUES(7, 5, 1);
 INSERT INTO VotoPergunta VALUES(7, 7, 1);
 INSERT INTO VotoPergunta VALUES(7, 8, -1);
-
 INSERT INTO VotoPergunta VALUES(8, 3, 1);
 INSERT INTO VotoPergunta VALUES(8, 8, 1);
-
 INSERT INTO VotoPergunta VALUES(9, 2, 1);
 INSERT INTO VotoPergunta VALUES(9, 3, 1);
 INSERT INTO VotoPergunta VALUES(9, 4, 1);
 INSERT INTO VotoPergunta VALUES(9, 6, 1);
 INSERT INTO VotoPergunta VALUES(9, 8, 1);
-
 INSERT INTO VotoPergunta VALUES(10, 2, 1);
 
 /*--------------------------------------------*/
 /*                VotoResposta                */
 /*--------------------------------------------*/
 
-7 não pode
-INSERT INTO VotoResposta VALUES(1, 2, 1);
+INSERT INTO VotoResposta VALUES(1, 2, -1);
+INSERT INTO VotoResposta VALUES(1, 4, -1);
 INSERT INTO VotoResposta VALUES(1, 8, 1);
-
-5 não pode
-INSERT INTO VotoResposta VALUES(3, 2, 1);
+INSERT INTO VotoResposta VALUES(3, 3, 1);
 INSERT INTO VotoResposta VALUES(3, 6, 1);
-
-5 não pode
-INSERT INTO VotoResposta VALUES(4, 2, 1);
-INSERT INTO VotoResposta VALUES(4, 3, 1);
-INSERT INTO VotoResposta VALUES(4, 8, 1);
-
-2 não pode
 INSERT INTO VotoResposta VALUES(5, 3, 1);
 INSERT INTO VotoResposta VALUES(5, 4, 1);
 INSERT INTO VotoResposta VALUES(5, 8, 1);
-
-5 não pode
 INSERT INTO VotoResposta VALUES(6, 3, 1);
 INSERT INTO VotoResposta VALUES(6, 7, 1);
-
-2 não pode
-INSERT INTO VotoResposta VALUES(7, 4, -1);
-INSERT INTO VotoResposta VALUES(7, 6, 1);
-INSERT INTO VotoResposta VALUES(7, 8, -1);
-
-5 não pode
-INSERT INTO VotoResposta VALUES(8, 2, -1);
-INSERT INTO VotoResposta VALUES(8, 4, 1);
-INSERT INTO VotoResposta VALUES(8, 7, -1);
-
-5 não pode
-INSERT INTO VotoResposta VALUES(10, 2, -1);
+INSERT INTO VotoResposta VALUES(7, 3, 1);
+INSERT INTO VotoResposta VALUES(7, 5, 1);
+INSERT INTO VotoResposta VALUES(10, 2, 1);
 INSERT INTO VotoResposta VALUES(10, 3, 1);
 INSERT INTO VotoResposta VALUES(10, 4, 1);
-INSERT INTO VotoResposta VALUES(10, 6, -1);
+INSERT INTO VotoResposta VALUES(10, 6, 1);
 INSERT INTO VotoResposta VALUES(10, 7, 1);
-
-6 não pode
-INSERT INTO VotoResposta VALUES(11, 2, -1);
-
-5 não pode
-INSERT INTO VotoResposta VALUES(13, 3, 1);
-INSERT INTO VotoResposta VALUES(13, 4, 1);
 INSERT INTO VotoResposta VALUES(13, 6, 1);
 INSERT INTO VotoResposta VALUES(13, 7, 1);
-
-7 não pode
+INSERT INTO VotoResposta VALUES(14, 2, -1);
 INSERT INTO VotoResposta VALUES(14, 3, -1);
 INSERT INTO VotoResposta VALUES(14, 4, -1);
-
-8 não pode
-INSERT INTO VotoResposta VALUES(15, 2, -1);
-INSERT INTO VotoResposta VALUES(15, 6, -1);
-
-5 não pode
+INSERT INTO VotoResposta VALUES(14, 5, -1);
+INSERT INTO VotoResposta VALUES(14, 7, -1);
+INSERT INTO VotoResposta VALUES(15, 5, 1);
 INSERT INTO VotoResposta VALUES(16, 2, 1);
-INSERT INTO VotoResposta VALUES(16, 4, 1);
-
-3 não pode
+INSERT INTO VotoResposta VALUES(16, 3, 1);
+INSERT INTO VotoResposta VALUES(16, 4, -1);
+INSERT INTO VotoResposta VALUES(16, 7, -1);
+INSERT INTO VotoResposta VALUES(16, 8, -1);
+INSERT INTO VotoResposta VALUES(17, 2, 1);
 INSERT INTO VotoResposta VALUES(17, 4, 1);
-
-1 não pode
-INSERT INTO VotoResposta VALUES(18, 3, 1);
-INSERT INTO VotoResposta VALUES(18, 4, 1);
-
-/*--------------------------------------------*/
-/*                 Notificação                */
-/*--------------------------------------------*/
+INSERT INTO VotoResposta VALUES(17, 5, 1);
+INSERT INTO VotoResposta VALUES(17, 8, -1);
+INSERT INTO VotoResposta VALUES(18, 6, 1);
+INSERT INTO VotoResposta VALUES(18, 7, 1);
 
 /*--------------------------------------------*/
 /*                  Mensagem                  */
