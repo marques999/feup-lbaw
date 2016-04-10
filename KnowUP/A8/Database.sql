@@ -293,20 +293,45 @@ INSERT INTO Moderador VALUES(5);
 /*--------------------------------------------*/
 
 INSERT INTO Pergunta VALUES (1, 54, 8,'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07' ,140, false);
-INSERT INTO Pergunta VALUES (2, 12, 5, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22',20, true);
+INSERT INTO Pergunta VALUES (2, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22',20, true);
 INSERT INTO Pergunta VALUES (3, 55 ,2, 'O que fazer quando tudo o resto falha?', 'O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema: <br> A migração da pecuária, especialmente, gado Bovino, está a destruir o parque da escola municipal de Valongo. <br> As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega. <br> <br> Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais. <br> <br> Muito Obrigado <br> Diogo Marques', 10, true);
 INSERT INTO Pergunta VALUES (4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32',1500, false);
 INSERT INTO Pergunta VALUES (5, 28, 2, 'Mudanças de Curso.', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2012-09-25 04:23:54', 3000, false);
+INSERT INTO Pergunta VALUES (6, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol','2014-09-25 14:56:43', 253, false);
+INSERT INTO Pergunta VALUES (7, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', 1243, true);
+INSERT INTO Pergunta VALUES (8, 42, 5, 'Lápis normal ou Lápis de Cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado', '2015-12-24 19:43:32', 123, false);
+INSERT INTO Pergunta VALUES (9, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help', '2016-03-23 17:43:52', 5344, true);
+INSERT INTO Pergunta VALUES (10, 24, 7 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolisticos dentro da comunidade não relacionados diretamente com a faculdade', '2016-03-24 19:40:10', 2, false);
 
 /*--------------------------------------------*/
-/*                Contribuição                */
+/*                Contribuiçao                */
 /*--------------------------------------------*/
 
-INSERT INTO Contribuição VALUES (1,7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <br> Folha A4: <br> 2480 px de largura <br> 3508 px de altura <br> <br> Folha A3: <br> 3508 px de largura <br> 4960 px de altura <br> <br> Folha A5: <br> 1754 px de largura <br> 2480 px de altura', 2016-03-21 14:35:33);
-INSERT INTO Contribuição VALUES(2,8, 'Muito Obrigado, rápido e esclarecedor como sempre!', 2016-03-21 14:49:33);
+INSERT INTO Contribuicao VALUES (1,7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <br> Folha A4: <br> 2480 px de largura <br> 3508 px de altura <br> <br> Folha A3: <br> 3508 px de largura <br> 4960 px de altura <br> <br> Folha A5: <br> 1754 px de largura <br> 2480 px de altura', '2016-03-21 14:35:33');
+INSERT INTO Contribuicao VALUES(2,8, 'Muito Obrigado, rápido e esclarecedor como sempre!', '2016-03-21 14:49:33');
 
-INSERT INTO Contribuição VALUES(3,5,'Encontrei na wikipedia: <br> <blockquote cite="https://pt.wikipedia.org/wiki/Dente"> Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila. </blockquote>')
+INSERT INTO Contribuicao VALUES(3,5,'Encontrei na wikipedia: <br> <blockquote cite="https://pt.wikipedia.org/wiki/Dente"> Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila. </blockquote>', '2015-11-10 20:42:45');
 
+INSERT INTO Contribuicao VALUES(4,5, 'Na minha opinião devias tomar paracetamol', '2014-09-25 14:58:01');
+INSERT INTO Contribuicao VALUES(5,2, 'Eu acho que devia ser ibuprofeno, também é anti-inflamatório!','2014-09-25 15:02:13');
+INSERT INTO Contribuicao VALUES(6,5, 'No caso de a dor ser leve, apesar de constante, penso que o mais aconselhado seria paracetamol, pois é menos prejudicial à saude @marques999', '2014-09-25 15:05:46');
+INSERT INTO Contribuicao VALUES(7,2, 'Sim, de certa forma tens razão, ainda que ele possa ter uma inflamação. Eu diria ibuprofeno pois também é anti-inflamatório. Se não tomar muitas vezes nao há problemas @darklord', '2014-09-25 15:26:53');
+INSERT INTO Contribuicao VALUES(8,5, 'A dor é muito forte? @mellus', '2014-09-25 15:30:22');
+INSERT INTO Contribuicao VALUES(9,6, 'Não, só que como é persistente perturba-me o estudo','2014-09-25 18:20:10');
+INSERT INTO Contribuicao VALUES(10,5, 'Então o paracetamol é o mais indicado devido à falta de outros sintomas @mellus @marques999', '2014-09-25 19:41:21');
+INSERT INTO Contribuicao VALUES(11,6, 'Muito obrigado! PS: Qual é a farmácia mais proxima do S.João?', '2014-09-25 20:36:41');
+INSERT INTO Contribuicao VALUES(12,2, 'Vai ao Amial, há uma aberta de certeza', '2014-09-25 20:40:12');
+
+INSERT INTO Contribuicao VALUES(13,5, '<blockquote cite="http://pt.stackoverflow.com/tags/ascii/info"> ASCII (acrônimo para American Standard Code for Information Interchange, que em português significa "Código Padrão Americano para o Intercâmbio de Informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.', '2016-01-10 21:14:22');
+INSERT INTO Contribuicao VALUES(14,7, 'Preciso de fazer algum include para usar no meu codigo em c++?','2016-01-11 09:54:09');
+
+INSERT INTO Contribuicao VALUES(15,8, 'Tendo em conta a minha experiência em uso de todo o tipo de lápis, aconselho cera para ambientes rurais, e normal para ambientes urbanos. Cabe-te agora a ti descobrir que paisagem queres pintar exatamente.', '2015-12-24 22:22:22');
+
+INSERT INTO Contribuicao VALUES(16,5, 'Star Wars é sempre um bom tema', '2016-03-24 19:43:32');
+INSERT INTO Contribuicao VAlUES(17,3, 'Papel Cor de Rosa dava um bom nome. Em relação ao tema, aproveitando a ideia do @darklord eu diria uma comédia romântica com bonecos do star wars. Deve ser incrivel', '2016-03-24 20:11:62');
+
+INSERT INTO Contribuicao VALUES(18,1, 'Desde que cumpra as normas do website, sim é permitido.', '2016-04-10 19:43:32');
+INSERT INTO Contribuicao VALUES(19,7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:43:32');
 /*--------------------------------------------*/
 /*                  Resposta                  */
 /*--------------------------------------------*/
@@ -315,6 +340,23 @@ INSERT INTO Resposta(1,1,true);
 
 INSERT INTO Resposta(3,4,true);
 
+INSERT INTO Resposta(4,6,false);
+INSERT INTO Resposta(5,6,false);
+INSERT INTO Resposta(6,6,false);
+INSERT INTO Resposta(7,6,false);
+INSERT INTO Resposta(8,6,false);
+INSERT INTO Resposta(10,6,true);
+INSERT INTO Resposta(11,4,false);
+
+INSERT INTO Resposta(13,5,false);
+INSERT INTO Resposta(14,7,false);
+
+INSERT INTO Resposta(15,8,true);
+
+INSERT INTO Resposta(16,5,false);
+INSERT INTO Resposta(17,3,false);
+
+INSERT INTO Resposta(18,1,false);
 /*--------------------------------------------*/
 /*                  Seguidor                  */
 /*--------------------------------------------*/
@@ -328,6 +370,11 @@ INSERT INTO Resposta(3,4,true);
 /*--------------------------------------------*/
 
 INSERT INTO ComentarioResposta(2,1);
+
+INSERT INTO ComentarioResposta(9,6);
+INSERT INTO ComentarioResposta(12,6);
+
+INSERT INTO ComentarioResposta(19,10);
 
 /*--------------------------------------------*/
 /*                VotoPergunta                */
