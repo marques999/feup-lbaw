@@ -37,16 +37,15 @@ DECLARE
 	AutorResposta integer;
 	EstadoPergunta BOOLEAN;
 BEGIN
+	EstadoPergunta = Pergunta.ativa;
 	SELECT Pergunta.idAutor INTO AutorPergunta
 	FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta;
 	SELECT Contribuicao.idAutor INTO AutorResposta
 	FROM Contribuicao WHERE NEW.idContribuicao = Contribuicao.idContribuicao;
-	SELECT Pergunta.ativa INTO EstadoPergunta
-	FROM Pergunta;
-	IF (AutorResposta == AutorPergunta) THEN
+	IF (not EstadoPergunta) THEN
 		RETURN NULL;
 	END IF;
-	IF (EstadoPergunta == false) THEN
+	IF (AutorResposta == AutorPergunta) THEN
 		RETURN NULL;
 	END IF;
 	RETURN NEW;
