@@ -260,7 +260,7 @@ INSERT INTO Utilizador
 VALUES (3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', '2015-06-02 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (4, 8, 'darklord', 'naosei', 'tambemnaosei@gmail.com', 'Vitor', 'Esteves', 'Mirandela', 'pt', '2015-08-13 12:30:04', '2016-04-10 15:23:22', false, true);
+VALUES (4, 8, 'darklord', 'naosei', 'up201303104@fe.up.pt', 'Vitor', 'Esteves', 'Mirandela', 'pt', '2015-08-13 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
 VALUES (5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', '2015-09-21 14:40:23', '2016-04-10 15:23:22', false, true);
@@ -293,20 +293,27 @@ INSERT INTO Moderador VALUES(5);
 /*--------------------------------------------*/
 
 INSERT INTO Pergunta VALUES (1, 54, 8,'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07' ,140, false);
+INSERT INTO Pergunta VALUES (2, 12, 5, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22',20, true);
+INSERT INTO Pergunta VALUES (3, 55 ,2, 'O que fazer quando tudo o resto falha?', 'O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema: <br> A migração da pecuária, especialmente, gado Bovino, está a destruir o parque da escola municipal de Valongo. <br> As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega. <br> <br> Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais. <br> <br> Muito Obrigado <br> Diogo Marques', 10, true);
+INSERT INTO Pergunta VALUES (4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32',1500, false);
+INSERT INTO Pergunta VALUES (5, 28, 2, 'Mudanças de Curso.', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2012-09-25 04:23:54', 3000, false);
 
 /*--------------------------------------------*/
 /*                Contribuição                */
 /*--------------------------------------------*/
 
-INSERT INTO Contribuição VALUES (1,7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <p> Folha A4: </p> <p> 2480 px de largura</p> <p> 3508 px de altura </p> <p> </p> <p> Folha A3: </p> <p> 3508 px de largura </p> <p> 4960 px de altura </p> <p> </p> <p> Folha A5: </p> <p> 1754 px de largura </p> <p> 2480 px de altura </p>', 2016-03-21 14:35:33);
-
+INSERT INTO Contribuição VALUES (1,7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <br> Folha A4: <br> 2480 px de largura <br> 3508 px de altura <br> <br> Folha A3: <br> 3508 px de largura <br> 4960 px de altura <br> <br> Folha A5: <br> 1754 px de largura <br> 2480 px de altura', 2016-03-21 14:35:33);
 INSERT INTO Contribuição VALUES(2,8, 'Muito Obrigado, rápido e esclarecedor como sempre!', 2016-03-21 14:49:33);
+
+INSERT INTO Contribuição VALUES(3,5,'Encontrei na wikipedia: <br> <blockquote cite="https://pt.wikipedia.org/wiki/Dente"> Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila. </blockquote>')
 
 /*--------------------------------------------*/
 /*                  Resposta                  */
 /*--------------------------------------------*/
 
 INSERT INTO Resposta(1,1,true);
+
+INSERT INTO Resposta(3,4,true);
 
 /*--------------------------------------------*/
 /*                  Seguidor                  */
