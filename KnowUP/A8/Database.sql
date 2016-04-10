@@ -292,13 +292,21 @@ INSERT INTO Moderador VALUES(5);
 /*                  Pergunta                  */
 /*--------------------------------------------*/
 
+INSERT INTO Pergunta VALUES (1, 54, 8,'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07' ,140, false);
+
 /*--------------------------------------------*/
 /*                Contribuição                */
 /*--------------------------------------------*/
 
+INSERT INTO Contribuição VALUES (1,7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <p> Folha A4: </p> <p> 2480 px de largura</p> <p> 3508 px de altura </p> <p> </p> <p> Folha A3: </p> <p> 3508 px de largura </p> <p> 4960 px de altura </p> <p> </p> <p> Folha A5: </p> <p> 1754 px de largura </p> <p> 2480 px de altura </p>', 2016-03-21 14:35:33);
+
+INSERT INTO Contribuição VALUES(2,8, 'Muito Obrigado, rápido e esclarecedor como sempre!', 2016-03-21 14:49:33);
+
 /*--------------------------------------------*/
 /*                  Resposta                  */
 /*--------------------------------------------*/
+
+INSERT INTO Resposta(1,1,true);
 
 /*--------------------------------------------*/
 /*                  Seguidor                  */
@@ -311,6 +319,8 @@ INSERT INTO Moderador VALUES(5);
 /*--------------------------------------------*/
 /*             ComentarioResposta             */
 /*--------------------------------------------*/
+
+INSERT INTO ComentarioResposta(2,1);
 
 /*--------------------------------------------*/
 /*                VotoPergunta                */
