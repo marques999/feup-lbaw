@@ -365,10 +365,10 @@ INSERT INTO Contribuicao
 VALUES(16, 5, 'Star Wars é sempre um bom tema...', '2016-03-24 19:43:32');
 
 INSERT INTO Contribuicao
-VALUES(17, 3, 'Papel cor-de-rosa dava um bom nome. Em relação ao tema, aproveitando a ideia do @darklord eu diria uma comédia romântica com bonecos do <em>Star Wars</em>. Deve ser incrivel!!!', '2016-03-24 20:11:62');
+VALUES(17, 3, 'Papel cor-de-rosa dava um bom nome. Em relação ao tema, aproveitando a ideia do @darklord eu diria uma comédia romântica com bonecos do <em>Star Wars</em>. Deve ser incrivel!!!', '2016-03-24 20:11:52');
 
 INSERT INTO Contribuicao
-VALUES(18, 1, 'Desde que cumpra as normas deste website, sim é permitido.', '2016-04-10 19:43:32');
+VALUES(18, 2, 'Desde que cumpra as normas deste website, sim é permitido.', '2016-04-10 19:43:32');
 
 INSERT INTO Contribuicao
 VALUES(19, 7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:41:14');
@@ -395,16 +395,35 @@ INSERT INTO Resposta VALUES(18, 10, false);
 /*                  Seguidor                  */
 /*--------------------------------------------*/
 
-INSERT INTO Seguidor VALUES(1, 8, '2016-03-21 14:30:07', 'DATA');
-INSERT INTO Seguidor VALUES(2, 4, '2016-04-10 16:45:22', 'DATA');
-INSERT INTO Seguidor VALUES(3, 2, 'DATA', 'DATA');
-INSERT INTO Seguidor VALUES(4, 6, '2015-11-10 19:44:32', 'DATA');
-INSERT INTO Seguidor VALUES(5, 2, '2016-04-25 04:23:54', 'DATA');
-INSERT INTO Seguidor VALUES(6, 3, '2014-09-25 14:56:43', 'DATA');
+INSERT INTO Seguidor VALUES(8, 1, '2016-03-21 14:30:07', 'DATA');
+INSERT INTO Seguidor VALUES(7, 1, '2016-03-21 14:35:33', 'DATA');
+
+INSERT INTO Seguidor VALUES(4, 2, '2016-04-10 16:45:22', 'DATA');
+
+INSERT INTO Seguidor VALUES(2, 3, 'DATA', 'DATA');
+
+INSERT INTO Seguidor VALUES(6, 4, '2015-11-10 19:44:32', 'DATA');
+INSERT INTO Seguidor VALUES(5, 4, '2015-11-10 20:42:45', 'DATA');
+
+INSERT INTO Seguidor VALUES(2, 5, '2016-04-25 04:23:54', 'DATA');
+
+INSERT INTO Seguidor VALUES(3, 6, '2015-09-25 14:56:43', 'DATA');
+INSERT INTO Seguidor VALUES(5, 6, '2015-09-25 15:05:46', 'DATA');
+INSERT INTO Seguidor VALUES(2, 6, '2015-09-25 15:26:53', 'DATA');
+
 INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', 'DATA');
-INSERT INTO Seguidor VALUES(8, 5, '2015-12-24 19:43:32', 'DATA');
-INSERT INTO Seguidor VALUES(9, 8, '2016-03-23 17:43:52', 'DATA');
-INSERT INTO Seguidor VALUES(10, 7, '2016-03-24 19:40:10', 'DATA');
+INSERT INTO Seguidor VALUES(5, 7, '2016-01-10 21:14:22', 'DATA');
+INSERT INTO Seguidor VALUES(6, 7, '2016-01-11 09:54:09', 'DATA');
+
+INSERT INTO Seguidor VALUES(5, 8, '2015-12-24 19:43:32', 'DATA');
+INSERT INTO Seguidor VALUES(8, 8, '2015-12-24 22:22:22', 'DATA');
+
+INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', 'DATA');
+INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', 'DATA');
+INSERT INTO Seguidor VALUES(3, 9, '2016-03-24 20:11:62', 'DATA');
+
+INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', 'DATA');
+INSERT INTO Seguidor VALUES(2, 10, '2016-04-10 19:43:32', 'DATA');
 
 /*--------------------------------------------*/
 /*             ComentarioPergunta             */
