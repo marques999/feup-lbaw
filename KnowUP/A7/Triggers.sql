@@ -35,12 +35,18 @@ CREATE OR REPLACE FUNCTION knowUP.responderPergunta() RETURNS TRIGGER as $respon
 DECLARE
 	AutorPergunta integer;
 	AutorResposta integer;
+	EstadoPergunta BOOLEAN;
 BEGIN
 	SELECT Pergunta.idAutor INTO AutorPergunta
 	FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta;
 	SELECT Contribuicao.idAutor INTO AutorResposta
 	FROM Contribuicao WHERE NEW.idContribuicao = Contribuicao.idContribuicao;
+	SELECT Pergunta.ativa INTO EstadoPergunta
+	FROM Pergunta;
 	IF (AutorResposta == AutorPergunta) THEN
+		RETURN NULL;
+	END IF;
+	IF (EstadoPergunta == false) THEN
 		RETURN NULL;
 	END IF;
 	RETURN NEW;
@@ -72,7 +78,7 @@ END;
 
 $registarVotoPergunta$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION knowUP.registarVotoPergunta(integer, integer, integer)
+CREATE OR REPLACE FUNCTION knowUP.registarVotoResposta(integer, integer, integer)
 RETURNS void AS $registerVotoResposta$
 BEGIN
 	IF EXISTS(SELECT 1 FROM knowUP.VotoResposta WHERE idResposta = $1 AND idAutor = $2) THEN
@@ -94,7 +100,7 @@ END;
 
 $calcularPontuacaoPergunta$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION calcularPontuacaoResposat(integer) RETURNS integer AS $calcularPontuacaoResposat$
+CREATE OR REPLACE FUNCTION calcularPontuacaoResposta(integer) RETURNS integer AS $calcularPontuacaoResposta$
 BEGIN
 	SELECT SUM(VotoResposta.valor) AS pontuacao FROM VotoResposta
 	WHERE VotoResposta.idResposta = $;
