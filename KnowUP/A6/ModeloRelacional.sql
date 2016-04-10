@@ -86,7 +86,6 @@ CREATE TABLE Utilizador (
 	email           text        NOT NULL,
 	primeiroNome    text        NOT NULL,
 	ultimoNome      text        NOT NULL,
-	descricao       text        NULL,
 	localidade      text        NULL,
 	codigoPais      text        NULL,
 	dataRegisto     timestamp   DEFAULT current_timestamp,
@@ -318,7 +317,7 @@ CREATE TABLE Mensagem (
 	idMensagem      serial      NOT NULL,
 	idRemetente     integer     NOT NULL,
 	idDestinatario  integer     NOT NULL,
-	titulo          text        NULL,
+	titulo          text        NOT NULL,
 	descricao       text        NOT NULL,
 	dataHora        timestamp   DEFAULT current_timestamp
 );

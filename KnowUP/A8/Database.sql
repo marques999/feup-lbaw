@@ -251,28 +251,28 @@ INSERT INTO CategoriaInstituicao VALUES (14, 21); /* Farmacologia */
 /*--------------------------------------------*/
 
 INSERT INTO Utilizador
-VALUES (1, NULL, 'admin', 'seguranca101', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', true, '2016-04-02 12:30:04');
+VALUES (1, NULL, 'admin', 'seguranca101', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', '2014-10-23 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', true, '2016-04-02 12:30:04');
+VALUES (2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', '2016-02-21 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', true, '2016-04-02 12:30:04');
+VALUES (3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', '2015-06-02 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (4, 8, 'darklord', 'naosei', 'tambemnaosei@gmail.com', 'Vitor', 'Esteves', 'Mirandela', 'pt', true, '2016-04-02 12:30:04');
+VALUES (4, 8, 'darklord', 'naosei', 'tambemnaosei@gmail.com', 'Vitor', 'Esteves', 'Mirandela', 'pt', '2015-08-13 12:30:04', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', true, '2016-04-05 14:40:23');
+VALUES (5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', '2015-09-21 14:40:23', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.com', 'Alexander', 'Fleming', 'de', true, '2016-04-05 14:43:49');
+VALUES (6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.com', 'Alexander', 'Fleming', 'Lochfield', 'uk', '2016-03-07 14:43:49', '2016-04-10 15:23:22', true, true);
 
 INSERT INTO Utilizador
-VALUES (7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'de', true, '2016-04-05 14:46:02');
+VALUES (7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'Trier', 'de', '2015-08-12 14:46:02', '2016-04-10 15:23:22', false, true);
 
 INSERT INTO Utilizador
-VALUES (8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'jp', true, '2016-04-05 14:49:33');
+VALUES (8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'Saitama', 'jp', '2015-10-14 14:49:33', '2016-04-10 15:23:22', false, true);
 
 /*--------------------------------------------*/
 /*                Administrador               */
