@@ -141,11 +141,9 @@ INSERT INTO CategoriaInstituicao VALUES(1, 25); /* Gestão Desportiva */
 INSERT INTO CategoriaInstituicao VALUES(1, 26); /* Ginástica */
 INSERT INTO CategoriaInstituicao VALUES(1, 27); /* Ténis */
 INSERT INTO CategoriaInstituicao VALUES(1, 56); /* Nutrição */
-
 INSERT INTO CategoriaInstituicao VALUES(2, 53); /* Arquitectura */
 INSERT INTO CategoriaInstituicao VALUES(2, 54); /* Arquitectura Paisagista */
 INSERT INTO CategoriaInstituicao VALUES(2, 55); /* Património */
-
 INSERT INTO CategoriaInstituicao VALUES(3, 38); /* Cinema */
 INSERT INTO CategoriaInstituicao VALUES(3, 39); /* Design */
 INSERT INTO CategoriaInstituicao VALUES(3, 40); /* Escultura */
@@ -153,9 +151,7 @@ INSERT INTO CategoriaInstituicao VALUES(3, 41); /* Fotografia */
 INSERT INTO CategoriaInstituicao VALUES(3, 42); /* Pintura */
 INSERT INTO CategoriaInstituicao VALUES(3, 48); /* Jornalismo */
 INSERT INTO CategoriaInstituicao VALUES(3, 50); /* Multimédia */
-
 INSERT INTO CategoriaInstituicao VALUES(4, 56); /* Nutrição */
-
 INSERT INTO CategoriaInstituicao VALUES(5, 2); /* Engenharia Ambiente */
 INSERT INTO CategoriaInstituicao VALUES(5, 5); /* Engenharia Informática */
 INSERT INTO CategoriaInstituicao VALUES(5, 12); /* Ciências Forenses */
@@ -170,16 +166,13 @@ INSERT INTO CategoriaInstituicao VALUES(5, 33); /* Química */
 INSERT INTO CategoriaInstituicao VALUES(5, 45); /* Geografia */
 INSERT INTO CategoriaInstituicao VALUES(5, 50); /* Multimédia */
 INSERT INTO CategoriaInstituicao VALUES(5, 54); /* Arquitectura Paisagista */
-
 INSERT INTO CategoriaInstituicao VALUES(6, 10); /* Criminologia */
 INSERT INTO CategoriaInstituicao VALUES(6, 11); /* Direito */
-
 INSERT INTO CategoriaInstituicao VALUES(7, 32); /* Matemática */
 INSERT INTO CategoriaInstituicao VALUES(7, 34); /* Contabilidade */
 INSERT INTO CategoriaInstituicao VALUES(7, 35); /* Economia */
 INSERT INTO CategoriaInstituicao VALUES(7, 36); /* Finanças */
 INSERT INTO CategoriaInstituicao VALUES(7, 37); /* Gestão */
-
 INSERT INTO CategoriaInstituicao VALUES(8, 1); /* Bioengenharia */
 INSERT INTO CategoriaInstituicao VALUES(8, 2); /* Engenharia Ambiente */
 INSERT INTO CategoriaInstituicao VALUES(8, 3); /* Engenharia Civil */
@@ -193,13 +186,11 @@ INSERT INTO CategoriaInstituicao VALUES(8, 30); /* Física */
 INSERT INTO CategoriaInstituicao VALUES(8, 32); /* Matemática */
 INSERT INTO CategoriaInstituicao VALUES(8, 33); /* Química */
 INSERT INTO CategoriaInstituicao VALUES(8, 50); /* Multimédia */
-
 INSERT INTO CategoriaInstituicao VALUES(9, 12); /* Ciências Forenses */
 INSERT INTO CategoriaInstituicao VALUES(9, 14); /* Imunologia */
 INSERT INTO CategoriaInstituicao VALUES(9, 19); /* Biologia Molecular */
 INSERT INTO CategoriaInstituicao VALUES(9, 20); /* Bioquímica */
 INSERT INTO CategoriaInstituicao VALUES(9, 21); /* Farmacologia */
-
 INSERT INTO CategoriaInstituicao VALUES(10, 38); /* Cinema */
 INSERT INTO CategoriaInstituicao VALUES(10, 39); /* Design */
 INSERT INTO CategoriaInstituicao VALUES(10, 43); /* Arqueologia */
@@ -213,11 +204,9 @@ INSERT INTO CategoriaInstituicao VALUES(10, 50); /* Multimédia */
 INSERT INTO CategoriaInstituicao VALUES(10, 51); /* Português */
 INSERT INTO CategoriaInstituicao VALUES(10, 52); /* Sociologia */
 INSERT INTO CategoriaInstituicao VALUES(10, 55); /* Património */
-
 INSERT INTO CategoriaInstituicao VALUES(11, 12); /* Ciências Forenses */
 INSERT INTO CategoriaInstituicao VALUES(11, 13); /* Anatomia */
 INSERT INTO CategoriaInstituicao VALUES(11, 17); /* Medicina Dentária */
-
 INSERT INTO CategoriaInstituicao VALUES(12, 12); /* Ciências Forenses */
 INSERT INTO CategoriaInstituicao VALUES(12, 13); /* Anatomia */
 INSERT INTO CategoriaInstituicao VALUES(12, 14); /* Imunologia */
@@ -227,13 +216,11 @@ INSERT INTO CategoriaInstituicao VALUES(12, 17); /* Medicina Dentária */
 INSERT INTO CategoriaInstituicao VALUES(12, 19); /* Biologia Molecular */
 INSERT INTO CategoriaInstituicao VALUES(12, 20); /* Bioquímica */
 INSERT INTO CategoriaInstituicao VALUES(12, 21); /* Farmacologia */
-
 INSERT INTO CategoriaInstituicao VALUES(13, 12); /* Ciências Forenses */
 INSERT INTO CategoriaInstituicao VALUES(13, 16); /* Psicologia */
 INSERT INTO CategoriaInstituicao VALUES(13, 40); /* Escultura */
 INSERT INTO CategoriaInstituicao VALUES(13, 44); /* Filosofia */
 INSERT INTO CategoriaInstituicao VALUES(13, 52); /* Sociologia */
-
 INSERT INTO CategoriaInstituicao VALUES(14, 1); /* Bioengenharia */
 INSERT INTO CategoriaInstituicao VALUES(14, 12); /* Ciências Forenses */
 INSERT INTO CategoriaInstituicao VALUES(14, 13); /* Anatomia */
@@ -291,6 +278,9 @@ INSERT INTO Moderador VALUES(5);
 /*--------------------------------------------*/
 /*                  Pergunta                  */
 /*--------------------------------------------*/
+
+-- há uma pergunta sem data
+-- uma das perguntas tem data anterior a 2015 (WHAT?)
 
 INSERT INTO Pergunta
 VALUES(1, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07', 140, false);
@@ -404,6 +394,17 @@ INSERT INTO Resposta VALUES(18, 10, false);
 /*--------------------------------------------*/
 /*                  Seguidor                  */
 /*--------------------------------------------*/
+
+INSERT INTO Seguidor VALUES(1, 8, '2016-03-21 14:30:07', 'DATA');
+INSERT INTO Seguidor VALUES(2, 4, '2016-04-10 16:45:22', 'DATA');
+INSERT INTO Seguidor VALUES(3, 2, 'DATA', 'DATA');
+INSERT INTO Seguidor VALUES(4, 6, '2015-11-10 19:44:32', 'DATA');
+INSERT INTO Seguidor VALUES(5, 2, '2016-04-25 04:23:54', 'DATA');
+INSERT INTO Seguidor VALUES(6, 3, '2014-09-25 14:56:43', 'DATA');
+INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', 'DATA');
+INSERT INTO Seguidor VALUES(8, 5, '2015-12-24 19:43:32', 'DATA');
+INSERT INTO Seguidor VALUES(9, 8, '2016-03-23 17:43:52', 'DATA');
+INSERT INTO Seguidor VALUES(10, 7, '2016-03-24 19:40:10', 'DATA');
 
 /*--------------------------------------------*/
 /*             ComentarioPergunta             */
@@ -559,13 +560,13 @@ VALUES(15, 4, 6, 'Re: presente de aniversário', 'Tenho aqui um papel cor-de-ros
 /*--------------------------------------------*/
 
 INSERT INTO Report
-VALUES(1, 2, 5, "O utilizador foi apanhado numa rede de tráfico de enciclopédias", '2015-12-24 15:43:09');
+VALUES(1, 5, 7, "O utilizador estava a tentar erguer uma estátua de Lenine num comentário recorrendo a tracinhos e pontos.", '2015-12-24 15:45:41');
 
 INSERT INTO Report
-VALUES(2, 3, 6, "O utilizador estava a tentar pintar como BobRoss mas esqueceu-se de acrescentar roupa aos personagens", '2015-12-24 15:45:22');
+VALUES(2, 5, 4, "O utilizador estava a ser demasiado awesome.", '2016-03-04 21:57:23');
 
 INSERT INTO Report
-VALUES(3, 5, 7, "O utilizador estava a tentar erguer uma estátua de Lenine num comentário recorrendo a tracinhos e pontos", '2015-12-24 15:45:41');
+VALUES(3, 2, 3, "O utilizador foi apanhado numa rede de tráfico de enciclopédias.", '2016-03-21 15:43:09');
 
 INSERT INTO Report
-VALUES(4, 5, 4, "O utilizador estava a ser demasiado Awesome", '2016-03-04 21:57:23');
+VALUES(4, 3, 6, "O utilizador estava a tentar pintar como Bob Ross mas esqueceu-se de acrescentar roupa aos personagens...", '2016-04-11 12:10:22');
