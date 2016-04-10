@@ -389,13 +389,8 @@ VALUES(19, 7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:41:1
 
 INSERT INTO Resposta VALUES(1, 1, true);
 
-INSERT INTO Resposta VALUES(17, 3, false);
-
 INSERT INTO Resposta VALUES(3, 4, true);
 INSERT INTO Resposta VALUES(11, 4, false);
-
-INSERT INTO Resposta VALUES(13, 5, false);
-INSERT INTO Resposta VALUES(16, 5, false);
 
 INSERT INTO Resposta VALUES(4, 6, false);
 INSERT INTO Resposta VALUES(5, 6, false);
@@ -404,9 +399,13 @@ INSERT INTO Resposta VALUES(7, 6, false);
 INSERT INTO Resposta VALUES(8, 6, false);
 INSERT INTO Resposta VALUES(10, 6, true);
 
+INSERT INTO Resposta VALUES(13, 7, false);
 INSERT INTO Resposta VALUES(14, 7, false);
 
 INSERT INTO Resposta VALUES(15, 8, true);
+
+INSERT INTO Resposta VALUES(16, 9, false);
+INSERT INTO Resposta VALUES(17, 9, false);
 
 INSERT INTO Resposta VALUES(18, 10, false);
 
