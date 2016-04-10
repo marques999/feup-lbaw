@@ -607,13 +607,13 @@ VALUES(15, 4, 6, 'Re: presente de aniversário', 'Tenho aqui um papel cor-de-ros
 /*--------------------------------------------*/
 
 INSERT INTO Report
-VALUES(1, 2, 7, "Foi reportado por outro utilizador devido a um comportamento demasiado agressivo. Leia atentamente as normas do website, de modo a evitar futuros warnings", '2015-12-24 15:43:09');
+VALUES(1, 2, 5, "O utilizador foi apanhado numa rede de tráfico de enciclopédias", '2015-12-24 15:43:09');
 
 INSERT INTO Report
-VALUES(2, 3, 7, "Foi reportado por outro utilizador devido a um comportamento demasiado agressivo. Leia atentamente as normas do website, de modo a evitar futuros warnings", '2015-12-24 15:45:22');
+VALUES(2, 3, 6, "O utilizador estava a tentar pintar como BobRoss mas esqueceu-se de acrescentar roupa aos personagens", '2015-12-24 15:45:22');
 
 INSERT INTO Report
-VALUES(3, 5, 7, "Após 3 warnings decidimos suspender temporariamente a sua conta", '2015-12-24 15:45:41');
+VALUES(3, 5, 7, "O utilizador estava a tentar erguer uma estátua de Lenine num comentário recorrendo a tracinhos e pontos", '2015-12-24 15:45:41');
 
 INSERT INTO Report
-VALUES(4, 5, 4, "Foi reportado por ser demasiado Awesome. Continue assim, haters gonna hate.", '2016-03-04 21:57:23');
+VALUES(4, 5, 4, "O utilizador estava a ser demasiado Awesome", '2016-03-04 21:57:23');
