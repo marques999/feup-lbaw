@@ -15,7 +15,7 @@ WHERE knowUP.Utilizador.idUtilizador = $idUtilizador;
 /* 2. EDITAR PERGUNTA                         */
 /*--------------------------------------------*/
 UPDATE knowUP.Pergunta
-SET 
+SET
 	knowUP.Pergunta.titulo = $novoTitulo,
 	knowUP.Pergunta.descricao = $novaDescricao
 WHERE knowUP.Pergunta.idPergunta = $idPergunta;

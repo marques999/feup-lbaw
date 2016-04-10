@@ -1,3 +1,27 @@
+SET SCHEMA 'knowup';
+
+/*--------------------------------------------*/
+/*                  DeleteAll                 */
+/*--------------------------------------------*/
+
+DELETE FROM Report;
+DELETE FROM Mensagem;
+DELETE FROM Notificacao;
+DELETE FROM Seguidor;
+DELETE FROM VotoResposta;
+DELETE FROM VotoPergunta;
+DELETE FROM ComentarioResposta;
+DELETE FROM ComentarioPergunta;
+DELETE FROM Resposta;
+DELETE FROM Contribuicao;
+DELETE FROM Pergunta;
+DELETE FROM Moderador;
+DELETE FROM Administrador;
+DELETE FROM Utilizador;
+DELETE FROM CategoriaInstituicao;
+DELETE FROM Instituicao;
+DELETE FROM Categoria;
+
 /*--------------------------------------------*/
 /*                  Categoria                 */
 /*--------------------------------------------*/
@@ -225,30 +249,30 @@ INSERT INTO CategoriaInstituicao VALUES (14, 21); /* Farmacologia */
 /*--------------------------------------------*/
 /*                 Utilizador                 */
 /*--------------------------------------------*/
-	
-INSERT INTO Utilizador
-VALUES (1, NULL, 'admin', 'seguranca101', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', true, '2016-04-02 12:30:04.255597');
 
 INSERT INTO Utilizador
-VALUES (2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', true, '2016-04-02 12:30:04.255597');
+VALUES (1, NULL, 'admin', 'seguranca101', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', true, '2016-04-02 12:30:04');
 
 INSERT INTO Utilizador
-VALUES (3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', true, '2016-04-02 12:30:04.255597');
+VALUES (2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', true, '2016-04-02 12:30:04');
 
 INSERT INTO Utilizador
-VALUES (4, 8, 'darklord', 'naosei', 'tambemnaosei@gmail.com', 'Vitor', 'Esteves', 'Mirandela', 'pt', true, '2016-04-02 12:30:04.255597');
+VALUES (3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', true, '2016-04-02 12:30:04');
 
 INSERT INTO Utilizador
-VALUES (5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', true, '2016-04-05 14:40:23.255597');
+VALUES (4, 8, 'darklord', 'naosei', 'tambemnaosei@gmail.com', 'Vitor', 'Esteves', 'Mirandela', 'pt', true, '2016-04-02 12:30:04');
 
 INSERT INTO Utilizador
-VALUES (6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.com', 'Alexander', 'Fleming', 'de', true, '2016-04-05 14:43:49.255597');
+VALUES (5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', true, '2016-04-05 14:40:23');
 
 INSERT INTO Utilizador
-VALUES (7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'de', true, '2016-04-05 14:46:02.255597');
+VALUES (6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.com', 'Alexander', 'Fleming', 'de', true, '2016-04-05 14:43:49');
 
 INSERT INTO Utilizador
-VALUES (8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'jp', true, '2016-04-05 14:49:33.255597');
+VALUES (7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'de', true, '2016-04-05 14:46:02');
+
+INSERT INTO Utilizador
+VALUES (8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'jp', true, '2016-04-05 14:49:33');
 
 /*--------------------------------------------*/
 /*                Administrador               */
@@ -378,50 +402,49 @@ INSERT INTO VotoResposta VALUES(2 autor, 1);
 /*--------------------------------------------*/
 
 INSERT INTO Mensagem
-VALUES(1, 3, 2, 'URGENTE', 'Olá! Por acaso não sabes se na papelaria vendem papel cor-de-rosa às riscas?', '2016-11-09 14:49:33.255597');
+VALUES(1, 3, 2, 'URGENTE', 'Olá! Por acaso não sabes se na papelaria vendem papel cor-de-rosa às riscas?', '2015-11-09 14:49:33');
 
 INSERT INTO Mensagem
-VALUES(2, 5, 7, 'Pintura', "Hola! Fiz aqui uns rabiscos da tua cara mesmo à maneira. Queres passar aqui em casa para os ver?", '2015-12-21 07:49:33.255597');
+VALUES(2, 5, 7, 'Pintura', 'Hola! Fiz aqui uns rabiscos da tua cara mesmo à maneira. Queres passar aqui em casa para os ver?', '2015-12-21 07:49:33');
 
 INSERT INTO Mensagem
-VALUES(3, 7, 5, NULL, "Guten Tag meu camarada. Achas que isso dá para vender?", '2015-12-21 08:30:15.255597');
-
-INSERT INTO Mensagem 
-VALUES(4, 2, 3, NULL, 'Não te sei dizer, mas acho que o darklord chegou a ir lá comprar. Porque não lhe perguntas?', '2016-11-09 14:52:33.255597');
+VALUES(3, 7, 5, 'Re: Pintura', 'Guten Tag meu camarada. Achas que isso dá para vender?', '2015-12-21 08:30:15');
 
 INSERT INTO Mensagem
-VALUES(5, 3, 4, 'URGENTE TAMBÉM', 'Boas darklord o marques disse-me que tinhas comprado um papel rosa às riscas na
-na papelaria da faculdade. É verdade? Quanto custou?' ,'2016-11-09 14:58:33.255597');
+VALUES(4, 2, 3, 'Re: URGENTE', 'Não te sei dizer, mas acho que o darklord chegou a ir lá comprar. Porque não lhe perguntas?', '2015-11-09 14:52:33');
 
-INSERT INTO Mensagem 
-VALUES(6, 5, 7, NULL, "Não sei, mas estão bem guapos. Queres passar por aqui ou não?", '2015-12-21 08:31:15.255597');
+INSERT INTO Mensagem
+VALUES(5, 3, 4, 'URGENTE TAMBÉM', 'Boas darklord o marques disse-me que tinhas comprado um papel rosa às riscas na papelaria da faculdade. É verdade? Quanto custou?' ,'2015-11-09 14:58:33');
 
-INSERT INTO Mensagem 
-VALUES(7, 7, 5, NULL, "A caminho camarada. Faz mais que é para dar a toda a gente.", '2015-12-21 10:22:59.255597');
+INSERT INTO Mensagem
+VALUES(6, 5, 7, 'Re: Pintura', 'Não sei, mas estão bem guapos. Queres passar por aqui ou não?', '2015-12-21 08:31:15');
 
-INSERT INTO Mensagem 
-VALUES(8, 4,3, NULL, 'Custa 19,99 patacas. Melhor cena da faculdade. Melhores desenhos da minha vida x)', '2015-11-09 15:00:33.255597');
+INSERT INTO Mensagem
+VALUES(7, 7, 5, 'Re: Pintura', 'A caminho camarada. Faz mais que é para dar a toda a gente.', '2015-12-21 10:22:59');
 
-INSERT INTO Mensagem 
-VALUES(9, 2, 3, NULL, 'Brigado :-D. Vou já comprar!!!', '2015-11-09 15:03:33.255597');
+INSERT INTO Mensagem
+VALUES(8, 4, 3, 'Re: URGENTE TAMBÉM', 'Custa 19,99 patacas. Melhor cena da faculdade. Melhores desenhos da minha vida x)', '2015-11-09 15:00:33');
 
-INSERT INTO Mensagem 
-VALUES(10, 14, 2, 'Parabens!!!', "Feliz aniversário! Diverte-te muito!", '2016-04-07 09:45:33.255597');
+INSERT INTO Mensagem
+VALUES(9, 2, 3, 'Re: URGENTE', 'Brigado :-D. Vou já comprar!!!', '2015-11-09 15:03:33');
 
-INSERT INTO Mensagem 
-VALUES(11, 2, 14, NULL, "Obrigado Gato Preto! :D Logo à noite há bolo de morango se quiseres", '2016-04-07 09:52:33');
+INSERT INTO Mensagem
+VALUES(10, 8, 2, 'Parabens!!!', 'Feliz aniversário! Diverte-te muito!', '2016-04-07 09:45:33');
 
-INSERT INTO Mensagem 
-VALUES(12, 3, 2, 'PARABENS!!!!!', "Parabéns Marques, tás a ficar velho rapaz", '2016-04-07 09:45:33');
+INSERT INTO Mensagem
+VALUES(11, 2, 8, 'Re: Parabens!!!', 'Obrigado Gato Preto! :D Logo à noite há bolo de morango se quiseres', '2016-04-07 09:52:33');
 
-INSERT INTO Mensagem 
-VALUES(13, 2, 3, NULL, "Obrigado Pedro Melo! :D Logo à noite há bolo de morango se quiseres", '2016-04-07 09:52:44');
+INSERT INTO Mensagem
+VALUES(12, 3, 2, 'PARABENS!!!!!', 'Parabéns Marques, tás a ficar velho rapaz', '2016-04-07 09:45:33');
 
-INSERT INTO Mensagem 
-VALUES(14, 6, 4, 'presente de aniversário', "Olha darklord, que prenda é que devo levar para o aniversário do Marques?", '2016-04-07 09:50:33');
+INSERT INTO Mensagem
+VALUES(13, 2, 3, 'Re: PARABENS!!!!!', 'Obrigado Pedro Melo! :D Logo à noite há bolo de morango se quiseres', '2016-04-07 09:52:44');
 
-INSERT INTO Mensagem 
-VALUES(15, 4, 6 'RE: presente de aniversário', "Tenho aqui um papel cor-de-rosa todo bonito do qual penso que ele gosta x)", '2016-04-07 09:51:33');
+INSERT INTO Mensagem
+VALUES(14, 6, 4, 'presente de aniversário', 'Olha darklord, que prenda é que devo levar para o aniversário do Marques?', '2016-04-07 09:50:33');
+
+INSERT INTO Mensagem
+VALUES(15, 4, 6, 'Re: presente de aniversário', 'Tenho aqui um papel cor-de-rosa todo bonito do qual penso que ele gosta x)', '2016-04-07 09:51:33');
 
 /*--------------------------------------------*/
 /*                   Report                   */
@@ -430,11 +453,11 @@ VALUES(15, 4, 6 'RE: presente de aniversário', "Tenho aqui um papel cor-de-rosa
 INSERT INTO Report
 VALUES(1, 2, 7, "WHAT", '2015-12-24 15:43:09');
 
-INSERT INTO Report 
+INSERT INTO Report
 VALUES(2, 3, 7, "WHAT", '2015-12-24 15:45:22');
 
 INSERT INTO Report
 VALUES(3, 5, 7, "WHAT", '2015-12-24 15:45:41');
 
-INSERT INTO Report 
+INSERT INTO Report
 VALUES(4, 5, 4, "WHAT", '2016-03-04 21:57:23');

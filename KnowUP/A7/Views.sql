@@ -24,7 +24,7 @@ CREATE OR REPLACE VIEW knowUP.MembrosInstituicao AS
 	LEFT JOIN knowUP.CategoriaInstituicao USING (idInstituicao),
 	LEFT JOIN knowUP.Pergunta USING (idCategoria),
 	GROUP BY Instituicao.idInstituicao;
-	
+
 /*--------------------------------------------*/
 /* 1. LISTAS DE PERGUNTAS POR CATEGORIA      */
 /*--------------------------------------------*/
@@ -34,7 +34,7 @@ SELECT Perguntas.idCategoria, Perguntas.texto, Categorias.nome
    FROM knowUP.Perguntas
    JOIN knowUP.Categorias ON Perguntas.idCategoria = Categorias.idCategoria
    ORDER BY Perguntas.idCategoria;
-   
+
 /*--------------------------------------------*/
 /* 1. LISTAS DE RESPOSTAS A UMA PERGUNTA      */
 /*--------------------------------------------*/
@@ -45,7 +45,7 @@ SELECT Pergunta.idPergunta, Utilizadores.username, Respostas.titulo, Respostas.d
 	WHERE Perguntas.idPergunta = resposta.idPergunta
 	AND Respostas.idAutor = Utilizadores.idUtilizador
 	ORDER BY Perguntas.timestamp;
-	
+
 /*--------------------------------------------*/
 /* LISTA DAS PERGUNTAS MAIS POPULARES          */
 /*--------------------------------------------*/
@@ -55,7 +55,7 @@ SELECT Perguntas.idPergunta, Perguntas.titulo, Perguntas.descricao, (contribuica
 	FROM knowUP.Perguntas, knowUP.Utilizadores
 	WHERE pergunta.perguntaid = contribuicao.contribuicaoid
 	ORDER BY contribuicao.votospositivos + contribuicao.votosnegativos DESC;
-	
+
 DROP VIEW IF EXISTS knowUP.RespostasMembro;
 CREATE VIEW knowUP.RespostasMembro AS
 SELECT Resposta.descricao, Resposta.dataHora, Resposta.melhorResposta
@@ -70,7 +70,7 @@ SELECT Pergunta.titulo, Pergunta.descricao, Pergunta.dataHora
 	JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
 	WHERE Utilizador.idUtilizador = :idUtilizador;
 
-   
+
 /*--------------------------------------------
 /* LISTA DAS PERGUNTAS MAIS VISTAS
 /*--------------------------------------------*/
