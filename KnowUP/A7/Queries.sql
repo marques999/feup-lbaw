@@ -123,10 +123,18 @@ INSERT INTO ComentarioResposta(idComentario, idResposta)
 VALUES(novoComentario, :idResposta);
 
 /*--------------------------------------------*/
-/* 5. INSERIR MENSAGEM                        */
+/* 5. CRIAR CONVERSA                          */
 /*--------------------------------------------*/
-INSERT INTO Mensagem(idRemetente, idDestinatario, titulo, descricao)
-VALUES(:idRemetente, :idDestinatario, :titulo, :descricao);
+
+INSERT INTO Conversa(idUtilizador1, idUtilizador2, titulo)
+VALUES(:idRemetente, :idDestinatario, :titulo);
+
+/*--------------------------------------------*/
+/* 5. ENVIAR MENSAGEM PRIVADA                 */
+/*--------------------------------------------*/
+
+INSERT INTO Mensagem(idConversa, idAutor, descricao)
+VALUES(:idConversa, :idAutor, :descricao);
 
 --------------------------------------------------
 

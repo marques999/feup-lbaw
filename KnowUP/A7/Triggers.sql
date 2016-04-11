@@ -7,13 +7,12 @@ SET SCHEMA 'knowup';
 CREATE OR REPLACE FUNCTION classificarPergunta() RETURNS trigger AS $classificarPergunta$
 DECLARE
 	AutorPergunta integer;
-	AutorVoto integer;
 BEGIN
-	AutorVoto = NEW.idAutor;
 	SELECT Pergunta.idAutor INTO AutorPergunta
-	FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta;
-	IF (AutorVoto == AutorPergunta) THEN
-	RETURN NULL;
+	FROM Pergunta WHERE Pergunta.idPergunta = NEW.idPergunta;
+	IF (AutorPergunta = NEW.idAutor) THEN
+		RAISE EXCEPTION 'não pode classificar as suas próprias perguntas!';
+		RETURN NULL;
 	END IF;
 	RETURN NEW;
 END;
@@ -29,17 +28,18 @@ CREATE TRIGGER TRIGGER_classificarPergunta
 /*              classificarResposta           */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION classificarResposta() RETURNS trigger AS $classificarResposta$
+CREATE OR REPLACE FUNCTION classificarResposta()
+RETURNS TRIGGER AS $classificarResposta$
 DECLARE
 	AutorResposta integer;
-	AutorVoto integer;
 BEGIN
-	AutorVoto = NEW.idAutor;
 	SELECT Contribuicao.idAutor INTO AutorResposta
 	FROM Resposta
-	JOIN Contribuicao WHERE Contribuicao.idContribuicao = Resposta.idResposta;
-	IF (AutorVoto == AutorResposta) THEN
-	RETURN NULL;
+	JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+	WHERE Resposta.idResposta = NEW.idResposta;
+	IF (AutorResposta = NEW.idAutor) THEN
+		RAISE EXCEPTION 'não pode classificar as suas próprias respostas!';
+		RETURN NULL;
 	END IF;
 	RETURN NEW;
 END;
@@ -52,25 +52,32 @@ CREATE TRIGGER TRIGGER_classificarResposta
 	EXECUTE PROCEDURE classificarResposta();
 
 /*--------------------------------------------*/
-/*               responderPergunta            */
+/*         TRIGGER: responderPergunta         */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION responderPergunta() RETURNS trigger AS $responderPergunta$
+CREATE OR REPLACE FUNCTION responderPergunta()
+RETURNS TRIGGER AS $responderPergunta$
 DECLARE
-	AutorPergunta integer;
-	AutorResposta integer;
-	EstadoPergunta boolean;
+	AutorPergunta INTEGER;
+	AutorResposta INTEGER;
+	PerguntaActiva BOOLEAN;
 BEGIN
-	EstadoPergunta = Pergunta.ativa;
-	IF (NOT EstadoPergunta) THEN
-	RETURN NULL;
+	SELECT Pergunta.ativa INTO PerguntaActiva
+	FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta
+	LIMIT 1;
+	IF (NOT PerguntaActiva) THEN
+		RAISE EXCEPTION 'não pode responder a uma pergunta fechada!';
+		RETURN NULL;
 	END IF;
 	SELECT Pergunta.idAutor INTO AutorPergunta
-	FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta;
+	FROM Pergunta WHERE Pergunta.idPergunta = NEW.idPergunta
+	LIMIT 1;
 	SELECT Contribuicao.idAutor INTO AutorResposta
-	FROM Contribuicao WHERE NEW.idContribuicao = Contribuicao.idContribuicao;
-	IF (AutorResposta == AutorPergunta) THEN
-	RETURN NULL;
+	FROM Contribuicao WHERE Contribuicao.idContribuicao = NEW.idResposta
+	LIMIT 1;
+	IF (AutorResposta = AutorPergunta) THEN
+		RAISE EXCEPTION 'não pode responder às suas próprias perguntas!';
+		RETURN NULL;
 	END IF;
 	RETURN NEW;
 END;
@@ -83,13 +90,15 @@ CREATE TRIGGER TRIGGER_responderPergunta
 	EXECUTE PROCEDURE responderPergunta();
 
 /*--------------------------------------------*/
-/*                melhorResposta              */
+/*           TRIGGER: melhorResposta          */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION knowUP.melhorResposta() RETURNS trigger AS $melhorResposta$
+CREATE OR REPLACE FUNCTION melhorResposta()
+RETURNS TRIGGER AS $melhorResposta$
 BEGIN
-	IF EXISTS (SELECT * FROM knowUP.Pergunta WHERE knowUP.Pergunta.melhorResposta) THEN
-		RETURN NULL;
+	IF EXISTS (SELECT 1 FROM Resposta WHERE Resposta.melhorResposta AND Resposta.idPergunta = NEW.idPergunta) THEN
+		UPDATE Resposta SET melhorResposta = FALSE
+		WHERE Resposta.melhorResposta AND Resposta.idPergunta = NEW.idPergunta;
 	END IF;
 	RETURN NEW;
 END;
@@ -97,129 +106,116 @@ END;
 $melhorResposta$ LANGUAGE plpgsql;
 
 CREATE TRIGGER TRIGGER_melhorResposta
-	BEFORE INSERT OR UPDATE ON Resposta
+	BEFORE UPDATE OF melhorResposta ON Resposta
 	FOR EACH ROW
-	WHEN (NEW.melhorResposta)
+	WHEN (NEW.melhorResposta AND NOT OLD.melhorResposta)
 	EXECUTE PROCEDURE melhorResposta();
 
 /*--------------------------------------------*/
-/*             registarVotoPergunta           */
+/*       TRIGGER: overlapAdministrador        */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION registarVotoPergunta(integer, integer, integer)
-RETURNS void AS $registarVotoPergunta$
+CREATE OR REPLACE FUNCTION overlapAdministrador()
+RETURNS TRIGGER AS $overlapAdministrador$
 BEGIN
-	IF EXISTS(SELECT 1 FROM knowUP.VotoPergunta WHERE idPergunta = $1 AND idAutor = $2) THEN
-		UPDATE knowUP.VotoPergunta SET valor = $3 WHERE idPergunta = $1 AND idAutor = $2);
-		RETURN;
-	ELSE
-		INSERT INTO knowUP.VotoPergunta VALUES ($1, $2, $3);
-		RETURN;
-	END IF;
-END;
-
-$registarVotoPergunta$ LANGUAGE plpgsql;
-
-/*--------------------------------------------*/
-/*             registarVotoResposta           */
-/*--------------------------------------------*/
-
-CREATE OR REPLACE FUNCTION registarVotoResposta(integer, integer, integer)
-RETURNS void AS $registarVotoResposta$
-BEGIN
-	IF EXISTS(SELECT 1 FROM knowUP.VotoResposta WHERE idResposta = $1 AND idAutor = $2) THEN
-		UPDATE knowUP.VotoResposta SET valor = $3 WHERE idResposta = $1 AND idAutor = $2);
-		RETURN;
-	ELSE
-		NSERT INTO knowUP.VotoResposta VALUES ($1, $2, $3);
-		RETURN;
-	END IF;
-END;
-
-$registarVotoResposta$ LANGUAGE plpgsql;
-
-/*--------------------------------------------*/
-/*       verificarOverlapAdministrador        */
-/*--------------------------------------------*/
-
-CREATE OR REPLACE FUNCTION knowUP.verificarOverlapAdministrador()
-RETURNS trigger AS $verificarOverlapAdministrador$
-BEGIN
-	IF EXISTS (SELECT 1 FROM knowUP.Moderador WHERE Moderador.idModerador = NEW.idAdministrador)
-	RETURN NULL;
+	IF EXISTS (SELECT 1 FROM Moderador WHERE Moderador.idModerador = NEW.idAdministrador) THEN
+		DELETE FROM Moderador WHERE Moderador.idModerador = NEW.idAdministrador;
 	END IF;
 	RETURN NEW;
 END;
 
-$verificarOverlapAdministrador$ LANGUAGE plpgsql;
+$overlapAdministrador$ LANGUAGE plpgsql;
 
-CREATE TRIGGER TRIGGER_verificarOverlapAdministrador
+CREATE TRIGGER TRIGGER_overlapAdministrador
 	BEFORE INSERT OR UPDATE ON Administrador
 	FOR EACH ROW
-	EXECUTE PROCEDURE verificarOverlapAdministrador();
+	EXECUTE PROCEDURE overlapAdministrador();
 
 /*--------------------------------------------*/
-/*          verificarOverlapModerador         */
+/*          TRIGGER: overlapModerador         */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION knowUP.verificarOverlapModerador()
-RETURNS trigger AS $verificarOverlapModerador$
+CREATE OR REPLACE FUNCTION overlapModerador()
+RETURNS TRIGGER AS $overlapModerador$
 BEGIN
-	IF EXISTS (SELECT 1 FROM knowUP.Administrador WHERE Administrador.idAdministrador = NEW.idModerador)
-	RETURN NULL;
+	IF EXISTS (SELECT 1 FROM Administrador WHERE Administrador.idAdministrador = NEW.idModerador) THEN
+		DELETE FROM Administrador WHERE Administrador.idAdministrador = NEW.idModerador;
 	END IF;
 	RETURN NEW;
 END;
 
-$verificarOverlapModerador$ LANGUAGE plpgsql;
+$overlapModerador$ LANGUAGE plpgsql;
 
-CREATE TRIGGER TRIGGER_verificarOverlapModerador
-	BEFORE INSERT OF UPDATE ON Moderador
+CREATE TRIGGER TRIGGER_overlapModerador
+	BEFORE INSERT OR UPDATE ON Moderador
 	FOR EACH ROW
-	EXECUTE PROCEDURE verificarOverlapModerador();
+	EXECUTE PROCEDURE overlapModerador();
 
 /*--------------------------------------------*/
-/*          calcularPontuacaoPergunta         */
+/*         TRIGGER: autofollowPergunta        */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION calcularPontuacaoPergunta(integer) RETURNS integer AS $calcularPontuacaoPergunta$
+CREATE OR REPLACE FUNCTION autofollowPergunta()
+RETURNS TRIGGER AS $autofollowPergunta$
 BEGIN
-	SELECT SUM(VotoPergunta.valor) AS pontuacao FROM VotoPergunta
-	WHERE VotoPergunta.idPergunta = $1;
+	INSERT INTO Seguidor(idSeguidor, idPergunta, dataInicio, dataAcesso)
+	VALUES(NEW.idAutor, NEW.idPergunta, NEW.dataHora, NEW.dataHora);
+	RETURN NEW;
+	EXCEPTION WHEN unique_violation THEN
+		RETURN NEW;
 END;
 
-$calcularPontuacaoPergunta$ LANGUAGE plpgsql;
+$autofollowPergunta$ LANGUAGE plpgsql;
 
-/*--------------------------------------------*/
-/*          calcularPontuacaoResposta         */
-/*--------------------------------------------*/
-
-CREATE OR REPLACE FUNCTION calcularPontuacaoResposta(integer) RETURNS integer AS $calcularPontuacaoResposta$
-BEGIN
-	SELECT SUM(VotoResposta.valor) AS pontuacao FROM VotoResposta
-	WHERE VotoResposta.idResposta = $1;
-END;
-
-$calcularPontuacaoResposta$ LANGUAGE plpgsql;
-
-/*--------------------------------------------*/
-/*                 formatarData               */
-/*--------------------------------------------*/
-
-CREATE OR REPLACE FUNCTION knowUP.formatarData(timestamp) RETURNS text AS $formatarData$
-BEGIN
-	SELECT to_char($1, 'Day, DD/MM/SS HH:MI');
-END;
-
-$formatarData$ LANGUAGE plpgsql;
-
-/*--------------------------------------------*/
-/*                seguirPergunta              */
-/*--------------------------------------------*/
-
-CREATE TRIGGER TRIGGER_seguirPergunta
-	AFTER INSERT ON knowUP.Pergunta
+CREATE TRIGGER TRIGGER_autofollowPergunta
+	AFTER INSERT ON Pergunta
 	FOR EACH ROW
-	BEGIN
-	INSERT INTO Seguidor(NEW.idAutor, NEW.idPergunta, now(), now());
-	END;
+	EXECUTE PROCEDURE autofollowPergunta();
+
+/*--------------------------------------------*/
+/*         TRIGGER: autofollowResposta        */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION autofollowResposta()
+RETURNS TRIGGER AS $autofollowResposta$
+BEGIN
+	INSERT INTO Seguidor
+	SELECT Contribuicao.idAutor, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
+	FROM Contribuicao
+	WHERE Contribuicao.idContribuicao = NEW.idResposta
+	LIMIT 1;
+	RETURN NEW;
+	EXCEPTION WHEN unique_violation THEN
+		RETURN NEW;
+END;
+
+$autofollowResposta$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_autofollowResposta
+	AFTER INSERT ON Resposta
+	FOR EACH ROW
+	EXECUTE PROCEDURE autofollowResposta();
+
+/*--------------------------------------------*/
+/*        TRIGGER: autofollowComentario       */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION autofollowComentario()
+RETURNS TRIGGER AS $autofollowComentario$
+BEGIN
+	INSERT INTO Seguidor
+	SELECT Contribuicao.idAutor, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
+	FROM Contribuicao
+	WHERE Contribuicao.idContribuicao = NEW.idPergunta
+	LIMIT 1;
+	RETURN NEW;
+	EXCEPTION WHEN unique_violation THEN
+		RETURN NEW;
+END;
+
+$autofollowComentario$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_autofollowComentario
+	AFTER INSERT ON ComentarioPergunta
+	FOR EACH ROW
+	EXECUTE PROCEDURE autofollowComentario();

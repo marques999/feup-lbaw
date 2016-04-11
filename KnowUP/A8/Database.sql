@@ -6,7 +6,7 @@ SET SCHEMA 'knowup';
 
 DELETE FROM Report;
 DELETE FROM Mensagem;
-DELETE FROM Notificacao;
+DELETE FROM Conversa;
 DELETE FROM Seguidor;
 DELETE FROM VotoResposta;
 DELETE FROM VotoPergunta;
@@ -121,7 +121,7 @@ INSERT INTO Instituicao
 VALUES(11, 'Faculdade de Medicina Dentária da Universidade do Porto', 'fmdup', 'Rua Dr. Manuel Pereira da Silva s/n, 4200-393 PORTO', '22 090 1100', 'https://sigarra.up.pt/fmdup/pt');
 
 INSERT INTO Instituicao
-VALUES(12, 'Faculdade de Medicina da Universidade do Porto', 'fmup', 'Alameda Prof. Hernâni Monteiro, 4200-319 PORTO', '22 551 3600', 'https://sigarra.up.pt/fmup/pt');
+VALUES(12, 'Faculdade de Medicina da Universidade do Porto', 'fmup', 'Alameda Professor Hernâni Monteiro, 4200-319 PORTO', '22 551 3600', 'https://sigarra.up.pt/fmup/pt');
 
 INSERT INTO Instituicao
 VALUES(13, 'Faculdade de Psicologia e de Ciências da Educação da Universidade do Porto', 'fpceup', 'Rua Alfredo Allen 525, 4200-135 PORTO', '22 607 9700', 'https://sigarra.up.pt/fpceup/pt');
@@ -238,28 +238,28 @@ INSERT INTO CategoriaInstituicao VALUES(14, 21); /* Farmacologia */
 /*--------------------------------------------*/
 
 INSERT INTO Utilizador
-VALUES(1, NULL, 'admin', 'seguranca101', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', '2014-10-23 12:30:04', '2016-04-10 15:23:22', false, true);
+VALUES(1, NULL, 'admin', 'seguranca1234', 'contact@knowup.pt', 'Administrador', 'NULL', 'Porto', 'pt', '2014-10-23 12:30:04', '2016-06-11 14:38:55', false, true);
 
 INSERT INTO Utilizador
-VALUES(2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', '2016-02-21 12:30:04', '2016-04-10 15:23:22', false, true);
+VALUES(2, 8, 'marques999', '14191091', 'up201305642@fe.up.pt', 'Diogo', 'Marques', 'Valongo', 'pt', '2015-01-21 12:30:04', '2016-06-15 04:48:42', false, true);
 
 INSERT INTO Utilizador
-VALUES(3, 8, 'mellus', 'abcdefg', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', '2015-06-02 12:30:04', '2016-04-10 15:23:22', false, true);
+VALUES(3, 8, 'mellus', 'werther', 'up201305618@fe.up.pt', 'Pedro', 'Melo', 'Penafiel', 'pt', '2015-03-02 12:30:04', '2016-06-17 17:16:18', false, true);
 
 INSERT INTO Utilizador
-VALUES(4, 8, 'darklord', 'naosei', 'up201303104@fe.up.pt', 'Vitor', 'Esteves', 'Mirandela', 'pt', '2015-08-13 12:30:04', '2016-04-10 15:23:22', false, true);
+VALUES(4, 8, 'darklord', 'soutroll1', 'up201303104@fe.up.pt', 'Vitor', 'Esteves', 'Mirandela', 'pt', '2015-04-13 12:30:04', '2016-06-16 12:41:25', false, true);
 
 INSERT INTO Utilizador
-VALUES(5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', '2015-09-21 14:40:23', '2016-04-10 15:23:22', false, true);
+VALUES(5, 3, 'picasso', 'xaguarelax', 'pintobem@guernica.es', 'Pablo', 'Picasso', 'Málaga', 'es', '2015-04-21 14:40:23', '2016-06-17 20:36:21', false, true);
 
 INSERT INTO Utilizador
-VALUES(6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.com', 'Alexander', 'Fleming', 'Lochfield', 'uk', '2016-03-07 14:43:49', '2016-04-10 15:23:22', true, true);
+VALUES(6, 9, 'penicilina', 'cur4tud0', 'tratamento@eficaz.co.uk', 'Alexander', 'Fleming', 'Lochfield', 'uk', '2015-06-12 14:43:49', '2016-06-10 15:23:03', true, true);
 
 INSERT INTO Utilizador
-VALUES(7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'Trier', 'de', '2015-08-12 14:46:02', '2016-04-10 15:23:22', false, true);
+VALUES(7, 7, 'marchista', '18capital67', 'tustaum@karlmail.de', 'Karl', 'Marx', 'Trier', 'de', '2015-07-12 14:46:02', '2016-06-15 19:50:34', false, true);
 
 INSERT INTO Utilizador
-VALUES(8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'Saitama', 'jp', '2015-10-14 14:49:33', '2016-04-10 15:23:22', false, true);
+VALUES(8, 14, 'bolinhas', 'purr9876', 'whiskas_saquetas@neko.jp', 'Gato', 'Preto', 'Saitama', 'jp', '2015-08-14 14:49:33', '2016-06-14 15:23:49', false, true);
 
 /*--------------------------------------------*/
 /*                Administrador               */
@@ -279,38 +279,35 @@ INSERT INTO Moderador VALUES(5);
 /*                  Pergunta                  */
 /*--------------------------------------------*/
 
--- há uma pergunta sem data
--- uma das perguntas tem data anterior a 2015 (WHAT?)
-
 INSERT INTO Pergunta
 VALUES(1, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07', 140, false);
 
 INSERT INTO Pergunta
-VALUES(2, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22', 20, true);
+VALUES(2, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22', 276, true);
 
 INSERT INTO Pergunta
-VALUES(3, 55, 2, 'O que fazer quando tudo o resto falha?', '<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', 10, true);
+VALUES(3, 55, 2, 'O que fazer quando tudo o resto falha?', '<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', '2015-09-23 16:45:22', 64, true);
 
 INSERT INTO Pergunta
-VALUES(4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32', 1500, false);
+VALUES(4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32', 1536, false);
 
 INSERT INTO Pergunta
-VALUES(5, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2012-09-25 04:23:54', 3000, false);
+VALUES(5, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2015-09-25 04:23:54', 3562, true);
 
 INSERT INTO Pergunta
-VALUES(6, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol','2014-09-25 14:56:43', 253, false);
+VALUES(6, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol', '2015-09-25 14:56:43', 442, false);
 
 INSERT INTO Pergunta
-VALUES(7, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', 1243, true);
+VALUES(7, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', 991, true);
 
 INSERT INTO Pergunta
-VALUES(8, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2015-12-24 19:43:32', 123, false);
+VALUES(8, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2015-12-24 19:43:32', 132, false);
 
 INSERT INTO Pergunta
-VALUES(9, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help! Please answer fast...', '2016-03-23 17:43:52', 5344, true);
+VALUES(9, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help! Please answer fast...', '2016-03-23 17:43:52', 5491, true);
 
 INSERT INTO Pergunta
-VALUES(10, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade...', '2016-03-24 19:40:10', 2, false);
+VALUES(10, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade...', '2016-03-24 19:40:10', 6, false);
 
 /*--------------------------------------------*/
 /*                Contribuiçao                */
@@ -323,7 +320,7 @@ INSERT INTO Contribuicao
 VALUES(2, 8, 'Muito obrigado, rápido e esclarecedor como sempre!', '2016-03-21 14:49:33');
 
 INSERT INTO Contribuicao
-VALUES(3, 5, 'Encontrei na <a href="https://pt.wikipedia.org/wiki/Dente">wikipedia</a>:<br><blockquote>Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila.</blockquote>', '2015-11-10 20:42:45');
+VALUES(3, 5, 'Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila.', '2015-11-10 20:42:45');
 
 INSERT INTO Contribuicao
 VALUES(4, 5, 'Na minha opinião devias tomar paracetamol.', '2015-09-25 14:58:01');
@@ -353,7 +350,7 @@ INSERT INTO Contribuicao
 VALUES(12, 2, 'Vai ao Amial, há uma aberta de certeza.', '2015-09-25 20:40:12');
 
 INSERT INTO Contribuicao
-VALUES(13, 5, '<blockquote cite="http://pt.stackoverflow.com/tags/ascii/info"> ASCII (acrónimo para American Standard Code for Information Interchange, que em português significa "Código Padrão Americano para o Intercâmbio de Informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.', '2016-01-10 21:14:22');
+VALUES(13, 5, '<blockquote>ASCII (acrónimo para <em>American Standard Code for Information Interchange</em>, que em português significa "código padrão americano para intercâmbio de informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.</blockquote><p>Fonte: <a href="http://pt.stackoverflow.com/tags/ascii/info">Wikipédia</a></p>', '2016-01-10 21:14:22');
 
 INSERT INTO Contribuicao
 VALUES(14, 6, 'Preciso de fazer algum <em>include<em> para usar no meu codigo em C++?','2016-01-11 09:54:09');
@@ -362,7 +359,7 @@ INSERT INTO Contribuicao
 VALUES(15, 8, 'Tendo em conta a minha experiência em uso de todo o tipo de lápis, aconselho cera para ambientes rurais, e normal para ambientes urbanos. Cabe agora a ti descobrir que paisagem queres pintar exatamente.', '2015-12-24 22:22:22');
 
 INSERT INTO Contribuicao
-VALUES(16, 5, 'Star Wars é sempre um bom tema...', '2016-03-24 19:43:32');
+VALUES(16, 5, '<em>Star Wars</em> é sempre um bom tema...', '2016-03-24 19:43:32');
 
 INSERT INTO Contribuicao
 VALUES(17, 3, 'Papel cor-de-rosa dava um bom nome. Em relação ao tema, aproveitando a ideia do @darklord eu diria uma comédia romântica com bonecos do <em>Star Wars</em>. Deve ser incrivel!!!', '2016-03-24 20:11:52');
@@ -395,35 +392,26 @@ INSERT INTO Resposta VALUES(18, 10, false);
 /*                  Seguidor                  */
 /*--------------------------------------------*/
 
-INSERT INTO Seguidor VALUES(8, 1, '2016-03-21 14:30:07', 'DATA');
-INSERT INTO Seguidor VALUES(7, 1, '2016-03-21 14:35:33', 'DATA');
-
-INSERT INTO Seguidor VALUES(4, 2, '2016-04-10 16:45:22', 'DATA');
-
-INSERT INTO Seguidor VALUES(2, 3, 'DATA', 'DATA');
-
-INSERT INTO Seguidor VALUES(6, 4, '2015-11-10 19:44:32', 'DATA');
-INSERT INTO Seguidor VALUES(5, 4, '2015-11-10 20:42:45', 'DATA');
-
-INSERT INTO Seguidor VALUES(2, 5, '2016-04-25 04:23:54', 'DATA');
-
-INSERT INTO Seguidor VALUES(3, 6, '2015-09-25 14:56:43', 'DATA');
-INSERT INTO Seguidor VALUES(5, 6, '2015-09-25 15:05:46', 'DATA');
-INSERT INTO Seguidor VALUES(2, 6, '2015-09-25 15:26:53', 'DATA');
-
-INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', 'DATA');
-INSERT INTO Seguidor VALUES(5, 7, '2016-01-10 21:14:22', 'DATA');
-INSERT INTO Seguidor VALUES(6, 7, '2016-01-11 09:54:09', 'DATA');
-
-INSERT INTO Seguidor VALUES(5, 8, '2015-12-24 19:43:32', 'DATA');
-INSERT INTO Seguidor VALUES(8, 8, '2015-12-24 22:22:22', 'DATA');
-
-INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', 'DATA');
-INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', 'DATA');
-INSERT INTO Seguidor VALUES(3, 9, '2016-03-24 20:11:62', 'DATA');
-
-INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', 'DATA');
-INSERT INTO Seguidor VALUES(2, 10, '2016-04-10 19:43:32', 'DATA');
+INSERT INTO Seguidor VALUES(8, 1, '2016-03-21 14:30:07', '2016-04-01 17:10:08');
+INSERT INTO Seguidor VALUES(7, 1, '2016-03-21 14:35:33', '2016-03-22 09:14:59');
+INSERT INTO Seguidor VALUES(4, 2, '2016-04-10 16:45:22', '2016-04-15 08:08:38');
+INSERT INTO Seguidor VALUES(2, 3, '2015-09-23 16:45:22', '2016-02-24 12:18:05');
+INSERT INTO Seguidor VALUES(6, 4, '2015-11-10 19:44:32', '2016-01-02 19:38:22');
+INSERT INTO Seguidor VALUES(5, 4, '2015-11-10 20:42:45', '2016-04-07 05:22:32');
+INSERT INTO Seguidor VALUES(2, 5, '2015-09-25 04:23:54', '2016-02-24 07:52:20');
+INSERT INTO Seguidor VALUES(3, 6, '2015-09-25 14:56:43', '2015-12-24 02:32:12');
+INSERT INTO Seguidor VALUES(5, 6, '2015-09-25 15:05:46', '2016-04-25 18:26:44');
+INSERT INTO Seguidor VALUES(2, 6, '2015-09-25 15:26:53', '2016-02-24 22:42:54');
+INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', '2016-06-09 15:32:47');
+INSERT INTO Seguidor VALUES(5, 7, '2016-01-10 21:14:22', '2016-04-01 23:02:30');
+INSERT INTO Seguidor VALUES(6, 7, '2016-01-11 09:54:09', '2016-01-12 18:38:10');
+INSERT INTO Seguidor VALUES(5, 8, '2015-12-24 19:43:32', '2016-05-23 20:56:57');
+INSERT INTO Seguidor VALUES(8, 8, '2015-12-24 22:22:22', '2016-04-30 11:24:37');
+INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', '2016-04-17 16:00:51');
+INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', '2016-04-12 04:44:26');
+INSERT INTO Seguidor VALUES(3, 9, '2016-03-24 20:11:41', '2016-03-28 10:12:19');
+INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', '2016-06-09 04:22:36');
+INSERT INTO Seguidor VALUES(2, 10, '2016-04-10 19:43:32', '2016-02-24 17:20:53');
 
 /*--------------------------------------------*/
 /*             ComentarioPergunta             */
@@ -526,66 +514,88 @@ INSERT INTO VotoResposta VALUES(18, 6, 1);
 INSERT INTO VotoResposta VALUES(18, 7, 1);
 
 /*--------------------------------------------*/
+/*                  Conversa                  */
+/*--------------------------------------------*/
+
+INSERT INTO Conversa
+VALUES(1, 3, 2, 'URGENTE', '2015-11-09 14:49:43', '2016-04-06 23:59:11');
+
+INSERT INTO Conversa
+VALUES(2, 3, 4, 'URGENTE TAMBÉM', '2015-11-09 15:13:08', '2015-11-09 15:15:23');
+
+INSERT INTO Conversa
+VALUES(3, 5, 7, 'Pintura', '2015-12-21 10:23:27', '2015-12-21 11:36:52');
+
+INSERT INTO Conversa
+VALUES(4, 8, 2, 'Parabéns!!!', '2016-04-07 09:52:17', '2016-04-07 09:52:49');
+
+INSERT INTO Conversa
+VALUES(5, 3, 2, 'PARABÉNS!!!!!', '2016-04-07 09:54:12', '2016-04-07 09:53:44');
+
+INSERT INTO Conversa
+VALUES(6, 6, 4, 'presente de aniversário', '2016-04-07 12:30:06', '2016-05-21 11:34:50');
+
+/*--------------------------------------------*/
 /*                  Mensagem                  */
 /*--------------------------------------------*/
 
 INSERT INTO Mensagem
-VALUES(1, 3, 2, 'URGENTE', 'Olá! Por acaso não sabes se na papelaria vendem papel cor-de-rosa às riscas?', '2015-11-09 14:49:33');
+VALUES(1, 1, 3, 'Olá! Por acaso não sabes se na papelaria vendem papel cor-de-rosa às riscas?', '2015-11-09 14:49:43');
 
 INSERT INTO Mensagem
-VALUES(2, 5, 7, 'Pintura', 'Hola! Fiz aqui uns rabiscos da tua cara mesmo à maneira. Queres passar aqui em casa para os ver?', '2015-12-21 07:49:33');
+VALUES(2, 1, 2, 'Não te sei dizer, mas acho que o @darklord chegou a ir lá comprar. Porque não lhe perguntas?', '2015-11-09 14:52:01');
 
 INSERT INTO Mensagem
-VALUES(3, 7, 5, 'Re: Pintura', 'Guten Tag meu camarada. Achas que isso dá para vender?', '2015-12-21 08:30:15');
+VALUES(3, 2, 3, 'Boas darklord, o @marques999 disse-me que tinhas comprado um papel rosa às riscas na papelaria da faculdade. É verdade? Quanto custou?', '2015-11-09 14:58:33');
 
 INSERT INTO Mensagem
-VALUES(4, 2, 3, 'Re: URGENTE', 'Não te sei dizer, mas acho que o darklord chegou a ir lá comprar. Porque não lhe perguntas?', '2015-11-09 14:52:33');
+VALUES(4, 2, 4, 'Custa 19,99 patacas. Melhor cena da faculdade. Melhores desenhos da minha vida x)', '2015-11-09 15:07:58');
 
 INSERT INTO Mensagem
-VALUES(5, 3, 4, 'URGENTE TAMBÉM', 'Boas darklord o marques disse-me que tinhas comprado um papel rosa às riscas na papelaria da faculdade. É verdade? Quanto custou?' ,'2015-11-09 14:58:33');
+VALUES(5, 2, 3, 'Brigado :-D. Vou já comprar!!!', '2015-11-09 15:13:08');
 
 INSERT INTO Mensagem
-VALUES(6, 5, 7, 'Re: Pintura', 'Não sei, mas estão bem guapos. Queres passar por aqui ou não?', '2015-12-21 08:31:15');
+VALUES(6, 3, 5, 'Hola! Fiz aqui uns rabiscos da tua cara, ficaram mesmo à patrão. Queres passar aqui em casa para os ver?', '2015-12-21 07:49:12');
 
 INSERT INTO Mensagem
-VALUES(7, 7, 5, 'Re: Pintura', 'A caminho camarada. Faz mais que é para dar a toda a gente.', '2015-12-21 10:22:59');
+VALUES(7, 3, 7,'Guten Tag meu camarada. Achas que isso dá para vender?', '2015-12-21 08:30:15');
 
 INSERT INTO Mensagem
-VALUES(8, 4, 3, 'Re: URGENTE TAMBÉM', 'Custa 19,99 patacas. Melhor cena da faculdade. Melhores desenhos da minha vida x)', '2015-11-09 15:00:33');
+VALUES(8, 3, 5, 'Não sei, mas estão bem guapos. Queres passar por aqui ou não?', '2015-12-21 08:31:23');
 
 INSERT INTO Mensagem
-VALUES(9, 2, 3, 'Re: URGENTE', 'Brigado :-D. Vou já comprar!!!', '2015-11-09 15:03:33');
+VALUES(9, 3, 7, 'A caminho camarada. Faz mais que é para dar a toda a gente.', '2015-12-21 10:22:59');
 
 INSERT INTO Mensagem
-VALUES(10, 8, 2, 'Parabens!!!', 'Feliz aniversário! Diverte-te muito!', '2016-04-07 09:45:33');
+VALUES(10, 4, 8, 'Feliz aniversário! Diverte-te muito!', '2016-04-07 09:42:35');
 
 INSERT INTO Mensagem
-VALUES(11, 2, 8, 'Re: Parabens!!!', 'Obrigado Gato Preto! :D Logo à noite há bolo de morango se quiseres', '2016-04-07 09:52:33');
+VALUES(11, 5, 3, 'Parabéns @marques999, estás a ficar velho rapaz!', '2016-04-07 09:45:26');
 
 INSERT INTO Mensagem
-VALUES(12, 3, 2, 'PARABENS!!!!!', 'Parabéns Marques, tás a ficar velho rapaz', '2016-04-07 09:45:33');
+VALUES(12, 6, 6, 'Olha @darklord, que prenda é que devo levar para o aniversário do @marques999?', '2016-04-07 09:50:47');
 
 INSERT INTO Mensagem
-VALUES(13, 2, 3, 'Re: PARABENS!!!!!', 'Obrigado Pedro Melo! :D Logo à noite há bolo de morango se quiseres', '2016-04-07 09:52:44');
+VALUES(13, 4, 2, 'Obrigado Gato Preto! :D Logo à noite há bolo de morango se quiseres...', '2016-04-07 09:52:19');
 
 INSERT INTO Mensagem
-VALUES(14, 6, 4, 'presente de aniversário', 'Olha darklord, que prenda é que devo levar para o aniversário do Marques?', '2016-04-07 09:50:33');
+VALUES(14, 5, 2, 'Obrigado Pedro Melo! :D Logo à noite há bolo de morango se quiseres...', '2016-04-07 09:53:44');
 
 INSERT INTO Mensagem
-VALUES(15, 4, 6, 'Re: presente de aniversário', 'Tenho aqui um papel cor-de-rosa todo bonito do qual penso que ele gosta x)', '2016-04-07 09:51:33');
+VALUES(15, 6, 4, 'Tenho aqui um papel cor-de-rosa todo bonito, acho que ele vai gostar x)', '2016-04-07 11:25:31');
 
 /*--------------------------------------------*/
 /*                   Report                   */
 /*--------------------------------------------*/
 
 INSERT INTO Report
-VALUES(1, 5, 7, "O utilizador estava a tentar erguer uma estátua de Lenine num comentário recorrendo a tracinhos e pontos.", '2015-12-24 15:45:41');
+VALUES(1, 5, 7, 'O utilizador estava a tentar erguer uma estátua de Lenin num comentário recorrendo a tracinhos e pontos.', '2015-12-24 15:45:41');
 
 INSERT INTO Report
-VALUES(2, 5, 4, "O utilizador estava a ser demasiado awesome.", '2016-03-04 21:57:23');
+VALUES(2, 5, 4, 'O utilizador estava a ser demasiado awesome.', '2016-03-04 21:57:21');
 
 INSERT INTO Report
-VALUES(3, 2, 3, "O utilizador foi apanhado numa rede de tráfico de enciclopédias.", '2016-03-21 15:43:09');
+VALUES(3, 2, 3, 'O utilizador foi apanhado numa rede de tráfico de enciclopédias.', '2016-03-21 15:43:09');
 
 INSERT INTO Report
-VALUES(4, 3, 6, "O utilizador estava a tentar pintar como Bob Ross mas esqueceu-se de acrescentar roupa aos personagens...", '2016-04-11 12:10:22');
+VALUES(4, 3, 6, 'O utilizador estava a tentar pintar como Bob Ross mas esqueceu-se de acrescentar roupa aos personagens...', '2016-04-11 12:10:22');

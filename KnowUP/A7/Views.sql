@@ -1,15 +1,6 @@
-DROP VIEW IF EXISTS knowUP.CategoriasPorInstituicao;
-CREATE VIEW knowUP.CategoriasPorInstituicao AS
-	SELECT  Instituicao.sigla,
-			Categoria.idCategoria,
-			Categoria.nome
-	FROM knowup.Instituicao
-	JOIN knowup.CategoriaInstituicao USING (idInstituicao)
-	JOIN knowup.Categoria USING (idCategoria)
-	ORDER BY Instituicao.sigla, Categoria.nome;
 
-DROP VIEW IF EXISTS knowUP.VistaInstituicao;
-CREATE OR REPLACE VIEW knowUP.MembrosInstituicao AS
+DROP VIEW IF EXISTS VistaInstituicao;
+CREATE OR REPLACE VIEW VistaInstituicao AS
 	SELECT Instituicao.idInstituicao,
 		   Instituicao.nome,
 	       Instituicao.sigla,
@@ -19,63 +10,131 @@ CREATE OR REPLACE VIEW knowUP.MembrosInstituicao AS
 		   COALESCE(count(Utilizador.idUtilizador), 0) AS numeroUtilizadores,
 		   COALESCE(count(Pergunta.idPergunta), 0) AS numeroPerguntas,
 		   COALESCE(sum(Pergunta.visualizacoes), 0) AS numeroVisualizacoes
-	FROM knowUP.Instituicao
-	LEFT JOIN knowUP.Utilizador USING(idInstituicao),
-	LEFT JOIN knowUP.CategoriaInstituicao USING (idInstituicao),
-	LEFT JOIN knowUP.Pergunta USING (idCategoria),
+	FROM Instituicao
+	LEFT JOIN Utilizador USING(idInstituicao),
+	LEFT JOIN CategoriaInstituicao USING (idInstituicao),
+	LEFT JOIN Pergunta USING (idCategoria),
 	GROUP BY Instituicao.idInstituicao;
 
 /*--------------------------------------------*/
-/* 1. LISTAS DE PERGUNTAS POR CATEGORIA      */
+/* 1. LISTA DE CATEGORIAS DE UMA INSTITUIÇÂO  */
 /*--------------------------------------------*/
-DROP VIEW IF EXISTS knowUP.PerguntasPorCategoria;
-CREATE VIEW knowUP.PerguntasPorCategoria AS
-SELECT Perguntas.idCategoria, Perguntas.texto, Categorias.nome
-   FROM knowUP.Perguntas
-   JOIN knowUP.Categorias ON Perguntas.idCategoria = Categorias.idCategoria
-   ORDER BY Perguntas.idCategoria;
+
+SELECT Categoria.idCategoria, Categoria.nome
+	FROM Instituicao
+	JOIN CategoriaInstituicao USING (idInstituicao)
+	JOIN Categoria USING (idCategoria)
+	WHERE Instituicao.idInstituicao = :idInstituicao
+	ORDER BY Categoria.nome ASC;;
+
+/*--------------------------------------------*/
+/* 2. LISTA DE INSTITUIÇÕES DE UMA CATEGORIA  */
+/*--------------------------------------------*/
+
+SELECT Instituicao.idInstituicao, Instituicao.sigla
+	FROM Categoria
+	JOIN CategoriaInstituicao USING(idCategoria)
+	JOIN Instituicao USING (idInstituicao)
+	WHERE Categoria.idCategoria = :idCategoria
+	ORDER BY Instituicao.sigla ASC;
 
 /*--------------------------------------------*/
 /* 1. LISTAS DE RESPOSTAS A UMA PERGUNTA      */
 /*--------------------------------------------*/
-DROP VIEW IF EXISTS knowUP.NumeroRespostas;
-CREATE VIEW knowUP.NumeroRespostas AS
-SELECT Pergunta.idPergunta, Utilizadores.username, Respostas.titulo, Respostas.descricao
-	FROM knowUP.Respostas, knowUP.Perguntas, knowUP.Utilizadores
-	WHERE Perguntas.idPergunta = resposta.idPergunta
+
+SELECT Resposta.idResposta,
+	Utilizador.idUtilizador,
+	Utilizador.username,
+	Contribuicao.descricao,
+	Contribuicao.dataHora
+	FROM Utilizador
+	JOIN Resposta.idPergunta = Pergunta.idPergunta
 	AND Respostas.idAutor = Utilizadores.idUtilizador
+	WHERE Utilizador.idUtilizador = Contribuicao.idAutor;
 	ORDER BY Perguntas.timestamp;
 
 /*--------------------------------------------*/
-/* LISTA DAS PERGUNTAS MAIS POPULARES          */
+/* LISTA DAS PERGUNTAS MAIS POPULARES         */
 /*--------------------------------------------*/
-DROP VIEW IF EXISTS knowUP.PerguntasPopulares;
-CREATE VIEW knowUP.PerguntasPopulares AS
-SELECT Perguntas.idPergunta, Perguntas.titulo, Perguntas.descricao, (contribuicao.votospositivos + contribuicao.votosnegativos) as pontuacao
-	FROM knowUP.Perguntas, knowUP.Utilizadores
-	WHERE pergunta.perguntaid = contribuicao.contribuicaoid
-	ORDER BY contribuicao.votospositivos + contribuicao.votosnegativos DESC;
 
-DROP VIEW IF EXISTS knowUP.RespostasMembro;
-CREATE VIEW knowUP.RespostasMembro AS
-SELECT Resposta.descricao, Resposta.dataHora, Resposta.melhorResposta
-   FROM knowUP.Utilizador
-   JOIN knowUP.Resposta ON Utilizadores.idUtilizador = Respostas.idAutor
-   WHERE Utilizadores.idUtilizador = :idUtilizador;
+DROP VIEW IF EXISTS PerguntasMelhorClassificadas;
 
-DROP VIEW IF EXISTS PerguntasMembro;
-CREATE VIEW PerguntasMembro AS
+CREATE VIEW PerguntasMelhorClassificadas AS
+SELECT Pergunta.idPergunta,
+	Utilizador.idUtilizador,
+	Utilizador.username,
+	Pergunta.titulo,
+	Pergunta.descricao,
+	calcularPontuacaoPergunta(Pergunta.idPergunta) AS pontuacao,
+	Pergunta.dataHora
+FROM Pergunta
+JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+ORDER BY pontuacao DESC;
+
+/*--------------------------------------------*/
+/* LISTA DAS PERGUNTAS MAIS VISTAS            */
+/*--------------------------------------------*/
+
+DROP VIEW IF EXISTS PerguntasMaisVistas;
+
+CREATE VIEW PerguntasMaisVistas AS
+SELECT Pergunta.idPergunta,
+	Utilizador.idUtilizador,
+	Utilizador.username,
+	Pergunta.titulo,
+	Pergunta.descricao,
+	calcularPontuacaoPergunta(Pergunta.idPergunta) AS pontuacao,
+	Pergunta.visualizacoes,
+	Pergunta.dataHora
+FROM Pergunta
+JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+ORDER BY Pergunta.visualizacoes DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR CATEGORIA        */
+/*--------------------------------------------*/
+
+SELECT Pergunta.idPergunta,
+	Utilizador.idUtilizador,
+	Utilizador.username,
+	Pergunta.titulo,
+	Pergunta.descricao,
+	calcularPontuacaoPergunta(Pergunta.idPergunta) AS pontuacao,
+	Pergunta.dataHora
+    FROM Pergunta
+  	WHERE Pergunta.idCategoria = :idCategoria
+  	ORDER BY Pergunta.dataHora DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR INSTITUICAO      */
+/*--------------------------------------------*/
+
+SELECT Pergunta.idPergunta,
+	Utilizador.idUtilizador,
+	Utilizador.username,
+	Pergunta.titulo,
+	Pergunta.descricao,
+	calcularPontuacaoPergunta(Pergunta.idPergunta) AS pontuacao,
+	Pergunta.dataHora
+    FROM Pergunta
+    JOIN Instituicao ON Instituicao.idCategoria = Pergunta.idCategoria
+    WHERE Instituicao.idInstituicao = :idInstituicao
+    ORDER BY Pergunta.dataHora DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR AUTOR            */
+/*--------------------------------------------*/
+
 SELECT Pergunta.titulo, Pergunta.descricao, Pergunta.dataHora
 	FROM Utilizador
 	JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
 	WHERE Utilizador.idUtilizador = :idUtilizador;
 
-
-/*--------------------------------------------
-/* LISTA DAS PERGUNTAS MAIS VISTAS
 /*--------------------------------------------*/
-DROP VIEW IF EXISTS knowUP.PerguntasMaisVistas;
-CREATE VIEW knowUP.PerguntasMaisVistas AS
-SELECT Perguntas.idPergunta, Perguntas.titulo, Perguntas.descricao, Perguntas.visualizacoes
-	FROM knowUP.Perguntas
-	ORDER BY Perguntas.visualizacoes;
+/* 1. LISTA DE RESPOSTAS POR AUTOR            */
+/*--------------------------------------------*/
+
+SELECT Resposta.descricao, Resposta.dataHora, Resposta.melhorResposta
+   FROM knowUP.Utilizador
+   JOIN knowUP.Resposta ON Utilizadores.idUtilizador = Respostas.idAutor
+   WHERE Utilizadores.idUtilizador = :idUtilizador;

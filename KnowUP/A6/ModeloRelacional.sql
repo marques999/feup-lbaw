@@ -6,7 +6,7 @@ SET SCHEMA 'knowup';
 
 DROP TABLE IF EXISTS Report;
 DROP TABLE IF EXISTS Mensagem;
-DROP TABLE IF EXISTS Notificacao;
+DROP TABLE IF EXISTS Conversa;
 DROP TABLE IF EXISTS Seguidor;
 DROP TABLE IF EXISTS VotoResposta;
 DROP TABLE IF EXISTS VotoPergunta;
@@ -293,21 +293,26 @@ ALTER TABLE Seguidor ADD CONSTRAINT FK_Seguidor_idPergunta
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
-/*                 Notificação                */
+/*                  Conversa                  */
 /*--------------------------------------------*/
 
-CREATE TABLE Notificacao (
-	idNotificacao   integer     NOT NULL,
-	idPergunta      integer     NOT NULL,
-	dataHora        timestamp   DEFAULT current_timestamp
+CREATE TABLE Conversa (
+	idConversa      serial      NOT NULL,
+	idUtilizador1   integer     NOT NULL,
+	idUtilizador2   integer     NOT NULL,
+	titulo			text        NOT NULL,
+	ultimoAcesso1   timestamp   DEFAULT current_timestamp,
+	ultimoAcesso2   timestamp   DEFAULT current_timestamp
 );
 
-ALTER TABLE Notificacao ADD CONSTRAINT PK_Notificacao
-	PRIMARY KEY (idNotificacao);
-ALTER TABLE Notificacao ADD CONSTRAINT FK_Notificacao_idNotificacao
-	FOREIGN KEY (idNotificacao) REFERENCES Contribuicao(idContribuicao) ON DELETE CASCADE;
-ALTER TABLE Notificacao ADD CONSTRAINT FK_Notificacao_idPergunta
-	FOREIGN KEY (idPergunta) REFERENCES Pergunta(idPergunta) ON DELETE CASCADE;
+ALTER TABLE Conversa ADD CONSTRAINT PK_Conversa
+	PRIMARY KEY (idConversa);
+ALTER TABLE Conversa ADD CONSTRAINT CK_Conversa_AutoresDiferentes
+	CHECK (idUtilizador1 <> idUtilizador2);
+ALTER TABLE Conversa ADD CONSTRAINT FK_Conversa_idUtilizador1
+	FOREIGN KEY (idUtilizador1) REFERENCES Utilizador(idUtilizador) ON DELETE CASCADE;
+ALTER TABLE Conversa ADD CONSTRAINT FK_Conversa_idUtilizador2
+	FOREIGN KEY (idUtilizador2) REFERENCES Utilizador(idUtilizador) ON DELETE CASCADE;
 
 /*--------------------------------------------*/
 /*                  Mensagem                  */
@@ -315,22 +320,19 @@ ALTER TABLE Notificacao ADD CONSTRAINT FK_Notificacao_idPergunta
 
 CREATE TABLE Mensagem (
 	idMensagem      serial      NOT NULL,
-	idRemetente     integer     NOT NULL,
-	idDestinatario  integer     NOT NULL,
-	titulo          text        NOT NULL,
+	idConversa      integer     NOT NULL,
+	idAutor         integer     NOT NULL,
 	descricao       text        NOT NULL,
 	dataHora        timestamp   DEFAULT current_timestamp
 );
 
 ALTER TABLE Mensagem ADD CONSTRAINT PK_Mensagem
 	PRIMARY KEY (idMensagem);
-ALTER TABLE Mensagem ADD CONSTRAINT CK_Mensagem_AutoresDiferentes
-	CHECK (idRemetente <> idDestinatario);
-ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idRemetente
-	FOREIGN KEY (idRemetente) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idConversa
+	FOREIGN KEY (idConversa) REFERENCES Conversa(idConversa)
 	ON DELETE CASCADE;
-ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idDestinatario
-	FOREIGN KEY (idDestinatario) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idAutor
+	FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
 	ON DELETE CASCADE;
 
 /*--------------------------------------------*/
