@@ -59,9 +59,14 @@ $registarVotoResposta$ LANGUAGE plpgsql;
 -- calcularPontuacaoPergunta(idPergunta)
 
 CREATE OR REPLACE FUNCTION calcularPontuacaoPergunta(INTEGER)
-RETURNS INTEGER AS $calcularPontuacaoPergunta$
+RETURNS TABLE(votosPositivos BIGINT, votosNegativos BIGINT, pontuacao BIGINT)
+AS $calcularPontuacaoPergunta$
 BEGIN
-	RETURN (SELECT COALESCE((SELECT SUM(valor) AS pontuacao FROM VotoPergunta WHERE idPergunta = $1), 0));
+	RETURN QUERY (SELECT TabelaVotos.*, TabelaVotos.votosPositivos - TabelaVotos.votosNegativos FROM
+		(SELECT
+		COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+		COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos
+	FROM VotoPergunta WHERE idPergunta = $1) AS TabelaVotos);
 END;
 
 $calcularPontuacaoPergunta$ LANGUAGE plpgsql;
@@ -73,12 +78,37 @@ $calcularPontuacaoPergunta$ LANGUAGE plpgsql;
 -- calcularPontuacaoResposta(idResposta)
 
 CREATE OR REPLACE FUNCTION calcularPontuacaoResposta(INTEGER)
-RETURNS INTEGER AS $calcularPontuacaoResposta$
+RETURNS TABLE(votosPositivos BIGINT, votosNegativos BIGINT, pontuacao BIGINT)
+AS $calcularPontuacaoResposta$
 BEGIN
-	RETURN(SELECT COALESCE((SELECT SUM(valor) AS pontuacao FROM VotoResposta WHERE idResposta = $1), 0));
+	RETURN QUERY (SELECT TabelaVotos.*, TabelaVotos.votosPositivos + TabelaVotos.votosNegativos FROM
+		(SELECT
+		COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+		COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos
+	FROM VotoResposta WHERE idResposta = $1) AS TabelaVotos);
 END;
 
 $calcularPontuacaoResposta$ LANGUAGE plpgsql;
+
+/*--------------------------------------------*/
+/*     FUNÇÃO: numeroComentariosPergunta      */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION numeroComentariosPergunta(INTEGER)
+RETURNS INTEGER AS $numeroComentariosPergunta$
+BEGIN
+	RETURN (SELECT COALESCE((SELECT COUNT(*) FROM ComentarioPergunta WHERE idPergunta = $1), 0));
+END;
+
+$numeroComentariosPergunta$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION numeroComentariosResposta(INTEGER)
+RETURNS INTEGER AS $numeroComentariosResposta$
+BEGIN
+	RETURN (SELECT COALESCE((SELECT COUNT(*) FROM ComentarioResposta WHERE idResposta = $1), 0));
+END;
+
+$numeroComentariosResposta$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
 /*           FUNÇÃO: visitarPergunta          */
