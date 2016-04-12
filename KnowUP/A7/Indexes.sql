@@ -25,19 +25,6 @@ CREATE INDEX Pergunta_IDX_MaisVistas
 ON Pergunta USING btree(visualizacoes);
 
 /*--------------------------------------------*/
-/*          Pergunta_IDX_MaisVotadas          */
-/*--------------------------------------------*/
-
--- O índice Pergunta_IDX_MaisVotadas facilita a listagem e ordenação
--- das perguntas com melhor classificação. Considerou-se um índice do
--- tipo btree já que esta operação se baseia na comparação de grandeza
--- entre as classificações atríbuidas às diversas perguntas existentes
--- no sistema.
-
-CREATE INDEX Pergunta_IDX_MaisVotadas
-ON Pergunta USING btree(valor);
-
-/*--------------------------------------------*/
 /*       Contribuicao_IDX_MaisRecentes        */
 /*--------------------------------------------*/
 

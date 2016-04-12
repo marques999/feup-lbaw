@@ -94,6 +94,8 @@ $calcularPontuacaoResposta$ LANGUAGE plpgsql;
 /*     FUNÇÃO: numeroComentariosPergunta      */
 /*--------------------------------------------*/
 
+-- numeroComentariosPergunta(idPergunta)
+
 CREATE OR REPLACE FUNCTION numeroComentariosPergunta(INTEGER)
 RETURNS INTEGER AS $numeroComentariosPergunta$
 BEGIN
@@ -102,6 +104,12 @@ END;
 
 $numeroComentariosPergunta$ LANGUAGE plpgsql;
 
+/*--------------------------------------------*/
+/*     FUNÇÃO: numeroComentariosResposta      */
+/*--------------------------------------------*/
+
+-- numeroComentariosResposta(idResposta)
+
 CREATE OR REPLACE FUNCTION numeroComentariosResposta(INTEGER)
 RETURNS INTEGER AS $numeroComentariosResposta$
 BEGIN
@@ -109,6 +117,18 @@ BEGIN
 END;
 
 $numeroComentariosResposta$ LANGUAGE plpgsql;
+
+/*--------------------------------------------*/
+/*          FUNÇÃO: numeroSeguidores          */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION numeroSeguidores(INTEGER)
+RETURNS INTEGER AS $numeroSeguidores$
+BEGIN
+	RETURN (SELECT COALESCE((SELECT COUNT(*) FROM Seguidor WHERE idPergunta = $1), 0));
+END;
+
+$numeroSeguidores$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
 /*           FUNÇÃO: visitarPergunta          */

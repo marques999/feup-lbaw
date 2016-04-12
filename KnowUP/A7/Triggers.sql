@@ -1,10 +1,10 @@
 SET SCHEMA 'knowup';
 
 /*--------------------------------------------*/
-/*              classificarPergunta           */
+/*             votarPropriaPergunta           */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION classificarPergunta() RETURNS trigger AS $classificarPergunta$
+CREATE OR REPLACE FUNCTION votarPropriaPergunta() RETURNS trigger AS $votarPropriaPergunta$
 DECLARE
 	AutorPergunta integer;
 BEGIN
@@ -17,19 +17,19 @@ BEGIN
 	RETURN NEW;
 END;
 
-$classificarPergunta$ LANGUAGE plpgsql;
+$votarPropriaPergunta$ LANGUAGE plpgsql;
 
-CREATE TRIGGER TRIGGER_classificarPergunta
+CREATE TRIGGER TRIGGER_votarPropriaPergunta
 	BEFORE INSERT ON VotoPergunta
 	FOR EACH ROW
-	EXECUTE PROCEDURE classificarPergunta();
+	EXECUTE PROCEDURE votarPropriaPergunta();
 
 /*--------------------------------------------*/
-/*              classificarResposta           */
+/*             votarPropriaResposta           */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION classificarResposta()
-RETURNS TRIGGER AS $classificarResposta$
+CREATE OR REPLACE FUNCTION votarPropriaResposta()
+RETURNS TRIGGER AS $votarPropriaResposta$
 DECLARE
 	AutorResposta integer;
 BEGIN
@@ -44,12 +44,12 @@ BEGIN
 	RETURN NEW;
 END;
 
-$classificarResposta$ LANGUAGE plpgsql;
+$votarPropriaResposta$ LANGUAGE plpgsql;
 
-CREATE TRIGGER TRIGGER_classificarResposta
+CREATE TRIGGER TRIGGER_votarPropriaResposta
 	BEFORE INSERT ON VotoResposta
 	FOR EACH ROW
-	EXECUTE PROCEDURE classificarResposta();
+	EXECUTE PROCEDURE votarPropriaResposta();
 
 /*--------------------------------------------*/
 /*         TRIGGER: responderPergunta         */
