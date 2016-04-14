@@ -1,5 +1,29 @@
 SET SCHEMA 'knowup';
 
+DROP INDEX IF EXISTS CategoriaInstituicao_IDX_Lookup;
+DROP INDEX IF EXISTS Resposta_IDX_Lookup;
+DROP INDEX IF EXISTS Contribuicao_IDX_Pesquisa;
+DROP INDEX IF EXISTS Pergunta_IDX_Pesquisa;
+DROP INDEX IF EXISTS Utilizador_IDX_Pesquisa;
+DROP INDEX IF EXISTS Contribuicao_IDX_MaisRecentes;
+DROP INDEX IF EXISTS Pergunta_IDX_MaisRecentes;
+DROP INDEX IF EXISTS Categoria_IDX_Pesquisa
+DROP INDEX IF EXISTS Utilizador_IDX_Username;
+
+/*--------------------------------------------*/
+/*          Utilizador_IDX_Username           */
+/*--------------------------------------------*/
+
+CREATE INDEX Utilizador_IDX_Username
+ON Utilizador USING hash(username);
+
+/*--------------------------------------------*/
+/*           Categoria_IDX_Pesquisa           */
+/*--------------------------------------------*/
+
+CREATE INDEX Categoria_IDX_Pesquisa
+ON Categoria USING hash(nome);
+
 /*--------------------------------------------*/
 /*         Pergunta_IDX_MaisRecentes          */
 /*--------------------------------------------*/
@@ -11,18 +35,6 @@ SET SCHEMA 'knowup';
 
 CREATE INDEX Pergunta_IDX_MaisRecentes
 ON Pergunta USING btree(dataHora);
-
-/*--------------------------------------------*/
-/*          Pergunta_IDX_MaisVistas           */
-/*--------------------------------------------*/
-
--- O índice Pergunta_IDX_MaisVistas facilita a listagem e ordenação
--- das perguntas mais vistas. Considerou-se um índice do tipo btree
--- já que esta operação se baseia na comparação de grandeza entre o
--- número de visitas às paginas das respectivas perguntas.
-
-CREATE INDEX Pergunta_IDX_MaisVistas
-ON Pergunta USING btree(visualizacoes);
 
 /*--------------------------------------------*/
 /*       Contribuicao_IDX_MaisRecentes        */
@@ -47,11 +59,11 @@ ON Contribuicao USING btree(dataHora);
 -- se os termos de pesquisa introduzidos pelo utilizador estão contidos numa das
 -- três colunas apresentadas em cima.
 
-CREATE INDEX Utilizador_IDX_Search
+CREATE INDEX Utilizador_IDX_Pesquisa
 ON Utilizador USING gin(to_tsvector('english', username || ' ' || primeiroNome || ' ' || ultimoNome));
 
 /*--------------------------------------------*/
-/*            Pergunta_IDX_Pesquisa           */
+/*           Pergunta_IDX_Pesquisa            */
 /*--------------------------------------------*/
 
 -- O índice Pergunta_IDX_Pesquisa facilita operações de pesquisa full-text
@@ -62,10 +74,10 @@ ON Utilizador USING gin(to_tsvector('english', username || ' ' || primeiroNome |
 -- pergunta.
 
 CREATE INDEX Pergunta_IDX_Pesquisa
-ON Pergunta USING gin(to_tsvector(titulo || ' ' || coalesce(descricao, ''));
+ON Pergunta USING gin(to_tsvector('english', titulo || ' ' || coalesce(descricao, '')));
 
 /*--------------------------------------------*/
-/*          Contribuicao_IDX_Pesquisa         */
+/*         Contribuicao_IDX_Pesquisa          */
 /*--------------------------------------------*/
 
 -- O índice Contribuicao_IDX_Pesquisa facilita operações de pesquisa full-text
@@ -75,4 +87,18 @@ ON Pergunta USING gin(to_tsvector(titulo || ' ' || coalesce(descricao, ''));
 -- se determinada palavra ou expressão está contida no corpo de uma contribuição.
 
 CREATE INDEX Contribuicao_IDX_Pesquisa
-ON Contribuicao USING gin(to_tsvector(descricao));
+ON Contribuicao USING gin(to_tsvector('english', descricao));
+
+/*--------------------------------------------*/
+/*            Resposta_IDX_Lookup             */
+/*--------------------------------------------*/
+
+CREATE INDEX Resposta_IDX_Lookup
+ON Resposta USING hash(idPergunta, idResposta);
+
+/*--------------------------------------------*/
+/*      CategoriaInstituicao_IDX_Lookup       */
+/*--------------------------------------------*/
+
+CREATE INDEX CategoriaInstituicao_IDX_Lookup
+ON CategoriaInstituicao USING hash(idInstituicao, idCategoria);
