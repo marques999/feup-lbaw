@@ -139,7 +139,6 @@ CREATE TABLE Pergunta (
 	titulo          text        NOT NULL,
 	descricao       text        NULL,
 	dataHora        timestamp   DEFAULT current_timestamp,
-	visualizacoes   integer     DEFAULT 0,
 	ativa           boolean     DEFAULT true
 );
 
