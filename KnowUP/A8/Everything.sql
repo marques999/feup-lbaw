@@ -1,5 +1,5 @@
 DROP SCHEMA IF EXISTS knowup CASCADE;
-CREATE SCHEMA knowup; 
+CREATE SCHEMA knowup;
 SET SCHEMA 'knowup';
 
 /*--------------------------------------------*/
@@ -96,7 +96,6 @@ CREATE TABLE Pergunta (
     titulo          text        NOT NULL,
     descricao       text        NULL,
     dataHora        timestamp   DEFAULT current_timestamp,
-    visualizacoes   integer     DEFAULT 0,
     ativa           boolean     DEFAULT true
 );
 
@@ -441,16 +440,16 @@ INSERT INTO Moderador VALUES(2);
 INSERT INTO Moderador VALUES(3);
 INSERT INTO Moderador VALUES(5);
 
-INSERT INTO Pergunta VALUES(1, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07', 140, false);
-INSERT INTO Pergunta VALUES(2, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22', 276, true);
-INSERT INTO Pergunta VALUES(3, 55, 2, 'O que fazer quando tudo o resto falha?', '<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', '2015-09-23 16:45:22', 64, true);
-INSERT INTO Pergunta VALUES(4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32', 1536, false);
-INSERT INTO Pergunta VALUES(5, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2015-09-25 04:23:54', 3562, true);
-INSERT INTO Pergunta VALUES(6, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol', '2015-09-25 14:56:43', 442, false);
-INSERT INTO Pergunta VALUES(7, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', 991, true);
-INSERT INTO Pergunta VALUES(8, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2015-12-24 19:43:32', 132, false);
-INSERT INTO Pergunta VALUES(9, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help! Please answer fast...', '2016-03-23 17:43:52', 5491, true);
-INSERT INTO Pergunta VALUES(10, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade...', '2016-03-24 19:40:10', 6, false);
+INSERT INTO Pergunta VALUES(1, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07', false);
+INSERT INTO Pergunta VALUES(2, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22', true);
+INSERT INTO Pergunta VALUES(3, 55, 2, 'O que fazer quando tudo o resto falha?', '<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', '2015-09-23 16:45:22', true);
+INSERT INTO Pergunta VALUES(4, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32', false);
+INSERT INTO Pergunta VALUES(5, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2015-09-25 04:23:54', true);
+INSERT INTO Pergunta VALUES(6, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol', '2015-09-25 14:56:43', false);
+INSERT INTO Pergunta VALUES(7, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', true);
+INSERT INTO Pergunta VALUES(8, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2015-12-24 19:43:32', false);
+INSERT INTO Pergunta VALUES(9, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help! Please answer fast...', '2016-03-23 17:43:52', true);
+INSERT INTO Pergunta VALUES(10, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade...', '2016-03-24 19:40:10', false);
 
 INSERT INTO Contribuicao VALUES(1, 7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <br> Folha A4: <br> 2480 px de largura <br> 3508 px de altura <br> <br> Folha A3: <br> 3508 px de largura <br> 4960 px de altura <br> <br> Folha A5: <br> 1754 px de largura <br> 2480 px de altura', '2016-03-21 14:35:33');
 INSERT INTO Contribuicao VALUES(2, 8, 'Muito obrigado, rápido e esclarecedor como sempre!', '2016-03-21 14:49:33');

@@ -166,7 +166,7 @@ SELECT
     Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
     Contribuicao.descricao,
     Contribuicao.dataHora
-    FROM ComentarioPergunta 
+    FROM ComentarioPergunta
     JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
     JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
     WHERE ComentarioPergunta.idPergunta = 6;
