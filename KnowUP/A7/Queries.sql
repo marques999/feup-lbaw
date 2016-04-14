@@ -1,30 +1,32 @@
+SET SCHEMA 'knowup';
+
 /*--------------------------------------------*/
 /* 1. EDITAR UTILIZADOR                       */
 /*--------------------------------------------*/
 UPDATE Utilizador
 SET
-	Utilizador.primeiroNome = COALESCE(:primeiroNome, Utilizador.primeiroNome),
-	Utilizador.ultimoNome =  COALESCE(:novoUltimoNome, Utilizador.ultimoNome),
-	Utilizador.email =  COALESCE(:novoEmail, Utilizador.email),
-	Utilizador.localidade =  COALESCE(:novaLocalidade, Utilizador.localidade),
-	Utilizador.codigoPais =  COALESCE(:novoCodigoPais, Utilizador.codigoPais)
-WHERE Utilizador.idUtilizador = :idUtilizador;
+    primeiroNome = COALESCE(:primeiroNome, primeiroNome),
+    ultimoNome =  COALESCE(:novoUltimoNome, ultimoNome),
+    email =  COALESCE(:novoEmail, email),
+    localidade =  COALESCE(:novaLocalidade, localidade),
+    codigoPais =  COALESCE(:novoCodigoPais, codigoPais)
+WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* 2. EDITAR PERGUNTA                         */
 /*--------------------------------------------*/
 UPDATE Pergunta
 SET
-	Pergunta.titulo = COALESCE(:novoTitulo, Pergunta.titulo),
-	Pergunta.descricao = COALESCE(:novaDescricao, Pergunta.descricao)
-WHERE Pergunta.idPergunta = :idPergunta;
+    titulo = COALESCE(:novoTitulo, titulo),
+    descricao = COALESCE(:novaDescricao, descricao)
+WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* 3. EDITAR RESPOSTA                         */
 /*--------------------------------------------*/
 UPDATE Contribuicao
-SET Contribuicao.descricao = COALESCE(:novaDescricao, Contribuicao.descricao)
-WHERE Contribuicao.idContribuicao = :idResposta;
+SET descricao = COALESCE(:novaDescricao, descricao)
+WHERE idContribuicao = :idResposta;
 
 --------------------------------------------------
 
@@ -45,15 +47,15 @@ AND Seguidor.idPergunta = :idPergunta;
 /* 3. FECHAR PERGUNTA                         */
 /*--------------------------------------------*/
 UPDATE Pergunta
-SET Pergunta.ativa = FALSE
-WHERE Pergunta.idPergunta = :idPergunta;
+SET ativa = FALSE
+WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* 4. ESCOLHER MELHOR RESPOSTA                */
 /*--------------------------------------------*/
 UPDATE Resposta
-SET Resposta.melhorResposta = TRUE
-WHERE Resposta.idResposta = :idResposta;
+SET melhorResposta = TRUE
+WHERE idResposta = :idResposta;
 
 /*--------------------------------------------*/
 /* 5. CLASSIFICAR PERGUNTA                    */
@@ -65,7 +67,7 @@ SELECT registarVotoPergunta(:idPergunta, :valor);
 /*--------------------------------------------*/
 SELECT registarVotoResposta(:idResposta, :valor);
 
---------------------------------------------------
+    --------------------------------------------------
 
 /*--------------------------------------------*/
 /* 1. INSERIR UTILIZADOR                      */
@@ -75,10 +77,10 @@ VALUES(:username, :password, :email, :primeiroNome, :ultimoNome);
 
 UPDATE Utilizador
 SET
-	Utilizador.idInstituicao = COALESCE(:idInstituicao, Utilizador.idInstituicao),
-	Utilizador.localidade = COALESCE(:localidade, Utilizador.localidade),
-	Utilizador.codigoPais = COALESCE(:codigoPais, Utilizador.codigoPais)
-WHERE Utilizador.idUtilizador = :idUtilizador;
+    idInstituicao = COALESCE(:idInstituicao, idInstituicao),
+    localidade = COALESCE(:localidade, localidade),
+     codigoPais = COALESCE(:codigoPais, codigoPais)
+WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* 1. INSERIR PERGUNTA                        */
@@ -142,20 +144,20 @@ VALUES(:idConversa, :idAutor, :descricao);
 /* 1. APAGAR UTILIZADOR                       */
 /*--------------------------------------------*/
 UPDATE Utilizador
-SET Utilizador.removido = TRUE
-WHERE Utilizador.idUtilizador = :idUtilizador;
+SET removido = TRUE
+WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* 2. APAGAR PERGUNTA                         */
 /*--------------------------------------------*/
 DELETE FROM Pergunta
-WHERE Pergunta.idPergunta = :idPergunta;
+WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* 3. APAGAR SEGUIDOR                         */
 /*--------------------------------------------*/
 DELETE FROM Seguidor
-WHERE Seguidor.idSeguidor = :idUtilizador;
+WHERE idSeguidor = :idUtilizador;
 
 /*--------------------------------------------*/
 /* 4. APAGAR RESPOSTA                         */
@@ -176,7 +178,7 @@ SELECT apagarComentarioResposta(:idComentario);
 /* 7. APAGAR MENSAGEM                         */
 /*--------------------------------------------*/
 DELETE FROM Mensagem
-WHERE Mensagem.idMensagem = :idMensagem;
+WHERE idMensagem = :idMensagem;
 
 --------------------------------------------------
 
@@ -190,5 +192,5 @@ VALUES(:idModerador, :idUtilizador, :descricao);
 /* 2. BANIR UTILIZADOR                        */
 /*--------------------------------------------*/
 UPDATE Utilizador
-SET Utilizador.activo = FALSE
-WHERE Utilizador.idUtilizador = :idUtilizador;
+SET activo = FALSE
+WHERE idUtilizador = :idUtilizador;
