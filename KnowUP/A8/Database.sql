@@ -1,9 +1,5 @@
 SET SCHEMA 'knowup';
 
-/*--------------------------------------------*/
-/*                  DeleteAll                 */
-/*--------------------------------------------*/
-
 DELETE FROM Report;
 DELETE FROM Mensagem;
 DELETE FROM Conversa;

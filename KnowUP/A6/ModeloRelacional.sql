@@ -1,9 +1,5 @@
 SET SCHEMA 'knowup';
 
-/*--------------------------------------------*/
-/*                  DropTable                 */
-/*--------------------------------------------*/
-
 DROP TABLE IF EXISTS Report;
 DROP TABLE IF EXISTS Mensagem;
 DROP TABLE IF EXISTS Conversa;
