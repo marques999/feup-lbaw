@@ -1,46 +1,26 @@
 <?
-	if (!isset($_SESSION)) {
-		session_start();
-	}
+  include_once('../../config/init.php');
+  include_once('../../config/security.php');
 
-	include_once('../model/action.php');
-	include_once('../model/users.php');
-	include_once('../model/session.php');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+    $stmt = $db->prepare('UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador');
+    $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
 
-	if (safe_check($_POST, 'idUser') && $loggedIn) {
+    if ($stmt->rowCount() > 0) {
+      
+      if (isset($_SESSION['username'])) {
+        unset($_SESSION['username']);
+      }
 
-		$result = false;
-		$userId = safe_getId($_POST['idUser']);
-		$userExists = users_idExists($userId);
+      if (isset($_SESSION['idUtilizador'])) {
+        unset($_SESSION['idUtilizador']);
+      }
 
-		if ($userId > 0 && $userExists && $thisUser == $userId) {
+      session_destroy();
+    }
+  }
 
-			$stmt = $db->prepare('DELETE FROM Users WHERE idUser = :idUser');
-			$stmt->bindParam(':idUser', $userId, PDO::PARAM_INT);
-
-			if ($stmt->execute()){
-				$result = true;
-			}
-			else {
-				header("Location: ../database_error.php");
-			}
-
-			if ($result) {
-
-				if (isset($_SESSION['username'])) {
-					unset($_SESSION['username']);
-				}
-
-				if (isset($_SESSION['userid'])) {
-					unset($_SESSION['userid']);
-				}
-
-				session_destroy();
-				header("Location: ../index.php");
-			}
-		}
-	}
-	else {
-		safe_redirect("../index.php");
-	}
+  safe_redirect(null);
 ?>

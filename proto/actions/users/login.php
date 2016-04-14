@@ -1,22 +1,26 @@
 <?
   include_once('../../config/init.php');
-  include_once($BASE_DIR .'database/users.php');  
+  include_once('../../config/security.php');
+  include_once('../../database/utilizador.php');
 
-  if (!$_POST['username'] || !$_POST['password']) {
-    $_SESSION['error_messages'][] = 'Invalid login';
+  if (safe_check($_POST, 'username') && safe_check($_SESSION, 'password')) {
+    $_SESSION['error_messages'][] = 'invalid login';
     $_SESSION['form_values'] = $_POST;
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit;
+  }
+  else {
+    
+    $myUsername = safe_trim($_POST['username']);
+    $myPassword = safe_trim($_POST['password']);
+  
+    if (utilizador_validateLogin($myUsername, $myPassword)) {
+      $_SESSION['username'] = $myUsername;
+      $_SESSION['idUtilizador'] = utilizador_getId($myUsername);
+      $_SESSION['success_messages'][] = 'Login successful';  
+    }
+    else {
+      $_SESSION['error_messages'][] = 'login failed';  
+    }
   }
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  
-  if (isLoginCorrect($username, $password)) {
-    $_SESSION['username'] = $username;
-    $_SESSION['success_messages'][] = 'Login successful';  
-  } else {
-    $_SESSION['error_messages'][] = 'Login failed';  
-  }
-  header('Location: ' . $_SERVER['HTTP_REFERER']);
+  safe_redirect(null);
 ?>
