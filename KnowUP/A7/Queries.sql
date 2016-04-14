@@ -1,7 +1,7 @@
 SET SCHEMA 'knowup';
 
 /*--------------------------------------------*/
-/* 1. EDITAR UTILIZADOR                       */
+/* 1. EDITAR INFORMAÇÕES DO UTILIZADOR        */
 /*--------------------------------------------*/
 UPDATE Utilizador
 SET
@@ -13,7 +13,7 @@ SET
 WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
-/* 2. EDITAR PERGUNTA                         */
+/* 2. EDITAR CONTEÚDO DA PERGUNTA             */
 /*--------------------------------------------*/
 UPDATE Pergunta
 SET
@@ -22,33 +22,11 @@ SET
 WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
-/* 3. EDITAR RESPOSTA                         */
+/* 3. EDITAR CONTEÚDO DA RESPOSTA             */
 /*--------------------------------------------*/
 UPDATE Contribuicao
 SET descricao = COALESCE(:novaDescricao, descricao)
 WHERE idContribuicao = :idResposta;
-
---------------------------------------------------
-
-/*--------------------------------------------*/
-/* 1. SEGUIR PERGUNTA                         */
-/*--------------------------------------------*/
-INSERT INTO Seguidor(idPergunta, idAutor)
-VALUES(:idPergunta, :idAutor);
-
-/*--------------------------------------------*/
-/* 2. DEIXAR DE SEGUIR PERGUNTA               */
-/*--------------------------------------------*/
-DELETE FROM Seguidor
-WHERE Seguidor.idSeguidor = :idSeguidor
-AND Seguidor.idPergunta = :idPergunta;
-
-/*--------------------------------------------*/
-/* 3. FECHAR PERGUNTA                         */
-/*--------------------------------------------*/
-UPDATE Pergunta
-SET ativa = FALSE
-WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* 4. ESCOLHER MELHOR RESPOSTA                */
@@ -58,16 +36,49 @@ SET melhorResposta = TRUE
 WHERE idResposta = :idResposta;
 
 /*--------------------------------------------*/
-/* 5. CLASSIFICAR PERGUNTA                    */
+/* 5. FECHAR PERGUNTA                         */
+/*--------------------------------------------*/
+UPDATE Pergunta
+SET ativa = FALSE
+WHERE idPergunta = :idPergunta;
+
+/*--------------------------------------------*/
+/* 6. SEGUIR PERGUNTA                         */
+/*--------------------------------------------*/
+INSERT INTO Seguidor(idPergunta, idAutor)
+VALUES(:idPergunta, :idAutor);
+
+/*--------------------------------------------*/
+/* 7. UNFOLLOW PERGUNTA                       */
+/*--------------------------------------------*/
+DELETE FROM Seguidor
+WHERE idSeguidor = :idSeguidor
+AND idPergunta = :idPergunta;
+
+/*--------------------------------------------*/
+/* 8. CLASSIFICAR PERGUNTA                    */
 /*--------------------------------------------*/
 SELECT registarVotoPergunta(:idPergunta, :valor);
 
 /*--------------------------------------------*/
-/* 6. CLASSIFICAR RESPOSTA                    */
+/* 9. CLASSIFICAR RESPOSTA                    */
 /*--------------------------------------------*/
 SELECT registarVotoResposta(:idResposta, :valor);
 
-    --------------------------------------------------
+/*--------------------------------------------*/
+/* 10. DENUNCIAR UTILIZADOR                   */
+/*--------------------------------------------*/
+INSERT INTO Report(idModerador, idUtilizador, descricao)
+VALUES(:idModerador, :idUtilizador, :descricao);
+
+/*--------------------------------------------*/
+/* 11. BANIR UTILIZADOR                       */
+/*--------------------------------------------*/
+UPDATE Utilizador
+SET activo = FALSE
+WHERE idUtilizador = :idUtilizador;
+
+--------------------------------------------------
 
 /*--------------------------------------------*/
 /* 1. INSERIR UTILIZADOR                      */
@@ -79,17 +90,17 @@ UPDATE Utilizador
 SET
     idInstituicao = COALESCE(:idInstituicao, idInstituicao),
     localidade = COALESCE(:localidade, localidade),
-     codigoPais = COALESCE(:codigoPais, codigoPais)
+    codigoPais = COALESCE(:codigoPais, codigoPais)
 WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
-/* 1. INSERIR PERGUNTA                        */
+/* 2. INSERIR PERGUNTA                        */
 /*--------------------------------------------*/
 INSERT INTO Pergunta(idCategoria, idAutor, titulo, descricao)
 VALUES(:idCategoria, :idAutor, :titulo, :descricao);
 
 /*--------------------------------------------*/
-/* 2. INSERIR RESPOSTA                        */
+/* 3. INSERIR RESPOSTA                        */
 /*--------------------------------------------*/
 INSERT INTO Contribuicao(idAutor, descricao)
 VALUES(:idAutor, :descricao);
@@ -97,11 +108,11 @@ VALUES(:idAutor, :descricao);
 SELECT currval(pg_get_serial_sequence('contribuicao', 'idContribuicao'))
 AS novaResposta;
 
-INSERT INTO Resposta(idResposta, idPergunta) 
+INSERT INTO Resposta(idResposta, idPergunta)
 VALUES(novaResposta, :idPergunta);
 
 /*--------------------------------------------*/
-/* 3. INSERIR COMENT�RIO NUMA PERGUNTA        */
+/* 4. INSERIR COMENTÁRIO NUMA PERGUNTA        */
 /*--------------------------------------------*/
 INSERT INTO Contribuicao(idAutor, descricao)
 VALUES(:idAutor, :descricao);
@@ -113,7 +124,7 @@ INSERT INTO ComentarioPergunta(idComentario, idPergunta)
 VALUES(novoComentario, :idPergunta);
 
 /*--------------------------------------------*/
-/* 4. INSERIR COMENT�RIO NUMA RESPOSTA        */
+/* 5. INSERIR COMENTÁRIO NUMA RESPOSTA        */
 /*--------------------------------------------*/
 INSERT INTO Contribuicao(idAutor, descricao)
 VALUES(:idAutor, :descricao);
@@ -165,12 +176,12 @@ WHERE idSeguidor = :idUtilizador;
 SELECT apagarResposta(:idResposta);
 
 /*--------------------------------------------*/
-/* 5. APAGAR COMENT�RIO A PERGUNTA            */
+/* 5. APAGAR COMENTÁRIO A PERGUNTA            */
 /*--------------------------------------------*/
 SELECT apagarComentarioPergunta(:idComentario);
 
 /*--------------------------------------------*/
-/* 6. APAGAR COMENT�RIO A RESPOSTA            */
+/* 6. APAGAR COMENTÁRIO A RESPOSTA            */
 /*--------------------------------------------*/
 SELECT apagarComentarioResposta(:idComentario);
 
@@ -179,18 +190,3 @@ SELECT apagarComentarioResposta(:idComentario);
 /*--------------------------------------------*/
 DELETE FROM Mensagem
 WHERE idMensagem = :idMensagem;
-
---------------------------------------------------
-
-/*--------------------------------------------*/
-/* 1. DENUNCIAR UTILIZADOR                    */
-/*--------------------------------------------*/
-INSERT INTO Report(idModerador, idUtilizador, descricao)
-VALUES(:idModerador, :idUtilizador, :descricao);
-
-/*--------------------------------------------*/
-/* 2. BANIR UTILIZADOR                        */
-/*--------------------------------------------*/
-UPDATE Utilizador
-SET activo = FALSE
-WHERE idUtilizador = :idUtilizador;
