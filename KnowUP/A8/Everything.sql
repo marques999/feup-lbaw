@@ -100,7 +100,6 @@ CREATE TABLE Pergunta (
 );
 
 ALTER TABLE Pergunta ADD CONSTRAINT PK_Pergunta PRIMARY KEY (idPergunta);
-ALTER TABLE Pergunta ADD CONSTRAINT CK_Pergunta_Visualizacoes CHECK (visualizacoes >= 0);
 ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idCategoria FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria) ON DELETE CASCADE;
 ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idAutor FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador) ON DELETE CASCADE;
 
@@ -221,11 +220,9 @@ DROP INDEX IF EXISTS Contribuicao_IDX_Pesquisa;
 DROP INDEX IF EXISTS Pergunta_IDX_Pesquisa;
 DROP INDEX IF EXISTS Utilizador_IDX_Pesquisa;
 DROP INDEX IF EXISTS Contribuicao_IDX_MaisRecentes;
-DROP INDEX IF EXISTS Pergunta_IDX_MaisVistas;
 DROP INDEX IF EXISTS Pergunta_IDX_MaisRecentes;
 
 CREATE INDEX Pergunta_IDX_MaisRecentes ON Pergunta USING btree(dataHora);
-CREATE INDEX Pergunta_IDX_MaisVistas ON Pergunta USING btree(visualizacoes);
 CREATE INDEX Contribuicao_IDX_MaisRecentes ON Contribuicao USING btree(dataHora);
 CREATE INDEX Utilizador_IDX_Pesquisa ON Utilizador USING gin(to_tsvector('english', username || ' ' || primeiroNome || ' ' || ultimoNome));
 CREATE INDEX Pergunta_IDX_Pesquisa ON Pergunta USING gin(to_tsvector('english', titulo || ' ' || coalesce(descricao, '')));
@@ -719,9 +716,6 @@ BEGIN
     UPDATE Seguidor
     SET dataAcesso = now()
     WHERE idPergunta = $1 AND idSeguidor = $2;
-    UPDATE Pergunta
-    SET visualizacoes = visualizacoes + 1
-    WHERE idPergunta = $1;
     RETURN;
 END;
 
@@ -942,24 +936,9 @@ SELECT * FROM (SELECT Pergunta.idPergunta,
     Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
     Pergunta.titulo,
     Pergunta.descricao,
-    Pergunta.visualizacoes,
     Pergunta.dataHora,
     Pergunta.ativa
 FROM Pergunta
 JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor)
 AS QueryPrincipal, calcularPontuacaoPergunta(QueryPrincipal.idPergunta)
 ORDER BY pontuacao DESC;
-
-CREATE VIEW PerguntasMaisVistas AS
-SELECT * FROM (SELECT Pergunta.idPergunta,
-    Utilizador.idUtilizador,
-    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-    Pergunta.titulo,
-    Pergunta.descricao,
-    Pergunta.visualizacoes,
-    Pergunta.dataHora,
-    Pergunta.ativa
-FROM Pergunta
-JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-ORDER BY Pergunta.visualizacoes DESC)
-AS QueryPrincipal, calcularPontuacaoPergunta(QueryPrincipal.idPergunta);

@@ -190,3 +190,234 @@ SELECT apagarComentarioResposta(:idComentario);
 /*--------------------------------------------*/
 DELETE FROM Mensagem
 WHERE idMensagem = :idMensagem;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE CATEGORIAS DE UMA INSTITUIÇÂO  */
+/*--------------------------------------------*/
+SELECT Categoria.idCategoria, Categoria.nome
+    FROM Instituicao
+    JOIN CategoriaInstituicao USING(idInstituicao)
+    JOIN Categoria USING(idCategoria)
+    WHERE idInstituicao = :idInstituicao
+    ORDER BY Categoria.nome ASC;
+
+/*--------------------------------------------*/
+/* 2. LISTA DE INSTITUIÇÕES DE UMA CATEGORIA  */
+/*--------------------------------------------*/
+SELECT Instituicao.idInstituicao, Instituicao.sigla
+    FROM Categoria
+    JOIN CategoriaInstituicao USING(idCategoria)
+    JOIN Instituicao USING(idInstituicao)
+    WHERE Categoria.idCategoria = :idCategoria
+    ORDER BY Instituicao.sigla ASC;
+
+/*--------------------------------------------*/
+/* 2. VER PERGUNTA                            */
+/*--------------------------------------------*/
+SELECT Pergunta.idPergunta,
+    Utilizador.idUtilizador,
+    Utilizador.username,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+    Instituicao.sigla,
+    Pergunta.titulo,
+    Pergunta.descricao,
+    Pergunta.ativa,
+    COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+    COALESCE(TabelaComentarios.count, 0) AS numeroComentarios,
+    COALESCE(TabelaSeguidores.count, 0) AS numeroSeguidores,
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+    FROM Pergunta
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    JOIN Instituicao USING(idInstituicao)
+    LEFT JOIN (SELECT idPergunta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoPergunta
+        WHERE idPergunta = :idPergunta
+        GROUP BY idPergunta)
+        AS TabelaVotos
+        USING (idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM Resposta
+        WHERE idPergunta = :idPergunta
+        GROUP BY idPergunta)
+        AS TabelaRespostas
+        USING (idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM ComentarioPergunta
+        WHERE idPergunta = :idPergunta
+        GROUP BY idPergunta)
+        AS TabelaComentarios
+        USING (idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM Seguidor
+        WHERE idPergunta = :idPergunta
+        GROUP BY idPergunta)
+        AS TabelaSeguidores
+        USING (idPergunta)
+    WHERE Pergunta.idPergunta = :idPergunta;
+
+/*--------------------------------------------*/
+/* 1. LISTAS DE RESPOSTAS A UMA PERGUNTA      */
+/*--------------------------------------------*/
+
+SELECT Resposta.idResposta,
+    Utilizador.idUtilizador,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+    Utilizador.username,
+    Instituicao.sigla,
+    Contribuicao.descricao,
+    COALESCE(TabelaComentarios.count, 0) AS numeroComentarios,
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Contribuicao.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora,
+    Resposta.melhorResposta
+    FROM Resposta
+    JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
+    
+    LEFT JOIN (SELECT idResposta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoResposta
+        GROUP BY idResposta)
+        AS TabelaVotos
+        USING (idResposta)
+    LEFT JOIN (SELECT idResposta, COUNT(*)
+        FROM ComentarioResposta
+        GROUP BY idResposta)
+        AS TabelaComentarios
+        USING (idResposta)
+    WHERE Resposta.idPergunta = :idPergunta
+    ORDER BY Contribuicao.dataHora DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR CATEGORIA        */
+/*--------------------------------------------*/
+
+SELECT Pergunta.idPergunta,
+    Utilizador.idUtilizador,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+    Utilizador.username,
+    Pergunta.titulo,
+    Pergunta.descricao,
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+    --numeroSeguidores(Pergunta.idPergunta) AS numeroSeguidores
+    FROM Pergunta
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    NATURAL LEFT JOIN (SELECT idPergunta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoPergunta
+        GROUP BY idPergunta)
+        AS TabelaVotos
+    WHERE Pergunta.idCategoria = :idCategoria
+    ORDER BY Pergunta.dataHora DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR INSTITUICAO      */
+/*--------------------------------------------*/
+
+SELECT Pergunta.idPergunta,
+    Utilizador.idUtilizador,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome,
+    Utilizador.username,
+    Pergunta.titulo,
+    Pergunta.descricao,
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+  --  numeroSeguidores(Pergunta.idPergunta) AS numeroSeguidores
+    FROM CategoriaInstituicao
+    JOIN Pergunta USING(idCategoria)
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    NATURAL LEFT JOIN (SELECT idPergunta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoPergunta
+        GROUP BY idPergunta)
+        AS TabelaVotos
+    WHERE CategoriaInstituicao.idInstituicao = 5
+    ORDER BY Pergunta.dataHora DESC;
+
+/*--------------------------------------------*/
+/* 1. LISTA DE PERGUNTAS POR AUTOR            */
+/*--------------------------------------------*/
+
+SELECT Pergunta.idPergunta,
+    Pergunta.titulo,
+    Pergunta.descricao,    
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora,
+    Pergunta.ativa
+    FROM Utilizador
+    JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
+    NATURAL LEFT JOIN (SELECT idPergunta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoPergunta
+        GROUP BY idPergunta)
+        AS TabelaVotos
+    WHERE Utilizador.idUtilizador = :idUtilizador;
+
+/*--------------------------------------------*/
+/* 2. LISTA DE RESPOSTAS POR AUTOR            */
+/*--------------------------------------------*/
+
+SELECT Resposta.idResposta,
+    Resposta.idPergunta,
+    Contribuicao.descricao,
+    Resposta.melhorResposta,
+    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
+    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
+    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
+    to_char(Contribuicao.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+    FROM Utilizador
+    JOIN Contribuicao ON Contribuicao.idAutor = Utilizador.idUtilizador
+    JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
+    LEFT JOIN (SELECT idResposta,
+        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        FROM VotoResposta
+        GROUP BY idResposta)
+        AS TabelaVotos
+        USING(idResposta)
+    WHERE Utilizador.idUtilizador = 2;
+
+/*--------------------------------------------*/
+/* 3. LISTA DE COMENTÁRIOS A UMA PERGUNTA     */
+/*--------------------------------------------*/
+
+SELECT ComentarioPergunta.idComentario,
+    Utilizador.idUtilizador,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+    Contribuicao.descricao,
+    to_char(Contribuicao.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+    FROM ComentarioPergunta
+    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
+    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
+    WHERE ComentarioPergunta.idPergunta = :idPergunta;
+
+/*--------------------------------------------*/
+/* 4. LISTA DE COMENTÁRIOS A UMA RESPOSTA     */
+/*--------------------------------------------*/
+
+SELECT ComentarioResposta.idComentario,
+    Utilizador.idUtilizador,
+    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+    Contribuicao.descricao,
+    to_char(Contribuicao.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora
+    FROM ComentarioResposta
+    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
+    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
+    WHERE ComentarioResposta.idResposta = :idResposta;

@@ -144,8 +144,6 @@ CREATE TABLE Pergunta (
 
 ALTER TABLE Pergunta ADD CONSTRAINT PK_Pergunta
 	PRIMARY KEY (idPergunta);
-ALTER TABLE Pergunta ADD CONSTRAINT CK_Pergunta_Visualizacoes
-	CHECK (visualizacoes >= 0);
 ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idCategoria
 	FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria)
 	ON DELETE CASCADE;
