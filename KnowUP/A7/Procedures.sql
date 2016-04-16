@@ -53,7 +53,7 @@ END;
 $registarVotoResposta$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
-/*          FUNÇÃO: visitarPergunta           */
+/*              visitarPergunta               */
 /*--------------------------------------------*/
 
 -- visitarPergunta(idPergunta, idUtilizador)
@@ -73,7 +73,7 @@ END;
 $visitarPergunta$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
-/*            FUNÇÃO: lerMensagens            */
+/*                lerMensagens                */
 /*--------------------------------------------*/
 
 -- lerMensagens(idConversa, idUtilizador)

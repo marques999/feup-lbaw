@@ -1,199 +1,154 @@
 SET SCHEMA 'knowup';
 
-DROP VIEW IF EXISTS PerguntasSemResposta;
 DROP VIEW IF EXISTS PerguntasMaisRecentes;
 DROP VIEW IF EXISTS PerguntasMelhorClassificadas;
-DROP VIEW IF EXISTS UtilizadoresBanidos;
-DROP VIEW IF EXISTS UtilizadoresActivos;
-DROP VIEW IF EXISTS UtilizadoresRemovidos;
+DROP VIEW IF EXISTS PerguntasSemResposta;
 DROP VIEW IF EXISTS VistaInstituicao;
 
+DROP MATERIALIZED VIEW IF EXISTS PerguntasPesquisa;
+DROP MATERIALIZED VIEW IF EXISTS UtilizadoresPesquisa;
+
 /*--------------------------------------------*/
-/* LISTA DAS PERGUNTAS MAIS RECENTES          */
+/* 1. LISTAR PERGUNTAS MAIS RECENTES          */
 /*--------------------------------------------*/
 
 CREATE VIEW PerguntasMaisRecentes AS
 SELECT Pergunta.idPergunta,
-    Utilizador.idUtilizador,
-    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-    Pergunta.titulo,
-    Pergunta.descricao,
-    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
-    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
-    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora,
-    Pergunta.ativa
-FROM Pergunta
-JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-LEFT JOIN (SELECT idPergunta,
-    SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-    SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
-    FROM VotoPergunta
-    GROUP BY idPergunta)
-    AS TabelaVotos
-    USING(idPergunta)
-ORDER BY dataHora DESC;
+       Utilizador.idUtilizador,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+       Pergunta.titulo,
+       Pergunta.descricao,
+       Pergunta.ativa,
+       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(SUM(valor), 0) AS pontuacao,
+       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+    FROM Pergunta
+    LEFT JOIN VotoPergunta USING(idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM Resposta
+        GROUP BY idPergunta)
+        AS TabelaRespostas
+        USING (idPergunta)
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
+    ORDER BY Pergunta.dataHora DESC;
 
 /*--------------------------------------------*/
-/* LISTA DAS PERGUNTAS MELHOR CLASSIFICADAS   */
+/* 2. LISTAR PERGUNTAS MELHOR CLASSIFICADAS   */
 /*--------------------------------------------*/
 
 CREATE VIEW PerguntasMelhorClassificadas AS
 SELECT Pergunta.idPergunta,
-    Utilizador.idUtilizador,
-    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-    Pergunta.titulo,
-    Pergunta.descricao,
-    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
-    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
-    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora,
-    Pergunta.ativa
-FROM Pergunta
-JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-LEFT JOIN (SELECT idPergunta,
-    SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-    SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
-    FROM VotoPergunta
-    GROUP BY idPergunta)
-    AS TabelaVotos
-    USING(idPergunta)
-ORDER BY pontuacao DESC;
+       Utilizador.idUtilizador,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+       Pergunta.titulo,
+       Pergunta.descricao,
+       Pergunta.ativa,
+       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(SUM(valor), 0) AS pontuacao,
+       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+    FROM Pergunta
+    LEFT JOIN VotoPergunta USING(idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM Resposta
+        GROUP BY idPergunta)
+        AS TabelaRespostas
+        USING (idPergunta)
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
+    ORDER BY pontuacao DESC;
 
 /*--------------------------------------------*/
-/* LISTA DAS PERGUNTAS SEM RESPOSTA           */
+/* 3. LISTAR PERGUNTAS NÃO RESPONDIDAS        */
 /*--------------------------------------------*/
 
 CREATE VIEW PerguntasSemResposta AS
 SELECT Pergunta.idPergunta,
-    Utilizador.idUtilizador,
-    Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-    Pergunta.titulo,
-    Pergunta.descricao,
-    COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
-    COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-    COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
-    to_char(Pergunta.dataHora, 'Day DD/MM/YYYY HH:MM') as dataHora,
-    Pergunta.ativa
-FROM Pergunta
-LEFT JOIN (SELECT idPergunta,
-    SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-    SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
-    FROM VotoPergunta
-    GROUP BY idPergunta)
-    AS TabelaVotos
-    USING(idPergunta)
-LEFT JOIN Resposta USING(idPergunta)
-JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-WHERE Resposta.idPergunta IS NULL
-ORDER BY dataHora DESC;
+       Utilizador.idUtilizador,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+       Pergunta.titulo,
+       Pergunta.descricao,
+       Pergunta.ativa,
+       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(SUM(valor), 0) AS pontuacao,
+       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+    FROM Pergunta
+    LEFT JOIN VotoPergunta USING(idPergunta)
+    LEFT JOIN (SELECT idPergunta, COUNT(*)
+        FROM Resposta
+        GROUP BY idPergunta)
+        AS TabelaRespostas
+        USING (idPergunta)
+    LEFT JOIN Resposta USING(idPergunta)
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    WHERE Resposta.idPergunta IS NULL
+    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
+    ORDER BY Pergunta.dataHora DESC;
 
 /*--------------------------------------------*/
-/* LISTA DE INSTITUIÇÕES                      */
+/* 4. PESQUISA FULL-TEXT DE PERGUNTAS         */
+/*--------------------------------------------*/
+
+CREATE MATERIALIZED VIEW PerguntasPesquisa AS
+SELECT QueryPrincipal.idPergunta,
+       Utilizador.idUtilizador,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+       QueryPrincipal.titulo,
+       QueryPrincipal.conteudo,
+       QueryPrincipal.numeroRespostas,
+       QueryPrincipal.dataHora,
+       QueryPrincipal.ativa,
+       to_tsvector('portuguese', conteudo) AS pesquisa
+    FROM (SELECT Pergunta.idPergunta,
+          Pergunta.titulo,
+          Pergunta.idAutor,
+          Pergunta.ativa,
+          Pergunta.titulo || ' ' ||
+          COALESCE(Pergunta.descricao, '') ||
+          COALESCE(string_agg(Contribuicao.descricao, ' '), '') AS conteudo,
+          COALESCE(COUNT (DISTINCT Resposta.idResposta), 0) AS numeroRespostas,
+          EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+          FROM Pergunta
+          LEFT JOIN Resposta USING(idPergunta)
+          LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+          GROUP BY idPergunta) AS QueryPrincipal
+    LEFT JOIN Utilizador ON Utilizador.idUtilizador = QueryPrincipal.idAutor;
+
+/*--------------------------------------------*/
+/* 5. PESQUISA FULL-TEXT DE UTILIZADORES      */
+/*--------------------------------------------*/
+
+CREATE MATERIALIZED VIEW UtilizadoresPesquisa AS
+SELECT Utilizador.idUtilizador,
+       Utilizador.username,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+       Utilizador.email,
+       to_tsvector('english', Utilizador.username || ' ' ||
+           Utilizador.primeiroNome || ' ' ||
+           Utilizador.ultimoNome || ' ' ||
+           Utilizador.email) AS pesquisa
+    FROM Utilizador;
+
+/*--------------------------------------------*/
+/* 6. LISTAR INSTITUIÇÕES                     */
 /*--------------------------------------------*/
 
 CREATE VIEW VistaInstituicao AS
 SELECT Instituicao.idInstituicao,
        Instituicao.nome,
        Instituicao.sigla,
-       Instituicao.morada,
-       Instituicao.contacto,
-       Instituicao.website,
-       COALESCE(TabelaUtilizadores.count, 0) AS numeroUtilizadores,
-       COALESCE(TabelaCategorias.count, 0) AS numeroCategorias,
-       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas
-FROM Instituicao
-LEFT JOIN (SELECT idInstituicao, COUNT(*)
-    FROM Utilizador
-    GROUP BY idInstituicao)
-    AS TabelaUtilizadores
-    USING(idInstituicao)
-LEFT JOIN (SELECT idInstituicao, COUNT(*)
-    FROM CategoriaInstituicao
-    GROUP BY idInstituicao)
-    AS TabelaCategorias
-    USING(idInstituicao)
-LEFT JOIN (SELECT idInstituicao, COUNT(*)
-    FROM Pergunta
-    NATURAL JOIN CategoriaInstituicao
-    GROUP BY idInstituicao)
-    AS TabelaPerguntas
-    USING(idInstituicao);
-
-/*--------------------------------------------*/
-/* LISTA DE UTILIZADORES ACTIVOS              */
-/*--------------------------------------------*/
-
-CREATE VIEW UtilizadoresActivos
-SELECT Utilizador.*, 
-       Instituicao.sigla,
-       Instituicao.website,
-       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
-FROM Utilizador
-NATURAL LEFT JOIN Instituicao
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Pergunta
-    GROUP BY idAutor)
-    AS TabelaPerguntas
-    USING(idUtilizador)
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Resposta 
-    JOIN Contribuicao
-    ON Contribuicao.idContribuicao = Resposta.idResposta
-    GROUP BY idAutor)
-    AS TabelaRespostas
-    USING(idUtilizador)
-WHERE Utilizador.ativo = TRUE AND Utilizador.removido = FALSE;
-
-/*--------------------------------------------*/
-/* LISTA DE UTILIZADORES BANIDOS              */
-/*--------------------------------------------*/
-
-CREATE VIEW UtilizadoresBanidos
-SELECT Utilizador.*, 
-       Instituicao.sigla,
-       Instituicao.website,
-       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
-FROM Utilizador
-NATURAL LEFT JOIN Instituicao
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Pergunta
-    GROUP BY idAutor)
-    AS TabelaPerguntas
-    USING(idUtilizador)
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Resposta 
-    JOIN Contribuicao
-    ON Contribuicao.idContribuicao = Resposta.idResposta
-    GROUP BY idAutor)
-    AS TabelaRespostas
-    USING(idUtilizador)
-WHERE Utilizador.ativo = FALSE;
-
-/*--------------------------------------------*/
-/* LISTA DE UTILIZADORES REMOVIDOS            */
-/*--------------------------------------------*/
-
-CREATE VIEW UtilizadoresRemovidos
-SELECT Utilizador.*, 
-       Instituicao.sigla,
-       Instituicao.website,
-       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
-FROM Utilizador
-NATURAL LEFT JOIN Instituicao
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Pergunta
-    GROUP BY idAutor)
-    AS TabelaPerguntas
-    USING(idUtilizador)
-LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
-    FROM Resposta 
-    JOIN Contribuicao
-    ON Contribuicao.idContribuicao = Resposta.idResposta
-    GROUP BY idAutor)
-    AS TabelaRespostas
-    USING(idUtilizador)
-WHERE Utilizador.ativo = TRUE AND Utilizador.removido = TRUE;
+       COALESCE(COUNT(DISTINCT Utilizador.idUtilizador), 0) AS numeroUtilizadores,
+       COALESCE(COUNT(DISTINCT CategoriaInstituicao.idCategoria), 0) AS numeroCategorias,
+       COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas
+    FROM Instituicao
+    LEFT JOIN Utilizador USING(idInstituicao)
+    LEFT JOIN CategoriaInstituicao USING(idInstituicao)
+    LEFT JOIN Pergunta USING (idCategoria)
+    GROUP BY Instituicao.idInstituicao
+    ORDER BY Instituicao.nome;

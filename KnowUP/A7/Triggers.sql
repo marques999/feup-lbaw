@@ -1,10 +1,11 @@
 SET SCHEMA 'knowup';
 
 /*--------------------------------------------*/
-/*            votarPropriaPergunta            */
+/*        TRIGGER_votarPropriaPergunta        */
 /*--------------------------------------------*/
 
-CREATE OR REPLACE FUNCTION votarPropriaPergunta() RETURNS trigger AS $votarPropriaPergunta$
+CREATE OR REPLACE FUNCTION votarPropriaPergunta()
+RETURNS TRIGGER AS $votarPropriaPergunta$
 DECLARE
     AutorPergunta integer;
 BEGIN
@@ -25,7 +26,7 @@ CREATE TRIGGER TRIGGER_votarPropriaPergunta
     EXECUTE PROCEDURE votarPropriaPergunta();
 
 /*--------------------------------------------*/
-/*            votarPropriaResposta            */
+/*        TRIGGER_votarPropriaResposta        */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION votarPropriaResposta()
@@ -52,7 +53,7 @@ CREATE TRIGGER TRIGGER_votarPropriaResposta
     EXECUTE PROCEDURE votarPropriaResposta();
 
 /*--------------------------------------------*/
-/*         TRIGGER: responderPergunta         */
+/*         TRIGGER_responderPergunta          */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION responderPergunta()
@@ -90,7 +91,7 @@ CREATE TRIGGER TRIGGER_responderPergunta
     EXECUTE PROCEDURE responderPergunta();
 
 /*--------------------------------------------*/
-/*           TRIGGER: melhorResposta          */
+/*           TRIGGER_melhorResposta           */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION melhorResposta()
@@ -112,14 +113,14 @@ CREATE TRIGGER TRIGGER_melhorResposta
     EXECUTE PROCEDURE melhorResposta();
 
 /*--------------------------------------------*/
-/*        TRIGGER: overlapAdministrador       */
+/*        TRIGGER_overlapAdministrador        */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION overlapAdministrador()
 RETURNS TRIGGER AS $overlapAdministrador$
 BEGIN
     IF EXISTS (SELECT 1 FROM Moderador WHERE Moderador.idModerador = NEW.idAdministrador) THEN
-        DELETE FROM Moderador WHERE Moderador.idModerador = NEW.idAdministrador;
+        RETURN NULL;
     END IF;
     RETURN NEW;
 END;
@@ -132,14 +133,14 @@ CREATE TRIGGER TRIGGER_overlapAdministrador
     EXECUTE PROCEDURE overlapAdministrador();
 
 /*--------------------------------------------*/
-/*          TRIGGER: overlapModerador         */
+/*          TRIGGER_overlapModerador          */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION overlapModerador()
 RETURNS TRIGGER AS $overlapModerador$
 BEGIN
     IF EXISTS (SELECT 1 FROM Administrador WHERE Administrador.idAdministrador = NEW.idModerador) THEN
-        DELETE FROM Administrador WHERE Administrador.idAdministrador = NEW.idModerador;
+        RETURN NULL;
     END IF;
     RETURN NEW;
 END;
@@ -152,7 +153,50 @@ CREATE TRIGGER TRIGGER_overlapModerador
     EXECUTE PROCEDURE overlapModerador();
 
 /*--------------------------------------------*/
-/*         TRIGGER: autofollowPergunta        */
+/*         TRIGGER_atualizarPesquisa          */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION atualizarPesquisa()
+RETURNS TRIGGER AS $atualizarPesquisa$
+BEGIN
+    REFRESH MATERIALIZED VIEW PerguntasPesquisa;
+    RETURN NULL;
+END;
+
+$atualizarPesquisa$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_atualizarPesquisaPergunta
+    AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+    ON Pergunta
+    FOR EACH STATEMENT
+    EXECUTE PROCEDURE atualizarPesquisa();
+
+CREATE TRIGGER TRIGGER_atualizarPesquisaResposta
+    AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+    ON Resposta
+    FOR EACH STATEMENT
+    EXECUTE PROCEDURE atualizarPesquisa();
+
+/*--------------------------------------------*/
+/*        TRIGGER_atualizarUtilizadores       */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION atualizarUtilizadores()
+RETURNS TRIGGER AS $atualizarUtilizadores$
+BEGIN
+    REFRESH MATERIALIZED VIEW UtilizadoresPesquisa;
+    RETURN NULL;
+END;
+$atualizarUtilizadores$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_atualizarUtilizadores
+    AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+    ON Utilizador
+    FOR EACH STATEMENT
+    EXECUTE PROCEDURE atualizarUtilizadores();
+
+/*--------------------------------------------*/
+/*         TRIGGER_autofollowPergunta         */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION autofollowPergunta()
@@ -173,7 +217,7 @@ CREATE TRIGGER TRIGGER_autofollowPergunta
     EXECUTE PROCEDURE autofollowPergunta();
 
 /*--------------------------------------------*/
-/*         TRIGGER: autofollowResposta        */
+/*         TRIGGER_autofollowResposta         */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION autofollowResposta()
@@ -197,7 +241,7 @@ CREATE TRIGGER TRIGGER_autofollowResposta
     EXECUTE PROCEDURE autofollowResposta();
 
 /*--------------------------------------------*/
-/*        TRIGGER: autofollowComentario       */
+/*        TRIGGER_autofollowComentario        */
 /*--------------------------------------------*/
 
 CREATE OR REPLACE FUNCTION autofollowComentario()
