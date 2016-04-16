@@ -1,0 +1,42 @@
+JSON401: VOTOS DA RESPOSTA
+
+[
+    {
+        "votospositivos": 3,
+        "votosnegativos": 5,
+        "pontuacao": -2
+    }
+]
+
+JSON402: COMENTÁRIOS DA RESPOSTA
+
+[
+    {
+        "idcomentario": 39,
+        "idutilizador": 2,
+        "nomeutilizador": "Diogo Marques",
+        "descricao": "EU SEI",
+        "datahora": "2016-04-15 16:54:29.787353"
+    },
+    {
+        "idcomentario": 40,
+        "idutilizador": 2,
+        "nomeutilizador": "Diogo Marques",
+        "descricao": "AFINAL NÃO SEI",
+        "datahora": "2016-04-15 16:55:03.999153"
+    },
+    {
+        "idcomentario": 41,
+        "idutilizador": 2,
+        "nomeutilizador": "Diogo Marques",
+        "descricao": "como?",
+        "datahora": "2016-04-15 16:56:20.341046"
+    },
+    {
+        "idcomentario": 42,
+        "idutilizador": 2,
+        "nomeutilizador": "Diogo Marques",
+        "descricao": "como?",
+        "datahora": "2016-04-15
+    }
+]

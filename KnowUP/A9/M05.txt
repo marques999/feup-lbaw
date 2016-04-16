@@ -1,0 +1,40 @@
+==== Módulo M05: Categorias ====
+
+=== R501: Listar categorias ===
+^ URL            | ''/pages/categoria/list.php''                        ||
+^ Description    | Esta página permite visualizar uma lista alfabética de todas as categorias existentes no sistema. ||
+^ UI             | [[:lbaw1525:proj:a3#ui07alista_de_categorias|UI07a]] ||
+^ Permissions    | PUB                                                  ||
+
+=== R502: Editar categoria ===
+^ URL            | ''/pages/categoria/edit.php''              ||
+^ Description    | Esta página permite alterar informações da categoria escolhida recorrendo a um formulário. ||
+^ Method         | GET                                        ||
+^ Parameters     | +id: integer | chave primária da categoria  |
+^ Permissions    | ADM                                        ||
+
+=== R503: Página da categoria ===
+^ URL            | ''/pages/categoria/view.php''                      ||
+^ Description    | Esta página permite visualizar uma lista de perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria. É possível filtrar/ordenar as perguntas por data de publicação, número de respostas, classificação. ||
+^ Method         | GET                                                ||
+^ Parameters     | +id: integer | chave primária da categoria          |
+^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]] ||
+^ Permissions    | PUB                                                ||
+
+=== R504: Actualizar categoria ===
+^ URL            | ''/actions/categoria/update.php''                   ||
+^ Description    | Esta //action// actualiza as informações de uma categoria com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página da categoria, caso contrário regressa à página de edição, sendo apresentada ao utilizador uma breve mensagem de erro. ||
+^ Method         | POST                                                ||
+^ Request body   | +idCategoria: Integer | chave primária da categoria  |
+^                | ?nome: text | novo nome da categoria (ou nome actual se não tiver sido alterado no formulário) |
+^ Redirects      | [[#r503pagina_da_categoria|R504]] | Success          |
+^                | [[#r502editar_categoria|R503]]    | Error            |
+^ Permissions    | ADM                                                 ||
+
+=== R505: Apagar categoria ===
+^ URL            | ''/actions/categoria/delete.php''           ||
+^ Description    | Esta //action// apaga uma categoria com base na informação recebida. Como esta operação tem sempre sucesso, salvo raras excepções, o utilizador será reencaminhado para a página de gestão de categorias. ||
+^ Method         | GET                                         ||
+^ Parameters     | +id: integer | chave primária da categoria   |
+^ Redirects      | [[#r801gerir_categorias|R801]]              ||
+^ Permissions    | ADM                                         ||

@@ -1,0 +1,29 @@
+=== R801: Portal de administração ===
+^ URL            | ''/pages/admin/index.php''                   ||
+^ Description    | DELETEME                                     ||
+^ UI             | [[:lbaw1525:proj:a3#ui15administracao|UI15]] ||
+^ Permissions    | ADM                                          ||
+
+=== R802: Gerir categorias ===
+^ URL            | ''/pages/admin/categoria.php''                              ||
+^ Description    | DELETEME                                                    ||
+^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]] ||
+^ Permissions    | ADM                                                         ||
+
+=== R803: Gerir instituições ===
+^ URL            | ''/pages/admin/instituicao.php''                            ||
+^ Description    | DELETEME                                                    ||
+^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]] ||
+^ Permissions    | ADM                                                         ||
+
+=== R804: Gerir utilizadores ===
+^ URL            | ''/pages/admin/utilizador.php''                   ||
+^ Description    | DELETEME                                          ||
+^ UI             | [[:lbaw1525:proj:a3#ui17gerir_utilizadores|UI17]] ||
+^ Permissions    | ADM                                               ||
+
+=== R805: Estatísticas ===
+^ URL            | ''/pages/admin/stats.php''                  ||
+^ Description    | DELETEME                                    ||
+^ UI             | [[:lbaw1525:proj:a3#ui18estatisticas|UI18]] ||
+^ Permissions    | ADM                                         ||

@@ -1,0 +1,70 @@
+==== Módulo M03: Perguntas ====
+
+=== R301: Editar pergunta  ====
+^ URL            | ''/pages/pergunta/edit.php''               ||
+^ Description    | Esta página permite alterar informações da pergunta escolhida recorrendo a um formulário. ||
+^ Method         | GET                                        ||
+^ Parameters     | +id: integer | chave primária da pergunta   |
+^ Permissions    | OWN, ADM                                   ||
+
+=== R302: Fechar pergunta  ===
+^ URL            | ''/actions/pergunta/close.php''            ||
+^ Description    | DELETEME                                   ||
+^ Method         | GET                                        ||
+^ Parameters     | +id: integer | chave primária da pergunta   |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]           ||
+^ Permissions    | OWN, MOD, ADM                              ||
+
+=== R303: Apagar pergunta ===
+^ URL            | ''/actions/pergunta/delete.php''                                ||
+^ Description    | Esta //action// que apaga uma pergunta com base na informação recebida. Como esta operação tem sempre sucesso, salvo raras excepções, o utilizador será reencaminhado para a página da pergunta associada a essa resposta. ||
+^ Method         | GET                                                             ||
+^ Parameters     | +id: integer | chave primária da pergunta                        |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                ||
+^ Permissions    | OWN, MOD, ADM                                                   ||
+
+=== R304: Atualizar pergunta ===
+^ URL            | ''actions/pergunta/update.php''                                ||
+^ Description    | Esta //action// que actualiza as informações de uma pergunta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma breve mensagem de erro. ||
+^ Method         | POST                                                           ||
+^ Request body   | +idPergunta: integer             | chave primária da pergunta   |
+^                | ?titulo: text                    | novo título da pergunta (ou título actual se não tiver sido alterado no formulário)     |
+^                | ?descricao: text                 | novo conteúdo da pergunta (ou conteúdo actual se não tiver sido alterado no formulário) |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Success                     ||
+^                | [[#r301editar_pergunta|R3401]]     | Error                     ||
+^ Permissions    | OWN, MOD, ADM                                                  ||
+
+=== R305: Registar voto ===
+^ URL            | ''/api/pergunta/insert_vote.php''                      ||
+^ Description    | Este pedido //AJAX// permite inserir um voto na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                                  ||
+^ Method         | POST                                                   ||
+^ Request body   | +idPergunta: integer     | chave primária da pergunta   |
+^                | +votoUtilizador: integer | valor do voto do utilizador  |
+^ Response body  | [[#json301registar_voto|JSON301]]                      ||
+^ Permissions    | PUB                                                    ||
+
+=== R306: Inserir comentário ===
+^ URL            | ''/api/pergunta/insert_comment.php''              ||
+^ Description    | Este pedido //AJAX// permite inserir um comentário na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                       ||
+^ Method         | POST                                              ||
+^ Request body   | +idPergunta: integer | chave primária da pergunta  |
+^                | +descricao: text     | conteúdo do comentário      |
+^ Response body  | Boolean                                           ||
+^ Permissions    | PUB                                               ||
+
+=== R307: Apagar comentário ===
+^ URL            | ''/api/pergunta/delete_comment.php''                                 ||
+^ Description    | Este pedido //AJAX// permite apagar um comentário publicado pelo utilizador com sessão iniciada na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false". ||
+^ Method         | POST                                                                 ||
+^ Request body   | +idComentario: integer | chave primária do comentário                 |
+^ Response body  | Boolean                                                              ||
+^ Permissions    | OWN, MOD, ADM                                                        ||
+
+=== R308: Obter comentários ===
+^ URL            | ''/api/pergunta/get_comments.php''                                           ||
+^ Description    | DELETEME                                                                     ||
+^ Method         | POST                                                                         ||
+^ Request body   | +idPergunta: integer       | chave primária da pergunta                       |
+^                | +ultimoComentario: integer | chave primária do último comentário requisitado  |
+^ Response body  | [[#json302obter_comentarios|JSON302]]                                        ||
+^ Permissions    | PUB                                                                          ||

@@ -1,0 +1,89 @@
+==== Módulo M01: Utilizadores ====
+
+=== R101: Pagina de autenticação ===
+^ URL            | ''/pages/utilizador/login.php''                       ||
+^ Description    | DELETEME                                              ||
+^ UI             | [[:lbaw1525:proj:a3#ui04pagina_de_autenticacao|UI04]] ||
+^ Permissions    | PUB                                                   ||
+
+=== R102: Página de registo ===
+^ URL            | ''/pages/utilizador/register.php''            ||
+^ Description    | DELETEME                                      ||
+^ UI             | [[:lbaw1525:proj:a3#ui03registar_conta|UI03]] ||
+^ Permissions    | PUB                                           ||
+
+=== R103: Página de perfil ===
+^ URL            | ''/pages/utilizador/profile.php''                   ||
+^ Description    | DELETEME                                            ||
+^ Method         | GET                                                 ||
+^ Parameters     | ?id: integer | chave primária do utilizador          |
+^ UI             | [[:lbaw1525:proj:a3#ui09perfil_do_utilizador|UI09]] ||
+^ Permissions    | MEM, OWN                                            ||
+
+=== R104: Notificações ===
+^ URL            | ''/pages/utilizador/notifications.php''     ||
+^ Description    | DELETEME                                    ||
+^ Method         | GET                                         ||
+^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]] ||
+^ Permissions    | MEM                                         ||
+
+=== R105: Editar perfil ===   
+^ URL            | ''/pages/utilizador/edit.php''              ||
+^ Description    | DELETEME                                    ||
+^ Method         | GET                                         ||
+^ Parameters     | ?id: integer | chave primária do utilizador  |
+^ Permissions    | OWN, ADM                                    ||
+
+=== R105: Iniciar sessão ===
+^ URL           | ''/actions/utilizador/login.php''                                                                ||
+^ Description   | Este recurso //web// corresponde a uma //action// que realiza a autenticação de um utilizador com base na informação recebida. Se as credenciais introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página inicial do //KnowUP// como membro, caso contrário regressa à página de autenticação, apresentando ao utilizador uma mensagem de erro. ||
+^ Method        | POST                                                                                             ||
+^ Request body  | +username: text                   | nome de utilizador introduzido no formulário de autenticação  |
+^               | +password: text                   | palavra-passe introduzida no formulário de autenticação       |
+^ Redirects     | [[#r201pagina_inicial|R201]]      | Sucesso                                                       |
+^               | [[#r101pagina_autenticacao|R101]] | Erro                                                          |
+^ Permissions   | PUB                                                                                              ||
+
+=== R106: Terminar sessão ===
+^ URL           | ''/actions/utilizador/logout.php'' ||
+^ Description   | Este recurso //web// corresponde a uma //action// que termina a sessão do utilizador actual. A sessão do utilizador será terminada e o utilizador será reencaminhado para a página inicial do //KnowUP// como visitante. ||
+^ Redirects     | [[#r202view_student|R202]]         ||
+^ Permissions   | OWN                                ||
+
+=== R107: Registar utilizador ===
+^ URL           | ''/actions/utilizador/register.php''           ||
+^ Description   | Este recurso //web// corresponde a uma //action// que efectua o registo de um novo utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de autenticação, caso contrário regressa à página de registo, apresentando ao utilizador uma mensagem de erro. ||
+^ Method        | POST                                           ||
+^ Request body  | +username: text | nome de utilizador (tal como foi introduzido no formulário de registo) |
+^               | +password: text  | palavra-passe (tal como foi introduzida no formulário de registo) |
+^               | +primeiroNome: text | primeiro nome (tal como foi introduzido no formulário de registo) |
+^               | +ultimoNome: text | último nome (tal como foi introduzido no formulário de registo) |
+^               | ?idInstituicao: integer | chave primária da instituição associada ao utilizador |
+^               | ?localidade: text | localidade do utilizador (tal como foi introduzida no formulário de registo) |
+^               | ?codigoPais: text | código do país do utilizador (tal como foi introduzido no formulário de registo)
+^ Redirects     | [[#r101pagina_de_autenticacao|R201]] | Sucesso  |
+^               | [[#r102pagina_de_registo|R102]]      | Erro     |
+^ Permissions   | PUB                                            ||
+
+=== R108: Apagar utilizador ===
+^ URL           | ''/actions/utilizador/delete.php''          ||
+^ Description   | Este recurso //web// corresponde a uma //action// que desativa a conta de um utilizador com base na informação recebida. A conta será desativada, a sessão actual será terminada e o utilizador será reencaminhado a página inicial do //KnowUP// como visitante. Espera-se que esta acção tenha sempre sucesso. ||
+^ Method        | GET                                         ||
+^ Request body  | +id: integer | chave primária do utilizador  |
+^ Redirects     | [[#r202view_student|R202]]                  ||
+^ Permissions   | OWN, ADM                                    ||
+
+=== R109: Atualizar utilizador ===
+^ URL           | ''/actions/utilizador/update.php'' ||
+^ Description   | Este recurso //web// corresponde a uma //action// que permite alterar as informações pessoais de um utilizador com sessão iniciada no momento com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a sua página de perfil, caso contrário regressa à página de edição, sendo apresentada ao utilizador uma breve mensagem de erro. ||
+^ Method        | POST ||
+^ Request body  | +idUtilizador: integer | chave primária do utilizador |
+^               | ?email: text | endereço de correio eletrónico do utilizador (ou endereço atual se não tiver sido alterado no formulário) |
+^               | ?primeiroNome: text | primeiro nome do utilizador (ou nome atual se não tiver sido alterado no formulário) |
+^               | ?ultimoNome: text | último nome do utilizador (ou nome atual se não tiver sido alterado no formulário) |
+^               | ?idInstituicao: integer | chave primária da instituição associada ao utilizador (ou instituição atual se não tiver sido alterada no formulário) |
+^               | ?localidade: text | localidade do utilizador (ou localidade actual se não tiver sido alterada no formulário) |
+^               | ?codigoPais: text | código do país do utilizador (ou país actual se não tiver sido alterado no formulário) |
+^ Redirects     | [[#r202view_student|R202]] | Sucesso |
+^               | [[#r203edit_student_form|R203]] | Erro |
+^ Permissions   | OWN, ADM ||
