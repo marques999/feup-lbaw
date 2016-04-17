@@ -1,69 +1,88 @@
 ==== Módulo M04: Respostas ====
 
-=== R401: Editar resposta ====
-^ URL            | ''/pages/resposta/edit.php''                                                              ||
-^ Description    | Esta página permite alterar informações da resposta escolhida recorrendo a um formulário. ||
-^ Method         | GET                                                                                       ||
-^ Parameters     | +id: integer | chave primária da resposta                                                  |
-^ Permissions    | OWN, MOD, ADM                                                   ||
+=== R401: Redigir resposta ===
+^ URL            | ''/pages/resposta/reply.php''                                                                            ||
+^ Description    | Esta página permite redigir uma resposta à pergunta escolhida através do preenchimento de um formulário. ||
+^ Method         | GET                                                                                                      ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                                 |
+^ UI             | [[:lbaw1525:proj:a3#ui19redigir_resposta|UI19]]                                                          ||
+^ Permissions    | MEM                                                                                                      ||
 
-=== R402: Apagar resposta ===
-^ URL            | ''/actions/resposta/delete.php''                               ||
-^ Description    | Este recurso //web// corresponde a uma //action// que apaga uma resposta com base na informação recebida. Como esta operação tem sempre sucesso, salvo raras excepções, o utilizador será reencaminhado para a página da pergunta. ||
-^ Method         | GET                                                            ||
-^ Parameters     | +id: integer | chave primária da resposta                       |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                               ||
-^ Permissions    | OWN, MOD, ADM                                                   ||
+=== R402: Editar resposta ===
+^ URL            | ''/pages/resposta/edit.php''                                                                             ||
+^ Description    | Esta página permite alterar informações da resposta escolhida através do preenchimento de um formulário. ||
+^ Method         | GET                                                                                                      ||
+^ Parameters     | +id: integer | chave primária da resposta                                                                 |
+^ UI             | [[:lbaw1525:proj:a3#ui19redigir_resposta|UI19]]                                                          ||
+^ Permissions    | OWN, MOD, ADM                                                                                            ||
 
-=== R403: Atualizar resposta ===
-^ URL            | ''actions/resposta/update.php''                                ||
-^ Description    | Este recurso //web// corresponde a uma //action// que actualiza as informações de uma resposta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da resposta, sendo apresentada ao utilizador uma breve mensagem de erro.             ||
-^ Method         | POST                                                           ||
-^ Request body   | +idResposta: integer             | chave primária da resposta   |
-^                | ?descricao: text                 | novo conteúdo da resposta (ou conteúdo actual se não tiver sido alterado no formulário) |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Success                     ||
-^                | [[#r401editar_resposta|R401]]    | Error                       ||
-^ Permissions    | OWN, MOD, ADM                                                  ||
+=== R403: Submeter resposta ===
+^ URL            | ''/actions/resposta/submit.php''                              ||
+^ Description    | Esta //action// submete uma resposta a uma pergunta existente no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da pergunta, caso contrário regressa à página de redacção da resposta, sendo apresentada ao utilizador uma mensagem de erro.                                                            ||
+^ Method         | POST                                                          ||
+^ Request body   | +idPergunta: integer             | chave primária da pergunta  |
+^                | +descricao: text                 | conteúdo da resposta        |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                     |
+^                | [[#r401redigir_resposta|R401]]   | Erro                        |
+^ Permissions    | MEM                                                           ||
 
-=== R404: Registar voto ===
+=== R404: Atualizar resposta ===
+^ URL            | ''/actions/resposta/update.php''                               ||
+^ Description    | Esta //action// atualiza uma resposta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da resposta, sendo apresentada ao utilizador uma mensagem de erro. ||
+^ Method         | POST                                                          ||
+^ Request body   | +idResposta: integer             | chave primária da resposta  |
+^                | ?descricao: text                 | novo conteúdo da resposta (ou conteúdo atual se não tiver sido alterado no formulário) |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                    ||
+^                | [[#r402editar_resposta|R402]]    | Erro                        |
+^ Permissions    | OWN, MOD, ADM                                                 ||
+
+=== R405: Apagar resposta ===
+^ URL            | ''/actions/resposta/delete.php''          ||
+^ Description    | Esta //action// apaga uma resposta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar.    ||
+^ Method         | GET                                       ||
+^ Parameters     | +id: integer | chave primária da resposta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
+^ Permissions    | OWN, MOD, ADM                             ||
+
+=== R406: Destacar resposta ===
+^ URL            | ''/actions/resposta/favorite.php''                     ||
+^ Description    | Esta //action// permite ao autor da pergunta destacar a melhor resposta a essa pergunta. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                                    ||
+^ Parameters     | +id: integer | chave primária da resposta               |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                       ||
+^ Permissions    | OWN                                                    ||
+
+=== R407: Registar voto ===
 ^ URL            | ''/api/resposta/insert_vote.php''                      ||
-^ Description    | Este pedido //AJAX// permite inserir um voto na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                                  ||
+^ Description    | Este //AJAX request// permite inserir um voto na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                                  ||
 ^ Method         | POST                                                   ||
 ^ Request body   | +idResposta: integer     | chave primária da resposta   |
 ^                | +votoUtilizador: integer | valor do voto do utilizador  |
 ^ Response body  | [[#json401registar_voto|JSON401]]                      ||
-^ Permissions    | PUB                                                    ||
+^ Permissions    | MEM                                                    ||
 
-=== R405: Inserir comentário ===
+=== R408: Obter comentários ===
+^ URL            | ''/api/resposta/get_comments.php''                                                                                         ||
+^ Description    | Este //AJAX request// permite obter os cinco comentários seguintes de uma resposta a partir do último comentário recebido. ||
+^ Method         | POST                                                                                                                       ||
+^ Request body   | +idResposta: integer       | chave primária da resposta                                                                     |
+^                | +ultimoComentario: integer | chave primária do último comentário requisitado                                                |
+^ Response body  | [[#json402obter_comentarios|JSON402]]                                                                                      ||
+^ Permissions    | PUB                                                                                                                        ||
+
+=== R409: Inserir comentário ===
 ^ URL            | ''/api/resposta/insert_comment.php''              ||
-^ Description    | Este pedido //AJAX// permite inserir um comentário na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                       ||
+^ Description    | Este //AJAX request// permite inserir um comentário na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                       ||
 ^ Method         | POST                                              ||
 ^ Request body   | +idResposta: integer | chave primária da resposta  |
 ^                | +descricao: text      | conteúdo do comentário     |
 ^ Response body  | Boolean                                           ||
-^ Permissions    | PUB                                               ||
+^ Permissions    | MEM                                               ||
 
-=== R406: Apagar comentário ===
-^ URL            | ''/api/resposta/delete_comment.php''                     ||
-^ Description    | Este pedido //AJAX// permite apagar um comentário publicado pelo utilizador atual na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false". ||
-^ Method         | POST                                                     ||
-^ Request body   | +idComentario: integer | chave primária do comentário     |
-^ Response body  | Boolean                                                  ||
-^ Permissions    | OWN, MOD, ADM                                            ||
-
-=== R407: Obter comentários ===
-^ URL            | ''/api/resposta/get_comments.php''                                           ||
-^ Description    | DELETEME                                                                     ||
-^ Method         | POST                                                                         ||
-^ Request body   | +idResposta: integer       | chave primária da resposta                       |
-^                | +ultimoComentario: integer | chave primária do último comentário requisitado  |
-^ Response body  | [[#json402obter_comentarios|JSON402]]                                        ||
-^ Permissions    | PUB                                                                          ||
-
-=== R408: Destacar resposta ===
-^ URL            | ''/api/resposta/favorite.php''                    ||
-^ Description    | DELETEME                                          ||
-^ Method         | POST                                              ||
-^ Request body   | +idResposta: integer | chave primária da resposta  |
-^ Response body  | Boolean                                           ||
-^ Permissions    | OWN                                               ||
+=== R410: Apagar comentário ===
+^ URL            | ''/api/resposta/remove_comment.php''                                              ||
+^ Description    | Este //AJAX request// permite apagar um comentário publicado por um utilizador ou pelo utilizador atual na resposta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false". ||
+^ Method         | POST                                                                              ||
+^ Request body   | +idComentario: integer | chave primária do comentário                              |
+^ Response body  | Boolean                                                                           ||
+^ Permissions    | OWN, MOD, ADM                                                                     ||

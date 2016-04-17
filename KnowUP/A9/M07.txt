@@ -1,30 +1,31 @@
 ==== Módulo M07: Mensagens ====
 
 === R701: Mensagens privadas ===
-^ URL            | ''/pages/conversa/messages.php''                  ||
-^ Description    | DELETEME                                          ||
-^ UI             | [[:lbaw1525:proj:a3#ui10mensagens_privadas|UI10]] ||
-^ Permissions    | MEM                                               ||
+^ URL            | ''/pages/conversa/messages.php''                                                                                                ||
+^ Description    | Esta página permite ao utilizadores visualizarem as suas conversas, bem como as últimas mensagens recebidas para cada conversa. ||
+^ UI             | [[:lbaw1525:proj:a3#ui10mensagens_privadas|UI10]]                                                                               ||
+^ Permissions    | MEM                                                                                                                             ||
 
 === R702: Página da conversa ===
-^ URL            | ''/pages/conversa/view.php''                      ||
-^ Description    | DELETEME                                          ||
-^ Method         | GET                                               ||
-^ Parameters     | +id: integer | chave primária da conversa          |
-^ UI             | [[:lbaw1525:proj:a3#ui11pagina_da_conversa|UI11]] ||
-^ Permissions    | MEM                                               ||
+^ URL            | ''/pages/conversa/view.php''                                                                                                    ||
+^ Description    | Esta página permite aos utilizadores enviarem mensagens e visualizar as mensagens trocadas entre os intervenientes na conversa. ||
+^ Method         | GET                                                                                                                             ||
+^ Parameters     | +id: integer | chave primária da conversa                                                                                        |
+^ UI             | [[:lbaw1525:proj:a3#ui11pagina_da_conversa|UI11]]                                                                               ||
+^ Permissions    | OWN                                                                                                                             ||
 
 === R703: Apagar conversa ===
-^ URL            | ''/actions/conversa/delete.php''          ||
-^ Description    | DELETEME                                  ||
-^ Method         | GET                                       ||
-^ Parameters     | +id: integer | chave primária da conversa  |
-^ Redirects      | [[#r701mensagens_privadas|R701]]          ||
-^ Permissions    | OWN                                       ||
+^ URL            | ''/actions/conversa/delete.php''             ||
+^ Description    | Esta //action// apaga uma conversa com base na informação recebida. O utilizador é sempre reencaminhado para a página das mensagens privadas, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                          ||
+^ Method         | GET                                          ||
+^ Parameters     | +id: integer | chave primária da conversa     |
+^ Redirects      | [[#r701mensagens_privadas|R701]]             ||
+^ Permissions    | OWN                                          ||
 
 === R704: Enviar mensagem ===
 ^ URL            | ''/actions/conversa/send_message.php''            ||
-^ Description    | DELETEME                                          ||
+^ Description    | Esta //action// insere uma mensagem na conversa escolhida com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da conversa, caso contrário regressa também à página da conversa, no entanto será apresentada ao utilizador uma mensagem de erro.                                                    ||
 ^ Method         | POST                                              ||
 ^ Request body   | +idConversa: integer | chave primária da conversa  |
 ^                | ?descricao: text     | conteúdo da mensagem        |

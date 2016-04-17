@@ -7,46 +7,46 @@
 ^ Permissions    | PUB                                                                                                 ||
 
 === R602: Editar instituição ===
-^ URL            | ''/pages/instituicao/edit.php''                                                              ||
-^ Description    | Esta página permite alterar informações da instituição escolhida recorrendo a um formulário. ||
-^ Method         | GET                                                                                          ||
-^ Parameters     | +id: integer | chave primária da instituição                                                  |
-^ AJAX Calls     | [[#r606associar_categoria|R606]], [[#r607remover_categoria|R607]]                            ||
-^ Permissions    | ADM                                                                                          ||
+^ URL            | ''/pages/instituicao/edit.php''                                                            ||
+^ Description    | Esta página permite alterar informações da instituição escolhida através de um formulário. ||
+^ Method         | GET                                                                                        ||
+^ Parameters     | +id: integer | chave primária da instituição                                                |
+^ AJAX Calls     | [[#r606associar_categoria|R606]], [[#r607remover_categoria|R607]]                          ||
+^ Permissions    | ADM                                                                                        ||
 
 === R603: Página da instituição ===
-^ URL            | ''/pages/instituicao/view.php''                                                  ||
-^ Description    | Esta página permite visualizar uma lista de perguntas da instituição escolhida e aceder rapidamente às categorias associadas a essa instituição. É possível filtrar/ordenar as perguntas por data de publicação, número de respostas, classificação. ||
-^ Method         | GET                                                                              ||
-^ Parameters     | +id: integer | chave primária da instituição                                      |
-^ UI             | DELETEME                                                                         ||
-^ Permissions    | PUB                                                                              ||
+^ URL            | ''/pages/instituicao/view.php''                                                    ||
+^ Description    | Esta página permite visualizar uma lista de perguntas da instituição escolhida e aceder rapidamente às categorias associadas a essa instituição. É possível filtrar/ordenar as perguntas por data de publicação, número de respostas ou classificação. ||
+^ Method         | GET                                                                                ||
+^ Parameters     | +id: integer | chave primária da instituição                                        |
+^ UI             | [[:lbaw1525:proj:a3#ui08pagina_da_instituicao|UI08]]                               ||
+^ Permissions    | PUB                                                                                ||
 
-=== R604: Actualizar instituição ===
+=== R604: Atualizar instituição ===
 ^ URL            | ''/actions/instituicao/update.php''           ||
-^ Description    | Esta //action// atualiza as informações de uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição, sendo apresentada ao utilizador uma breve mensagem de erro. ||
+^ Description    | Esta //action// atualiza as informações de uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição, sendo apresentada ao utilizador uma mensagem de erro.                                                            ||
 ^ Method         | POST                                          ||
-^ Request body   | +idInstituicao: integer | chave primária da instituição |
-^                | ?nome: text             | novo nome da instituição (ou nome actual se não tiver sido alterado no formulário)  |
-^                | ?sigla: text            | nova sigla da instituição (ou sigla actual se não tiver sido alterada no formulário) |
-^                | ?morada: text           | nova morada da instituição (ou morada actual se não tiver sido alterada no formulário) |
-^                | ?contacto: text         | novo telefone de contacto da instituição (ou contacto actual se não tiver sido alterado no formulário) |
-^                | ?website: text          | novo website da instituição (ou website actual se não tiver sido alterado no formulário) |
-^ Redirects      | [[#r603pagina_da_instituicao|R603]] | Success  |
-^                | [[#r602editar_instituicao|R602]]    | Error    |
+^ Request body   | +idInstituicao: integer | chave primária da instituição                                                                         |
+^                | ?nome: text             | novo nome da instituição (ou nome atual se não tiver sido alterado no formulário)                     |
+^                | ?sigla: text            | nova sigla da instituição (ou sigla atual se não tiver sido alterada no formulário)                   |
+^                | ?morada: text           | nova morada da instituição (ou morada atual se não tiver sido alterada no formulário)                 |
+^                | ?contacto: text         | novo telefone de contacto da instituição (ou contacto atual se não tiver sido alterado no formulário) |
+^                | ?website: text          | novo website da instituição (ou website atual se não tiver sido alterado no formulário)               |
+^ Redirects      | [[#r603pagina_da_instituicao|R603]] | Sucesso  |
+^                | [[#r602editar_instituicao|R602]]    | Erro     |
 ^ Permissions    | ADM                                           ||
 
 === R605: Apagar instituição ===
-^ URL            | ''/actions/instituicao/delete.php''                 ||
-^ Description    | Esta //action// apaga uma instituição com base na informação recebida. Como esta operação tem sempre sucesso, salvo raras excepções, o utilizador será reencaminhado para a página de gestão de instituições. ||
-^ Method         | GET                                                 ||
-^ Parameters     | +id: integer | chave primária da instituição         |
-^ Redirects      | [[#r802gerir_instituicoes|R802]]                    ||
-^ Permissions    | ADM                                                 ||
+^ URL            | ''/actions/instituicao/delete.php''              ||
+^ Description    | Esta //action// apaga uma instituição com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de instituições, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                              ||
+^ Parameters     | +id: integer | chave primária da instituição      |
+^ Redirects      | [[#r802gerir_instituicoes|R802]]                 ||
+^ Permissions    | ADM                                              ||
 
 === R606: Associar categoria ===
 ^ URL            | ''/api/instituicao/insert_categoria.php''                                ||
-^ Description    | Este pedido //AJAX// permite remover uma categoria à instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                                  ||
+^ Description    | Este //AJAX request// permite associar uma categoria à instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                         ||
 ^ Method         | POST                                                                     ||
 ^ Request body   | +idInstituicao: integer | chave primária da instituição                   |
 ^                | +idCategoria: integer   | chave primária da categoria                     |
@@ -55,7 +55,7 @@
 
 === R607: Remover categoria ===
 ^ URL            | ''/api/instituicao/remove_categoria.php''                                ||
-^ Description    | Este pedido //AJAX// permite remover uma categoria da instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                                  ||
+^ Description    | Este //AJAX request// permite remover uma categoria da instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                         ||
 ^ Method         | POST                                                                     ||
 ^ Request body   | +idInstituicao: integer | chave primária da instituição                   |
 ^                | +idCategoria: integer   | chave primária da categoria                     |
