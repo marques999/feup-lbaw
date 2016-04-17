@@ -27,20 +27,20 @@
 ^ Parameters     | +id: integer | chave primária do utilizador denunciado  |
 ^ Permissions    | MOD                                                    ||
 
-=== R104: Notificações ===
+=== R105: Notificações ===
 ^ URL            | ''/pages/utilizador/notifications.php''                                   ||
 ^ Description    | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou sempre que surgirem novos seguidores. ||
 ^ Method         | GET                                                                       ||
 ^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                               ||
 ^ Permissions    | OWN                                                                       ||
 
-=== R105: Editar perfil ===
+=== R106: Editar perfil ===
 ^ URL            | ''/pages/utilizador/edit.php''               ||
 ^ Description    | Esta página permite aos utilizadores alterar a sua instituição de ensino e editar as suas informações pessoais (nome, endereço de e-mail, localidade, país..)                                            ||
 ^ Method         | GET                                         ||
 ^ Permissions    | OWN                                         ||
 
-=== R106: Denunciar utilizador ===
+=== R107: Denunciar utilizador ===
 ^ URL            | ''/actions/utilizador/report.php''                                        ||
 ^ Description    | Esta //action// denuncia um utilizador ao administrador com base informação recebida. Se as informações introduzidas pelo moderador forem válidas, este é reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao moderador uma mensagem de erro.                                                                            ||
 ^ Method         | POST                                                                      ||
@@ -50,7 +50,7 @@
 ^                | [[#r104pagina_de_report|R104]] | Erro                                      |
 ^ Permissions    | MEM                                                                       ||
 
-=== R105: Iniciar sessão ===
+=== R108: Iniciar sessão ===
 ^ URL           | ''/actions/utilizador/login.php''                                                                   ||
 ^ Description   | Esta //action// realiza a autenticação de um utilizador com base na informação recebida. Se as credenciais introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página inicial como membro, caso contrário regressa à página de autenticação, sendo apresentada ao utilizador uma mensagem de erro.                                                                                                     ||
 ^ Method        | POST                                                                                                ||
@@ -60,13 +60,13 @@
 ^               | [[#r101pagina_de_autenticacao|R101]] | Erro                                                          |
 ^ Permissions   | PUB                                                                                                 ||
 
-=== R106: Terminar sessão ===
+=== R109: Terminar sessão ===
 ^ URL           | ''/actions/utilizador/logout.php''                                                                                  ||
 ^ Description   | Esta //action// termina a sessão do utilizador atual. Este será reencaminhado para a página inicial como visitante. ||
 ^ Redirects     | [[#r201pagina_inicial|R201]]                                                                                        ||
 ^ Permissions   | OWN                                                                                                                 ||
 
-=== R107: Registar utilizador ===
+=== R110: Registar utilizador ===
 ^ URL           | ''/actions/utilizador/register.php''           ||
 ^ Description   | Esta //action// efetua o registo de um novo utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de autenticação, caso contrário regressa à página de registo, sendo apresentada ao utilizador uma mensagem de erro.                                                            ||
 ^ Method        | POST                                           ||
@@ -81,7 +81,7 @@
 ^               | [[#r102pagina_de_registo|R102]]      | Erro     |
 ^ Permissions   | PUB                                            ||
 
-=== R108: Atualizar utilizador ===
+=== R111: Atualizar utilizador ===
 ^ URL           | ''/actions/utilizador/update.php''                     ||
 ^ Description   | Esta //action// permite alterar as informações pessoais do próprio utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a sua página de perfil, caso contrário regressa à página de edição do perfil, sendo apresentada ao utilizador uma mensagem de erro.                                      ||
 ^ Method        | POST                                                   ||
@@ -96,7 +96,7 @@
 ^               | [[#r105editar_perfil|R105]]    | Erro                   |
 ^ Permissions   | OWN                                                    ||
 
-=== R109: Banir utilizador ===
+=== R112: Banir utilizador ===
 ^ URL           | ''/actions/utilizador/ban.php''             ||
 ^ Description   | Esta //action// desativa temporariamente a conta de um utilizador com base na informação recebida. A conta será desativada temporariamente, a sessão do utilizador em questão será terminada e o administrador reencaminhado a página de gestão dos utilizadores. Espera-se que esta operação tenha sempre sucesso.                                                      ||
 ^ Method        | GET                                         ||
@@ -104,7 +104,7 @@
 ^ Redirects     | [[#r804gerir_utilizadores|R804]]            ||
 ^ Permissions   | ADM                                         ||
 
-=== R110: Apagar utilizador ===
+=== R113: Apagar utilizador ===
 ^ URL           | ''/actions/utilizador/delete.php''                                             ||
 ^ Description   | Esta //action// desativa permanentemente a conta de um utilizador com base na informação recebida. Caso tenha sido um administrador a invocar esta acção, este será reencaminhado para a página de gestão de utilizadores. Pelo contrário, se tiver sido um utilizador, a sua sessão será terminada e este será reencaminhado a página inicial como visitante. Espera-se que esta operação tenha sempre sucesso. ||
 ^ Method        | GET                                                                            ||
