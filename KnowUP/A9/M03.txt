@@ -5,6 +5,7 @@
 ^ Description    | Esta página permite visualizar a pergunta escolhida, bem como as respetivas respostas e comentários. Serão ainda apresentadas ligações para perguntas relacionadas e para as categorias relacionadas com a categoria ou com a instituição da pergunta atual. ||
 ^ Method         | GET                                                                                           ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                                      |
+^ AJAX Calls     | [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r407registar_voto|R407]], [[#r408obter_comentarios|R408]], [[#r409inserir_comentario|R409]], [[#r410apagar_comentario|R410]]                                                                                  ||
 ^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                             ||
 ^ Permissions    | PUB                                                                                           ||
 
@@ -21,7 +22,7 @@
 ^ Description    | Esta página permite alterar informações da pergunta escolhida através do preenchimento de um formulário. ||
 ^ Method         | GET                                                                                                      ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                                                 |
-^ UI             | [[:lbaw1525:proj:a3#ui12fazer_pergunta|UI12]]                                                             |
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                               ||
 ^ Permissions    | OWN, MOD, ADM                                                                                            ||
 
 === R304: Submeter pergunta ===
@@ -45,7 +46,7 @@
 ^                | [[#r303editar_pergunta|R303]]    | Erro                        ||
 ^ Permissions    | OWN, MOD, ADM                                                  ||
 
-=== R306: Fechar pergunta  ===
+=== R306: Fechar pergunta ===
 ^ URL            | ''/actions/pergunta/close.php''                                                                             ||
 ^ Description    | Esta //action// fecha uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar. ||
 ^ Method         | GET                                                                                                         ||
@@ -61,7 +62,23 @@
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
 ^ Permissions    | OWN, ADM                                  ||
 
-=== R308: Registar voto ===
+=== R308: Seguir pergunta ===
+^ URL            | ''/actions/pergunta/follow.php''          ||
+^ Description    | Esta //action// permite ao utilizador atual seguir uma pergunta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                       ||
+^ Parameters     | +id: integer | chave primária da pergunta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
+^ Permissions    | MEM                                       ||
+
+=== R309: Unfollow pergunta ===
+^ URL            | ''/actions/pergunta/unfollow.php''        ||
+^ Description    | Esta //action// permite ao utilizador atual deixar de seguir uma pergunta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                       ||
+^ Parameters     | +id: integer | chave primária da pergunta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
+^ Permissions    | OWN                                       ||
+
+=== R310: Registar voto ===
 ^ URL            | ''/api/pergunta/insert_vote.php''                      ||
 ^ Description    | Este //AJAX request// permite inserir um voto na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                                  ||
 ^ Method         | POST                                                   ||
@@ -70,7 +87,7 @@
 ^ Response body  | [[#json301registar_voto|JSON301]]                      ||
 ^ Permissions    | MEM                                                    ||
 
-=== R309: Obter comentários ===
+=== R311: Obter comentários ===
 ^ URL            | ''/api/pergunta/get_comments.php''                                                                                         ||
 ^ Description    | Este //AJAX request// permite obter os cinco comentários seguintes de uma pergunta a partir do último comentário recebido. ||
 ^ Method         | POST                                                                                                                       ||
@@ -79,7 +96,7 @@
 ^ Response body  | [[#json302obter_comentarios|JSON302]]                                                                                      ||
 ^ Permissions    | PUB                                                                                                                        ||
 
-=== R310: Inserir comentário ===
+=== R312: Inserir comentário ===
 ^ URL            | ''/api/pergunta/insert_comment.php''              ||
 ^ Description    | Este //AJAX request// permite inserir um comentário na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                       ||
 ^ Method         | POST                                              ||
@@ -88,7 +105,7 @@
 ^ Response body  | Boolean                                           ||
 ^ Permissions    | MEM                                               ||
 
-=== R311: Apagar comentário ===
+=== R313: Apagar comentário ===
 ^ URL            | ''/api/pergunta/remove_comment.php''                                              ||
 ^ Description    | Este //AJAX request// permite apagar um comentário publicado por um utilizador ou pelo utilizador atual na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false". ||
 ^ Method         | POST                                                                              ||

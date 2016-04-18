@@ -1,0 +1,57 @@
+==== Módulo M02: Pesquisa ====
+
+=== R201: Página inicial ===
+^ URL            | ''/pages/homepage.php''                                                                                                        ||
+^ Description    | Esta página permite aos utilizadores (membros ou visitantes) visualizar uma lista de perguntas, ordenar as perguntas por data de publicação, número de respostas ou classificação e aceder rapidamente às categorias e às instituições existentes no sistema.                                  ||
+^ Method         | GET                                                                                                                            ||
+^ UI             | [[:lbaw1525:proj:a3#ui01homepage_visitante|UI01]], [[:lbaw1525:proj:a3#ui02homepage_membro|UI02]]                              ||
+^ Permissions    | PUB                                                                                                                            ||
+
+=== R202: Página de resultados ===
+^ URL            | ''/pages/pesquisa/results.php''                                                ||
+^ Description    | Esta página permite pesquisar perguntas ou utilizadores existentes no sistema. ||
+^ Method         | GET                                                                            ||
+^ Parameters     | +query: text | termos de pesquisa introduzidos pelo utilizador                  |
+^ AJAX Calls     | [[#r205obter_perguntas|R205]], [[#r206obter_utilizadores|R206]]                ||
+^ UI             | [[:lbaw1525:proj:a3#ui14pagina_de_resultados|UI14]]                            ||
+^ Permissions    | PUB                                                                            ||
+
+=== R203: Pesquisar perguntas ===
+^ URL            | ''/pages/pesquisa/pergunta.php''                                                                             ||
+^ Description    | Esta página permite pesquisar perguntas segundo vários filtros e critérios de ordenação (pesquisa avançada). ||
+^ Method         | GET                                                                                                          ||
+^ Parameters     | +query: text | termos de pesquisa introduzidos pelo utilizador                                                |
+^ AJAX Calls     | [[#r205obter_perguntas|R205]]                                                                                ||
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                                   ||
+^ Permissions    | PUB                                                                                                          ||
+
+=== R204: Pesquisar utilizadores ===
+^ URL            | ''/pages/pesquisa/utilizador.php''                                                                              ||
+^ Description    | Esta página permite pesquisar utilizadores segundo vários filtros e critérios de ordenação (pesquisa avançada). ||
+^ Method         | GET                                                                                                             ||
+^ Parameters     | +query: text | termos de pesquisa introduzidos pelo utilizador                                                   |
+^ AJAX Calls     | [[#r206obter_utilizadores|R206]]                                                                                ||
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                                      ||
+^ Permissions    | MEM                                                                                                             ||
+
+=== R205: Obter perguntas ===
+^ URL            | ''/api/pesquisa/get_perguntas.php''                             ||
+^ Description    | Este //AJAX request// permite obter uma lista com as perguntas que obedecem aos critérios de pesquisa introduzidos pelo utilizador. ||
+^ Method         | POST                                                            ||
+^ Request body   | +query: text  | termos de pesquisa introduzidos pelo utilizador  |
+^                | ?sort: text   | ?sort=answers: ordena as perguntas por número de respostas \\ ?sort=date: ordena as perguntas por data de publicação \\ ?sort=rank: ordena as perguntas por relevância \\ ?sort=score: ordena as perguntas por pontuação |
+^                | ?order: text  | ?order=ascending: apresenta os resultados por ordem crescente \\ ?order=descending: apresenta os resultados por ordem decrescente |
+^                | ?filter: text | ?filter=day: pesquisa apenas nas perguntas publicadas nas últimas 24 horas \\ ?filter=week: pesquisa nas perguntas publicadas na última semana \\ ?filter=month: pesquisa nas perguntas publicadas no ultimo mês \\ ?filter=year: pesquisa nas perguntas publicadas no último ano |
+^ Response body  | [[#json201obter_perguntas|JSON201]]                             ||
+^ Permissions    | PUB                                                             ||
+
+=== R206: Obter utilizadores ===
+^ URL            | ''/api/pesquisa/get_utilizadores.php''                              ||
+^ Description    | Este //AJAX request// permite obter uma lista com os utilizadores que obedecem aos critérios de pesquisa introduzidos pelo utilizador. ||
+^ Method         | POST                                                                ||
+^ Request body   | +query: text  | termos de pesquisa introduzidos pelo utilizador      |
+^                | ?sort: text   | ?sort=email: ordena os utilizadores pelo endereço de e-mail \\ ?sort=name: ordena os utilizadores pelo nome completo \\ ?sort=rank: ordena os utilizadores por relevância \\ ?sort=username: ordena os utilizadores por username |
+^                | ?order: text  | ?order=ascending: apresenta os resultados por ordem crescente \\ ?order=descending: apresenta os resultados por ordem decrescente |
+^                | ?filter: text | ?filter=active: pesquisa apenas no grupo de utilizadores ativos \\ ?filter=inactive: pesquisa apenas no grupo de utilizadores que apagaram a sua conta \\ ?filter=banned: pesquisa no grupo dos utilizadores banidos  |
+^ Response body  | [[#json202obter_utilizadores|JSON202]]                              ||
+^ Permissions    | MEM                                                                 ||

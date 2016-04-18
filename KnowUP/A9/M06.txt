@@ -12,6 +12,7 @@
 ^ Method         | GET                                                                                        ||
 ^ Parameters     | +id: integer | chave primária da instituição                                                |
 ^ AJAX Calls     | [[#r606associar_categoria|R606]], [[#r607remover_categoria|R607]]                          ||
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                 ||
 ^ Permissions    | ADM                                                                                        ||
 
 === R603: Página da instituição ===
@@ -37,27 +38,27 @@
 ^ Permissions    | ADM                                           ||
 
 === R605: Apagar instituição ===
-^ URL            | ''/actions/instituicao/delete.php''              ||
-^ Description    | Esta //action// apaga uma instituição com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de instituições, sendo apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | GET                                              ||
-^ Parameters     | +id: integer | chave primária da instituição      |
-^ Redirects      | [[#r802gerir_instituicoes|R802]]                 ||
-^ Permissions    | ADM                                              ||
+^ URL          | ''/actions/instituicao/delete.php''                          ||
+^ Description  | Esta //action// apaga uma instituição com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de instituições, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method       | GET                                                          ||
+^ Parameters   | +id: integer | chave primária da instituição                  |
+^ Redirects    | [[#r803gerir_instituicoes|R803]]                             ||
+^ Permissions  | ADM                                                          ||
 
 === R606: Associar categoria ===
-^ URL            | ''/api/instituicao/insert_categoria.php''                                ||
-^ Description    | Este //AJAX request// permite associar uma categoria à instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                         ||
-^ Method         | POST                                                                     ||
-^ Request body   | +idInstituicao: integer | chave primária da instituição                   |
-^                | +idCategoria: integer   | chave primária da categoria                     |
-^ Response body  | Boolean                                                                  ||
-^ Permissions    | ADM                                                                      ||
+^ URL            | ''/api/instituicao/insert_categoria.php''               ||
+^ Description    | Este //AJAX request// permite associar uma categoria à instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".        ||
+^ Method         | POST                                                    ||
+^ Request body   | +idInstituicao: integer | chave primária da instituição  |
+^                | +idCategoria: integer   | chave primária da categoria    |
+^ Response body  | Boolean                                                 ||
+^ Permissions    | ADM                                                     ||
 
 === R607: Remover categoria ===
-^ URL            | ''/api/instituicao/remove_categoria.php''                                ||
-^ Description    | Este //AJAX request// permite remover uma categoria da instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".                         ||
-^ Method         | POST                                                                     ||
-^ Request body   | +idInstituicao: integer | chave primária da instituição                   |
-^                | +idCategoria: integer   | chave primária da categoria                     |
-^ Response body  | Boolean                                                                  ||
-^ Permissions    | ADM                                                                      ||
+^ URL            | ''/api/instituicao/remove_categoria.php''               ||
+^ Description    | Este //AJAX request// permite remover uma categoria da instituição escolhida. Responde com "true" se as informações forem válidas e se a operação for executada com sucesso, caso contrário retorna "false".        ||
+^ Method         | POST                                                    ||
+^ Request body   | +idInstituicao: integer | chave primária da instituição  |
+^                | +idCategoria: integer   | chave primária da categoria    |
+^ Response body  | Boolean                                                 ||
+^ Permissions    | ADM                                                     ||

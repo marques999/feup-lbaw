@@ -13,7 +13,7 @@
 ^ Description    | Esta página permite alterar informações da resposta escolhida através do preenchimento de um formulário. ||
 ^ Method         | GET                                                                                                      ||
 ^ Parameters     | +id: integer | chave primária da resposta                                                                 |
-^ UI             | [[:lbaw1525:proj:a3#ui19redigir_resposta|UI19]]                                                          ||
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                               ||
 ^ Permissions    | OWN, MOD, ADM                                                                                            ||
 
 === R403: Submeter resposta ===

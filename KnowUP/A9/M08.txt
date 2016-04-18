@@ -1,7 +1,7 @@
 ==== Módulo M08: Administração ====
 
 === R801: Portal de administração ===
-^ URL            | ''/pages/admin/index.php''                   ||
+^ URL            | ''/pages/admin/homepage.php''                ||
 ^ Description    | Esta página serve como portal ao administrador para gerir as categorias, as instituições e os utilizadores existentes no sistema.                                                        ||
 ^ UI             | [[:lbaw1525:proj:a3#ui15administracao|UI15]] ||
 ^ Permissions    | ADM                                          ||
@@ -25,7 +25,7 @@
 ^ Permissions    | ADM                                                                                               ||
 
 === R805: Estatísticas ===
-^ URL            | ''/pages/admin/stats.php''                                                                       ||
+^ URL            | ''/pages/admin/estatisticas.php''                                                                ||
 ^ Description    | Esta página permite ao administrador consultar estatísticas de utilização deste serviço: utilizadores mais ativos nos últimos dias, utilizadores com mais perguntas, utilizadores com mais respostas, categorias mais populares, instituições mais populares, etc... ||
 ^ UI             | [[:lbaw1525:proj:a3#ui18estatisticas|UI18]]                                                      ||
 ^ Permissions    | ADM                                                                                              ||

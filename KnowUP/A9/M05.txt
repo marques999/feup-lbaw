@@ -11,15 +11,16 @@
 ^ Description    | Esta página permite alterar informações da categoria escolhida através de um formulário. ||
 ^ Method         | GET                                                                                      ||
 ^ Parameters     | +id: integer | chave primária da categoria                                                |
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                               ||
 ^ Permissions    | ADM                                                                                      ||
 
 === R503: Página da categoria ===
-^ URL            | ''/pages/categoria/view.php''                                                                                  ||
+^ URL            | ''/pages/categoria/view.php''                                                                                   ||
 ^ Description    | Esta página permite visualizar uma lista de perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria. É possível filtrar/ordenar as perguntas por data de publicação, número de respostas ou classificação. ||
-^ Method         | GET                                                                                                            ||
-^ Parameters     | +id: integer | chave primária da categoria                                                                      |
-^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]]                                                             ||
-^ Permissions    | PUB                                                                                                            ||
+^ Method         | GET                                                                                                             ||
+^ Parameters     | +id: integer | chave primária da categoria                                                                       |
+^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]]                                                              ||
+^ Permissions    | PUB                                                                                                             ||
 
 === R504: Atualizar categoria ===
 ^ URL            | ''/actions/categoria/update.php''                                                             ||
@@ -32,9 +33,9 @@
 ^ Permissions    | ADM                                                                                           ||
 
 === R505: Apagar categoria ===
-^ URL            | ''/actions/categoria/delete.php''            ||
-^ Description    | Esta //action// apaga uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de categorias, sendo apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | GET                                          ||
-^ Parameters     | +id: integer | chave primária da categoria    |
-^ Redirects      | [[#r801gerir_categorias|R801]]               ||
-^ Permissions    | ADM                                          ||
+^ URL          | ''/actions/categoria/delete.php''              ||
+^ Description  | Esta //action// apaga uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de categorias, sendo apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method       | GET                                            ||
+^ Parameters   | +id: integer | chave primária da categoria      |
+^ Redirects    | [[#r802gerir_categorias|R802]]                 ||
+^ Permissions  | ADM                                            ||

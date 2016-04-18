@@ -1,5 +1,96 @@
-JSON401: VOTOS DA RESPOSTA
+==== JSON201: Obter perguntas ====
 
+<code javascript>
+[
+    {
+        "idpergunta": 2,
+        "idutilizador": 4,
+        "nomeutilizador": "Vitor Esteves",
+        "titulo": "O que fazer no final do curso?",
+        "descricao": "Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?",
+        "datahora": "1460303122",
+        "numerorespostas": 0,
+        "pontuacao": 0,
+        "ativa": true
+    },
+    {
+        "idpergunta": 3,
+        "idutilizador": 2,
+        "nomeutilizador": "Diogo Marques",
+        "titulo": "O que fazer quando tudo o resto falha?",
+        "descricao": "<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.",
+        "datahora": "1443023122",
+        "numerorespostas": 0,
+        "pontuacao": -6,
+        "ativa": true
+    }
+]
+</code>
+
+==== JSON202: Obter utilizadores ====
+
+<code javascript>
+[
+    {
+        "idutilizador": 2,
+        "username": "marques999",
+        "nomeutilizador": "Diogo Marques",
+        "email": "up201305642@fe.up.pt",
+        "localidade": "Valongo",
+        "codigopais": "pt",
+        "ativo": true,
+        "removido": false
+    },
+    {
+        "idutilizador": 3,
+        "username": "mellus",
+        "nomeutilizador": "Pedro Melo",
+        "email": "up201305618@fe.up.pt",
+        "localidade": "Penafiel",
+        "codigopais": "pt",
+        "ativo": true,
+        "removido": false
+    }
+]
+</code>
+
+
+==== JSON301: Registar voto ====
+
+<code javascript>
+[
+    {
+        "votospositivos": 3,
+        "votosnegativos": 1,
+        "pontuacao": 2
+    }
+]
+</code>
+
+==== JSON302: Obter comentários ====
+
+<code javascript>
+[
+    {
+        "idcomentario": 8,
+        "idutilizador": 5,
+        "nomeutilizador": "Pablo Picasso",
+        "descricao": "A dor é muito forte? @mellus",
+        "datahora": "1443191422"
+    },
+    {
+        "idcomentario": 9,
+        "idutilizador": 3,
+        "nomeutilizador": "Pedro Melo",
+        "descricao": "Não, só que como é persistente perturba-me o estudo.",
+        "datahora": "1443201610"
+    }
+]
+</code>
+
+==== JSON401: Registar voto ====
+
+<code javascript>
 [
     {
         "votospositivos": 3,
@@ -7,36 +98,39 @@ JSON401: VOTOS DA RESPOSTA
         "pontuacao": -2
     }
 ]
+</code>
 
-JSON402: COMENTÁRIOS DA RESPOSTA
+==== JSON402: Obter comentários ====
 
+<code javascript>
 [
     {
         "idcomentario": 39,
         "idutilizador": 2,
         "nomeutilizador": "Diogo Marques",
         "descricao": "EU SEI",
-        "datahora": "2016-04-15 16:54:29.787353"
+        "datahora": "1460735669"
     },
     {
         "idcomentario": 40,
         "idutilizador": 2,
         "nomeutilizador": "Diogo Marques",
         "descricao": "AFINAL NÃO SEI",
-        "datahora": "2016-04-15 16:55:03.999153"
+        "datahora": "1460735703"
     },
     {
         "idcomentario": 41,
         "idutilizador": 2,
         "nomeutilizador": "Diogo Marques",
         "descricao": "como?",
-        "datahora": "2016-04-15 16:56:20.341046"
+        "datahora": "1460735780"
     },
     {
         "idcomentario": 42,
         "idutilizador": 2,
         "nomeutilizador": "Diogo Marques",
-        "descricao": "como?",
-        "datahora": "2016-04-15
+        "descricao": "porquê?",
+        "datahora": "1460735854"
     }
 ]
+</code>

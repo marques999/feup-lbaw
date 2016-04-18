@@ -14,7 +14,7 @@
 
 === R103: Página de perfil ===
 ^ URL            | ''/pages/utilizador/profile.php''                   ||
-^ Description    | Esta página permite                                 ||
+^ Description    | Esta página permite visualizar as informações pessoais e as publicações de um utilizador (se for passado um //ID// como parâmetro) ou do próprio utilizador (se não forem passados quaisquer parâmetros).               ||
 ^ Method         | GET                                                 ||
 ^ Parameters     | ?id: integer | chave primária do utilizador          |
 ^ UI             | [[:lbaw1525:proj:a3#ui09perfil_do_utilizador|UI09]] ||
@@ -25,6 +25,7 @@
 ^ Description    | Esta página permite aos moderadores denunciar utilizadores que não cumpram com as normas de utilização deste serviço através do preenchimento de um formulário.                                                         ||
 ^ Method         | GET                                                    ||
 ^ Parameters     | +id: integer | chave primária do utilizador denunciado  |
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                             ||
 ^ Permissions    | MOD                                                    ||
 
 === R105: Notificações ===
@@ -35,17 +36,18 @@
 ^ Permissions    | OWN                                                                       ||
 
 === R106: Editar perfil ===
-^ URL            | ''/pages/utilizador/edit.php''               ||
-^ Description    | Esta página permite aos utilizadores alterar a sua instituição de ensino e editar as suas informações pessoais (nome, endereço de e-mail, localidade, país..)                                            ||
-^ Method         | GET                                         ||
-^ Permissions    | OWN                                         ||
+^ URL            | ''/pages/utilizador/edit.php'' ||
+^ Description    | Esta página permite aos utilizadores alterar a sua instituição de ensino e editar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país).                         ||
+^ Method         | GET                            ||
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]     ||
+^ Permissions    | OWN                            ||
 
 === R107: Denunciar utilizador ===
 ^ URL            | ''/actions/utilizador/report.php''                                        ||
 ^ Description    | Esta //action// denuncia um utilizador ao administrador com base informação recebida. Se as informações introduzidas pelo moderador forem válidas, este é reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao moderador uma mensagem de erro.                                                                            ||
 ^ Method         | POST                                                                      ||
 ^ Request body   | +idUtilizador: integer          | chave primária do utilizador denunciado  |
-^                | +descricao: text                | mensagem do moderador                    |
+^                | +descricao: text                | mensagem do moderador                    |wo
 ^ Redirects      | [[#r103pagina_de_perfil|R103]] | Sucesso                                   |
 ^                | [[#r104pagina_de_report|R104]] | Erro                                      |
 ^ Permissions    | MEM                                                                       ||
@@ -93,7 +95,7 @@
 ^               | ?localidade: text       | localidade do utilizador (ou localidade actual se não tiver sido alterada no formulário)                              |
 ^               | ?codigoPais: text       | código do país do utilizador (ou país actual se não tiver sido alterado no formulário)                                |
 ^ Redirects     | [[#r103pagina_de_perfil|R103]] | Sucesso                |
-^               | [[#r105editar_perfil|R105]]    | Erro                   |
+^               | [[#r106editar_perfil|R106]]    | Erro                   |
 ^ Permissions   | OWN                                                    ||
 
 === R112: Banir utilizador ===

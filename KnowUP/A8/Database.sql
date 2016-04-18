@@ -334,7 +334,7 @@ INSERT INTO Contribuicao
 VALUES(DEFAULT, 5, 'A dor é muito forte? @mellus', '2015-09-25 15:30:22');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 6, 'Não, só que como é persistente perturba-me o estudo', '2015-09-25 18:20:10');
+VALUES(DEFAULT, 3, 'Não, só que como é persistente perturba-me o estudo', '2015-09-25 18:20:10');
 
 INSERT INTO Contribuicao
 VALUES(DEFAULT, 5, 'Então o paracetamol é o mais indicado devido à falta de outros sintomas @mellus @marques999', '2015-09-25 19:41:21');
@@ -432,7 +432,6 @@ INSERT INTO ComentarioResposta VALUES(19, 10);
 INSERT INTO VotoPergunta VALUES(1, 4, 1);
 INSERT INTO VotoPergunta VALUES(1, 5, 1);
 INSERT INTO VotoPergunta VALUES(1, 8, 1);
-INSERT INTO VotoPergunta VALUES(3, 2, -1);
 INSERT INTO VotoPergunta VALUES(3, 3, -1);
 INSERT INTO VotoPergunta VALUES(3, 4, -1);
 INSERT INTO VotoPergunta VALUES(3, 5, -1);
