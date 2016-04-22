@@ -15,5 +15,35 @@
 <script type="text/javascript" src="{$BASE_URL}javascript/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/modernizr-2.8.3.min.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/ink-all.min.js"></script>
+<script type="text/javascript" src="{$BASE_URL}javascript/nano.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/autoload.min.js"></script>
 </head>
+<body>
+  {block name=navigation}
+  {include file='common/navigation.tpl'}
+  {/block}
+  {block name=content}
+  {/block}
+  {block name=footer}
+  <script>
+  $(function() {
+    $("ul#footer-links").hide();
+    $("#footer").hover(function() {
+      $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    })
+  });
+  </script>
+  <footer id="footer" class="clearfix medium fixed horizontal-padding">
+    <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
+      <li><a href="about.php">About</a></li>
+      <li><a href="sitemap.php">Sitemap</a></li>
+      <li><a href="contacts.php">Contacts</a></li>
+    </ul>
+    <p class="note medium no-margin half-vertical-padding">
+       <i class="fa fa-copyright"></i>
+       <span>2016 KnowUp! - Collaborative Q&A</span>
+    </p>
+  </footer>
+  {/block}
+</body>
+</html>

@@ -1,5 +1,5 @@
-{include file='admin/header-chart.tpl'}
-{include file='admin/navigation.tpl'}
+{extends file='admin/common/pagina_estatisticas.tpl'}
+{block name=content}
 <div class="column-group half-gutters">
 <div class="column all-33 medium-50 small-100 tiny-100">
   <h4 class="align-center condensed">Mais perguntas (esta semana)</h4>
@@ -364,4 +364,4 @@
   </table>
 </div>
 </div>
-{include file='admin/footer.tpl'}
+{/block}

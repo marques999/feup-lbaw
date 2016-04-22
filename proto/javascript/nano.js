@@ -1,0 +1,1 @@
+function nano(n,e){return n.replace(/\{([\w\.]*)\}/g,function(n,t){for(var r=t.split("."),f=e[r.shift()],u=0,i=r.length;i>u;u++)f=f[r[u]];return"undefined"!=typeof f&&null!==f?f:""})}
