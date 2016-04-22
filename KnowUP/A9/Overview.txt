@@ -1,0 +1,15 @@
+^ M01: Utilizadores   | Recursos //web// associados com a autenticação  dos utilizadores e gestão das respetivas páginas pessoais. Inclui ainda os seguintes recursos do sistema: autenticação, registo, //reports// de utilizadores, acesso a notificações, ao próprio perfil e ao dos outros utilizadores, edição do mesmo. |
+
+^ M02: Pesquisa       | Recursos //web// associados com a página inicial e pesquisas orientadas. Inclui ainda os seguintes recursos do sistema: listagem dos resultados, pesquisa avançada de utilizadores, pesquisa avançada de perguntas,  por categoria/data/número de respostas na página inicial. |
+
+^ M03: Perguntas      | Recursos //web// associados com a visualização, interação e gestão das perguntas e dos respetivos comentários Inclui ainda os seguintes recursos do sistema: visualização das perguntas, com a possibilidade de editar ou fechar as mesmas, criar e publicar novas perguntas, votar ou seguir as perguntas existentes, escrever comentários, apagar comentários. |
+
+^ M04: Respostas      | Recursos //web// associados com a interação e gestão das respostas e dos respetivos comentários. Inclui ainda os seguintes recursos do sistema: criar e publicar respostas, editar as respostas publicadas, classificar respostas, escrever comentários, apagar comentários. |
+
+^ M05: Categorias     | Recursos //web// associados com a visualização e gestão das categorias. Inclui ainda os seguintes recursos do sistema: listagem de perguntas por categoria, listagem de categorias, possibilidade de adicionar novas categorias ou de remover as existentes e atualizar a informação presente nas mesmas. |
+
+^ M06: Instituições   | Recursos //web// associados com a visualização e gestão de instituições. Inclui ainda os seguintes recursos do sistema: listagem de perguntas por instituição, listagem de instituições, possibilidade de adicionar novas instituições ou de remover as existentes e de atualizar a informação presente nas mesmas. Será também possível associar categorias a instituições. |
+
+^ M07: Mensagens      | Recursos //web// associados com a interação e gestão do sistema de mensagens privadas. Inclui ainda os seguintes recursos do sistema: criação de uma conversa entre dois utilizadores, envio de mensagens, listagem das conversas, e das mensagens recebidas numa conversa. |
+
+^ M08: Administração  | Recursos //web// associados com a gestão dos utilizadores, de categorias e de instituições, mais concretamente: listar e pesquisar utilizadores, consultar //reports// dos moderadores, apagar utilizadores, banir utilizadores, listar, editar ou apagar categorias, listar, editar ou apagar instituições e aceder a estatísticas de utilização do sistema. |
