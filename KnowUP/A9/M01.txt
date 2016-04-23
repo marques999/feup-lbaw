@@ -14,43 +14,44 @@
 
 === R103: Página de perfil ===
 ^ URL            | ''/pages/utilizador/profile.php''                   ||
-^ Description    | Esta página permite visualizar as informações pessoais e as publicações de um utilizador (se for passado um //ID// como parâmetro) ou do próprio utilizador (se não forem passados quaisquer parâmetros).               ||
+^ Description    | Esta página permite visualizar as informações pessoais e as publicações de um utilizador (se for passado um //ID// como parâmetro) ou do próprio utilizador (se não forem passados quaisquer parâmetros).       ||
 ^ Method         | GET                                                 ||
 ^ Parameters     | ?id: integer | chave primária do utilizador          |
 ^ UI             | [[:lbaw1525:proj:a3#ui09perfil_do_utilizador|UI09]] ||
 ^ Permissions    | MEM, OWN                                            ||
 
 === R104: Página de report ===
-^ URL            | ''/pages/utilizador/report.php''                       ||
-^ Description    | Esta página permite aos moderadores denunciar utilizadores que não cumpram com as normas de utilização deste serviço através do preenchimento de um formulário.                                                         ||
-^ Method         | GET                                                    ||
-^ Parameters     | +id: integer | chave primária do utilizador denunciado  |
-^ UI             | [[:lbaw1525:proj:ax|UIxx]]                             ||
-^ Permissions    | MOD                                                    ||
+^ URL            | ''/pages/utilizador/report.php''                             ||
+^ Description    | Esta página permite aos moderadores denunciar utilizadores que não cumpram com as normas de utilização deste serviço através do preenchimento de um formulário.                                                               ||
+^ Method         | GET                                                          ||
+^ Parameters     | +id: integer | chave primária do utilizador a ser denunciado  |
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                  ||
+^ Permissions    | MOD                                                          ||
 
 === R105: Notificações ===
-^ URL            | ''/pages/utilizador/notifications.php''                                   ||
+^ URL            | ''/pages/utilizador/notifications.php''                                       ||
 ^ Description    | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou sempre que surgirem novos seguidores. ||
-^ Method         | GET                                                                       ||
-^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                               ||
-^ Permissions    | OWN                                                                       ||
+^ Method         | GET                                                                           ||
+^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                                   ||
+^ Permissions    | OWN                                                                           ||
 
 === R106: Editar perfil ===
-^ URL            | ''/pages/utilizador/edit.php'' ||
-^ Description    | Esta página permite aos utilizadores alterar a sua instituição de ensino e editar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país).                         ||
-^ Method         | GET                            ||
-^ UI             | [[:lbaw1525:proj:ax|UIxx]]     ||
-^ Permissions    | OWN                            ||
+^ URL            | ''/pages/utilizador/edit.php''                                                                            ||
+^ Description    | Esta página permite aos utilizadores alterar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país). Se for passado um //ID// como parâmetro, permite ainda aos administradores alterar as informações pessoais dos outros utilizadores. ||
+^ Method         | GET                                                                                                       ||
+^ Parameters     | ?id: integer | chave primária do utilizador                                                                |
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                               ||
+^ Permissions    | OWN, ADM                                                                                                  ||
 
 === R107: Denunciar utilizador ===
 ^ URL            | ''/actions/utilizador/report.php''                                        ||
-^ Description    | Esta //action// denuncia um utilizador ao administrador com base informação recebida. Se as informações introduzidas pelo moderador forem válidas, este é reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao moderador uma mensagem de erro.                                                                            ||
+^ Description    | Esta //action// denuncia um utilizador ao administrador com base informação recebida. Se as informações introduzidas pelo moderador forem válidas, este é reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao moderador uma mensagem de erro.                                                                        ||
 ^ Method         | POST                                                                      ||
-^ Request body   | +idUtilizador: integer          | chave primária do utilizador denunciado  |
-^                | +descricao: text                | mensagem do moderador                    |wo
+^ Request body   | +idUtilizador: integer         | chave primária do utilizador denunciado   |
+^                | +descricao: text               | mensagem do moderador                     |
 ^ Redirects      | [[#r103pagina_de_perfil|R103]] | Sucesso                                   |
 ^                | [[#r104pagina_de_report|R104]] | Erro                                      |
-^ Permissions    | MEM                                                                       ||
+^ Permissions    | MOD                                                                       ||
 
 === R108: Iniciar sessão ===
 ^ URL           | ''/actions/utilizador/login.php''                                                                   ||
@@ -70,7 +71,7 @@
 
 === R110: Registar utilizador ===
 ^ URL           | ''/actions/utilizador/register.php''           ||
-^ Description   | Esta //action// efetua o registo de um novo utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de autenticação, caso contrário regressa à página de registo, sendo apresentada ao utilizador uma mensagem de erro.                                                            ||
+^ Description   | Esta //action// efetua o registo de um novo utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de autenticação, caso contrário regressa à página de registo, sendo apresentada ao utilizador uma mensagem de erro.                                                         ||
 ^ Method        | POST                                           ||
 ^ Request body  | +username: text         | nome de utilizador (tal como foi introduzido no formulário de registo)           |
 ^               | +password: text         | palavra-passe (tal como foi introduzida no formulário de registo)                |
@@ -88,15 +89,15 @@
 ^ Description   | Esta //action// permite alterar as informações pessoais do próprio utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a sua página de perfil, caso contrário regressa à página de edição do perfil, sendo apresentada ao utilizador uma mensagem de erro.                                      ||
 ^ Method        | POST                                                   ||
 ^ Request body  | +idUtilizador: integer  | chave primária do utilizador  |
-^               | ?email: text            | endereço de correio eletrónico do utilizador (ou endereço atual se não tiver sido alterado no formulário)             |
-^               | ?primeiroNome: text     | primeiro nome do utilizador (ou nome atual se não tiver sido alterado no formulário)                                  |
-^               | ?ultimoNome: text       | último nome do utilizador (ou nome atual se não tiver sido alterado no formulário)                                    |
+^               | ?email: text            | endereço de correio eletrónico do utilizador (ou endereço atual se não tiver sido alterado no formulário)   |
+^               | ?primeiroNome: text     | primeiro nome do utilizador (ou nome atual se não tiver sido alterado no formulário)                        |
+^               | ?ultimoNome: text       | último nome do utilizador (ou nome atual se não tiver sido alterado no formulário)                          |
 ^               | ?idInstituicao: integer | chave primária da instituição associada ao utilizador (ou instituição atual se não tiver sido alterada no formulário) |
-^               | ?localidade: text       | localidade do utilizador (ou localidade actual se não tiver sido alterada no formulário)                              |
-^               | ?codigoPais: text       | código do país do utilizador (ou país actual se não tiver sido alterado no formulário)                                |
+^               | ?localidade: text       | localidade do utilizador (ou localidade actual se não tiver sido alterada no formulário)                    |
+^               | ?codigoPais: text       | código do país do utilizador (ou país actual se não tiver sido alterado no formulário)                      |
 ^ Redirects     | [[#r103pagina_de_perfil|R103]] | Sucesso                |
 ^               | [[#r106editar_perfil|R106]]    | Erro                   |
-^ Permissions   | OWN                                                    ||
+^ Permissions   | OWN, ADM                                               ||
 
 === R112: Banir utilizador ===
 ^ URL           | ''/actions/utilizador/ban.php''             ||
@@ -107,10 +108,10 @@
 ^ Permissions   | ADM                                         ||
 
 === R113: Apagar utilizador ===
-^ URL           | ''/actions/utilizador/delete.php''                                             ||
-^ Description   | Esta //action// desativa permanentemente a conta de um utilizador com base na informação recebida. Caso tenha sido um administrador a invocar esta acção, este será reencaminhado para a página de gestão de utilizadores. Pelo contrário, se tiver sido um utilizador, a sua sessão será terminada e este será reencaminhado a página inicial como visitante. Espera-se que esta operação tenha sempre sucesso. ||
-^ Method        | GET                                                                            ||
-^ Request body  | +id: integer | chave primária do utilizador                                     |
-^ Redirects     | [[#r201pagina_inicial|R201]]     | Utilizador                                   |
-^               | [[#r804gerir_utilizadores|R804]] | Administrador                                |
-^ Permissions   | OWN, ADM                                                                       ||
+^ URL           | ''/actions/utilizador/delete.php''                                                                    ||
+^ Description   | Esta //action// desativa permanentemente a conta de um utilizador com base na informação recebida. Caso tenha sido um administrador a invocar esta acção, este será reencaminhado para a página de gestão de utilizadores. Pelo contrário, se tiver sido um utilizador, a sua sessão será terminada e este será reencaminhado a página inicial como visitante. Espera-se que em ambos os casos esta operação tenha sempre sucesso. ||
+^ Method        | POST                                                                                                  ||
+^ Request body  | +idUtilizador: integer | chave primária do utilizador                                                  |
+^ Redirects     | [[#r201pagina_inicial|R201]]     | Utilizador                                                          |
+^               | [[#r804gerir_utilizadores|R804]] | Administrador                                                       |
+^ Permissions   | OWN, ADM                                                                                              ||
