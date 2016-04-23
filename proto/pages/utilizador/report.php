@@ -2,12 +2,12 @@
   include_once('../../config/init.php');
   include_once('../../config/security.php');
 
-  if ($_SESSION['idUtilizador']) {
+  if (safe_check($_SESSION, 'idUtilizador')) {
 
     $idModerador = safe_getId($_SESSION, 'idUtilizador');
 
     if (safe_check($_GET, 'id')) {
-      
+
       $idUtilizador = safe_getId($_GET, 'id');
 
       if (utilizador_isModerator($idModerador) && $idModerador != $idUtilizador) {

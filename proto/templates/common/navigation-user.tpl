@@ -1,4 +1,3 @@
-{assign var='avatar' value=$USERID|utilizador_getAvatar}
 <body class="ink-drawer">
 <header id="header-container">
 <nav id="header-menu" class="ink-navigation">
@@ -7,7 +6,7 @@
     <button class="ink-button black half-horizontal-space quarter-vertical-padding fa fa-bars left-drawer-trigger"></button>
   </li>
   <li id="nav-notifications" class="medium">
-    <a href="{$BASE_URL}pages/users/notifications.php">
+    <a href="{$BASE_URL}pages/utilizador/notifications.php">
       <i class="fa fa-bell-o"></i><span class="ink-badge red">5</span>
     </a>
   </li>
@@ -22,12 +21,12 @@
       <span>{$USERNAME}</span>
     </a>
     <ul class="submenu fw-600">
-      <div class="half-padding align-center">
-       <img class="img-circle" src="holder.js/64x64/auto/ink" alt="">
+      <div class="half-vertical-padding align-center">
+       <img class="avatar-medium" src="{$USERID|utilizador_getAvatar}" alt="">
       </div>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#profile">Perfil</a></li>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#questions">Gerir perguntas</a></li>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#answers">Gerir respostas</a></li>
+      <li><a href="{$BASE_URL}pages/utilizador/profile.php">Perfil</a></li>
+      <li><a href="{$BASE_URL}pages/utilizador/manage.php#questions">Gerir perguntas</a></li>
+      <li><a href="{$BASE_URL}pages/utilizador/manage.php#answers">Gerir respostas</a></li>
       <li><a href="{$BASE_URL}pages/utilizador/logout.php">Terminar sessão</a></li>
     </ul>
   </li>
@@ -71,12 +70,12 @@
     </a>
     <ul class="submenu fw-600">
       <div class="half-vertical-padding align-center">
-       <img class="img-circle avatar-medium" src="{$avatar}" alt="">
+       <img class="avatar-medium" src="{$USERID|utilizador_getAvatar}" alt="">
       </div>
-      <li><b><a href="{$BASE_URL}pages/users/messages.php">Mensagens (3)</a></b></li>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#profile">Perfil</a></li>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#questions">Gerir perguntas</a></li>
-      <li><a href="{$BASE_URL}pages/utilizador/profile.php#answers">Gerir respostas</a></li>
+      <li><b><a href="{$BASE_URL}pages/conversa/list.php">Mensagens (3)</a></b></li>
+      <li><a href="{$BASE_URL}pages/utilizador/profile.php">Perfil</a></li>
+      <li><a href="{$BASE_URL}pages/utilizador/manage.php#questions">Gerir perguntas</a></li>
+      <li><a href="{$BASE_URL}pages/utilizador/manage.php#answers">Gerir respostas</a></li>
       <li><a href="{$BASE_URL}actions/utilizador/logout.php">Terminar sessão</a></li>
     </ul>
   </li>

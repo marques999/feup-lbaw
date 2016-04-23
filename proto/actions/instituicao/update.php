@@ -5,7 +5,7 @@
   if (safe_check($_SESSION, 'idUtilizador')) {
 
     if (safe_check($_POST, 'idInstituicao')) {
-  
+
       $queryString = "UPDATE Instituicao SET ";
       $hasNome = $safe_check($_POST, 'nome');
       $numberColumns = 0;
@@ -45,7 +45,7 @@
       $queryString += ' WHERE idInstituicao = :idInstituicao';
 
       if ($numberColumns > 0) {
-        
+
         $idInstituicao = safe_getId($_GET, 'id');
         $stmt = $db->prepare($queryString);
         $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
@@ -74,7 +74,7 @@
           $safeWebsite = safe_trim($_POST, 'website');
           $stmt->bindParam(':website', $safeWebsite, PDO::PARAM_STR);
         }
-        
+
         try {
           $stmt->execute();
         }

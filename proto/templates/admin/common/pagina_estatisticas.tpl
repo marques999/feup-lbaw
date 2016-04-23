@@ -7,13 +7,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <title>KnowUP! - Collaborative Q&A</title>
 <link rel="shortcut icon" href="{$BASE_URL}images/favicon.ico">
-<link rel="stylesheet" type="text/css" href="{$BASE_URL}css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="{$BASE_URL}css/font-roboto.css">
-<link rel="stylesheet" type="text/css" href="{$BASE_URL}css/ink.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{$BASE_URL}css/main.css">
-<script type="text/javascript" src="{$BASE_URL}javascript/chart.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{$BASE_URL}css/font-roboto.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/chartHelper.js"></script>
-<script type="text/javascript" src="{$BASE_URL}javascript/jquery-2.1.4.min.js"></script>
 <script>
 var schoolDatabase = {
   "FEUP" : [ 69, 86, 91, 103, 46, 75 ],

@@ -129,21 +129,35 @@
       <i class="fa fa-pencil fa-fw"></i>
       <span>Responder</span>
     </a>
+    {if $follows}
+    <button class="ink-button follow-button medium black active">
+      <i class="fa fa-feed fa-fw"></i>
+      <span>Unfollow&nbsp;</span>
+    {else}
     <button class="ink-button follow-button medium black">
       <i class="fa fa-feed fa-fw"></i>
-      <span>Seguir&nbsp;</span>
+      <span>Follow&nbsp;</span>
+    {/if}
       <strong>{$pergunta.numeroseguidores}</strong>
     </button>
   </div>
   <div class="button-group question-vote-buttons">
     <button class="ink-button medium black vote-positive">
       <i class="fa fa-thumbs-up fa-fw"></i>
-      <span>Gosto&nbsp;</span>
+      {if $myscore eq 1}
+        <span>Gostei&nbsp;</span>
+      {else}
+        <span>Gosto&nbsp;</span>
+      {/if}
       <strong>{$pergunta.votospositivos}</strong>
     </button>
     <button class="ink-button medium black vote-negative">
       <i class="fa fa-thumbs-down fa-fw"></i>
-      <span>Não gosto&nbsp;</span>
+      {if $myscore eq -1}
+        <span>Não gostei&nbsp;</span>
+      {else}
+        <span>Não gosto&nbsp;</span>
+      {/if}
       <strong>{$pergunta.votosnegativos}</strong>
     </button>
   </div>

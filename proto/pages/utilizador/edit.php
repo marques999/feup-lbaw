@@ -3,11 +3,11 @@
   include_once('../../config/security.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
-    
+
     $idUtilizador1 = safe_getId($_SESSION, 'idUtilizador');
 
     if (safe_check($_GET, 'id')) {
-      
+
       $idUtilizador2 = safe_getId($_GET, 'id');
 
       if ($idUtilizador1 == $idUtilizador2 || utilizador_isAdministrator($idUtilizador1)) {

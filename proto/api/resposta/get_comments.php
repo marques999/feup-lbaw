@@ -13,7 +13,7 @@
           Utilizador.idUtilizador,
           Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
           Contribuicao.descricao,
-          Contribuicao.dataHora
+          to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
         FROM ComentarioResposta
         JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
         JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
@@ -27,7 +27,7 @@
           Utilizador.idUtilizador,
           Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
           Contribuicao.descricao,
-          Contribuicao.dataHora
+          to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
         FROM ComentarioResposta
         JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
         JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor

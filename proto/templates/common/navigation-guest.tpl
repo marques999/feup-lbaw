@@ -30,7 +30,7 @@
           <img src="{$BASE_URL}/images/assets/header-256px.png" alt="">
         </a>
       </li>
-      <form action="{$BASE_URL}pages/pesquisa/pergunta.php" class="ink-form ink-search all-20 medium">
+      <form action="{$BASE_URL}pages/pesquisa/results.php" class="ink-form ink-search all-20 medium">
         <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="query" id="query"></span>
@@ -39,13 +39,13 @@
         </div>
       </form>
       <li id="nav-ask">
-        <a href="{$BASE_URL}pages/other/permission.php">
+        <a href="{$BASE_URL}pages/utilizador/login.php">
           <i class="fa fa-comment-o"></i>
           <span id="tag-ask">Perguntar</span>
         </a>
       </li>
       <li id="nav-browse">
-        <a href="{$BASE_URL}pages/other/permission.php">
+        <a href="{$BASE_URL}pages/categoria/list.php">
           <i class="fa fa-pencil-square-o"></i>
           <span id="tag-browse">Responder</span>
         </a>

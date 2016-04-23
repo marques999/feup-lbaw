@@ -57,6 +57,41 @@ function pergunta_listById($idPergunta) {
   $stmt->execute();
   return $stmt->fetch();
 }
+function pergunta_userFollows($idUtilizador, $idPergunta) {
+  global $db;
+  $stmt = $db->prepare('SELECT idSeguidor FROM Seguidor WHERE idSeguidor = :idUtilizador AND idPergunta = :idPergunta');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  return ($result && is_array($result) && $result['idseguidor'] == $idUtilizador);
+}
+function pergunta_userVote($idUtilizador, $idPergunta) {
+  global $db;
+  $stmt = $db->prepare('SELECT valor FROM VotoPergunta WHERE idAutor = :idUtilizador AND idPergunta = :idPergunta');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetch()['valor'];
+}
+function pergunta_fetchRelacionadas($idCategoria, $idPergunta) {
+  global $db;
+  $stmt = $db->prepare("SELECT Pergunta.idPergunta,
+      Pergunta.titulo,
+      Utilizador.username
+    FROM CategoriaInstituicao
+    JOIN CategoriaInstituicao CategoriasRelacionadas USING(idInstituicao)
+    JOIN Pergunta ON Pergunta.idCategoria = CategoriasRelacionadas.idCategoria
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    WHERE CategoriaInstituicao.idCategoria = :idCategoria
+    AND Pergunta.idPergunta <> :idPergunta
+    GROUP BY Pergunta.idPergunta, Utilizador.username
+    ORDER BY random() LIMIT 5");
+  $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
+  $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
+}
 function pergunta_fetchRespostas($idPergunta) {
   global $db;
   $stmt = $db->prepare("SELECT Resposta.idResposta,
@@ -171,7 +206,22 @@ function pergunta_getStats($filterBy) {
   }
   $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
-  return json_encode($stmt->fetchAll());
+  return $stmt->fetchAll();
+}
+function resposta_fetchComments($idResposta) {
+  global $db;
+  $stmt = $db->prepare("SELECT
+      Utilizador.idUtilizador,
+      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Contribuicao.descricao,
+      Contribuicao.dataHora
+    FROM ComentarioResposta
+    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
+    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
+    WHERE ComentarioResposta.idResposta = :idResposta");
+  $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
 }
 function resposta_getStats($filterBy) {
   global $db;
@@ -199,6 +249,6 @@ function resposta_getStats($filterBy) {
   }
   $queryString .= "ORDER BY numeroRespostas DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
-  return json_encode($stmt->fetchAll());
+  return $stmt->fetchAll();
 }
 ?>

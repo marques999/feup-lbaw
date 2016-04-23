@@ -1,9 +1,10 @@
 {extends file='common/header.tpl'}
 {block name=content}
+<div class="ink-grid">
   <div class="column-group half-top-space">
     <div class="column all-66 large-50 medium-40 small-40 tiny-100">
       <h3 class="condensed">Categorias
-        <span class="fw-300 medium">({count($categorias)})</span>
+        <span class="fw-300 medium">({$categorias|count})</span>
       </h3>
     </div>
     <div class="column all-33 large-50 medium-60 small-60 tiny-100">
@@ -15,9 +16,7 @@
       </nav>
     </div>
   </div>
-  <div class="all-100 ">
-    <hr class="no-margin half-bottom-padding">
-  </div>
+  <hr class="no-margin half-bottom-padding">
   <div class="column-group ink-stacker half-gutters">
   {foreach $categorias as $categoria}
     {if ($categoria@index % $numberRows) eq 0}
@@ -31,4 +30,7 @@
     {/if}
   {/foreach}
   </div>
+</div>
+{/block}
+{block name=footer}
 {/block}

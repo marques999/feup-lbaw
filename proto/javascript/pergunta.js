@@ -11,11 +11,11 @@ var questionCommentId = -1;
  * submeterComentarioPergunta(commentsForm)
  */
 function submeterComentarioPergunta(commentsForm)
-{  
+{
   var thisId = commentsForm.find($("input[name=idPergunta]")).val();
 
   $.post("../../api/pergunta/insert_comment.php", commentsForm.serialize(), function(jsonResult)
-  {   
+  {
     if (+jsonResult)
     {
       questionRefreshStatus = false;
@@ -28,9 +28,9 @@ function submeterComentarioPergunta(commentsForm)
  * submeterComentarioResposta(commentsForm)
  */
 function submeterComentarioResposta(commentsForm)
-{  
+{
   var thisId = commentsForm.find($("input[name=idResposta]")).val();
-  
+
   $.post("../../api/resposta/insert_comment.php", commentsForm.serialize(), function(jsonResult)
   {
     if (+jsonResult)
@@ -89,21 +89,30 @@ function registarVotoPergunta(domElement, nodeId, valor)
     type: 'POST',
     url: '../../api/pergunta/insert_vote.php',
     data:
-    { 
+    {
       idPergunta: nodeId.substring(nodeId.indexOf('-') + 1, nodeId.length),
       votoUtilizador: valor
     },
     beforeSend: function()
     {
-      domElement.find('strong').html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
     },
     success: function(jsonString)
     {
       if (jsonString !== undefined && jsonString !== 'false')
       {
         var jsonObject = JSON.parse(jsonString);
-        domParent.find('.vote-positive strong').text(jsonObject['votospositivos']);
-        domParent.find('.vote-negative strong').text(jsonObject['votosnegativos']);
+        var positiveButton =  domParent.find('.vote-positive');
+        var negativeButton = domParent.find('.vote-negative');
+
+        if (valor == 1) {
+          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gostei&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
+          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gosto&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+        }
+        else if (valor == -1) {
+          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gosto&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
+          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gostei&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+        }
       }
       else
       {
@@ -131,7 +140,7 @@ function registarVotoResposta(domElement, nodeId, valor)
     type: 'POST',
     url: '../../api/resposta/insert_vote.php',
     data:
-    { 
+    {
       idResposta: nodeId.substring(nodeId.indexOf('-') + 1, nodeId.length),
       votoUtilizador: valor
     },
@@ -161,7 +170,7 @@ function registarVotoResposta(domElement, nodeId, valor)
 
 function followPergunta(domElement, nodeId)
 {
-  if (userFollowsQuestion)
+  if (domElement.hasClass('active'))
   {
     return __unfollowPergunta(domElement, nodeId);
   }
@@ -199,8 +208,8 @@ function __followPergunta(domElement, nodeId)
       if (jsonString)
       {
         strongTag.text(JSON.parse(jsonString)['count']);
-        spanTag.text(' Unfollow');
-        userFollowsQuestion = true;
+        spanTag.text('Unfollow ');
+        domElement.addClass('active');
       }
       else
       {
@@ -236,9 +245,9 @@ function __unfollowPergunta(domElement, nodeId)
     {
       if (jsonString)
       {
+        spanTag.text('Follow ');
+        domElement.removeClass('active');
         strongTag.text(JSON.parse(jsonString)['count']);
-        spanTag.text(' Follow');
-        userFollowsQuestion = false;
       }
       else
       {
@@ -257,7 +266,7 @@ function __unfollowPergunta(domElement, nodeId)
  * insertComment(domElement, jsonObject)
  */
 function insertComment(domElement, jsonObject) {
-  domElement.append(nano('<div class="column half-vertical-space"><img class="push-left all-5 img-circle quarter-right-space" src="holder.js/64x64/auto/ink" alt=""><a href="../users/profile.php?id={idutilizador}">{nomeutilizador}</a>\n<small>{datahora}</small><p class="fw-medium">{descricao}</p></div>', jsonObject));
+  domElement.append(nano('<div class="column half-vertical-space"><img class="push-left all-5 img-circle quarter-right-space" src="../../images/avatars/{idutilizador}_small.png" alt=""><a href="../utilizador/profile.php?id={idutilizador}">{nomeutilizador}</a>\n<small>{datahora}</small><p class="fw-medium">{descricao}</p></div>', jsonObject));
 };
 
 /*
@@ -276,7 +285,7 @@ function fetchQuestionComments(thisId, currentNode)
   {
     return;
   }
-  
+
   parentNode = null;
   nodeContent = null;
 
@@ -285,7 +294,7 @@ function fetchQuestionComments(thisId, currentNode)
     type: 'POST',
     url: '../../api/pergunta/get_comments.php',
     data:
-    { 
+    {
       idPergunta: thisId,
       ultimoComentario: questionCommentId
     },
@@ -298,7 +307,7 @@ function fetchQuestionComments(thisId, currentNode)
     {
       parentNode.children().last().remove();
       parentNode.append(nodeContent);
-      
+
       if (jsonString)
       {
         printQuestionComments(thisId, JSON.parse(jsonString));
@@ -334,7 +343,7 @@ function fetchAnswerComments(thisId, currentNode)
     type: 'POST',
     url: '../../api/resposta/get_comments.php',
     data:
-    { 
+    {
       idResposta: thisId,
       ultimoComentario: lastCommentId[thisId]
     },
@@ -347,7 +356,7 @@ function fetchAnswerComments(thisId, currentNode)
     {
       parentNode.children().last().remove();
       parentNode.append(nodeContent);
-      
+
       if (jsonString)
       {
         var jsonObject = JSON.parse(jsonString);
@@ -356,7 +365,7 @@ function fetchAnswerComments(thisId, currentNode)
         {
           domElement.find('small').remove();
         }
-        
+
         printAnswerComments(thisId, JSON.parse(jsonString));
       }
     }
@@ -376,7 +385,7 @@ function refreshQuestionComments(thisId, currentNode)
     type: 'POST',
     url: '../../api/pergunta/get_comments.php',
     data:
-    { 
+    {
       idPergunta: thisId,
       ultimoComentario: questionCommentId
     },
@@ -387,7 +396,7 @@ function refreshQuestionComments(thisId, currentNode)
     success: function(jsonString)
     {
       buttonTag.html('Submeter');
-      
+
       if (jsonString)
       {
         printQuestionComments(thisId, JSON.parse(jsonString));
@@ -410,7 +419,7 @@ function refreshAnswerComments(thisId, currentNode)
     type: 'POST',
     url: '../../api/resposta/get_comments.php',
     data:
-    { 
+    {
       idResposta: thisId,
       ultimoComentario: lastCommentId[thisId]
     },
@@ -421,7 +430,7 @@ function refreshAnswerComments(thisId, currentNode)
     success: function(jsonString)
     {
       buttonTag.html('Submeter');
-      
+
       if (jsonString)
       {
         printAnswerComments(thisId, JSON.parse(jsonString));
@@ -435,7 +444,7 @@ function refreshAnswerComments(thisId, currentNode)
  * printAnswerComments(idResposta, jsonObject)
  */
 function printAnswerComments(idResposta, jsonObject) {
-  
+
   if (jsonObject.length < 1) {
     refreshStatus[idResposta] = true;
   }
@@ -445,9 +454,9 @@ function printAnswerComments(idResposta, jsonObject) {
   }
 
   var domElement = $(getAnswerTarget(idResposta));
-  
+
   if (domElement.is(":visible")) {
-    
+
     for (var i = 0; i < jsonObject.length; i++) {
       insertComment(domElement, jsonObject[i]);
       answerCommentCount[idResposta]++;
@@ -462,7 +471,7 @@ function printAnswerComments(idResposta, jsonObject) {
  * printQuestionComments(idPegunta, jsonObject)
  */
 function printQuestionComments(idPergunta, jsonObject) {
-  
+
   if (jsonObject.length < 1) {
     questionRefreshStatus = false;
   }
@@ -472,7 +481,7 @@ function printQuestionComments(idPergunta, jsonObject) {
   }
 
   var domElement = $('#question-comments');
-  
+
   if (questionCommentId == -1) {
     domElement.children().not(':first').remove();
   }

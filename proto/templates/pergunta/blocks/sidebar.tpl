@@ -1,58 +1,50 @@
 <div class="column all-20 medium-25 small-100 tiny-100">
   <nav class="ink-navigation medium vertical-padding">
     <h5 class="slab half-vertical-space">
-      <i class="fa fa-institution"></i>&nbsp;FEUP
+      <i class="fa fa-institution"></i>
+      <span>Categorias</span>
     </h5>
     <ul class="menu vertical white">
-      {foreach $categorias as $categoria}
-        {if $categoria.idcategoria eq $pergunta.idcategoria}
-          <li class="active">
-            <a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a>
-          </li>
-        {else}
-          <li>
-            <a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a>
-          </li>
-        {/if}
-      {/foreach}
-      {if $categorias@count gt 5}
-        <li class="heading"><a href="hub.php">ver mais...</a></li>
+    {foreach $categorias as $categoria}
+      {if $categoria.idcategoria eq $pergunta.idcategoria}
+      <li class="active"><a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a></li>
+      {else}
+      <li><a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a></li>
       {/if}
+    {/foreach}
     </ul>
     <h5 class="slab half-vertical-space">
-      <i class="fa fa-exchange"></i>&nbsp;Relacionadas
+      <i class="fa fa-exchange"></i>
+      <span>Relacionadas</span>
     </h5>
     <ul class="menu vertical white">
-      <li>
-        <a href="{$BASE_URL}pages/pergunta/view.php?id=1">"Que país tem a pior gastronomia na vossa opinião?" --
-          <small>mellus</small>
-        </a>
-      </li>
-      <li>  
-        <a href="{$BASE_URL}pages/pergunta/view.php?id=2">"Qual foi o comentário mais hilariante que encontraram em código?" --
-          <small>darklord</small>
-        </a>
-      </li>
-      <li><a href="view/1">"Quem é considerado o melhor programador de todos os tempos?" -- <small>marques999</small></a></li>
+    {foreach $relacionadas as $relacionada}
+      <li><a href="{$BASE_URL}pages/pergunta/view.php?id={$relacionada.idpergunta}">"{$relacionada.titulo|strip_tags}" --
+        <small>{$relacionada.username}</small>
+      </a></li>
+    {/foreach}
     </ul>
-    {if $USERID eq $pergunta.idutilizador}
-      <h5 class="slab half-vertical-space">
-        <i class="fa fa-cog"></i>&nbsp;Gestão
-      </h5>
-      <ul class="menu vertical white">
-        <li>
-          <a href="{$BASE_URL}pages/pergunta/edit.php">
-            <strong><sup>(OP)</sup></strong>
-            <span>Editar pergunta</span>
-          </a>
-        </li>
-        <li>
-          <a href="{$BASE_URL}pages/pergunta/delete.php">
-            <strong><sup>(OP)</sup></strong>
-            <span>Apagar pergunta</span>
-          </a>
-        </li>
-      </ul>
+    {if $administrador or $moderador or $USERID eq $pergunta.idutilizador}
+    <h5 class="slab half-vertical-space">
+      <i class="fa fa-cog"></i>
+      <span>Gestão</span>
+    </h5>
+    <ul class="menu vertical white">
+      <li><a href="{$BASE_URL}pages/pergunta/edit.php">
+        <strong><sup>({$privileges})</sup></strong>
+        <span>Editar pergunta</span>
+      </a></li>
+      <li><a href="{$BASE_URL}pages/pergunta/close.php">
+        <strong><sup>({$privileges})</sup></strong>
+        <span>Fechar pergunta</span>
+      </a></li>
+      {if $administrador OR $USERID eq $pergunta.idutilizador}
+      <li><a href="{$BASE_URL}pages/pergunta/delete.php">
+        <strong><sup>({$privileges})</sup></strong>
+        <span>Apagar pergunta</span>
+      </a></li>
+      {/if}
+    </ul>
     {/if}
   </nav>
 </div>

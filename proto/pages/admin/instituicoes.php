@@ -2,7 +2,7 @@
   include_once('../../config/init.php');
   include_once('../../config/security.php');
 
-  if ($_SESSION['idUtilizador']) {
+  if (safe_check($_SESSION, 'idUtilizador')) {
 
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
 

@@ -1,7 +1,19 @@
 <?
   function instituicao_listAll() {
     global $db;
-    return $db->query("SELECT * FROM Instituicao ORDER BY sigla")->fetchAll();
+    $stmt = $db->query("SELECT Instituicao.idInstituicao,
+        Instituicao.nome,
+        Instituicao.sigla,
+        COUNT(DISTINCT CategoriaInstituicao.idCategoria) AS numeroCategorias,
+        COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas,
+        COUNT(DISTINCT Utilizador.idUtilizador) AS numeroUtilizadores
+      FROM Instituicao
+      NATURAL LEFT JOIN CategoriaInstituicao
+      NATURAL LEFT JOIN Pergunta
+      NATURAL LEFT JOIN Utilizador
+      GROUP BY idInstituicao
+      ORDER BY sigla");
+    return $stmt->fetchAll();
   }
   function instituicao_listById($idInstituicao) {
     global $db;
@@ -61,7 +73,7 @@
   }
   function instituicao_getStats($filterBy) {
     global $db;
-    $queryString = "SELECT 
+    $queryString = "SELECT
         Instituicao.idInstituicao,
         Instituicao.sigla,
         MAX(Pergunta.idPergunta) AS ultimaPergunta,
@@ -85,6 +97,6 @@
     }
     $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
     $stmt = $db->query($queryString);
-    return json_encode($stmt->fetchAll());
+    return $stmt->fetchAll();
   }
 ?>

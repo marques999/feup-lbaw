@@ -13,7 +13,7 @@
         WHERE idContribuicao = :idResposta AND idAutor = :idUtilizador");
       $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
       $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-        
+
       try {
         $stmt->execute();
       }

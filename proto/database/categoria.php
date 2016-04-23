@@ -22,18 +22,35 @@
     $stmt->execute();
     return $stmt->fetchAll();
   }
-  function categoria_listRelacionadas($idCategoria) {
+  function categoria_listRelacionadas($idCategoria, $includeSelf) {
     global $db;
-    $stmt = $db->prepare("SELECT Categorias.idCategoria, Categorias.nome
-      FROM Categoria
-      JOIN CategoriaInstituicao CI1 USING(idCategoria)
-      JOIN CategoriaInstituicao CI2 USING(idInstituicao)
-      JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
-      WHERE Categoria.idCategoria = :idCategoria
-      AND Categorias.idCategoria <> Categoria.idCategoria
-      GROUP BY Categorias.idCategoria
-      ORDER BY random()
-      LIMIT 5");
+    if ($includeSelf) {
+      $stmt = $db->prepare("(SELECT Categoria.idCategoria, Categoria.nome
+        FROM Categoria
+        WHERE Categoria.idCategoria = :idCategoria)
+        UNION (SELECT Categorias.idCategoria, Categorias.nome
+        FROM Categoria
+        JOIN CategoriaInstituicao CI1 USING(idCategoria)
+        JOIN CategoriaInstituicao CI2 USING(idInstituicao)
+        JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
+        WHERE Categoria.idCategoria = :idCategoria
+        AND Categorias.idCategoria <> Categoria.idCategoria
+        GROUP BY Categorias.idCategoria
+        ORDER BY random()
+        LIMIT 4)");   
+    }
+    else {
+      $stmt = $db->prepare("SELECT Categorias.idCategoria, Categorias.nome
+        FROM Categoria
+        JOIN CategoriaInstituicao CI1 USING(idCategoria)
+        JOIN CategoriaInstituicao CI2 USING(idInstituicao)
+        JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
+        WHERE Categoria.idCategoria = :idCategoria
+        AND Categorias.idCategoria <> Categoria.idCategoria
+        GROUP BY Categorias.idCategoria
+        ORDER BY random()
+        LIMIT 5");     
+    }
     $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
@@ -92,6 +109,6 @@
     }
     $queryString .= "ORDER BY numeroPerguntas DESC, Pergunta.dataHora DESC LIMIT 5";
     $stmt = $db->query($queryString);
-    return json_encode($stmt->fetchAll());
+    return $stmt->fetchAll();
   }
 ?>

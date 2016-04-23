@@ -210,21 +210,6 @@ function utilizador_listarRemovidos() {
     ORDER BY Utilizador.idUtilizador");
   return $stmt->fetchAll();
 }
-function utilizador_pesquisar($stringPesquisa) {
-  global $db;
-  $stmt = $db->prepare("SELECT UtilizadoresPesquisa.idUtilizador,
-      UtilizadoresPesquisa.username,
-      UtilizadoresPesquisa.nomeUtilizador,
-      UtilizadoresPesquisa.email,
-      ts_rank_cd(UtilizadoresPesquisa.pesquisa, query) AS rank
-    FROM UtilizadoresPesquisa, plainto_tsquery('english', :stringPesquisa) AS query
-    WHERE query @@ pesquisa
-    ORDER BY rank DESC");
-  $stmt->bindParam(':stringPesquisa', $stringPesquisa, PDO::PARAM_STR);
-  $stmt->execute();
-  return $stmt->fetchAll();
-}
-
 $countries = array(
   'af'=>'Afghanistan',
   'al'=>'Albania',

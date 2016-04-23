@@ -1,4 +1,4 @@
-{extends file='common/header-editor.tpl'}
+{extends file='common/header.tpl'}
 {block name=content}
   {include file='common/page-fullscreen.tpl'}
   {include file='pergunta/blocks/sidebar.tpl'}
@@ -15,7 +15,9 @@
     <section id="answers" class="push-center all-90 small-100 tiny-100">
     {include file='pergunta/blocks/respostas.tpl'}
     </section>
-    {include file='pergunta/blocks/formulario.tpl'}
+    {if $pergunta.ativa and $USERID neq $pergunta.idutilizador}
+      {include file='pergunta/blocks/formulario.tpl'}
+    {/if}
   </div>
   <script type="text/javascript" src="{$BASE_URL}javascript/pergunta.js"></script>
   <script>

@@ -18,7 +18,14 @@
       $stmt = $db->prepare("INSERT INTO ComentarioPergunta(idComentario, idPergunta) VALUES(:idComentario, :idPergunta)");
       $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
       $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-      $stmt->execute();
+
+      try {
+        $stmt->execute();
+      }
+      catch (PDOException $e) {
+        http_response_code(400);
+      }
+
       echo json_encode($stmt->rowCount());
     }
     else {

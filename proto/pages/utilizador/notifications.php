@@ -1,5 +1,10 @@
-<? 
+<?
   include_once('../../config/init.php');
-  //---------------------------------------------
-  $smarty->display('utilizador/notifications.tpl');
+
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $smarty->display('utilizador/notifications.tpl');
+  }
+  else {
+    safe_redirect('utilizador/login.php');
+  }
 ?>

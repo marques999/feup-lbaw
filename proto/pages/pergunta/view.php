@@ -1,28 +1,46 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
-  include_once('../../database/instituicao.php');
+  include_once('../../database/categoria.php');
   include_once('../../database/pergunta.php');
 
   $idPergunta = safe_getId($_GET, 'id');
+  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   $queryPergunta = pergunta_listById($idPergunta);
 
   if ($queryPergunta && is_array($queryPergunta)) {
-    
+
     $idCategoria = safe_getId($queryPergunta, 'idcategoria');
-    $queryInstituicoes = instituicao_listByCategoria($idCategoria);
     $queryRespostas = pergunta_fetchRespostas($idPergunta);
     $queryComentarios = pergunta_fetchComments($idPergunta);
-    $isAdministrator = utilizador_isAdministrator($_SESSION['idUtilizador']);
-    $isModerator = utilizador_isModerator($_SESSION['idUtilizador']);
+    $queryCategorias = categoria_listRelacionadas($idCategoria, true);
+    $queryRelacionadas = pergunta_fetchRelacionadas($idCategoria, $idPergunta);
+    $isAdministrator = utilizador_isAdministrator($idUtilizador);
+    $isModerator = utilizador_isModerator($idUtilizador);
+    $userVote = pergunta_userVote($idUtilizador, $idPergunta);
+    $userFollows = pergunta_userFollows($idUtilizador, $idPergunta);
+    $userPrivileges = 'User';
+   
+    if (safe_getId($queryPergunta, 'idutilizador') == $idUtilizador) {
+      $userPrivileges = 'OP';
+    }
+    else if ($isAdministrator) {
+      $userPrivileges = 'Admin';
+    }
+    else if ($isModerator) {
+      $userPrivileges = 'MOD';
+    }
 
     $smarty->assign('pergunta', $queryPergunta);
-    $smarty->assign('instituicoes', $queryInstituicoes);
+    $smarty->assign('categorias', $queryCategorias);
     $smarty->assign('respostas', $queryRespostas);
     $smarty->assign('comentarios', $queryComentarios);
+    $smarty->assign('relacionadas', $queryRelacionadas);
     $smarty->assign('administrador', $isAdministrator);
     $smarty->assign('moderador', $isModerator);
-    $smarty->assign('categorias', (11));
+    $smarty->assign('follows', $userFollows);
+    $smarty->assign('privileges', $userPrivileges);
+    $smarty->assign('myscore', $userVote);
     $smarty->display('pergunta/view.tpl');
   }
   else {
