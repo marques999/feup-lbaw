@@ -7,12 +7,13 @@
 ^ Permissions    | PUB                                                                                                             ||
 
 === R502: Página da categoria ===
-^ URL            | ''/pages/categoria/view.php''                      ||
-^ Description    | Esta página permite visualizar uma lista com perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria.                                          ||
-^ Method         | GET                                                ||
-^ Parameters     | +id: integer | chave primária da categoria          |
-^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]] ||
-^ Permissions    | PUB                                                ||
+^ URL            | ''/pages/categoria/view.php''                                                               ||
+^ Description    | Esta página permite visualizar uma lista com perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria.                                                                                   ||
+^ Method         | GET                                                                                         ||
+^ Parameters     | +id: integer | chave primária da categoria                                                   |
+^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]] ||
+^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]]                                          ||
+^ Permissions    | PUB                                                                                         ||
 
 === R503: Editar categoria ===
 ^ URL            | ''/actions/categoria/update.php''                   ||

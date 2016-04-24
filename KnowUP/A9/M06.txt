@@ -17,18 +17,19 @@
 ^ URL            | ''/pages/instituicao/edit.php''                                                            ||
 ^ Description    | Esta página permite alterar informações da instituição escolhida através de um formulário. ||
 ^ Method         | GET                                                                                        ||
-^ Parameters     | +id: integer | chave primária da instituição                                                |
+^ Parameters     | +id: text | sigla da instituição                                                            |
 ^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                          ||
 ^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                ||
 ^ Permissions    | ADM                                                                                        ||
 
 === R604: Página da instituição ===
-^ URL            | ''/pages/instituicao/view.php''                      ||
-^ Description    | Esta página permite visualizar uma lista de perguntas da instituição escolhida e aceder rapidamente às categorias associadas a essa instituição. ||
-^ Method         | GET                                                  ||
-^ Parameters     | +id: integer | chave primária da instituição          |
-^ UI             | [[:lbaw1525:proj:a3#ui08pagina_da_instituicao|UI08]] ||
-^ Permissions    | PUB                                                  ||
+^ URL            | ''/pages/instituicao/view.php''                                                             ||
+^ Description    | Esta página permite visualizar uma lista de perguntas da instituição escolhida e aceder rapidamente às categorias associadas a essa instituição.                                                                                                   ||
+^ Method         | GET                                                                                         ||
+^ Parameters     | +id: text | sigla da instituição                                                             |
+^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]] ||
+^ UI             | [[:lbaw1525:proj:a3#ui08pagina_da_instituicao|UI08]]                                        ||
+^ Permissions    | PUB                                                                                         ||
 
 === R605: Adicionar instituição ===
 ^ URL            | ''/actions/instituicao/submit.php''                                        ||
@@ -61,7 +62,7 @@
 ^ URL          | ''/actions/instituicao/delete.php''                                 ||
 ^ Description  | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                                ||
 ^ Method       | GET                                                                 ||
-^ Parameters   | +id: integer                        | chave primária da instituição  |
+^ Parameters   | +id: text                           | sigla da instituição           |
 ^ Redirects    | [[#r803gerir_instituicoes|R803]]    | Sucesso                       ||
 ^              | [[#r604pagina_da_instituicao|R604]] | Erro                           |
 ^ Permissions  | ADM                                                                 ||

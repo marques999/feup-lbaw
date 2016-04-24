@@ -11,7 +11,7 @@
 
 === R402: Submeter resposta ===
 ^ URL            | ''/actions/resposta/submit.php''                                                                         ||
-^ Description    | Esta //action// permite publicar uma nova resposta a uma pergunta existente com base na informação recebida. O utilizador é sempre reencaminhado para a página da nova pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operações falhar. ||
+^ Description    | Esta //action// permite publicar uma nova resposta a uma pergunta existente com base na informação recebida. O utilizador é sempre reencaminhado para a página da nova pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operações falhar.               ||
 ^ Method         | POST                                                                                                     ||
 ^ Request body   | +idPergunta: integer             | chave primária da pergunta                                             |
 ^                | +descricao: text                 | conteúdo da resposta                                                   |
@@ -31,7 +31,7 @@
 
 === R404: Apagar resposta ===
 ^ URL            | ''/actions/resposta/delete.php''                          ||
-^ Description    | Esta //action// permite apagar uma resposta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operação falhar. ||
+^ Description    | Esta //action// permite apagar uma resposta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operação falhar.      ||
 ^ Method         | GET                                                       ||
 ^ Parameters     | +idp: integer | chave primária da pergunta                 |
 ^                | +idr: integer | chave primária da resposta                 |
@@ -44,7 +44,7 @@
 ^ Method         | GET                                                                  ||
 ^ Parameters     | +id: integer | chave primária da resposta                             |
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                     ||
-^ Permissions    | OWNR, MOD, ADM                                                       ||
+^ Permissions    | OP, MOD, ADM                                                         ||
 
 === R406: Registar voto ===
 ^ URL            | ''/api/resposta/insert_vote.php''                                                            ||

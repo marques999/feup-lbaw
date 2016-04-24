@@ -94,7 +94,7 @@ SELECT Resposta.idResposta,
     AS TabelaComentarios
     USING (idResposta)
   WHERE Resposta.idPergunta = :idPergunta
-  ORDER BY Resposta.idResposta;
+  ORDER BY Resposta.idResposta DESC;
 
 /*--------------------------------------------*/
 /* LISTAR PERGUNTAS POR CATEGORIA             */
@@ -181,10 +181,10 @@ SELECT Pergunta.idPergunta,
 SELECT Resposta.idResposta,
        Pergunta.idPergunta,
        Pergunta.titulo,
-       Contribuicao.descricao,
-       Pergunta.dataHora,
-       Resposta.melhorResposta,
        Pergunta.ativa,
+       Contribuicao.descricao,
+       Contribuicao.dataHora,
+       Resposta.melhorResposta,
        COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
        COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
        COALESCE(SUM(valor), 0) AS pontuacao

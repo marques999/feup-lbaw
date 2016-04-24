@@ -1,13 +1,13 @@
 ==== Módulo M03: Perguntas ====
 
 === R301: Página da pergunta ===
-^ URL            | ''/pages/pergunta/view.php''                                                                  ||
-^ Description    | Esta página permite visualizar uma pergunta, bem como as respetivas respostas e comentários.  ||
-^ Method         | GET                                                                                           ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                      |
-^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r406registar_voto|R406]], [[#r407obter_comentarios|R407]], [[#r408inserir_comentario|R408]], [[#r409apagar_comentario|R409]]                                                                                  ||
-^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                             ||
-^ Permissions    | PUB                                                                                           ||
+^ URL            | ''/pages/pergunta/view.php''                                                                 ||
+^ Description    | Esta página permite visualizar uma pergunta, bem como as respetivas respostas e comentários. ||
+^ Method         | GET                                                                                          ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                     |
+^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r406registar_voto|R406]], [[#r407obter_comentarios|R407]], [[#r408inserir_comentario|R408]], [[#r409apagar_comentario|R409]]                                                                                 ||
+^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                            ||
+^ Permissions    | PUB                                                                                          ||
 
 === R302: Redigir pergunta ===
 ^ URL            | ''/pages/pergunta/ask.php''                                                                          ||
@@ -23,7 +23,7 @@
 ^ Method         | GET                                                                                ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                           |
 ^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                         ||
-^ Permissions    | OWNP, MOD, ADM                                                                     ||
+^ Permissions    | OP, MOD, ADM                                                                       ||
 
 === R304: Submeter pergunta ===
 ^ URL            | ''/actions/pergunta/submit.php''                        ||
@@ -44,7 +44,7 @@
 ^                | ?descricao: text                 | novo conteúdo da pergunta   |
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                    ||
 ^                | [[#r303editar_pergunta|R303]]    | Erro                       ||
-^ Permissions    | OWNP, MOD, ADM                                                ||
+^ Permissions    | OP, MOD, ADM                                                  ||
 
 === R306: Fechar pergunta ===
 ^ URL            | ''/actions/pergunta/close.php''                                                                                               ||
@@ -52,16 +52,16 @@
 ^ Method         | GET                                                                                                                           ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                                                                      |
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                              ||
-^ Permissions    | OWNP, MOD, ADM                                                                                                                ||
+^ Permissions    | OP, MOD, ADM                                                                                                                  ||
 
 === R307: Apagar pergunta ===
-^ URL            | ''/actions/pergunta/delete.php''           ||
-^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador  uma mensagem de erro.                             ||
-^ Method         | GET                                        ||
-^ Parameters     | +id: integer | chave primária da pergunta   |
-^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso ||
-^                | [[#r301pagina_da_pergunta|R301]] | Erro    ||
-^ Permissions    | OWNP, ADM                                  ||
+^ URL            | ''/actions/pergunta/delete.php''                              ||
+^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador  uma mensagem de erro.                                                ||
+^ Method         | POST                                                          ||
+^ Parameters     | +idPergunta: integer             | chave primária da pergunta  |
+^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso                    ||
+^                | [[#r301pagina_da_pergunta|R301]] | Erro                       ||
+^ Permissions    | OP, ADM                                                       ||
 
 === R308: Seguir pergunta ===
 ^ URL            | ''/api/pergunta/follow.php''                                                                     ||
