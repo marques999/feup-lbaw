@@ -4,100 +4,114 @@
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    if (safe_check($_POST, 'idInstituicao')) {
+    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
 
-      $queryString = "UPDATE Instituicao SET ";
-      $hasNome = $safe_check($_POST, 'nome');
-      $numberColumns = 0;
+    if (utilizador_isAdministrator($idAdministrador)) {
 
-      if ($hasNome) {
-        $queryString += "nome = :nome";
-        $numberColumns++;
-      }
+      if (safe_check($_POST, 'idInstituicao')) {
 
-      $hasSigla = $safe_check($_POST, 'sigla');
-
-      if ($hasSigla) {
-        $queryString += ($numberColumns > 0 ? ' AND sigla = :sigla' : 'sigla = :sigla');
-        $numberColumns++;
-      }
-
-      $hasMorada = $safe_check($_POST, 'morada');
-
-      if ($hasMorada) {
-        $queryString += ($numberColumns > 0 ? ' AND morada = :morada' : 'morada = :morada');
-        $numberColumns++;
-      }
-
-      $hasContacto = $safe_check($_POST, 'contacto');
-
-      if ($hasContacto) {
-        $queryString += ($numberColumns > 0 ? ' AND contacto = :contacto' : 'contacto = :contacto');
-        $numberColumns++;
-      }
-
-      $hasWebsite = $safe_check($_POST, 'website');
-
-      if ($hasWebsite) {
-        $queryString += ($numberColumns > 0 ? ' AND website = :website' : 'website = :website');
-      }
-
-      $queryString += ' WHERE idInstituicao = :idInstituicao';
-
-      if ($numberColumns > 0) {
-
-        $idInstituicao = safe_getId($_GET, 'id');
-        $stmt = $db->prepare($queryString);
-        $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+        $queryString = "UPDATE Instituicao SET ";
+        $hasNome = $safe_check($_POST, 'nome');
+        $numberColumns = 0;
 
         if ($hasNome) {
-          $safeNome = safe_trim($_POST, 'nome');
-          $stmt->bindParam(':nome', $safeNome, PDO::PARAM_STR);
+          $queryString += "nome = :nome";
+          $numberColumns++;
         }
+
+        $hasSigla = $safe_check($_POST, 'sigla');
 
         if ($hasSigla) {
-          $safeSigla = safe_trim($_POST, 'sigla');
-          $stmt->bindParam(':sigla', $safeSigla, PDO::PARAM_STR);
+          $queryString += ($numberColumns > 0 ? ' AND sigla = :sigla' : 'sigla = :sigla');
+          $numberColumns++;
         }
+
+        $hasMorada = $safe_check($_POST, 'morada');
 
         if ($hasMorada) {
-          $safeMorada = safe_trim($_POST, 'morada');
-          $stmt->bindParam(':morada', $safeMorada, PDO::PARAM_STR);
+          $queryString += ($numberColumns > 0 ? ' AND morada = :morada' : 'morada = :morada');
+          $numberColumns++;
         }
+
+        $hasContacto = $safe_check($_POST, 'contacto');
 
         if ($hasContacto) {
-          $safeContacto = safe_trim($_POST, 'contacto');
-          $stmt->bindParam(':contacto', $safeContacto, PDO::PARAM_STR);
+          $queryString += ($numberColumns > 0 ? ' AND contacto = :contacto' : 'contacto = :contacto');
+          $numberColumns++;
         }
+
+        $hasWebsite = $safe_check($_POST, 'website');
 
         if ($hasWebsite) {
-          $safeWebsite = safe_trim($_POST, 'website');
-          $stmt->bindParam(':website', $safeWebsite, PDO::PARAM_STR);
+          $queryString += ($numberColumns > 0 ? ' AND website = :website' : 'website = :website');
         }
 
-        try {
-          $stmt->execute();
-        }
-        catch (PDOException $e) {
-          safe_error('admin/instituicao.php', $e->getMessage());
-        }
+        $queryString += ' WHERE idInstituicao = :idInstituicao';
 
-        if ($stmt->rowCount() > 0) {
-            safe_redirect('admin/instituicao.php');
+        if ($numberColumns > 0) {
+
+          $idInstituicao = safe_getId($_GET, 'id');
+          $stmt = $db->prepare($queryString);
+          $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+
+          if ($hasNome) {
+            $safeNome = safe_trim($_POST, 'nome');
+            $stmt->bindParam(':nome', $safeNome, PDO::PARAM_STR);
+          }
+
+          if ($hasSigla) {
+            $safeSigla = safe_trim($_POST, 'sigla');
+            $stmt->bindParam(':sigla', $safeSigla, PDO::PARAM_STR);
+          }
+
+          if ($hasMorada) {
+            $safeMorada = safe_trim($_POST, 'morada');
+            $stmt->bindParam(':morada', $safeMorada, PDO::PARAM_STR);
+          }
+
+          if ($hasContacto) {
+            $safeContacto = safe_trim($_POST, 'contacto');
+            $stmt->bindParam(':contacto', $safeContacto, PDO::PARAM_STR);
+          }
+
+          if ($hasWebsite) {
+            $safeWebsite = safe_trim($_POST, 'website');
+            $stmt->bindParam(':website', $safeWebsite, PDO::PARAM_STR);
+          }
+
+          try {
+            $stmt->execute();
+          }
+          catch (PDOException $e) {
+            safe_error(null, $e->getMessage());
+          }
+
+          if ($stmt->rowCount() > 0) {
+
+              if ($hasSigla) {
+                safe_redirect("instituicao/view.php?=$safeSigla");
+              }
+              else {
+                safe_redirect('admin/instituicoes.php');
+              }
+          }
+          else {
+            safe_error(null, 'Erro desconhecido, nenhum tuplo foi alterado!');
+          }
         }
         else {
-          safe_error('admin/instituicao.php', 'Erro na operação, a instituição não existe?');
+           safe_error(null, 'Operação sem efeito, nenhum campo foi alterado...');
         }
       }
       else {
-         safe_error('admin/instituicao.php', 'Operação sem efeito, nenhum campo foi alterado...');
+        safe_error(null, 'Deve especificar uma instituição primeiro!');
       }
     }
     else {
-      safe_error('admin/instituicao.php', 'Deve especificar uma instituição primeiro!');
+      http_response_code(403);
     }
   }
   else {
-    http_response_code(403);
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
   }
 ?>

@@ -19,12 +19,12 @@
         FROM Pergunta
         LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
         LEFT JOIN (SELECT idPergunta,
-            SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-            SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
-            FROM VotoPergunta
-            GROUP BY idPergunta)
-            AS TabelaVotos
-            USING (idPergunta)
+          SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
+          SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+          FROM VotoPergunta
+          GROUP BY idPergunta)
+          AS TabelaVotos
+          USING (idPergunta)
         LEFT JOIN (SELECT idPergunta, COUNT(*)
           FROM Resposta
           GROUP BY idPergunta)
@@ -162,7 +162,7 @@
       return false;
     }
 
-    return $stmt->fetchAll();
+    return json_encode($stmt->fetchAll());
   }
   function utilizador_pesquisar($query, $filter, $sort, $order) {
 
@@ -265,6 +265,6 @@
       return false;
     }
 
-    return $stmt->fetchAll();
+    return json_encode($stmt->fetchAll());
   }
 ?>

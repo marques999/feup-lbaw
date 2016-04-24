@@ -10,10 +10,11 @@
 
   if ($queryCategoria && is_array($queryCategoria)) {
 
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
     $queryPerguntas = categoria_fetchPerguntas($idCategoria);
     $queryInstituicoes = instituicao_listByCategoria($idCategoria);
     $queryRelacionadas = categoria_listRelacionadas($idCategoria, false);
-    $isAdministrator = utilizador_isAdministrator($_SESSION['idUtilizador']);
+    $isAdministrator = utilizador_isAdministrator($idUtilizador);
 
     $smarty->assign('categoria', $queryCategoria);
     $smarty->assign('perguntas', $queryPerguntas);

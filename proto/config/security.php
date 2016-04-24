@@ -28,6 +28,7 @@
       $refererUrl = $BASE_URL . 'pages/' . $defaultUrl;
     }
     header("Location: $refererUrl");
+    exit;
   }
   function safe_error($defaultUrl, $errorMessage) {
     global $_SESSION;

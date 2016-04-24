@@ -2,41 +2,28 @@
   include_once('../../config/init.php');
   include_once('../../config/security.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
-    $isAdministrator = utilizador_isAdministrator($idUtilizador);
+  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+    safe_redirect('403.php');
+  }
 
-    if ($isAdministrator) {
+  if (!safe_check($_GET, 'id')) {
+    safe_error(null, 'Deve especificar um utilizador primeiro!');
+  }
 
-      if (safe_check($_GET, 'id')) {
-        $idUtilizador =
-        $stmt = $db->prepare('UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador');
-        $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  try {
 
-        try {
-          $stmt->execute();
-        }
-        catch (PDOException $e) {
-          safe_error(null, $e->getMessage());
-        }
-
-        if ($stmt->rowCount() > 0) {
-          safe_redirect('admin/utilizadores.php');
-        }
-        else {
-          safe_error(null, 'Erro na operação, utilizador inexistente?');
-        }
-      }
-      else {
-        safe_error(null, 'Deve especificar uma utilizador primeiro!');
-      }
+    if (utilizador_ban(safe_getId($_GET, 'id')) > 0) {
+      safe_redirect('admin/utilizadores.php');
     }
     else {
-      http_response_code(403);
+      safe_error(null, 'Erro na operação, tentou apagar uma conta de outro utilizador?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

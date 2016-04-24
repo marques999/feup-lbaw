@@ -6,29 +6,43 @@
 
     if (safe_check($_POST, 'idPergunta')) {
 
+      $hasCategoria = safe_check($_POST, 'idCategoria');
       $queryString = "UPDATE Pergunta SET ";
-      $hasTitulo = $safe_check($_POST, 'titulo');
       $numberColumns = 0;
 
-      if ($hasTitulo) {
-        $queryString += "titulo = :titulo";
+      if ($hasCategoria) {
+        $queryString .= 'idCategoria = :idCategoria';
         $numberColumns++;
       }
 
-      $hasDescricao = $safe_check($_POST, 'descricao');
+      $hasTitulo = safe_check($_POST, 'titulo');
+
+      if ($hasTitulo) {
+        $queryString += ($numberColumns > 0 ? : ' AND titulo = :titulo' : 'titulo = :titulo';
+        $numberColumns++;
+      }
+
+      $hasDescricao = safe_check($_POST, 'descricao');
 
       if ($hasDescricao) {
         $queryString += ($numberColumns > 0 ? ' AND descricao = :descricao' : 'descricao = :descricao');
         $numberColumns++;
       }
 
-      $queryString += ' WHERE idPergunta = :idPergunta';
+      $queryString += ' WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador';
 
       if ($numberColumns > 0) {
 
         $idPergunta = safe_getId($_POST, 'idPergunta');
+        $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
         $stmt = $db->prepare($queryString);
         $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+        $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+
+        if ($hasCategoria) {
+          $safeCategoria = safe_getId($_POST, 'idCategoria');
+          $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+        }
 
         if ($hasTitulo) {
           $safeTitulo = safe_trim($_POST, 'titulo');
@@ -48,10 +62,10 @@
         }
 
         if ($stmt->rowCount() > 0) {
-            safe_redirect('admin/instituicao.php');
+          safe_redirect("pergunta/view.php?id=$idPergunta");
         }
         else {
-          safe_error(null, 'Erro na operação, a pergunta não existe?');
+          safe_error(null, 'Erro na operação, tentou editar uma pergunta de outro utilizador?');
         }
       }
       else {
@@ -63,6 +77,6 @@
     }
   }
   else {
-    http_response_code(403);
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
   }
 ?>

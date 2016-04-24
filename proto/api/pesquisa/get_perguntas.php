@@ -3,10 +3,10 @@
   include_once('../../config/security.php');
   include_once('../../database/pesquisa.php');
 
-  $query = safe_trim($_GET['query']);
-  $filterBy = safe_trim($_GET['filter']);
-  $sortBy = safe_trim($_GET['sort']);
-  $orderBy = safe_trim($_GET['order']);
-
-  echo json_encode(pergunta_pesquisar($query, $filterBy, $sortBy, $orderBy));
+  echo pergunta_pesquisar(
+  	safe_trim($_GET['query']),
+  	safe_trim($_GET['filter']),
+  	safe_trim($_GET['sort']),
+  	safe_trim($_GET['order'])
+  );
 ?>

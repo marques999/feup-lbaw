@@ -1,13 +1,13 @@
 <?
   include_once('../../config/init.php');
+  include_once('../../config/security.php');
   include_once('../../database/pergunta.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-
     if (safe_check($_GET, 'id')) {
 
+      $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
       $idPergunta = safe_getId($_GET, 'id');
       $queryPergunta = pergunta_listById($idPergunta);
       $idAutor = safe_getId($queryPergunta, 'idutilizador');

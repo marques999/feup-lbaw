@@ -1,6 +1,5 @@
 {extends file='other/header.tpl'}
 {block name=content}
-{include file='common/messages.tpl'}
 <form action="{$BASE_URL}actions/utilizador/login.php" method="post" class="ink-form ink-formvalidator">
   <fieldset>
     <legend class="slab align-center">Autenticação</legend>

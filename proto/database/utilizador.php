@@ -30,22 +30,34 @@ function utilizador_validateLogin($username, $password) {
   }
   return 0;
 }
+function utilizador_delete($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('UPDATE Utilizador SET removido = TRUE WHERE idUtilizador = :idUtilizador');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function utilizador_ban($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
 function utilizador_fetchThreads($idUtilizador) {
   global $db;
   $stmt = $db->prepare("SELECT
       Conversa.idConversa,
       Conversa.titulo,
-      (CASE WHEN :idUtilizador = idUtilizador1 THEN ultimoAcesso1 ELSE ultimoAcesso2 END)
-      AS ultimoacesso,
+      (CASE WHEN :idUtilizador = idUtilizador1 THEN ultimoAcesso1 ELSE ultimoAcesso2 END) AS ultimoacesso,
       Utilizador.idUtilizador AS iddestinatario,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomedestinatario,
       Instituicao.sigla,
-      (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa)
-      AS numeromensagens,
+      (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa) AS numeromensagens,
       Mensagem1.idAutor AS idautor,
       AutorMensagem.username AS nomeautor,
       Mensagem1.descricao,
-      to_char(Mensagem1.dataHora, 'Day DD/MM/YYYY HH:MM') AS dataHora
+      Mensagem1.dataHora
     FROM Conversa
     JOIN Utilizador ON Utilizador.idUtilizador = (CASE WHEN :idUtilizador = idUtilizador1
     THEN idUtilizador2 ELSE idUtilizador1 END)
@@ -72,8 +84,8 @@ function utilizador_getById($idUtilizador) {
       Instituicao.website,
       Utilizador.localidade,
       Utilizador.codigoPais,
-      EXTRACT(EPOCH FROM Utilizador.dataRegisto) AS dataRegisto,
-      EXTRACT(EPOCH FROM Utilizador.ultimaSessao) AS ultimaSessao,
+      Utilizador.dataRegisto,
+      Utilizador.ultimaSessao,
       Utilizador.ativo,
       Utilizador.removido,
     (SELECT COUNT(*) FROM Pergunta
@@ -83,8 +95,7 @@ function utilizador_getById($idUtilizador) {
     AND Contribuicao.idAutor = idUtilizador) AS numerorespostas
     FROM Utilizador
     LEFT JOIN Instituicao USING(idInstituicao)
-    WHERE Utilizador.idUtilizador = :idUtilizador
-    LIMIT 1;");
+    WHERE Utilizador.idUtilizador = :idUtilizador;");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
@@ -94,13 +105,13 @@ function resposta_listByAuthor($idUtilizador) {
   $stmt = $db->prepare("SELECT Resposta.idResposta,
       Pergunta.idPergunta,
       Pergunta.titulo,
-      Contribuicao.descricao,
-      Resposta.melhorResposta,
       Pergunta.ativa,
+      Contribuicao.descricao,
+      Contribuicao.dataHora,
+      Resposta.melhorResposta,
       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-      COALESCE(SUM(valor), 0) AS pontuacao,
-      EXTRACT(EPOCH FROM Contribuicao.dataHora) as dataHora
+      COALESCE(SUM(valor), 0) AS pontuacao
     FROM Contribuicao
     JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
     JOIN Pergunta ON Pergunta.idPergunta = Resposta.idPergunta
@@ -108,7 +119,7 @@ function resposta_listByAuthor($idUtilizador) {
     LEFT JOIN VotoResposta USING(idResposta)
     WHERE Contribuicao.idAutor = :idUtilizador
     GROUP BY Contribuicao.idContribuicao, Pergunta.idPergunta, Resposta.idResposta
-    ORDER BY Resposta.idResposta DESC");
+    ORDER BY Contribuicao.dataHora DESC");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -121,10 +132,10 @@ function utilizador_listarActivos() {
       Utilizador.email,
       Utilizador.localidade,
       Utilizador.codigoPais,
+      Utilizador.ultimaSessao,
       Instituicao.sigla,
       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      EXTRACT(EPOCH FROM Utilizador.ultimaSessao) AS ultimaSessao
+      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
     FROM Utilizador
     NATURAL LEFT JOIN Instituicao
     LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
@@ -152,10 +163,10 @@ function utilizador_listarBanidos() {
       Utilizador.email,
       Utilizador.localidade,
       Utilizador.codigoPais,
+      Utilizador.ultimaSessao,
       Instituicao.sigla,
       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      EXTRACT(EPOCH FROM Utilizador.ultimaSessao) AS ultimaSessao
+      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
     FROM Utilizador
     NATURAL LEFT JOIN Instituicao
     LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
@@ -187,10 +198,10 @@ function utilizador_listarRemovidos() {
       Utilizador.email,
       Utilizador.localidade,
       Utilizador.codigoPais,
+      Utilizador.ultimaSessao,
       Instituicao.sigla,
       COALESCE(TabelaPerguntas.count, 0) AS numeroPerguntas,
-      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      EXTRACT(EPOCH FROM Utilizador.ultimaSessao) AS ultimaSessao
+      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas
     FROM Utilizador
     NATURAL LEFT JOIN Instituicao
     LEFT JOIN (SELECT idAutor AS idUtilizador, COUNT(*)
@@ -452,7 +463,6 @@ $countries = array(
   'ye'=>'Yemen',
   'zm'=>'Zambia',
   'zw'=>'Zimbabwe');
-
   function utilizador_getCountry($id) {
     global $countries;
     return $countries[$id];

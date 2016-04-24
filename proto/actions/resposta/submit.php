@@ -1,39 +1,35 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/resposta.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    if (safe_check($_POST, 'idPergunta')) {
+  if (!safe_check($_POST, 'idPergunta')) {
+    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+  }
 
-      if (safe_check($_POST, 'descricao')) {
+  if (!safe_check($_POST, 'descricao')) {
+    safe_error(null, 'O corpo da resposta não pode estar em branco!');
+  }
 
-        $idPergunta = safe_getId($_POST, 'idPergunta');
-        $idResposta = safe_getId($_POST, 'idResposta');
-        $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-        $safeMessage = safe_trim($_POST['descricao']);
-        $stmt = $db->prepare("INSERT INTO Contribuicao(idContribuicao, idAutor. descricao)
-          VALUES(DEFAULT, :idUtilizador, :descricao)");
-        $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-        $stmt->bindParam(":descricao", $safeMessage, PDO::PARAM_STR);
-        $stmt->execute();
+  try {
 
-        if ($stmt->rowCount() > 0) {
-          safe_redirect(null);
-        }
-        else {
-          safe_error(null, 'Erro na operação, outra resposta com este identificador já existe?');
-        }
-      }
-      else {
-        safe_error(null, 'O corpo da resposta não pode estar vazio!');
-      }
+    $idPergunta = safe_getId($_POST, 'idPergunta');
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+    $safeMessage = safe_trim($_POST['descricao']);
+
+    if (resposta_inserirResposta($idPergunta, $idUtilizador, $safeMessage) > 0) {
+      $idResposta = $db->lastInsertId('contribuicao_idcontribuicao_seq');
+      safe_redirect("pergunta/view.php?=$idPergunta#reply-$idResposta");
     }
     else {
-      safe_error(null, 'Deve especificar uma pergunta primeiro!');
+       safe_error(null, 'Erro na operação, outra resposta com este identificador já existe?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

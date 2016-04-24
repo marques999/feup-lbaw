@@ -1,42 +1,30 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/resposta.php');
 
   if (safe_check($_POST, 'idResposta')) {
 
     $idResposta = safe_getId($_POST, 'idResposta');
 
     if (safe_check($_POST, 'ultimoComentario')) {
-      $ultimoComentario = safe_getId($_POST, 'ultimoComentario');
-      $stmt = $db->prepare("SELECT
-          ComentarioResposta.idComentario,
-          Utilizador.idUtilizador,
-          Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-          Contribuicao.descricao,
-          to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
-        FROM ComentarioResposta
-        JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
-        JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-        WHERE ComentarioResposta.idResposta = :idResposta
-        AND ComentarioResposta.idComentario > :ultimoComentario");
-      $stmt->bindParam(":ultimoComentario", $ultimoComentario, PDO::PARAM_INT);
+
+      try {
+        echo resposta_fetchCommentsAfter($idResposta, safe_getId($_POST, 'ultimoComentario'));
+      }
+      catch (PDOException $e) {
+        http_response_code(400);
+      }
     }
     else {
-      $stmt = $db->prepare("SELECT
-          ComentarioResposta.idComentario,
-          Utilizador.idUtilizador,
-          Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-          Contribuicao.descricao,
-          to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
-        FROM ComentarioResposta
-        JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
-        JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-        WHERE ComentarioResposta.idResposta = :idResposta");
-    }
 
-    $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
-    $stmt->execute();
-    echo json_encode($stmt->fetchAll());
+      try {
+        echo resposta_fetchCommentsJson($idResposta);
+      }
+      catch (PDOException $e) {
+        http_response_code(400);
+      }
+    }
   }
   else {
     http_response_code(400);

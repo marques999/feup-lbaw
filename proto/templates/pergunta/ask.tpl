@@ -1,5 +1,5 @@
-{include file='common/header-editor.tpl'}
-{include file='common/navigation.tpl'}
+{extends file='common/header.tpl'}
+{block name=content}
 <div class="ink-grid column-group half-top-padding">
 <form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator all-60 medium-60 small-100 tiny-100">
 <fieldset>
@@ -115,4 +115,4 @@
   </div>
 </div>
 </div>
-{include file='common/footer.tpl'}
+{/block}

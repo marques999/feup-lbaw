@@ -1,43 +1,43 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/resposta.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    if (safe_check($_POST, 'idPergunta') && safe_check($_POST, 'idResposta') && safe_check($_POST, 'descricao')) {
+  if (!safe_check($_POST, 'idPergunta')) {
+    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+  }
 
-      $idPergunta = safe_getId($_POST, 'idPergunta');
-      $idResposta = safe_getId($_POST, 'idResposta');
-      $stmt = $db->prepare("SELECT idPergunta FROM Resposta WHERE idResposta = :idResposta");
-      $stmt->bindParam(':idResposta', $idResposta, PDO::PARAM_INT);
-      $stmt->execute();
+  if (!safe_check($_POST, 'idResposta')) {
+    safe_error(null, 'Deve especificar uma resposta primeiro!');
+  }
 
-      if (count($stmt->fetchAll()) > 0) {
+  if (!safe_check($_POST, 'descricao')) {
+    safe_error(null, 'O corpo da resposta não pode estar em branco!');
+  }
 
-        $safeMessage = safe_trim($_POST['descricao']);
-        $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-        $stmt = $db->prepare("UPDATE Contribuicao SET descricao = :descricao
-          WHERE idContribuicao = :idResposta AND idAutor = :idUtilizador");
-        $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
-        $stmt->bindParam(":descricao", $safeMessage, PDO::PARAM_STR);
-        $stmt->execute();
+  // verificar autor
+  $idPergunta = safe_getId($_POST, 'idPergunta');
+  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  $paginaPergunta = "pergunta/view.php?id=$idPergunta#reply-$idResposta";
+  $isSuperuser = utilizador_isAdministrator($idUtilizador) || utilizador_isModerator($idUtilizador);
 
-        if ($stmt->rowCount() > 0) {
-            safe_redirect(null);
-        }
-        else {
-          safe_error("pergunta/view.php?id=$idPergunta", 'Erro na operação: tentou editar uma resposta de outro utilizador, ou pergunta inexistente...');
-        }
-      }
-      else {
-        safe_error("pergunta/view.php?id=$idPergunta", 'O par de identificadores pergunta/resposta especificado não existe!');
-      }
+  try {
+
+    $idResposta = safe_getId($_POST, 'idResposta');
+    $safeMessage = safe_trim($_POST, 'descricao');
+
+    if (resposta_atualizarResposta($idResposta, $idUtilizador) > 0) {
+      safe_redirect($paginaPergunta);
     }
     else {
-      safe_error('homepage.php', 'Deve especificar todos os parâmetros da operação primeiro!');
+      safe_error($paginaPergunta, 'Erro na operação, tentou editar uma resposta de outro utilizador?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

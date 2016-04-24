@@ -1,32 +1,29 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/pergunta.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
+  if (!safe_check($_POST, 'idPergunta')) {
+    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+  }
+
+  try {
+
+    $idPergunta = safe_getId($_POST, 'idPergunta');
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
 
-    if (safe_check($_GET, 'id')) {
-
-      $idPergunta = safe_getId($_GET, 'id');
-      $stmt = $db->prepare("DELETE FROM Pergunta
-        WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador");
-      $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-      $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-      $stmt->execute();
-
-      if ($stmt->rowCount() > 0) {
-        safe_redirect(null);
-      }
-      else {
-        safe_error(null, 'Erro na operação, a pergunta não existe?');
-      }
+    if (pergunta_apagarPergunta($idPergunta, $idUtilizador) > 0) {
+      safe_redirect(null);
     }
     else {
-      safe_error(null, 'Deve especificar uma pergunta primeiro!');
+      safe_error(null, 'Erro na operação, tentou apagar uma pergunta de outro utilizador?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

@@ -1,41 +1,37 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/categoria.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    if (safe_check($_POST, 'idCategoria')) {
+  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+    http_response_code(403);
+  }
 
-      $idCategoria = safe_getId($_GET, 'id');
+  if (!safe_check($_POST, 'idCategoria')) {
+    safe_error(null, 'Deve especificar uma categoria primeiro!');
+  }
 
-      if ($safe_check($_POST, 'nome')) {
+  if (!safe_check($_POST, 'nome')) {
+    safe_error(null, 'Operação sem efeito, nenhum campo foi alterado...');
+  }
 
-        $stmt = $db->prepare("UPDATE Categoria SET nome = :nome WHERE idInstituicao = :idInstituicao");
-        $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
+  try {
 
-        try {
-          $stmt->execute();
-        }
-        catch (PDOException $e) {
-          safe_error('admin/categoria.php', $e->getMessage());
-        }
+    $idCategoria = safe_getId($_POST, 'idCategoria');
+    $nomeCategoria = safe_trim($_POST, 'nome');
 
-        if ($stmt->rowCount() > 0) {
-          safe_redirect('admin/categoria.php');
-        }
-        else {
-          safe_error('admin/categoria.php', 'Erro na operação, categoria inexistente?');
-        }
-      }
-      else {
-        safe_error('admin/categoria.php', 'Operação sem efeito, nenhum campo foi alterado...');
-      }
+    if (categoria_update($idCategoria, $nomeCategoria) > 0) {
+      safe_redirect("categoria/view.php?=$idCategoria");
     }
     else {
-      safe_error('admin/categoria.php', 'Deve especificar uma categoria primeiro!');
+      safe_error(null, 'Erro na operação, nenhum tuplo foi alterado!');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

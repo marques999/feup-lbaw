@@ -1,32 +1,23 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/pergunta.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
-
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
 
     if (safe_check($_POST, 'idPergunta')) {
 
       $idPergunta = safe_getId($_POST, 'idPergunta');
-      $stmt = $db->prepare("DELETE FROM Seguidor WHERE idSeguidor = :idUtilizador AND idPergunta = :idPergunta");
-      $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-      $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-      $stmt->execute();
+      $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
 
-      if ($stmt->rowCount() > 0) {
-
-        $stmt = $db->prepare("SELECT COUNT(*) FROM Seguidor WHERE idPergunta = :idPergunta");
-        $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+      if (pergunta_unfollowPergunta($idPergunta, $idUtilizador) > 0) {
 
         try {
-          $stmt->execute();
+          echo pergunta_contarSeguidores($idPergunta);
         }
         catch (PDOException $e) {
           http_response_code(400);
         }
-
-        echo json_encode($stmt->fetch());
       }
       else {
         http_response_code(400);

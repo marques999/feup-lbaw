@@ -13,10 +13,71 @@ function pergunta_listByAuthor($idUtilizador) {
     JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
     LEFT JOIN VotoPergunta USING(idPergunta)
     WHERE Utilizador.idUtilizador = :idUtilizador
-    GROUP BY Pergunta.idPergunta");
+    GROUP BY Pergunta.idPergunta
+    ORDER BY Pergunta.dataHora DESC");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
+}
+function pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descricao) {
+  global $db;
+  if (isset($descricao)) {
+    $stmt = $db->prepare("INSERT INTO Pergunta(idPergunta, idCategoria, idAutor, titulo, descricao)
+    VALUES(DEFAULT, :idCategoria, :idUtilizador, :titulo, :descricao)");
+    $stmt->bindParam(":descricao", $safeMessage, PDO::PARAM_STR);
+  }
+  else {
+    $stmt = $db->prepare("INSERT INTO Pergunta(idPergunta, idCategoria, idAutor, titulo)
+    VALUES(DEFAULT, :idCategoria, :idUtilizador, :titulo)");
+  }
+  $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(":titulo", $safeTitle, PDO::PARAM_STR);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_apagarPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("DELETE FROM Pergunta
+    WHERE idPergunta = :idPergunta
+    AND idAutor = :idUtilizador");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_fecharPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("UPDATE Pergunta SET ativa = FALSE
+    WHERE idPergunta = :idPergunta
+    AND idAutor = :idUtilizador");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_followPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("INSERT INTO Seguidor(idSeguidor, idPergunta) VALUES(:idUtilizador, :idPergunta)");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_unfollowPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("DELETE FROM Seguidor WHERE idSeguidor = :idUtilizador AND idPergunta = :idPergunta");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_contarSeguidores($idPergunta) {
+  global $db;
+  $stmt = $db->prepare("SELECT COUNT(*) FROM Seguidor WHERE idPergunta = :idPergunta");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return json_encode($stmt->fetch());
 }
 function pergunta_listById($idPergunta) {
   global $db;
@@ -57,6 +118,47 @@ function pergunta_listById($idPergunta) {
   $stmt->execute();
   return $stmt->fetch();
 }
+function pergunta_registarVoto($idPergunta, $idUtilizador, $valor) {
+  global $db;
+  $stmt = $db->prepare("SELECT registarVotoPergunta(:idPergunta, :idUtilizador, :valor)");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(":valor", $valor, PDO::PARAM_INT);
+  $stmt->execute();
+}
+function pergunta_inserirComentario($idPergunta, $idUtilizador, $descricao) {
+  global $db;
+  $stmt = $db->prepare("INSERT INTO Contribuicao(idContribuicao, idAutor, descricao)
+    VALUES(DEFAULT, :idUtilizador, :descricao)");
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(":descricao", $descricao, PDO::PARAM_STR);
+  $stmt->execute();
+  $idComentario = $db->lastInsertId('contribuicao_idcontribuicao_seq');
+  $stmt = $db->prepare("INSERT INTO ComentarioPergunta(idComentario, idPergunta)
+    VALUES(:idComentario, :idPergunta)");
+  $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return json_encode($stmt->rowCount());
+}
+function pergunta_removerComentario($idPergunta, $idComentario, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("DELETE FROM ComentarioPergunta
+    WHERE idComentario = :idComentario
+    AND idPergunta = :idPergunta");
+  $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  if ($stmt->rowCount() > 0) {
+    $stmt = $db->prepare("DELETE FROM Contribuicao
+      WHERE idContribuicao = :idComentario
+      AND idAutor = :idUtilizador");
+    $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
+    $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+    $stmt->execute();
+  }
+  return json_encode($stmt->rowCount());
+}
 function pergunta_userFollows($idUtilizador, $idPergunta) {
   global $db;
   $stmt = $db->prepare('SELECT idSeguidor FROM Seguidor WHERE idSeguidor = :idUtilizador AND idPergunta = :idPergunta');
@@ -91,6 +193,22 @@ function pergunta_fetchRelacionadas($idCategoria, $idPergunta) {
   $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
+}
+function pergunta_fetchVotes($idPergunta) {
+  global $db;
+  $stmt = $db->prepare("SELECT
+      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
+      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+      COALESCE(COUNT(*), 0) AS pontuacao
+    FROM VotoPergunta
+    WHERE idPergunta = :idPergunta
+    GROUP BY idPergunta");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetch();
+}
+function pergunta_fetchVotesJson($idPergunta) {
+  return json_encode(pergunta_fetchVotes($idPergunta));
 }
 function pergunta_fetchRespostas($idPergunta) {
   global $db;
@@ -136,7 +254,7 @@ function pergunta_fetchComments($idPergunta) {
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       Utilizador.removido,
       Contribuicao.descricao,
-      Contribuicao.dataHora
+      to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
     FROM ComentarioPergunta
     JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
     JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
@@ -145,6 +263,27 @@ function pergunta_fetchComments($idPergunta) {
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
+}
+function pergunta_fetchCommentsJson($idPergunta) {
+  return json_encode(pergunta_fetchComments($idPergunta));
+}
+function pergunta_fetchCommentsAfter($idPergunta, $ultimoComentario) {
+  global $db;
+  $stmt = $db->prepare("SELECT
+      ComentarioPergunta.idComentario,
+      Utilizador.idUtilizador,
+      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Contribuicao.descricao,
+      to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
+    FROM ComentarioPergunta
+    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
+    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
+    WHERE ComentarioPergunta.idPergunta = :idPergunta
+    AND ComentarioPergunta.idComentario > :ultimoComentario");
+  $stmt->bindParam(":ultimoComentario", $ultimoComentario, PDO::PARAM_INT);
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->execute();
+  return json_encode($stmt->fetchAll());
 }
 function pergunta_pesquisar($queryString) {
   global $db;
@@ -206,7 +345,7 @@ function pergunta_getStats($filterBy) {
   }
   $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
-  return $stmt->fetchAll();
+  return json_encode($stmt->fetchAll());
 }
 function resposta_fetchComments($idResposta) {
   global $db;
@@ -221,34 +360,6 @@ function resposta_fetchComments($idResposta) {
     WHERE ComentarioResposta.idResposta = :idResposta");
   $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
   $stmt->execute();
-  return $stmt->fetchAll();
-}
-function resposta_getStats($filterBy) {
-  global $db;
-  $queryString = "SELECT Utilizador.idUtilizador,
-      Utilizador.username,
-      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-      MAX(Contribuicao.idContribuicao) AS ultimaResposta,
-      MAX(Contribuicao.dataHora) AS dataHora,
-      COALESCE(COUNT(Resposta.idResposta), 0) AS numeroRespostas
-    FROM Resposta
-    LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-    LEFT JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-    GROUP BY Utilizador.idUtilizador\n";
-  if ($filterBy == 'day') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 day'\n";
-  }
-  else if ($filterBy == 'week') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 week'\n";
-  }
-  else if ($filterBy == 'month') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 month'\n";
-  }
-  else if ($filterBy == 'year') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 year'\n";
-  }
-  $queryString .= "ORDER BY numeroRespostas DESC, dataHora DESC LIMIT 5";
-  $stmt = $db->query($queryString);
   return $stmt->fetchAll();
 }
 ?>

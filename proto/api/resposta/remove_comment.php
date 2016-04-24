@@ -1,18 +1,18 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
-  include_once('../../database/pergunta.php');
+  include_once('../../database/resposta.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    if (safe_check($_POST, 'idPergunta') && safe_check($_POST, 'descricao')) {
+    if (safe_check($_POST, 'idResposta') && safe_check($_POST, 'idComentario')) {
 
-      $idPergunta = safe_getId($_POST, 'idPergunta');
+      $idComentario = safe_getId($_POST, 'idComentario');
+      $idResposta = safe_getId($_POST, 'idResposta');
       $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-      $safeDescricao = safe_trim($_POST['descricao']);
 
       try {
-        echo pergunta_inserirComentario($idPergunta, $idUtilizador, $safeDescricao);
+        echo resposta_removerComentario($idResposta, $idComentario, $idUtilizador);
       }
       catch (PDOException $e) {
         http_response_code(400);

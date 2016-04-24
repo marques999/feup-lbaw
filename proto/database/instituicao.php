@@ -15,6 +15,32 @@
       ORDER BY sigla");
     return $stmt->fetchAll();
   }
+  function instituicao_delete($idInstituicao) {
+    global $db;
+    $stmt = $db->prepare("DELETE FROM Instituicao WHERE idInstituicao = :idInstituicao");
+    $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->rowCount();
+  }
+  function instituicao_associarCategoria($idInstituicao, $idCategoria) {
+    global $db;
+    $stmt = $db->prepare("INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria)
+      VALUES(:idInstituicao, :idCategoria)");
+    $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+    $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+    $stmt->execute();
+    return json_encode($stmt->rowCount());
+  }
+  function instituicao_removerCategoria($idInstituicao, $idCategoria) {
+    global $db;
+    $stmt = $db->prepare("DELETE FROM CategoriaInstituicao
+     WHERE idInstituicao = :idInstituicao
+      AND idCategoria = :idCategoria");
+    $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+    $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+    $stmt->execute();
+    return json_encode($stmt->rowCount());
+  }
   function instituicao_listById($idInstituicao) {
     global $db;
     $stmt = $db->prepare("SELECT * FROM Instituicao WHERE idInstituicao = :idInstituicao");
@@ -67,7 +93,7 @@
       WHERE CategoriaInstituicao.idInstituicao = :idInstituicao
       GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
       ORDER BY Pergunta.dataHora DESC");
-    $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);;
+    $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
   }
@@ -97,6 +123,6 @@
     }
     $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
     $stmt = $db->query($queryString);
-    return $stmt->fetchAll();
+    return json_encode($stmt->fetchAll());
   }
 ?>

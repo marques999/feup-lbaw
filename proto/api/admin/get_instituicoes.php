@@ -5,10 +5,8 @@
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-
-    if (utilizador_isAdministrator($idUtilizador)) {
-      echo json_encode(instituicao_getStats(safe_trim($_GET['filter'])));
+    if (utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+      echo instituicao_getStats(safe_trim($_GET['filter']));
     }
     else {
       http_response_code(403);

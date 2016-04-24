@@ -1,34 +1,30 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/categoria.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    if (safe_check($_GET, 'id')) {
+  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+    http_response_code(403);
+  }
 
-      $idCategoria = safe_getId($_GET, 'id');
-      $stmt = $db->prepare("DELETE FROM Categoria WHERE idCategoria = :idCategoria");
-      $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+  if (!safe_check($_GET, 'id')) {
+    safe_error(null, 'Deve especificar uma categoria primeiro!');
+  }
 
-      try {
-        $stmt->execute();
-      }
-      catch (PDOException $e) {
-        safe_error('admin/categoria.php', $e->getMessage());
-      }
+  try {
 
-      if ($stmt->rowCount() > 0) {
-        safe_redirect('admin/categoria.php');
-      }
-      else {
-        safe_error('admin/categoria.php', 'erro na operação, a categoria não existe?');
-      }
+    if (categoria_delete(safe_getId($_GET, 'id')) > 0) {
+      safe_redirect('admin/categorias.php');
     }
     else {
-      safe_error('admin/categoria.php', 'deve especificar uma categoria primeiro!');
+      safe_error(null, 'Erro desconhecido, tentou apagar uma categoria inexistente?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

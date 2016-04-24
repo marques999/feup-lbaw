@@ -21,6 +21,7 @@
   {block name=navigation}
   {include file='common/navigation.tpl'}
   {/block}
+  {include file='common/messages.tpl'}
   {block name=content}
   {/block}
   {block name=footer}

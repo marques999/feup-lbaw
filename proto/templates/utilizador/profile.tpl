@@ -64,7 +64,7 @@
         </p>
       </div>
       <div class="column all-80">
-        <p class="quarter-vertical-space">Utilizadores</p>
+        <p class="quarter-vertical-space">{$grupo}</p>
         <p class="quarter-vertical-space">{$utilizador.dataregisto|date_format:"%A, %e %B %Y %H:%M"}</p>
         <p class="quarter-vertical-space">{$utilizador.ultimasessao|date_format:"%A, %e %B %Y %H:%M"}</p>
       </div>

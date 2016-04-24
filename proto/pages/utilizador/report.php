@@ -4,10 +4,9 @@
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    $idModerador = safe_getId($_SESSION, 'idUtilizador');
-
     if (safe_check($_GET, 'id')) {
 
+      $idModerador = safe_getId($_SESSION, 'idUtilizador');
       $idUtilizador = safe_getId($_GET, 'id');
 
       if (utilizador_isModerator($idModerador) && $idModerador != $idUtilizador) {

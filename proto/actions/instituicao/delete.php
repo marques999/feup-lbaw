@@ -1,34 +1,30 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/security.php');
+  include_once('../../database/instituicao.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
 
-    if (safe_check($_GET, 'id')) {
+  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+    http_response_code(403);
+  }
 
-      $idInstituicao = safe_getId($_GET, 'id');
-      $stmt = $db->prepare("DELETE FROM Instituicao WHERE idInstituicao = :idInstituicao");
-      $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+  if (!safe_check($_GET, 'id')) {
+    safe_error(null, 'Deve especificar uma instituição primeiro!');
+  }
 
-      try {
-        $stmt->execute();
-      }
-      catch (PDOException $e) {
-        safe_error('admin/instituicao.php', $e->getMessage());
-      }
+  try {
 
-      if ($stmt->rowCount() > 0) {
-        safe_redirect('admin/instituicao.php');
-      }
-      else {
-        safe_error('admin/instituicao.php', 'Erro na operação, a instituição não existe?');
-      }
+    if (instituicao_delete(safe_getId($_GET, 'id')) > 0) {
+      safe_redirect('admin/instituicoes.php');
     }
     else {
-      safe_error('admin/instituicao.php', 'Deve especificar uma instituição primeiro!');
+      safe_error(null, 'Erro desconhecido, tentou apagar uma instituição inexistente?');
     }
   }
-  else {
-    http_response_code(403);
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

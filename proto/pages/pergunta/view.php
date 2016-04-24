@@ -5,12 +5,13 @@
   include_once('../../database/pergunta.php');
 
   $idPergunta = safe_getId($_GET, 'id');
-  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   $queryPergunta = pergunta_listById($idPergunta);
 
   if ($queryPergunta && is_array($queryPergunta)) {
 
     $idCategoria = safe_getId($queryPergunta, 'idcategoria');
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+    $idAutor = safe_getId($queryPergunta, 'idutilizador');
     $queryRespostas = pergunta_fetchRespostas($idPergunta);
     $queryComentarios = pergunta_fetchComments($idPergunta);
     $queryCategorias = categoria_listRelacionadas($idCategoria, true);
@@ -20,8 +21,8 @@
     $userVote = pergunta_userVote($idUtilizador, $idPergunta);
     $userFollows = pergunta_userFollows($idUtilizador, $idPergunta);
     $userPrivileges = 'User';
-   
-    if (safe_getId($queryPergunta, 'idutilizador') == $idUtilizador) {
+
+    if ($idAutor == $idUtilizador) {
       $userPrivileges = 'OP';
     }
     else if ($isAdministrator) {

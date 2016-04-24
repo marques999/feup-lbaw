@@ -3,14 +3,12 @@
   include_once('../../config/security.php');
   include_once('../../database/categoria.php');
   include_once('../../database/instituicao.php');
-  include_once('../../database/pergunta.php');
 
-  $siglaInstituicao = safe_trim($_GET['id']);
-  $queryInstituicao = instituicao_listBySigla($siglaInstituicao);
+  $queryInstituicao = instituicao_listBySigla(safe_trim($_GET['id']));
 
   if ($queryInstituicao && is_array($queryInstituicao)) {
 
-	$idInstituicao = $queryInstituicao['idinstituicao'];
+    $idInstituicao = $queryInstituicao['idinstituicao'];
     $queryCategorias = categoria_listByInstituicao($idInstituicao);
     $queryPerguntas = instituicao_fetchPerguntas($idInstituicao);
     $isAdministrator = utilizador_isAdministrator($_SESSION['idUtilizador']);

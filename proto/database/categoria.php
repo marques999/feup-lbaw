@@ -3,6 +3,28 @@
     global $db;
     return $db->query("SELECT * FROM Categoria ORDER BY nome")->fetchAll();
   }
+  function categoria_adicionarCategoria($nomeCategoria) {
+    global $db;
+    $stmt = $db->prepare("INSERT INTO Categoria(idCategoria, nome) VALUES(DEFAULT, :nome)");
+    $stmt->bindParam(":nome", $nomeCategoria, PDO::PARAM_STR);
+    $stmt->execute();
+    return json_encode($stmt->rowCount());
+  }
+  function categoria_delete($idCategoria) {
+    global $db;
+    $stmt = $db->prepare("DELETE FROM Categoria WHERE idCategoria = :idCategoria");
+    $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->rowCount();
+  }
+  function categoria_update($idCategoria, $nomeCategoria) {
+    global $db;
+    $stmt = $db->prepare("UPDATE Categoria SET nome = :nome WHERE idInstituicao = :idInstituicao");
+    $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
+    $stmt->bindParam(':nome', $nomeCategoria, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->rowCount();
+  }
   function categoria_listById($idCategoria) {
     global $db;
     $stmt = $db->prepare("SELECT * FROM Categoria WHERE idCategoria = :idCategoria");
@@ -37,7 +59,7 @@
         AND Categorias.idCategoria <> Categoria.idCategoria
         GROUP BY Categorias.idCategoria
         ORDER BY random()
-        LIMIT 4)");   
+        LIMIT 4)");
     }
     else {
       $stmt = $db->prepare("SELECT Categorias.idCategoria, Categorias.nome
@@ -49,7 +71,7 @@
         AND Categorias.idCategoria <> Categoria.idCategoria
         GROUP BY Categorias.idCategoria
         ORDER BY random()
-        LIMIT 5");     
+        LIMIT 5");
     }
     $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
     $stmt->execute();
@@ -109,6 +131,6 @@
     }
     $queryString .= "ORDER BY numeroPerguntas DESC, Pergunta.dataHora DESC LIMIT 5";
     $stmt = $db->query($queryString);
-    return $stmt->fetchAll();
+    return json_encode($stmt->fetchAll());
   }
 ?>
