@@ -35,11 +35,11 @@
 ^ Permissions    | MEM                                                                                                                 ||
 
 === R205: Obter perguntas ===
-^ URL            | ''/api/pesquisa/get_perguntas.php''                               ||
+^ URL            | ''/api/pesquisa/get_perguntas.php''                                          ||
 ^ Description    | Este //AJAX request// permite obter uma lista com todas as perguntas existentes no sistema (se não for passada uma //query// como argumento) ou com as perguntas que obedecem aos critérios de pesquisa introduzidos pelo utilizador (se for passada uma //query// como argumento). ||
-^ Method         | POST                                                              ||
-^ Request body   | +query: text    | termos de pesquisa introduzidos pelo utilizador  |
-^                | ?sort: text     | ?sort=answers: ordena as perguntas por número de respostas \\ ?sort=date: ordena as perguntas por data de publicação \\ ?sort=rank: ordena as perguntas por relevância \\ ?sort=score: ordena as perguntas por pontuação \\ ?sort=title: ordena as perguntas por título    |
+^ Method         | POST                                                                         ||
+^ Request body   | +query: text    | termos de pesquisa introduzidos pelo utilizador             |
+^                | ?sort: text     | ?sort=answers: ordena as perguntas por número de respostas \\ ?sort=date: ordena as perguntas por data de publicação \\ ?sort=rank: ordena as perguntas por relevância \\ ?sort=score: ordena as perguntas por pontuação \\ ?sort=title: ordena as perguntas por título     |
 ^                | ?order: text    | ?order=ascending: apresenta os resultados por ordem crescente \\ ?order=descending: apresenta os resultados por ordem decrescente      |
 ^                | ?filter: text   | ?filter=day: pesquisa apenas nas perguntas publicadas nas últimas 24 horas \\ ?filter=week: pesquisa nas perguntas publicadas na última semana \\ ?filter=month: pesquisa nas perguntas publicadas no ultimo mês \\ ?filter=year: pesquisa nas perguntas publicadas no último ano |
 ^ Response body  | [[#json201obter_perguntas|JSON201]]                                          ||
@@ -48,15 +48,15 @@
 ^ Permissions    | PUB                                                                          ||
 
 === R206: Obter utilizadores ===
-^ URL            | ''/api/pesquisa/get_utilizadores.php''                                                                                 ||
-^ Description    | Este //AJAX request// permite obter uma lista com todos os utilizadores existentes no sistema (se não for passada uma //query// como argumento) ou com os utilizadores que obedecem aos critérios de pesquisa introduzidos pelo utilizador (se for passada uma //query// como argumento). ||
-^ Method         | POST                                                                                                                   ||
-^ Request body   | +query: text    | termos de pesquisa introduzidos pelo utilizador                                                       |
-^                | ?sort: text     | ?sort=email: ordena os utilizadores pelo endereço de e-mail \\ ?sort=name: ordena os utilizadores pelo nome completo \\ ?sort=rank: ordena os utilizadores por relevância \\ ?sort=username: ordena os utilizadores por username                                   |
+^ URL            | ''/api/pesquisa/get_utilizadores.php''                                                                                            ||
+^ Description    | Este //AJAX request// permite obter uma lista com todos os utilizadores existentes no sistema (se não for passada uma //query// como argumento) ou com os utilizadores que obedecem aos critérios de pesquisa introduzidos pelo utilizador (se for passada uma //query// como argumento).            ||
+^ Method         | POST                                                                                                                              ||
+^ Request body   | +query: text    | termos de pesquisa introduzidos pelo utilizador                                                                  |
+^                | ?sort: text     | ?sort=email: ordena os utilizadores pelo endereço de e-mail \\ ?sort=name: ordena os utilizadores pelo nome completo \\ ?sort=rank: ordena os utilizadores por relevância \\ ?sort=username: ordena os utilizadores por username                                              |
 ^                | ?order: text    | ?order=ascending: apresenta os resultados por ordem crescente \\ ?order=descending: apresenta os resultados por ordem decrescente      |
-^                | ?filter: text   | ?filter=active: pesquisa apenas no grupo de utilizadores ativos \\ ?filter=inactive: pesquisa apenas no grupo de utilizadores que apagaram a sua conta \\ ?filter=banned: pesquisa no grupo dos utilizadores banidos           |
-^ Response body  | [[#json202obter_utilizadores|JSON202]]                                       ||
-^ Returns        | 200 OK          | se todas as operações executarem com sucesso                |
-^                | 400 Bad Request | se as informações enviadas pelo utilizador forem inválidas  |
-^                | 403 Forbidden   | se utilizador não tiver permissões suficientes              |
-^ Permissions    | MEM                                                                          ||
+^                | ?filter: text   | ?filter=active: pesquisa apenas no grupo de utilizadores ativos \\ ?filter=inactive: pesquisa apenas no grupo de utilizadores que apagaram a sua conta \\ ?filter=banned: pesquisa no grupo dos utilizadores banidos                                                                |
+^ Response body  | [[#json202obter_utilizadores|JSON202]]                                                                                            ||
+^ Returns        | 200 OK          | se todas as operações executarem com sucesso                                                                     |
+^                | 400 Bad Request | se as informações enviadas pelo utilizador forem inválidas                                                       |
+^                | 403 Forbidden   | se utilizador não tiver permissões suficientes                                                                   |
+^ Permissions    | MEM                                                                                                                               ||

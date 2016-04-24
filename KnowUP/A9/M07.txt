@@ -40,6 +40,6 @@
 ^ Method         | GET                                                           ||
 ^ Method         | GET                                                           ||
 ^ Parameters     | +id: integer                     | chave primária da conversa  |
-^ Redirects      | [[#r701mensagens_privadas|R701]] | Sucesso                    ||
+^ Redirects      | [[#r701mensagens_privadas|R701]] | Sucesso                     |
 ^                | [[#r702pagina_da_conversa|R702]] | Erro                        |
 ^ Permissions    | OWN                                                           ||

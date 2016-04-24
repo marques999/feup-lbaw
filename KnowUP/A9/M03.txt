@@ -26,41 +26,41 @@
 ^ Permissions    | OP, MOD, ADM                                                                       ||
 
 === R304: Submeter pergunta ===
-^ URL            | ''/actions/pergunta/submit.php''                        ||
-^ Description    | Esta //action// permite introduzir uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova pergunta, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro. ||
-^ Method         | POST                                                    ||
-^ Request body   | +titulo: text                    | título da pergunta    |
-^                | ?descricao: text                 | conteúdo da pergunta  |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso               |
-^                | [[#r302redigir_pergunta|R302]]   | Erro                  |
-^ Permissions    | MEM                                                     ||
+^ URL            | ''/actions/pergunta/submit.php''                           ||
+^ Description    | Esta //action// permite introduzir uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova pergunta, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro.    ||
+^ Method         | POST                                                       ||
+^ Request body   | +titulo: text                    | título da pergunta       |
+^                | ?descricao: text                 | conteúdo da pergunta     |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                  |
+^                | [[#r302redigir_pergunta|R302]]   | Erro                     |
+^ Permissions    | MEM                                                        ||
 
 === R305: Atualizar pergunta ===
-^ URL            | ''/actions/pergunta/update.php''                              ||
-^ Description    | Esta //action// permite atualizar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta já com as alterações feitas, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro.     ||
-^ Method         | POST                                                          ||
-^ Request body   | +idPergunta: integer             | chave primária da pergunta  |
-^                | ?titulo: text                    | novo título da pergunta     |
-^                | ?descricao: text                 | novo conteúdo da pergunta   |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                    ||
-^                | [[#r303editar_pergunta|R303]]    | Erro                       ||
-^ Permissions    | OP, MOD, ADM                                                  ||
+^ URL            | ''/actions/pergunta/update.php''                                 ||
+^ Description    | Esta //action// permite atualizar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta já com as alterações feitas, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro.        ||
+^ Method         | POST                                                             ||
+^ Request body   | +idPergunta: integer             | chave primária da pergunta     |
+^                | ?titulo: text                    | novo título da pergunta        |
+^                | ?descricao: text                 | novo conteúdo da pergunta      |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                        |
+^                | [[#r303editar_pergunta|R303]]    | Erro                           |
+^ Permissions    | OP, MOD, ADM                                                     ||
 
 === R306: Fechar pergunta ===
-^ URL            | ''/actions/pergunta/close.php''                                                                                               ||
-^ Description    | Esta //action// permite fechar uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser mais respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | GET                                                                                                                           ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                                                      |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                              ||
-^ Permissions    | OP, MOD, ADM                                                                                                                  ||
+^ URL            | ''/actions/pergunta/close.php''                                                                                                   ||
+^ Description    | Esta //action// permite fechar uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser mais respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar.     ||
+^ Method         | GET                                                                                                                               ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                                                          |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                                  ||
+^ Permissions    | OP, MOD, ADM                                                                                                                      ||
 
 === R307: Apagar pergunta ===
 ^ URL            | ''/actions/pergunta/delete.php''                              ||
 ^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador  uma mensagem de erro.                                                ||
 ^ Method         | POST                                                          ||
 ^ Parameters     | +idPergunta: integer             | chave primária da pergunta  |
-^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso                    ||
-^                | [[#r301pagina_da_pergunta|R301]] | Erro                       ||
+^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso                     |
+^                | [[#r301pagina_da_pergunta|R301]] | Erro                        |
 ^ Permissions    | OP, ADM                                                       ||
 
 === R308: Seguir pergunta ===

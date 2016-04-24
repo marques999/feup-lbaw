@@ -46,7 +46,7 @@
 
 === R606: Atualizar instituição ===
 ^ URL            | ''/actions/instituicao/update.php''                                                                                                         ||
-^ Description    | Esta //action// permite alterar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição da instituição, sendo apresentada ao utilizador uma mensagem de erro.                                                              ||
+^ Description    | Esta //action// permite alterar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição da instituição, sendo apresentada ao utilizador uma mensagem de erro.                                                                                             ||
 ^ Method         | POST                                                                                                                                        ||
 ^ Request body   | +idInstituicao: integer             | chave primária da instituição                                                                          |
 ^                | ?nome: text                         | novo nome da instituição (ou nome atual se não tiver sido alterado no formulário)                      |
@@ -59,13 +59,13 @@
 ^ Permissions    | ADM                                                                                                                                         ||
 
 === R607: Apagar instituição ===
-^ URL          | ''/actions/instituicao/delete.php''                                 ||
-^ Description  | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                                ||
-^ Method       | GET                                                                 ||
-^ Parameters   | +id: text                           | sigla da instituição           |
-^ Redirects    | [[#r803gerir_instituicoes|R803]]    | Sucesso                       ||
-^              | [[#r604pagina_da_instituicao|R604]] | Erro                           |
-^ Permissions  | ADM                                                                 ||
+^ URL          | ''/actions/instituicao/delete.php''                        ||
+^ Description  | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                       ||
+^ Method       | GET                                                        ||
+^ Parameters   | +id: text                           | sigla da instituição  |
+^ Redirects    | [[#r803gerir_instituicoes|R803]]    | Sucesso               |
+^              | [[#r604pagina_da_instituicao|R604]] | Erro                  |
+^ Permissions  | ADM                                                        ||
 
 === R608: Associar categoria ===
 ^ URL            | ''/api/instituicao/insert_categoria.php''                                            ||
