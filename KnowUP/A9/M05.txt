@@ -1,41 +1,44 @@
 ==== Módulo M05: Categorias ====
 
 === R501: Listar categorias ===
-^ URL            | ''/pages/categoria/list.php''                                                                     ||
-^ Description    | Esta página permite visualizar uma lista alfabética de todas as categorias existentes no sistema. ||
-^ UI             | [[:lbaw1525:proj:a3#ui07alista_de_categorias|UI07a]]                                              ||
-^ Permissions    | PUB                                                                                               ||
-
-=== R502: Editar categoria ===
-^ URL            | ''/pages/categoria/edit.php''                                                            ||
-^ Description    | Esta página permite alterar informações da categoria escolhida através de um formulário. ||
-^ Method         | GET                                                                                      ||
-^ Parameters     | +id: integer | chave primária da categoria                                                |
-^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                               ||
-^ Permissions    | ADM                                                                                      ||
-
-=== R503: Página da categoria ===
-^ URL            | ''/pages/categoria/view.php''                                                                                   ||
-^ Description    | Esta página permite visualizar uma lista de perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria. É possível filtrar/ordenar as perguntas por data de publicação, número de respostas ou classificação. ||
-^ Method         | GET                                                                                                             ||
-^ Parameters     | +id: integer | chave primária da categoria                                                                       |
-^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]]                                                              ||
+^ URL            | ''/pages/categoria/list.php''                                                                                   ||
+^ Description    | Esta página permite visualizar uma lista ordenada alfabeticamente de todas as categorias existentes no sistema. ||
+^ UI             | [[:lbaw1525:proj:a3#ui07alista_de_categorias|UI07a]]                                                            ||
 ^ Permissions    | PUB                                                                                                             ||
 
-=== R504: Atualizar categoria ===
-^ URL            | ''/actions/categoria/update.php''                                                             ||
-^ Description    | Esta //action// atualiza as informações de uma categoria com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da categoria, caso contrário regressa à página de edição, sendo apresentada ao utilizador uma mensagem de erro.                                                                                                            ||
-^ Method         | POST                                                                                          ||
-^ Request body   | +idCategoria: integer | chave primária da categoria                                            |
-^                | ?nome: text | novo nome da categoria (ou nome atual se não tiver sido alterado no formulário)  |
-^ Redirects      | [[#r503pagina_da_categoria|R503]] | Sucesso                                                    |
-^                | [[#r502editar_categoria|R502]]    | Erro                                                       |
-^ Permissions    | ADM                                                                                           ||
+=== R502: Página da categoria ===
+^ URL            | ''/pages/categoria/view.php''                      ||
+^ Description    | Esta página permite visualizar uma lista com perguntas da categoria escolhida e aceder rapidamente às categorias relacionadas e às instituições associadas a essa categoria.                                          ||
+^ Method         | GET                                                ||
+^ Parameters     | +id: integer | chave primária da categoria          |
+^ UI             | [[:lbaw1525:proj:a3#ui06pagina_da_categoria|UI06]] ||
+^ Permissions    | PUB                                                ||
 
-=== R505: Apagar categoria ===
-^ URL          | ''/actions/categoria/delete.php''              ||
-^ Description  | Esta //action// apaga uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página de gestão de categorias, sendo apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method       | GET                                            ||
-^ Parameters   | +id: integer | chave primária da categoria      |
-^ Redirects    | [[#r802gerir_categorias|R802]]                 ||
-^ Permissions  | ADM                                            ||
+=== R503: Editar categoria ===
+^ URL            | ''/actions/categoria/update.php''                   ||
+^ Description    | Esta //action// permite alterar uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página da categoria, sendo apresentada uma mensagem de erro se esta operação falhar.        ||
+^ Method         | POST                                                ||
+^ Request body   | +idCategoria: integer | chave primária da categoria  |
+^                | ?nome: text           | novo nome da categoria       |
+^ Redirects      | [[#r502pagina_da_categoria|R502]]                   ||
+^ Permissions    | ADM                                                 ||
+
+=== R504: Apagar categoria ===
+^ URL          | ''/actions/categoria/delete.php''                               ||
+^ Description  | Esta //action// permite apagar uma categoria com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de categorias, caso contrário regressa à página da categoria, sendo apresentada ao utilizador uma mensagem de erro.                                  ||
+^ Method       | GET                                                             ||
+^ Parameters   | +id: integer                      | chave primária da categoria  |
+^ Redirects    | [[#r802gerir_categorias|R802]]    | Sucesso                      |
+^              | [[#r502pagina_da_categoria|R502]] | Erro                         |
+^ Permissions  | ADM                                                             ||
+
+=== R505: Adicionar categoria ===
+^ URL            | ''/api/categoria/insert.php''                                                                          ||
+^ Description    | Este //AJAX request// permite adicionar uma nova categoria ao sistema com base na informação recebida. ||
+^ Method         | POST                                                                                                   ||
+^ Request body   | +nome: text              | nome da categoria                                                            |
+^ Response body  | Boolean                                                                                                ||
+^ Returns        | 200 OK                   | se todas as operações executarem com sucesso                                 |
+^                | 400 Bad Request          | se as informações enviadas pelo utilizador forem inválidas                   |
+^                | 403 Forbidden            | se utilizador não tiver permissões suficientes                               |
+^ Permissions    | ADM                                                                                                    ||

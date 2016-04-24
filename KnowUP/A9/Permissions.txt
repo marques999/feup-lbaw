@@ -1,9 +1,9 @@
-^ PUB    | Público         | Grupo de utilizadores sem privilégios (visitantes)                |
-^ MEM    | Membros         | Grupo de utilizadores autenticados (podem ser membros, moderadores ou administradores, no entanto sem permissões especiais)                                                                      |
-^ MOD    | Moderador       | Grupo de moderadores                                              |
-^ ADM    | Administrador   | Grupo de administradores                                          |
-^ OP     | OriginalPoster  | Utilizador autenticado que corresponde ao autor de uma pergunta   |
-^ SEG    | Seguidor        | Grupo de utilizadores autenticados que seguem uma pergunta        |
-^ OWNRES | AutorResposta   | Utilizador autenticado que corresponde ao autor de uma resposta   |
-^ OWNCOM | AutorComentário | Utilizador autenticado que corresponde ao autor de um comentário  | 
-^ OWN    | Owner           | Próprio utilizador (deverá estar autenticado), que poderá também ser um dos intervenientes numa conversa entre dois utilizadores                                                               |
+^ PUB    | Público         | Grupo de utilizadores sem privilégios (visitantes)                                                    |
+^ MEM    | Membros         | Grupo de utilizadores autenticados (membros, moderadores ou administradores sem permissões especiais) |
+^ MOD    | Moderadores     | Grupo de moderadores                                                                                  |
+^ ADM    | Administrador   | Grupo de administradores                                                                              |
+^ SEG    | Seguidores      | Grupo de utilizadores autenticados que seguem uma pergunta                                            |
+^ OWN    | OwnUser         | Próprio utilizador (deverá ter sessão iniciada)                                                       |
+^ OWNR   | OwnerResposta   | Utilizador autenticado que corresponde ao autor de uma resposta                                       |
+^ OWNC   | OwnerComentário | Utilizador autenticado que corresponde ao autor de um comentário                                      |
+^ OP     | OriginalPoster  | Utilizador autenticado que corresponde ao autor de uma pergunta                                       |

@@ -58,13 +58,11 @@
 ==== JSON301: Registar voto ====
 
 <code javascript>
-[
-    {
-        "votospositivos": 3,
-        "votosnegativos": 1,
-        "pontuacao": 2
-    }
-]
+{
+    "votospositivos": 3,
+    "votosnegativos": 1,
+    "pontuacao": 2
+}
 </code>
 
 ==== JSON302: Obter comentários ====
@@ -76,14 +74,14 @@
         "idutilizador": 5,
         "nomeutilizador": "Pablo Picasso",
         "descricao": "A dor é muito forte? @mellus",
-        "datahora": "1443191422"
+        "datahora": "Friday, 25 September 2015 15:30"
     },
     {
         "idcomentario": 9,
         "idutilizador": 3,
         "nomeutilizador": "Pedro Melo",
         "descricao": "Não, só que como é persistente perturba-me o estudo.",
-        "datahora": "1443201610"
+        "datahora": "Friday, 25 September 2015 18:20"
     }
 ]
 </code>
@@ -91,13 +89,11 @@
 ==== JSON401: Registar voto ====
 
 <code javascript>
-[
-    {
-        "votospositivos": 3,
-        "votosnegativos": 5,
-        "pontuacao": -2
-    }
-]
+{
+    "votospositivos": 3,
+    "votosnegativos": 5,
+    "pontuacao": -2
+}
 </code>
 
 ==== JSON402: Obter comentários ====
@@ -105,32 +101,18 @@
 <code javascript>
 [
     {
-        "idcomentario": 39,
-        "idutilizador": 2,
-        "nomeutilizador": "Diogo Marques",
-        "descricao": "EU SEI",
-        "datahora": "1460735669"
+        "idcomentario": 11,
+        "idutilizador": 3,
+        "nomeutilizador": "Pedro Melo",
+        "descricao": "Muito obrigado! PS: Qual é a farmácia mais próxima do S.João?",
+        "datahora": "Friday, 25 September 2015 20:36"
     },
     {
-        "idcomentario": 40,
+        "idcomentario": 12,
         "idutilizador": 2,
         "nomeutilizador": "Diogo Marques",
-        "descricao": "AFINAL NÃO SEI",
-        "datahora": "1460735703"
+        "descricao": "Vai ao Amial, há uma aberta de certeza.",
+        "datahora": "Friday, 25 September 2015 20:40"
     },
-    {
-        "idcomentario": 41,
-        "idutilizador": 2,
-        "nomeutilizador": "Diogo Marques",
-        "descricao": "como?",
-        "datahora": "1460735780"
-    },
-    {
-        "idcomentario": 42,
-        "idutilizador": 2,
-        "nomeutilizador": "Diogo Marques",
-        "descricao": "porquê?",
-        "datahora": "1460735854"
-    }
 ]
 </code>

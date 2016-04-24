@@ -1,25 +1,26 @@
 ==== Módulo M08: Administração ====
 
 === R801: Portal de administração ===
-^ URL            | ''/pages/admin/homepage.php''                ||
-^ Description    | Esta página serve como portal ao administrador para gerir as categorias, as instituições e os utilizadores existentes no sistema.                                                        ||
-^ UI             | [[:lbaw1525:proj:a3#ui15administracao|UI15]] ||
-^ Permissions    | ADM                                          ||
+^ URL            | ''/pages/admin/homepage.php''                                                                                                     ||
+^ Description    | Esta página serve como portal ao administrador para gerir as categorias, as instituições e os utilizadores existentes no sistema. ||
+^ UI             | [[:lbaw1525:proj:a3#ui15administracao|UI15]]                                                                                      ||
+^ Permissions    | ADM                                                                                                                               ||
 
 === R802: Gerir categorias ===
-^ URL            | ''/pages/admin/categoria.php''                              ||
-^ Description    | Esta página permite ao administrador fazer a gestão das categorias existentes no sistema: visualizar uma lista de categorias, alterar informações sobre as categorias, bem como apagar categorias.                   ||
-^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]] ||
+^ URL            | ''/pages/admin/categorias.php''                             ||
+^ Description    | Esta página permite ao administrador fazer a gestão das categorias existentes no sistema: visualizar uma lista de categorias, alterar informações sobre as categorias, apagar categorias.                            ||
+^ AJAX Calls     | [[#r505adicionar_categoria|R505]]                           ||
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                 ||
 ^ Permissions    | ADM                                                         ||
 
 === R803: Gerir instituições ===
-^ URL            | ''/pages/admin/instituicao.php''                            ||
+^ URL            | ''/pages/admin/instituicoes.php''                                                             ||
 ^ Description    | Esta página permite ao administrador fazer a gestão das instituições existentes no sistema: visualizar uma lista com as instituições, alterar informações sobre as instituições, apagar instituições, bem como associar ou remover categorias às instituições. ||
-^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]] ||
-^ Permissions    | ADM                                                         ||
+^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]]                                   ||
+^ Permissions    | ADM                                                                                           ||
 
 === R804: Gerir utilizadores ===
-^ URL            | ''/pages/admin/utilizador.php''                                                                   ||
+^ URL            | ''/pages/admin/utilizadores.php''                                                                 ||
 ^ Description    | Esta página permite ao administrador fazer a gestão dos utilizadores existentes no sistema: pesquisar utilizadores, visualizar uma lista com os utilizadores, consultar os //reports// enviados pelos moderadores, banir utilizadores, bem como apagar utilizadores. ||
 ^ UI             | [[:lbaw1525:proj:a3#ui17gerir_utilizadores|UI17]]                                                 ||
 ^ Permissions    | ADM                                                                                               ||

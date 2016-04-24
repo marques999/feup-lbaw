@@ -21,31 +21,31 @@
 ^ Permissions    | MEM, OWN                                            ||
 
 === R104: Página de report ===
-^ URL            | ''/pages/utilizador/report.php''                             ||
-^ Description    | Esta página permite aos moderadores denunciar utilizadores que não cumpram com as normas de utilização deste serviço através do preenchimento de um formulário.                                                               ||
-^ Method         | GET                                                          ||
-^ Parameters     | +id: integer | chave primária do utilizador a ser denunciado  |
-^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                  ||
-^ Permissions    | MOD                                                          ||
+^ URL            | ''/pages/utilizador/report.php''                                                                                 ||
+^ Description    | Esta página permite aos moderadores visualizar um histórico dos //reports// que submeteram. Se for passado um //ID// como parâmetro, permite denunciar um utilizador que não tenha cumprido com as normas de utilização deste serviço através do preenchimento de um formulário. ||
+^ Method         | GET                                                                                                              ||
+^ Parameters     | ?id: integer | chave primária do utilizador a ser denunciado                                                      |
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                                      ||
+^ Permissions    | MOD                                                                                                              ||
 
 === R105: Notificações ===
-^ URL            | ''/pages/utilizador/notifications.php''                                       ||
-^ Description    | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou sempre que surgirem novos seguidores. ||
-^ Method         | GET                                                                           ||
-^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                                   ||
-^ Permissions    | OWN                                                                           ||
+^ URL            | ''/pages/utilizador/notifications.php''                             ||
+^ Description    | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou quando surgem novos seguidores. ||
+^ Method         | GET                                                                 ||
+^ UI             | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                         ||
+^ Permissions    | OWN                                                                 ||
 
 === R106: Editar perfil ===
-^ URL            | ''/pages/utilizador/edit.php''                                                                            ||
-^ Description    | Esta página permite aos utilizadores alterar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país). Se for passado um //ID// como parâmetro, permite ainda aos administradores alterar as informações pessoais dos outros utilizadores. ||
-^ Method         | GET                                                                                                       ||
-^ Parameters     | ?id: integer | chave primária do utilizador                                                                |
-^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                               ||
-^ Permissions    | OWN, ADM                                                                                                  ||
+^ URL            | ''/pages/utilizador/edit.php''                                                                         ||
+^ Description    | Esta página permite aos utilizadores alterar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país). Se for passado um //ID// como parâmetro, permite ainda ao administraodr alterar as informações pessoais dos outros utilizadores. ||
+^ Method         | GET                                                                                                    ||
+^ Parameters     | ?id: integer | chave primária do utilizador                                                             |
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                            ||
+^ Permissions    | OWN, ADM                                                                                               ||
 
 === R107: Denunciar utilizador ===
 ^ URL            | ''/actions/utilizador/report.php''                                        ||
-^ Description    | Esta //action// denuncia um utilizador ao administrador com base informação recebida. Se as informações introduzidas pelo moderador forem válidas, este é reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao moderador uma mensagem de erro.                                                                        ||
+^ Description    | Esta //action// permite aos moderadores denunciar um utilizador ao administrador com base informação recebida. Se as informações introduzidas forem válidas e as operações na base de dados executarem com sucesso, este será reencaminhado para a página de perfil do utilizador denunciado, caso contrário regressa à página de //report//, sendo apresentada ao utilizador uma mensagem de erro.       ||
 ^ Method         | POST                                                                      ||
 ^ Request body   | +idUtilizador: integer         | chave primária do utilizador denunciado   |
 ^                | +descricao: text               | mensagem do moderador                     |
@@ -55,7 +55,7 @@
 
 === R108: Iniciar sessão ===
 ^ URL           | ''/actions/utilizador/login.php''                                                                   ||
-^ Description   | Esta //action// realiza a autenticação de um utilizador com base na informação recebida. Se as credenciais introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página inicial como membro, caso contrário regressa à página de autenticação, sendo apresentada ao utilizador uma mensagem de erro.                                                                                                     ||
+^ Description   | Esta //action// realiza a autenticação de um utilizador com base na informação recebida. Se as credenciais introduzidas pelo utilizador forem válidas, este será reencaminhado para a página inicial como membro, caso contrário regressa à página de autenticação, sendo apresentada ao utilizador uma mensagem de erro.                                                                                                     ||
 ^ Method        | POST                                                                                                ||
 ^ Request body  | +username: text                      | nome de utilizador introduzido no formulário de autenticação  |
 ^               | +password: text                      | palavra-passe introduzida no formulário de autenticação       |
@@ -71,7 +71,7 @@
 
 === R110: Registar utilizador ===
 ^ URL           | ''/actions/utilizador/register.php''           ||
-^ Description   | Esta //action// efetua o registo de um novo utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a página de autenticação, caso contrário regressa à página de registo, sendo apresentada ao utilizador uma mensagem de erro.                                                         ||
+^ Description   | Esta //action// permite registar um novo utilizador no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este será reencaminhado para a página de autenticação, caso contrário regressa à página de registo, sendo apresentada ao utilizador uma mensagem de erro.                                                         ||
 ^ Method        | POST                                           ||
 ^ Request body  | +username: text         | nome de utilizador (tal como foi introduzido no formulário de registo)           |
 ^               | +password: text         | palavra-passe (tal como foi introduzida no formulário de registo)                |
@@ -86,7 +86,7 @@
 
 === R111: Atualizar utilizador ===
 ^ URL           | ''/actions/utilizador/update.php''                     ||
-^ Description   | Esta //action// permite alterar as informações pessoais do próprio utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, o utilizador é reencaminhado para a sua página de perfil, caso contrário regressa à página de edição do perfil, sendo apresentada ao utilizador uma mensagem de erro.                                      ||
+^ Description   | Esta //action// permite alterar as informações pessoais do próprio utilizador com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este será reencaminhado para a sua página de perfil, caso contrário regressa à página de edição do perfil, sendo apresentada ao utilizador uma mensagem de erro.                                      ||
 ^ Method        | POST                                                   ||
 ^ Request body  | +idUtilizador: integer  | chave primária do utilizador  |
 ^               | ?email: text            | endereço de correio eletrónico do utilizador (ou endereço atual se não tiver sido alterado no formulário)   |

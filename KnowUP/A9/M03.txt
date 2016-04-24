@@ -2,75 +2,77 @@
 
 === R301: Página da pergunta ===
 ^ URL            | ''/pages/pergunta/view.php''                                                                  ||
-^ Description    | Esta página permite visualizar a pergunta escolhida, bem como as respetivas respostas e comentários. Serão ainda apresentadas ligações para perguntas relacionadas e para as categorias relacionadas com a categoria ou com a instituição da pergunta atual. ||
+^ Description    | Esta página permite visualizar uma pergunta, bem como as respetivas respostas e comentários.  ||
 ^ Method         | GET                                                                                           ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                                      |
-^ AJAX Calls     | [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r407registar_voto|R407]], [[#r408obter_comentarios|R408]], [[#r409inserir_comentario|R409]], [[#r410apagar_comentario|R410]]                                                                                  ||
+^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r406registar_voto|R406]], [[#r407obter_comentarios|R407]], [[#r408inserir_comentario|R408]], [[#r409apagar_comentario|R409]]                                                                                  ||
 ^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                             ||
 ^ Permissions    | PUB                                                                                           ||
 
 === R302: Redigir pergunta ===
-^ URL            | ''/pages/pergunta/ask.php''                                                                    ||
-^ Description    | Esta página permite redigir uma pergunta no sistema através do preenchimento de um formulário. ||
-^ Method         | GET                                                                                            ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                       |
-^ UI             | [[:lbaw1525:proj:a3#ui12fazer_pergunta|UI12]]                                                  ||
-^ Permissions    | MEM                                                                                            ||
+^ URL            | ''/pages/pergunta/ask.php''                                                                          ||
+^ Description    | Esta página permite publicar uma nova pergunta no sistema através do preenchimento de um formulário. ||
+^ Method         | GET                                                                                                  ||
+^ Parameters     | +id: integer | chave primária da categoria                                                            |
+^ UI             | [[:lbaw1525:proj:a3#ui12fazer_pergunta|UI12]]                                                        ||
+^ Permissions    | MEM                                                                                                  ||
 
 === R303: Editar pergunta ===
-^ URL            | ''/pages/pergunta/edit.php''                                                                             ||
-^ Description    | Esta página permite alterar informações da pergunta escolhida através do preenchimento de um formulário. ||
-^ Method         | GET                                                                                                      ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                                 |
-^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                               ||  
-^ Permissions    | OWN, MOD, ADM                                                                                            ||
+^ URL            | ''/pages/pergunta/edit.php''                                                       ||
+^ Description    | Esta página permite editar uma pergunta através do preenchimento de um formulário. ||
+^ Method         | GET                                                                                ||
+^ Parameters     | +id: integer | chave primária da pergunta                                           |
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                         ||
+^ Permissions    | OWNP, MOD, ADM                                                                     ||
 
 === R304: Submeter pergunta ===
 ^ URL            | ''/actions/pergunta/submit.php''                        ||
-^ Description    | Esta //action// introduz uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da pergunta recém-criada, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro.                                                      ||
+^ Description    | Esta //action// permite introduzir uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova pergunta, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro. ||
 ^ Method         | POST                                                    ||
 ^ Request body   | +titulo: text                    | título da pergunta    |
-^                | +descricao: text                 | conteúdo da pergunta  |
+^                | ?descricao: text                 | conteúdo da pergunta  |
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso               |
 ^                | [[#r302redigir_pergunta|R302]]   | Erro                  |
 ^ Permissions    | MEM                                                     ||
 
 === R305: Atualizar pergunta ===
-^ URL            | ''/actions/pergunta/update.php''                               ||
-^ Description    | Esta //action// atualiza uma pergunta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas, este é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro. ||
-^ Method         | POST                                                           ||
-^ Request body   | +idPergunta: integer             | chave primária da pergunta   |
-^                | ?titulo: text                    | novo título da pergunta (ou título atual se não tiver sido alterado no formulário)     |
-^                | ?descricao: text                 | novo conteúdo da pergunta (ou conteúdo atual se não tiver sido alterado no formulário) |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                     ||
-^                | [[#r303editar_pergunta|R303]]    | Erro                        ||
-^ Permissions    | OWN, MOD, ADM                                                  ||
+^ URL            | ''/actions/pergunta/update.php''                              ||
+^ Description    | Esta //action// permite atualizar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta já com as alterações feitas, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro.     ||
+^ Method         | POST                                                          ||
+^ Request body   | +idPergunta: integer             | chave primária da pergunta  |
+^                | ?titulo: text                    | novo título da pergunta     |
+^                | ?descricao: text                 | novo conteúdo da pergunta   |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                    ||
+^                | [[#r303editar_pergunta|R303]]    | Erro                       ||
+^ Permissions    | OWNP, MOD, ADM                                                ||
 
 === R306: Fechar pergunta ===
-^ URL            | ''/actions/pergunta/close.php''                                                                             ||
-^ Description    | Esta //action// fecha uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | GET                                                                                                         ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                                    |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                            ||
-^ Permissions    | OWN, MOD, ADM                                                                                               ||
+^ URL            | ''/actions/pergunta/close.php''                                                                                               ||
+^ Description    | Esta //action// permite fechar uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser mais respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar. ||
+^ Method         | GET                                                                                                                           ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                                                      |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                              ||
+^ Permissions    | OWNP, MOD, ADM                                                                                                                ||
 
 === R307: Apagar pergunta ===
-^ URL            | ''/actions/pergunta/delete.php''          ||
-^ Description    | Esta //action// apaga uma pergunta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo apresentada uma mensagem de erro se esta operação falhar.    ||
-^ Method         | GET                                       ||
-^ Parameters     | +id: integer | chave primária da pergunta  |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
-^ Permissions    | OWN, ADM                                  ||
+^ URL            | ''/actions/pergunta/delete.php''           ||
+^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador  uma mensagem de erro.                             ||
+^ Method         | GET                                        ||
+^ Parameters     | +id: integer | chave primária da pergunta   |
+^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso ||
+^                | [[#r301pagina_da_pergunta|R301]] | Erro    ||
+^ Permissions    | OWNP, ADM                                  ||
 
 === R308: Seguir pergunta ===
-^ URL            | ''/api/pergunta/follow.php''                                                                           ||
-^ Description    | Este //AJAX request// permite ao utilizador atual seguir uma pergunta com base na informação recebida. ||
-^ Method         | POST                                                                                                   ||
-^ Request body   | +idPergunta: integer | chave primária da pergunta                                                       |
-^ Response body  | Boolean                                                                                                ||
-^ Returns        | 200 OK          | se as informações enviadas pelo utilizador forem válidas                              |
-^                | 400 Bad Request | se a pergunta não existir ou se utilizador já for seguidor da pergunta                |
-^ Permissions    | MEM                                                                                                    ||
+^ URL            | ''/api/pergunta/follow.php''                                                                     ||
+^ Description    | Este //AJAX request// permite ao utilizador seguir uma pergunta com base na informação recebida. ||
+^ Method         | POST                                                                                             ||
+^ Request body   | +idPergunta: integer | chave primária da pergunta                                                 |
+^ Response body  | Boolean                                                                                          ||
+^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                   |
+^                | 400 Bad Request      | se a pergunta não existir ou se utilizador já for seguidor da pergunta     |
+^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                             |
+^ Permissions    | MEM                                                                                              ||
 
 === R309: Unfollow pergunta ===
 ^ URL            | ''/api/pergunta/unfollow.php''                                                                             ||
@@ -78,43 +80,54 @@
 ^ Method         | POST                                                                                                       ||
 ^ Request body   | +idPergunta: integer | chave primária da pergunta                                                           |
 ^ Response body  | Boolean                                                                                                    ||
-^ Returns        | 200 OK          | se as informações enviadas pelo utilizador forem válidas                                  |
-^                | 400 Bad Request | se a pergunta não existir ou se utilizador nao for seguidor da pergunta                   |
+^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                             |
+^                | 400 Bad Request      | se a pergunta indicada não existir ou se utilizador não for seguidor da pergunta     |
+^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                                       |
 ^ Permissions    | SEG                                                                                                        ||
 
 === R310: Registar voto ===
-^ URL            | ''/api/pergunta/insert_vote.php''                                          ||
-^ Description    | Este //AJAX request// permite inserir um voto na pergunta escolhida.       ||
-^ Method         | POST                                                                       ||
-^ Request body   | +idPergunta: integer     | chave primária da pergunta                       |
-^                | +votoUtilizador: integer | valor do voto do utilizador                      |
-^ Response body  | [[#json301registar_voto|JSON301]]                                          ||
-^ Returns        | 200 OK          | se as informações enviadas pelo utilizador forem válidas  |
-^                | 400 Bad Request | se a pergunta não existir                                 |
-^ Permissions    | MEM                                                                        ||
+^ URL            | ''/api/pergunta/insert_vote.php''                                                            ||
+^ Description    | Este //AJAX request// permite inserir um voto numa pergunta com base na informação recebida. ||
+^ Method         | POST                                                                                         ||
+^ Request body   | +idPergunta: integer     | chave primária da pergunta                                         |
+^                | +votoUtilizador: integer | valor do voto do utilizador                                        |
+^ Response body  | [[#json301registar_voto|JSON301]]                                                            ||
+^ Returns        | 200 OK                   | se as informações enviadas pelo utilizador forem válidas           |
+^                | 400 Bad Request          | se a pergunta indicada não existir                                 |
+^                | 403 Forbidden            | se utilizador não tiver permissões suficientes                     |
+^ Permissions    | MEM                                                                                          ||
 
 === R311: Obter comentários ===
-^ URL            | ''/api/pergunta/get_comments.php''                                                                                         ||
-^ Description    | Este //AJAX request// permite obter todos os comentários seguintes de uma pergunta a partir do último comentário recebido. ||
-^ Method         | POST                                                                                                                       ||
-^ Request body   | +idPergunta: integer       | chave primária da pergunta                                                                     |
-^                | +ultimoComentario: integer | chave primária do último comentário requisitado                                                |
-^ Response body  | [[#json302obter_comentarios|JSON302]]                                                                                      ||
-^ Permissions    | PUB                                                                                                                        ||
+^ URL            | ''/api/pergunta/get_comments.php''                                                                                    ||
+^ Description    | Este //AJAX request// permite obter todos os comentários a uma pergunta (se não for especificado um valor no campo //ultimoComentario// dos parâmetros) ou todos os comentários a partir do último comentário recebido (se for especificado um valor no campo //ultimoComentario//). ||
+^ Method         | POST                                                                                                                  ||
+^ Request body   | +idPergunta: integer       | chave primária da pergunta                                                                |
+^                | ?ultimoComentario: integer | último comentário recebido                                                                |
+^ Response body  | [[#json302obter_comentarios|JSON302]]                                                                                 ||
+^ Returns        | 200 OK                     | se as informações enviadas pelo utilizador forem válidas                                  |
+^                | 400 Bad Request            | se a pergunta indicada não existir                                                        |
+^ Permissions    | PUB                                                                                                                   ||
 
 === R312: Inserir comentário ===
-^ URL            | ''/api/pergunta/insert_comment.php''              ||
-^ Description    | Este //AJAX request// permite inserir um comentário na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false".                       ||
-^ Method         | POST                                              ||
-^ Request body   | +idPergunta: integer | chave primária da pergunta  |
-^                | +descricao: text     | conteúdo do comentário      |
-^ Response body  | Boolean                                           ||
-^ Permissions    | MEM                                               ||
+^ URL            | ''/api/pergunta/insert_comment.php''                                                               ||
+^ Description    | Este //AJAX request// permite inserir um comentário numa pergunta com base na informação recebida. ||
+^ Method         | POST                                                                                               ||
+^ Request body   | +idPergunta: integer | chave primária da pergunta                                                   |
+^                | +descricao: text     | conteúdo do comentário                                                       |
+^ Response body  | Boolean                                                                                            ||
+^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                     |
+^                | 400 Bad Request      | se a pergunta indicada não existir.                                          |
+^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                               |
+^ Permissions    | MEM                                                                                                ||
 
 === R313: Apagar comentário ===
-^ URL            | ''/api/pergunta/remove_comment.php''                                              ||
-^ Description    | Este //AJAX request// permite apagar um comentário publicado por um utilizador ou pelo utilizador atual na pergunta escolhida. Responde com "true" se as informações introduzidas pelo utilizador forem válidas, caso contrário retorna "false". ||
-^ Method         | POST                                                                              ||
-^ Request body   | +idComentario: integer | chave primária do comentário                              |
-^ Response body  | Boolean                                                                           ||
-^ Permissions    | OWN, MOD, ADM                                                                     ||
+^ URL            | ''/api/pergunta/remove_comment.php''                                                                        ||
+^ Description    | Este //AJAX request// permite apagar um comentário publicado numa pergunta com base na informação recebida. ||
+^ Method         | POST                                                                                                        ||
+^ Request body   | +idPergunta: integer   | chave primária da pergunta                                                          |
+^                | +idComentario: integer | chave primária do comentário                                                        |
+^ Response body  | Boolean                                                                                                     ||
+^ Returns        | 200 OK                 | se as informações enviadas pelo utilizador forem válidas                            |
+^                | 400 Bad Request        | se a pergunta ou comentário indicados não existirem                                 |
+^                | 403 Forbidden          | se utilizador não tiver permissões suficientes                                      |
+^ Permissions    | OWNC, MOD, ADM                                                                                              ||
