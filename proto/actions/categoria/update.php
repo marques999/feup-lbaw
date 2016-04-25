@@ -15,8 +15,8 @@
     safe_error(null, 'Deve especificar uma categoria primeiro!');
   }
 
-  if (!safe_check($_POST, 'nome')) {
-    safe_error(null, 'Operação sem efeito, nenhum campo foi alterado...');
+  if (!safe_strcheck($_POST, 'nome')) {
+    safe_error(null, 'O nome da categoria não pode estar em branco!');
   }
 
   try {

@@ -16,30 +16,30 @@
     header("Location: ../message_register.php?id=2");
   }
 
-  if (safe_check($_POST, 'username')) {
-    $_username = safe_trim($_POST['username']);
+  if (safe_strcheck($_POST, 'username')) {
+    $_username = safe_trim($_POST, 'username');
   }
   else {
     safe_error("../register.php", 'Deve preencher um username no formulário de registo!');
   }
 
-  if (safe_check($_POST, 'password')) {
-    $_password = create_hash($_POST['password']);
+  if (safe_strcheck($_POST, 'password')) {
+    $_password = create_hash($_POST, 'password');
   }
   else {
     safe_error("../register.php", 'Deve preencher uma password no formulário de registo!');
   }
 
-  if (safe_check($_POST, 'first-name') && safe_check($_POST, 'last-name')) {
-    $_primeiroNome = safe_trim($_POST['first-name']);
-    $_ultimoNome = safe_trim($_POST['last-name']);
+  if (safe_strcheck($_POST, 'first-name') && safe_strcheck($_POST, 'last-name')) {
+    $_primeiroNome = safe_trim($_POST, 'first-name');
+    $_ultimoNome = safe_trim($_POST, 'last-name');
   }
   else {
     safe_redirect("../register.php");
   }
 
-  if (safe_check($_POST, 'email')) {
-    $_email = safe_trim($_POST['email']);
+  if (safe_strcheck($_POST, 'email')) {
+    $_email = safe_trim($_POST, 'email');
   }
   else {
     safe_error("../register.php", 'Deve preencher um endereço de e-mail no formulário!');
@@ -98,7 +98,7 @@
     $numberColumns++;
   }
 
-  $hasLocalidade = safe_check($_POST, 'localidade');
+  $hasLocalidade = safe_strcheck($_POST, 'localidade');
 
   if ($hasLocalidade) {
 
@@ -110,7 +110,7 @@
     $numberColumns++;
   }
 
-  $hasCodigoPais = safe_check($_POST, 'pais');
+  $hasCodigoPais = safe_strcheck($_POST, 'pais');
 
   if ($hasCodigoPais) {
 
@@ -130,12 +130,12 @@
     }
 
     if ($hasLocalidade) {
-      $_localidade = safe_trim($_POST['localidade']);
+      $_localidade = safe_trim($_POST, 'localidade');
       $stmt->bindParam(':localidade', $_localidade, PDO::PARAM_STR);
     }
 
     if ($hasCodigoPais) {
-      $_codigoPais = safe_trim($_POST['codigoPais']);
+      $_codigoPais = safe_trim($_POST, 'codigoPais');
       $stmt->bindParam(':codigoPais', $_codigoPais, PDO::PARAM_STR);
     }
 

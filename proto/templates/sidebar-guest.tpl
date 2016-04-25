@@ -8,7 +8,7 @@
         <li><a href="list_questions.php">Engenharia Física</a></li>
         <li><a href="list_questions.php">Engenharia Informática</a></li>
         <li><a href="list_questions.php">Estudos Portugueses</a></li>
-        <li class="heading"><a href="categories.php">ver mais...</a></li>
+        <li class="heading"><a href="{$BASE_URL}pages/categoria/list.php">ver mais...</a></li>
     </ul>
     <h5 class="slab half-vertical-space">
       <i class="fa fa-line-chart"></i>&nbsp;Populares

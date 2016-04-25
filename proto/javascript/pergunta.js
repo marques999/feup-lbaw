@@ -8,6 +8,54 @@ var questionCommentCount = 0;
 var questionCommentId = -1;
 
 /*
+ * $(document.ready)
+ */
+$(function() {
+  $("#answers a.ink-toggle").click(function() {  
+    fetchAnswerComments(
+      $(this).data('id'),
+      $(this));
+  });
+  $(".question-action-buttons .follow-button").click(function() {
+    followPergunta(
+      $(this), 
+      $(this.parentNode.parentNode.parentNode).get(0).id);
+  });
+  $(".question-vote-buttons .vote-positive").click(function() {
+    registarVotoPergunta(
+      $(this), 
+      $(this.parentNode.parentNode.parentNode).get(0).id,
+      1);
+  });
+  $(".question-vote-buttons .vote-negative").click(function() {
+    registarVotoPergunta(
+      $(this), 
+      $(this.parentNode.parentNode.parentNode).get(0).id,
+      -1);
+  });
+  $(".reply-buttons .vote-positive").click(function() {
+    registarVotoResposta(
+      $(this), 
+      $(this.parentNode.parentNode.parentNode).get(0).id,
+       1);
+  });
+  $(".reply-buttons .vote-negative").click(function() {
+    registarVotoResposta(
+      $(this), 
+      $(this.parentNode.parentNode.parentNode).get(0).id,
+      -1);
+  });
+  $('.question-comments-form').submit(function(event) {
+    submeterComentarioPergunta($(this));
+    event.preventDefault();
+  });
+  $('.answer-comments-form').submit(function(event) {
+    submeterComentarioResposta($(this));
+    event.preventDefault();
+  });
+});
+
+/*
  * submeterComentarioPergunta(commentsForm)
  */
 function submeterComentarioPergunta(commentsForm)

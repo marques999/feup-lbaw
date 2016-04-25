@@ -1,4 +1,5 @@
 {include file='common/header.tpl'}
+{block name="content"}
 <body>
 <div class="ink-grid push-center xlarge-55 large-70 medium-80 all-100">
 <div class="column-group half-gutters">
@@ -327,4 +328,4 @@
 </div>
 </fieldset>
 </form>
-{include file='common/footer-empty.tpl'}
+{/block}

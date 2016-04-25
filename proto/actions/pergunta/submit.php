@@ -11,16 +11,16 @@
     safe_error(null, 'Deve especificar uma categoria primeiro!');
   }
 
-  if (!safe_check($_POST, 'titulo')) {
+  if (!safe_strcheck($_POST, 'titulo')) {
     safe_error(null, 'O título da pergunta não pode estar em branco!');
   }
 
   $idCategoria = safe_getId($_POST, 'idCategoria');
   $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  $safeTitle = safe_trim($_POST['titulo']);
+  $safeTitle = safe_trim($_POST, 'titulo');
 
-  if (safe_check($_POST, 'descricao') {
-    $safeMessage = safe_trim($_POST['descricao']);
+  if (safe_strcheck($_POST, 'descricao') {
+    $safeMessage = safe_trim($_POST, 'descricao');
   }
 
   try {

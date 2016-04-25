@@ -15,7 +15,7 @@
     safe_error(null, 'Deve especificar uma resposta primeiro!');
   }
 
-  if (!safe_check($_POST, 'descricao')) {
+  if (!safe_strcheck($_POST, 'descricao')) {
     safe_error(null, 'O corpo da resposta não pode estar em branco!');
   }
 

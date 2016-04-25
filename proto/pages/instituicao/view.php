@@ -4,7 +4,7 @@
   include_once('../../database/categoria.php');
   include_once('../../database/instituicao.php');
 
-  $queryInstituicao = instituicao_listBySigla(safe_trim($_GET['id']));
+  $queryInstituicao = instituicao_listBySigla(safe_trim($_GET, 'id'));
 
   if ($queryInstituicao && is_array($queryInstituicao)) {
 

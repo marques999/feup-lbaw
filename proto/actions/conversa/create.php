@@ -11,11 +11,11 @@
     safe_error(null, 'Deve especificar um destinatário primeiro!');
   }
 
-  if (!safe_check($_POST, 'titulo')) {
+  if (!safe_strcheck($_POST, 'titulo')) {
     safe_error(null, 'O assunto da conversa não pode estar em branco!');
   }
 
-  if (!safe_check($_POST, 'descricao')) {
+  if (!safe_strcheck($_POST, 'descricao')) {
     safe_error(null, 'O corpo da mensagem não pode estar em branco!');
   }
 

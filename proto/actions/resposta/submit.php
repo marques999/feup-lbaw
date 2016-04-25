@@ -11,7 +11,7 @@
     safe_error(null, 'Deve especificar uma pergunta primeiro!');
   }
 
-  if (!safe_check($_POST, 'descricao')) {
+  if (!safe_strcheck($_POST, 'descricao')) {
     safe_error(null, 'O corpo da resposta não pode estar em branco!');
   }
 
@@ -19,7 +19,7 @@
 
     $idPergunta = safe_getId($_POST, 'idPergunta');
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-    $safeMessage = safe_trim($_POST['descricao']);
+    $safeMessage = safe_trim($_POST, 'descricao');
 
     if (resposta_inserirResposta($idPergunta, $idUtilizador, $safeMessage) > 0) {
       $idResposta = $db->lastInsertId('contribuicao_idcontribuicao_seq');

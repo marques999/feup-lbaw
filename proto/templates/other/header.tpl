@@ -25,6 +25,7 @@
         <img src="{$BASE_URL}images/assets/header.png" alt="">
       </a>
     </div>
+    {include file='common/messages.tpl'}
     {block name=content}
     {/block}
   </div>

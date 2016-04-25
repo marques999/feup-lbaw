@@ -1,3 +1,6 @@
+{if $pergunta.ativa and $USERID neq $pergunta.idutilizador}
+  {include file='pergunta/blocks/formulario.tpl'}
+{/if}
 <section id="reply-form" class="push-center half-vertical-space all-85 small-100 tiny-100">
   <form action="actions/action_create_event.php" method="post" enctype="multipart/form-data" class="ink-form ink-formvalidator">
     <fieldset>

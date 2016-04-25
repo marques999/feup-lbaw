@@ -5,11 +5,11 @@
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    if (safe_check($_POST, 'idResposta') && safe_check($_POST, 'descricao')) {
+    if (safe_check($_POST, 'idResposta') && safe_strcheck($_POST, 'descricao')) {
 
       $idResposta = safe_getId($_POST, 'idResposta');
       $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-      $safeDescricao = safe_trim($_POST['descricao']);
+      $safeDescricao = safe_trim($_POST, 'descricao');
 
       try {
         echo resposta_inserirComentario($idResposta, $idUtilizador, $safeDescricao);

@@ -17,9 +17,8 @@ function utilizador_isModerator($idUtilizador) {
 }
 function utilizador_validateLogin($username, $password) {
   global $db;
-  $safeUsername = safe_trim($username);
   $stmt = $db->prepare('SELECT * FROM Utilizador WHERE username = :username');
-  $stmt->bindParam(':username', $safeUsername, PDO::PARAM_STR);
+  $stmt->bindParam(':username', $username, PDO::PARAM_STR);
   $stmt->execute();
   $result = $stmt->fetch();
   if ($result && is_array($result)) {
@@ -43,6 +42,16 @@ function utilizador_ban($idUtilizador) {
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
+}
+function utilizador_fetchInstituicao($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('SELECT idInstituicao, sigla
+    FROM Utilizador
+    LEFT JOIN Instituicao USING (idInstituicao)
+    WHERE idUtilizador = :idUtilizador');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetch();
 }
 function utilizador_fetchThreads($idUtilizador) {
   global $db;

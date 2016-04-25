@@ -22,6 +22,68 @@
     $stmt->execute();
     return $stmt->rowCount();
   }
+  function instituicao_editarInstituicao($idInstituicao, $nome, $sigla, $morada, $contacto, $website) {
+    global $db;
+    $queryString = "UPDATE Instituicao SET ";
+    $hasNome = safe_strcheck($nome);
+    $hasSigla = safe_strcheck($sigla);
+    $hasMorada = safe_strcheck($morada);
+    $hasContacto = safe_strcheck($contacto);
+    $hasWebsite = safe_strcheck($website);
+    $numberColumns = 0;
+    if ($hasNome) {
+      $queryString += "nome = :nome";
+      $numberColumns++;
+    }
+    if ($hasSigla) {
+      if ($numberColumns > 0) {
+        $queryString .= ', ';
+      }
+      $queryString += 'sigla = :sigla';
+      $numberColumns++;
+    }
+    if ($hasMorada) {
+      if ($numberColumns > 0) {
+        $queryString .= ', ';
+      }
+      $queryString += 'morada = :morada';
+      $numberColumns++;
+    }
+    if ($hasContacto) {
+      if ($numberColumns > 0) {
+        $queryString .= ', ';
+      }     
+      $queryString += 'contacto = :contacto';
+      $numberColumns++;
+    }
+    if ($hasWebsite) {
+      if ($numberColumns > 0) {
+        $queryString .= ', ';
+      }   
+      $queryString += 'website = :website';
+      $numberColumns++;
+    }
+    $queryString += ' WHERE idInstituicao = :idInstituicao';
+    $stmt = $db->prepare($queryString);
+    $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+    if ($hasNome) {
+      $stmt->bindParam(':nome', $safeNome, PDO::PARAM_STR);
+    }
+    if ($hasSigla) {
+      $stmt->bindParam(':sigla', $safeSigla, PDO::PARAM_STR);
+    }
+    if ($hasMorada) {
+      $stmt->bindParam(':morada', $safeMorada, PDO::PARAM_STR);
+    }
+    if ($hasContacto) {
+      $stmt->bindParam(':contacto', $safeContacto, PDO::PARAM_STR);
+    }
+    if ($hasWebsite) {
+      $stmt->bindParam(':website', $safeWebsite, PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    return $stmt->rowCount();
+  }
   function instituicao_associarCategoria($idInstituicao, $idCategoria) {
     global $db;
     $stmt = $db->prepare("INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria)

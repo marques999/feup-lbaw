@@ -9,8 +9,8 @@
   <article class="question">
     <h5 class="slab quarter-vertical-space">
       <a class="black" href="view_question.php">Porque é o Linux parece ser mais rápido que o Windows?</a>
-    </h5> 
-    
+    </h5>
+
     <!-- PERGUNTA 1: autor -->
     <div class="condensed author-panel quarter-vertical-space">
       <div>
@@ -29,7 +29,7 @@
         </p>
       </div>
     </div>
-    
+
     <!-- PERGUNTA 1: conteúdo -->
     <p class="medium no-margin align-justify">
     Desta maneira, a <span class="highlight">percepção das dificuldades</span> promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais... <a class="black fw-700" href="view_question.php">ver mais <i class="fa fa-arrow-circle-right"></i></a>
@@ -43,7 +43,7 @@
     <h5 class="slab quarter-vertical-space">
       <a class="black" href="view_question.php">Que país tem a pior gastronomia na vossa opinião?</a>
     </h5>
-   
+
     <!-- PERGUNTA 2: autor -->
     <div class="condensed author-panel quarter-vertical-space">
       <div>
@@ -62,7 +62,7 @@
         </p>
       </div>
     </div>
-    
+
     <!-- PERGUNTA 2: conteúdo -->
     <p class="medium no-margin align-justify">
     Desta maneira, a <span class="highlight">percepção das dificuldades</span> promove a alavancagem do sistema de participação geral. O cuidado em identificar pontos críticos no início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do remanejamento dos quadros funcionais... <a class="black fw-700" href="view_question.php">ver mais <i class="fa fa-arrow-circle-right"></i></a>

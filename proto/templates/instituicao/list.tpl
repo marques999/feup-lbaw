@@ -28,13 +28,22 @@
             <small>{$instituicao.sigla|upper}</small>
           </b>
           <p class="no-margin">
-            <small><i class="fa fa-user fa-fw"></i>&nbsp;{$instituicao.numeroutilizadores} membros</small>
+            <small>
+              <i class="fa fa-user fa-fw"></i>
+              <span>{$instituicao.numeroutilizadores} membros</span>
+            </small>
           </p>
           <p class="no-margin">
-            <small><i class="fa fa-question-circle fa-fw"></i>&nbsp;{$instituicao.numeroperguntas} perguntas</small>
+            <small>
+              <i class="fa fa-question-circle fa-fw"></i>
+              <span>{$instituicao.numeroperguntas} perguntas</span>
+            </small>
           </p>
-          <p class="no-margin">
-            <small><i class="fa fa-eye fa-fw"></i>&nbsp;{$instituicao.numerocategorias} categorias</small>
+          <p class="half-bottom-space">
+            <small>
+              <i class="fa fa-eye fa-fw"></i>
+              <span>{$instituicao.numerocategorias} categorias</span>
+            </small>
           </p>
         </div>
       </div>

@@ -16,7 +16,7 @@
     </div>
   </div>
 </form>
-<table class="ink-table alternating hover"> 
+<table class="ink-table alternating hover">
   <thead>
     <tr>
       <th data-sortable="true">Username</th>
@@ -63,7 +63,7 @@
     </div>
   </div>
 </form>
-<table class="ink-table alternating hover"> 
+<table class="ink-table alternating hover">
   <thead>
     <tr>
       <th data-sortable="true">Username</th>

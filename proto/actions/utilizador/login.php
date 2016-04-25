@@ -3,10 +3,10 @@
   include_once('../../config/salt.php');
   include_once('../../config/security.php');
 
-  if (safe_check($_POST, 'username') && safe_check($_POST, 'password')) {
+  if (safe_strcheck($_POST, 'username') && safe_strcheck($_POST, 'password')) {
 
-    $myUsername = safe_trim($_POST['username']);
-    $myPassword = safe_trim($_POST['password']);
+    $myUsername = safe_trim($_POST, 'username');
+    $myPassword = safe_trim($_POST, 'password');
     $idUtilizador = utilizador_validateLogin($myUsername, $myPassword);
 
     if ($idUtilizador > 0) {

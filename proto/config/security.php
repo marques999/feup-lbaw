@@ -40,8 +40,11 @@
   function safe_check($array, $id){
     return isset($array[$id]);
   }
-  function safe_trim($text, $tags = '') {
-    $workingString = preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
+  function safe_strcheck($array, $id) {
+    return isset($array[$id]) && !empty($array[$id]);
+  }
+  function safe_trim($array, $id) {
+    $workingString = preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $array[$id]);
     $workingString = preg_replace('!\s+!', ' ', $workingString);
     return htmlspecialchars($workingString);
   }

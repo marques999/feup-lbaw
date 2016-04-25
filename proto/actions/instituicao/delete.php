@@ -8,7 +8,7 @@
   }
 
   if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
-    http_response_code(403);
+    safe_redirect('403.php');
   }
 
   if (!safe_check($_GET, 'id')) {
