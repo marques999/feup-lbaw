@@ -17,13 +17,13 @@ SELECT Pergunta.idPergunta,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Pergunta.titulo,
+       Pergunta.dataHora,
        Pergunta.descricao,
        Pergunta.ativa,
        COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
        COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
        COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao,
-       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+       COALESCE(SUM(valor), 0) AS pontuacao
     FROM Pergunta
     LEFT JOIN VotoPergunta USING(idPergunta)
     LEFT JOIN (SELECT idPergunta, COUNT(*)
@@ -109,11 +109,11 @@ SELECT QueryPrincipal.idPergunta,
           Pergunta.titulo,
           Pergunta.idAutor,
           Pergunta.ativa,
+          Pergunta.dataHora,
           Pergunta.titulo || ' ' ||
           COALESCE(Pergunta.descricao, '') ||
           COALESCE(string_agg(Contribuicao.descricao, ' '), '') AS conteudo,
-          COALESCE(COUNT (DISTINCT Resposta.idResposta), 0) AS numeroRespostas,
-          EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
+          COALESCE(COUNT (DISTINCT Resposta.idResposta), 0) AS numeroRespostas
           FROM Pergunta
           LEFT JOIN Resposta USING(idPergunta)
           LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
