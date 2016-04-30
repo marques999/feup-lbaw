@@ -4,15 +4,16 @@
     $stmt = $db->prepare("SELECT Conversa.titulo,
       Mensagem.idMensagem,
       Mensagem.descricao,
+      Mensagem.dataHora,
       Instituicao.sigla,
-      to_char(Mensagem.dataHora, 'Day DD/MM/YYYY HH:MM') as datahora,
       AutorMensagem.idUtilizador,
+      AutorMensagem.removido,
       AutorMensagem.username,
       AutorMensagem.primeiroNome || ' ' || AutorMensagem.ultimoNome AS nomeautor
     FROM Mensagem
     JOIN Conversa USING(idConversa)
     JOIN Utilizador AutorMensagem ON AutorMensagem.idUtilizador = Mensagem.idAutor
-    JOIN Instituicao ON Instituicao.idInstituicao = AutorMensagem.idUtilizador
+    JOIN Instituicao ON Instituicao.idInstituicao = AutorMensagem.idInstituicao
     WHERE Mensagem.idConversa = :idConversa");
     $stmt->bindParam(':idConversa', $idConversa, PDO::PARAM_INT);
     $stmt->execute();

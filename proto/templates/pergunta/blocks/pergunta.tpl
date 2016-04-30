@@ -28,13 +28,22 @@
           <span>Ver Perfil</span>
         </a>
       </li>
-      {if not $USERID or $USERID eq $pergunta.idutilizador}
+      {if $moderador}
+      <li>
+        <a href="{$BASE_URL}pages/utilizador/report.php?id={$pergunta.idutilizador}">
+          <i class="fa fa-flag fa-fw"></i>
+          <span>Denunciar</span>
+        </a>
+      </li>
+      {else}
       <li class="disabled">
         <a href="#">
           <i class="fa fa-flag fa-fw"></i>
           <span>Denunciar</span>
         </a>
       </li>
+      {/if}
+      {if not $USERID or $USERID eq $pergunta.idutilizador}
       <li class="disabled">
         <a href="#">
          <i class="fa fa-envelope fa-fw"></i>
@@ -42,12 +51,6 @@
         </a>
       </li>
       {else}
-      <li>
-        <a href="{$BASE_URL}pages/users/report.php?id={$pergunta.idutilizador}">
-          <i class="fa fa-flag fa-fw"></i>
-          <span>Denunciar</span>
-        </a>
-      </li>
       <li>
         <a href="{$BASE_URL}pages/conversa/view.php?id={$pergunta.idutilizador}">
           <i class="fa fa-envelope fa-fw"></i>
@@ -131,8 +134,8 @@
     </a>
     {if $follows}
     <button class="ink-button follow-button medium black active">
-      <i class="fa fa-feed fa-fw"></i>
-      <span>Unfollow&nbsp;</span>
+      <i class="fa fa-check fa-fw"></i>
+      <span>Following&nbsp;</span>
     {else}
     <button class="ink-button follow-button medium black">
       <i class="fa fa-feed fa-fw"></i>

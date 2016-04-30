@@ -2,7 +2,7 @@
 {block name=content}
   {include file='common/page-fullscreen.tpl'}
   {include file='pergunta/blocks/sidebar.tpl'}
-  <div class="column all-80 medium-75 small-100 tiny-100">
+  <div class="column all-80 medium-75 small-100 tiny-100 half-bottom-padding">
     <section id="question-{$pergunta.idpergunta}" class="half-vertical-padding">
     {include file='pergunta/blocks/pergunta.tpl'}
     </section>

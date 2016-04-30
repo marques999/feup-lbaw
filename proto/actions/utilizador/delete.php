@@ -1,6 +1,5 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/security.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
@@ -19,7 +18,7 @@
   }
 
   if (!$ownAccount && !$isAdministrator) {
-     safe_redirect('403.php');
+    safe_redirect('403.php');
   }
 
   try {

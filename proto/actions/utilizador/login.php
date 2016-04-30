@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/salt.php');
-  include_once('../../config/security.php');
 
   if (safe_strcheck($_POST, 'username') && safe_strcheck($_POST, 'password')) {
 
@@ -19,7 +18,7 @@
     }
   }
   else {
-    $_SESSION['error_messages'][] = 'Invalid login!';
+    $_SESSION['error_messages'][] = 'ERRO: campos do formulário de login não foram preenchidos corretamente!';
     $_SESSION['form_values'] = $_POST;
   }
 ?>

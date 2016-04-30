@@ -1,6 +1,5 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/security.php');
   include_once('../../database/categoria.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
@@ -8,7 +7,7 @@
   }
 
   if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
-    http_response_code(403);
+    safe_redirect('403.php');
   }
 
   if (!safe_check($_POST, 'idCategoria')) {

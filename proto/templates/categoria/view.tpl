@@ -31,7 +31,9 @@
         <img src="{$BASE_URL}images/assets/question-marks.png" alt="">
       </div>
     </div>
+    <div class="column-group quarter-gutters">
     {include file='categoria/blocks/perguntas.tpl'}
+    </div>
   </div>
 </div>
 {/block}

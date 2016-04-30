@@ -12,7 +12,11 @@
   {foreach $mensagens as $mensagem}
   <div class="message column-group half-vertical-space">
     <div class="column all-15 medium-20 small-25 tiny-25">
-      <b class="no-margin"><a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">{$mensagem.username}</a></b>
+        {if $mensagem.removido}
+        <strong>{$mensagem.username}</strong>
+        {else}
+        <strong><a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">{$mensagem.username}</a></strong>
+        {/if}
       <p class="medium no-margin">{$mensagem.sigla|upper}</p>
       <img class="avatar-medium half-vertical-space"
         src="{$mensagem.idutilizador|utilizador_getAvatar}"
@@ -20,7 +24,11 @@
     </div>
     <div class="column all-85 medium-80 small-75 tiny-75">
       <div class="message-header">
+        {if $mensagem@index gt 0}
+        <b>RE: {$mensagem.titulo}</b>
+        {else}
         <b>{$mensagem.titulo}</b>
+        {/if}
         <p class="slab">
           <small>
             <i class="fa fa-calendar"></i>
@@ -32,12 +40,14 @@
         <p class="medium half-vertical-space">{$mensagem.descricao}</p>
       </div>
       <div class="message-buttons quarter-vertical-padding align-right">
+        {if $mensagem.idutilizador neq $USERID and not $mensagem.removido}
         <small>
-          <a href="#" class="ink-button black"><i class="fa fa-pencil"></i>&nbsp;Responder</a>
+          <a href="#" class="ink-button black"><i class="fa fa-pencil fa-fw"></i>&nbsp;Responder</a>
         </small>
         <small>
-          <a href="#" class="ink-button black"><i class="fa fa-quote-right"></i>&nbsp;Citação</a>
+          <a href="#" class="ink-button black"><i class="fa fa-quote-right fa-fw"></i>&nbsp;Citar</a>
         </small>
+        {/if}
       </div>
     </div>
   </div>

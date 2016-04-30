@@ -1,6 +1,5 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/security.php');
   include_once('../../database/resposta.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
@@ -9,10 +8,10 @@
 
       $idResposta = safe_getId($_POST, 'idResposta');
       $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-      $safeDescricao = safe_trim($_POST, 'descricao');
+      $descricao = safe_trim($_POST, 'descricao');
 
       try {
-        echo resposta_inserirComentario($idResposta, $idUtilizador, $safeDescricao);
+        echo resposta_inserirComentario($idResposta, $idUtilizador, $descricao);
       }
       catch (PDOException $e) {
         http_response_code(400);

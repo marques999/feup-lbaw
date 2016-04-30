@@ -63,7 +63,7 @@
   </div>
   {/if}
   {if $USERID and $pergunta.ativa}
-  <div class="button-toolbar">
+  <div class="button-toolbar quarter-vertical-space">
     <div class="button-group small">
       <a class="ink-button black" href="reply.php#reply-form">
         <i class="fa fa-pencil fa-fw"></i>

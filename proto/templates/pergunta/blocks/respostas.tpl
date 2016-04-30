@@ -21,13 +21,22 @@
             <span>Ver Perfil</span>
           </a>
         </li>
-        {if not $USERID or $USERID eq $pergunta.idutilizador}
+        {if $moderador}
+        <li>
+          <a href="{$BASE_URL}pages/utilizador/report.php?id={$resposta.idutilizador}">
+            <i class="fa fa-flag fa-fw"></i>
+            <span>Denunciar</span>
+          </a>
+        </li>
+        {else}
         <li class="disabled">
           <a href="#">
             <i class="fa fa-flag fa-fw"></i>
             <span>Denunciar</span>
           </a>
         </li>
+        {/if}
+        {if not $USERID or $USERID eq $pergunta.idutilizador}
         <li class="disabled">
           <a href="#">
             <i class="fa fa-envelope fa-fw"></i>
@@ -35,12 +44,6 @@
           </a>
         </li>
         {else}
-        <li>
-          <a href="{$BASE_URL}pages/utilizador/report.php?id={$resposta.idutilizador}">
-            <i class="fa fa-flag fa-fw"></i>
-            <span>Denunciar</span>
-          </a>
-        </li>
         <li>
           <a href="{$BASE_URL}pages/conversa/view.php?id={$resposta.idutilizador}">
             <i class="fa fa-envelope fa-fw"></i>
@@ -124,7 +127,7 @@
   </div>
   {/if}
 {if not $resposta@last}
-  <hr class="half-vertical-space">
+<hr class="half-vertical-space">
 {/if}
 </article>
 {foreachelse}

@@ -5,7 +5,7 @@
       <i class="fa fa-key"></i>
       <a class="black" href="{$BASE_URL}pages/admin/homepage.php">Administração</a>
     </h5>
-  </div> 
+  </div>
   {elseif $instituicao != ''}
   <div class="message half-vertical-space">
     <h5 class="slab no-margin">

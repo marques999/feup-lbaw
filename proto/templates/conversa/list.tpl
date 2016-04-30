@@ -37,7 +37,11 @@
       </td>
       <td class="fw-700">
           <i class="fa fa-user"></i>
+          {if $conversa.removido}
+          {$conversa.nomeautor}
+          {else}
           <a href="{$BASE_URL}pages/utilizador/profile.php?id={$conversa.idautor}">{$conversa.nomeautor}</a>
+          {/if}
           <p><small>{$conversa.datahora|date_format:"%A, %e %B %Y %H:%M"}</small></p>
       </td>
     </tr>

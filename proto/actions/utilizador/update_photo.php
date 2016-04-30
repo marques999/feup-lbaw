@@ -1,6 +1,5 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/security.php');
   include_once('../../config/imgupload.php');
   include_once('../../database/utilizador.php');
 

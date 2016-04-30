@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/salt.php');
-  include_once('../../config/security.php');
   include_once('../../database/utilizador.php');
 
   $userExists = users_usernameExists($_POST['username']);

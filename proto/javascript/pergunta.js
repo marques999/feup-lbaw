@@ -201,8 +201,17 @@ function registarVotoResposta(domElement, nodeId, valor)
       if (jsonString !== undefined && jsonString !== 'false')
       {
         var jsonObject = JSON.parse(jsonString);
-        domParent.find('.vote-positive strong').text(jsonObject['votospositivos']);
-        domParent.find('.vote-negative strong').text(jsonObject['votosnegativos']);
+        var positiveButton =  domParent.find('.vote-positive');
+        var negativeButton = domParent.find('.vote-negative');
+
+        if (valor == 1) {
+          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gostei&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
+          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gosto&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+        }
+        else if (valor == -1) {
+          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gosto&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
+          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gostei&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+        }
       }
       else
       {
@@ -236,7 +245,6 @@ function __updateFollow(booleanValue)
 function __followPergunta(domElement, nodeId)
 {
   var strongTag = domElement.find('strong');
-  var spanTag = domElement.find('span');
   var previousCount = strongTag.text();
 
   $.ajax(
@@ -249,14 +257,13 @@ function __followPergunta(domElement, nodeId)
     },
     beforeSend: function()
     {
-      domElement.find('strong').html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
     },
     success: function(jsonString)
     {
       if (jsonString)
       {
-        strongTag.text(JSON.parse(jsonString)['count']);
-        spanTag.text('Unfollow ');
+        domElement.html(nano('<i class="fa fa-check fa-fw"></i>\n<span>Following&nbsp;</span>\n<strong>{count}</strong>', JSON.parse(jsonString)));
         domElement.addClass('active');
       }
       else
@@ -274,7 +281,6 @@ function __followPergunta(domElement, nodeId)
 function __unfollowPergunta(domElement, nodeId)
 {
   var strongTag = domElement.find('strong');
-  var spanTag = domElement.find('span');
   var previousCount = strongTag.text();
 
   $.ajax(
@@ -293,9 +299,8 @@ function __unfollowPergunta(domElement, nodeId)
     {
       if (jsonString)
       {
-        spanTag.text('Follow ');
+        domElement.html(nano('<i class="fa fa-feed fa-fw"></i>\n<span>Follow&nbsp;</span>\n<strong>{count}</strong>', JSON.parse(jsonString)));
         domElement.removeClass('active');
-        strongTag.text(JSON.parse(jsonString)['count']);
       }
       else
       {
@@ -358,7 +363,14 @@ function fetchQuestionComments(thisId, currentNode)
 
       if (jsonString)
       {
-        printQuestionComments(thisId, JSON.parse(jsonString));
+        var jsonObject = JSON.parse(jsonString);
+        
+        if (questionCommentId == -1 && jsonObject.length > 0)
+        {
+          domElement.find('small').remove();
+        }
+        
+        printQuestionComments(thisId, jsonObject);
       }
     }
   });
@@ -521,7 +533,7 @@ function printAnswerComments(idResposta, jsonObject) {
 function printQuestionComments(idPergunta, jsonObject) {
 
   if (jsonObject.length < 1) {
-    questionRefreshStatus = false;
+    questionRefreshStatus = true;
   }
 
   if (questionRefreshStatus) {

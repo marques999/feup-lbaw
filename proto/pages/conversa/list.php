@@ -1,6 +1,5 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/security.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $smarty->assign('conversas', utilizador_fetchThreads(safe_getId($_SESSION, 'idUtilizador')));

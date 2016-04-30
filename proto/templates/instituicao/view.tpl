@@ -32,7 +32,9 @@
         <img src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
       </div>
     </div>
+    <div class="column-group quarter-gutters">
     {include file='instituicao/blocks/perguntas.tpl'}
+    </div>
   </div>
 </div>
 {/block}

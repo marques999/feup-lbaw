@@ -65,6 +65,7 @@ function utilizador_fetchThreads($idUtilizador) {
       (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa) AS numeromensagens,
       Mensagem1.idAutor AS idautor,
       AutorMensagem.username AS nomeautor,
+      AutorMensagem.removido,
       Mensagem1.descricao,
       Mensagem1.dataHora
     FROM Conversa
