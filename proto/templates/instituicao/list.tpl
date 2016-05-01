@@ -1,10 +1,11 @@
 {extends file='common/header.tpl'}
 {block name=content}
-<div class="ink-grid">
+<div class="ink-grid push-center">
   <div class="column-group half-top-space">
     <div class="column all-66 large-50 medium-40 small-40 tiny-100">
       <h3 class="condensed">Instituições
-        <span class="fw-300 medium">({$instituicoes|count})</span>
+        <span>|</span>
+        <span class="fw-300 medium">{$instituicoes|count}</span>
       </h3>
     </div>
     <div class="column all-33 large-50 medium-60 small-60 tiny-100">
@@ -18,7 +19,7 @@
   </div>
   <hr class="no-margin half-bottom-padding">
   <div class="column-group half-gutters">
-    {foreach $instituicoes as $instituicao}
+  {foreach $instituicoes as $instituicao}
     <div class="column all-25 large-33 medium-50 small-100 tiny-100">
       <div class="message">
         <img src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
@@ -29,8 +30,8 @@
           </b>
           <p class="no-margin">
             <small>
-              <i class="fa fa-user fa-fw"></i>
-              <span>{$instituicao.numeroutilizadores} membros</span>
+              <i class="fa fa-cube fa-fw"></i>
+              <span>{$instituicao.numerocategorias} categorias</span>
             </small>
           </p>
           <p class="no-margin">
@@ -41,14 +42,14 @@
           </p>
           <p class="half-bottom-space">
             <small>
-              <i class="fa fa-eye fa-fw"></i>
-              <span>{$instituicao.numerocategorias} categorias</span>
+              <i class="fa fa-user fa-fw"></i>
+              <span>{$instituicao.numeroutilizadores} membros</span>
             </small>
           </p>
         </div>
       </div>
     </div>
-    {/foreach}
+  {/foreach}
   </div>
 </div>
 {/block}

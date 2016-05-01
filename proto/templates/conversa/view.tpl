@@ -4,9 +4,9 @@
   <div class="message all-100 half-vertical-space">
     <h5 class="slab no-margin">
       <i class="fa fa-envelope fa-fw"></i>
-      <a href="{$BASE_URL}pages/conversa/list.php" class="black">Mensagens Privadas</a>
-      <strong>&gt;</strong>
-      <a href="{$BASE_URL}pages/conversa/view.php?id={$conversa.idconversa}" class="black">{$conversa.titulo}</a>
+      <a href="{$BASE_URL}pages/conversa/list.php" class="black">Mensagens Privadas&nbsp;</a>
+      <i class="fa fa-angle-right"></i>
+      <a href="{$BASE_URL}pages/conversa/view.php?id={$conversa.idconversa}" class="black">&nbsp;{$conversa.titulo}</a>
     </h5>
   </div>
   {foreach $mensagens as $mensagem}
@@ -25,9 +25,9 @@
     <div class="column all-85 medium-80 small-75 tiny-75">
       <div class="message-header">
         {if $mensagem@index gt 0}
-        <b>RE: {$mensagem.titulo}</b>
+        <b>RE: {$conversa.titulo}</b>
         {else}
-        <b>{$mensagem.titulo}</b>
+        <b>{$conversa.titulo}</b>
         {/if}
         <p class="slab">
           <small>

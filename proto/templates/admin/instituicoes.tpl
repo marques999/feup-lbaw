@@ -7,7 +7,7 @@
     </h3>
   </div>
   <div class="column all-20 medium-30 small-40 tiny-50 align-right">
-    <a href="#" class="ink-button medium">
+    <a href="{$BASE_URL}pages/instituicao/create.php" class="ink-button medium">
       <i class="fa fa-plus"></i>
       <span>Adicionar instituição</span>
     </a>
@@ -20,13 +20,13 @@
       <img class="all-100" src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
       <div class="quarter-vertical-padding">
         <b class="no-margin">
-          <a class="black" href="{$BASE_DIR}pages/{$instituicao.sigla}">{$instituicao.nome}</a>
+          <a class="black" href="{$BASE_URL}pages/instituicao/view.php?id={$instituicao.sigla}">{$instituicao.nome}</a>
           <small>{$instituicao.sigla|upper}</small>
         </b>
         <p class="no-margin">
           <small>
-            <i class="fa fa-user fa-fw"></i>
-            <span>{$instituicao.numeroutilizadores} membros</span>
+            <i class="fa fa-eye fa-fw"></i>
+            <span>{$instituicao.numerocategorias} categorias</span>
           </small>
         </p>
         <p class="no-margin">
@@ -37,22 +37,22 @@
         </p>
         <p class="half-bottom-space">
           <small>
-            <i class="fa fa-eye fa-fw"></i>
-            <span>{$instituicao.numerocategorias} categorias</span>
+            <i class="fa fa-user fa-fw"></i>
+            <span>{$instituicao.numeroutilizadores} membros</span>
           </small>
         </p>
         <p class="no-margin align-center">
            <small>
-             <button class="ink-button">
+             <a class="ink-button" href="{$BASE_URL}pages/instituicao/edit.php?id={$instituicao.sigla}">
                <i class="fa fa-pencil-square-o"></i>
                <span>Editar</span>
-            </button>
+            </a>
            </small>
            <small>
-            <button class="ink-button">
+            <a class="ink-button" href="{$BASE_URL}pages/instituicao/delete.php?id={$instituicao.sigla}">
               <i class="fa fa-close"></i>
               <span>Apagar</span>
-            </button>
+            </a>
           </small>
         </p>
       </div>

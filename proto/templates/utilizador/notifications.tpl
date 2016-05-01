@@ -18,10 +18,10 @@ $(function(){
 <div class="ink-grid">
   <div class="message all-100 half-vertical-space">
     <h5 class="slab no-margin">
-      <i class="fa-user fa"></i>
-      <a href="{$BASE_URL}pages/utilizador/profile.php" class="black">Utilizador</a>
-      <strong>&gt;</strong>
-      <a href="{$BASE_URL}pages/utilizador/notifications.php" class="black">Notificações</a>
+      <i class="fa fa-user fa-fw"></i>
+      <a class="black" href="{$BASE_URL}pages/utilizador/profile.php">Utilizador</a>
+      &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+      <a class="black" href="{$BASE_URL}pages/utilizador/notifications.php">Notificações</a>
     </h5>
   </div>
 

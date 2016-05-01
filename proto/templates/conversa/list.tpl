@@ -5,7 +5,7 @@
     <h5 class="slab no-margin">
       <i class="fa fa-user fa-fw"></i>
       <a href="{$BASE_URL}pages/utilizador/profile.php" class="black">Utilizador</a>
-      <strong>&gt;</strong>
+      &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
       <a href="{$BASE_URL}pages/conversa/list.php" class="black">Mensagens Privadas</a>
     </h5>
   </div>

@@ -28,7 +28,7 @@
     </p>
     <p class="no-margin">
       {if $USERID eq $utilizador.idutilizador}
-      <a class="ink-tooltip" href="#" data-tip-text="Alterar endereço de e-mail" data-tip-color="black">
+      <a class="ink-tooltip" id="update-password" href="#" data-tip-text="Alterar endereço de e-mail" data-tip-color="black">
         <i class="fa fa-plus-circle"></i>
       </a>
       {else}
@@ -48,6 +48,9 @@
       <strong>Localização:</strong>
       {$utilizador.localidade}, {$utilizador.codigopais|utilizador_getCountry}
     </p>
+    {if $USERID eq $utilizador.idutilizador}
+      {include file='utilizador/update_password.tpl'}
+    {/if}
   </div>
   <div class="column half-padding all-70 large-60 medium-60 small-100 tiny-100 top">
     <h4 class="slab half-vertical-space">Perfil</h4>

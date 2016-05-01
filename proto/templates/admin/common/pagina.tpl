@@ -11,12 +11,14 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{$BASE_URL}css/main.css">
 <link rel="stylesheet" type="text/css" href="{$BASE_URL}css/font-roboto.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/ink-all.min.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/autoload.min.js"></script>
 </head>
 <body>
 <div class="ink-grid push-center">
+  {block name=navigation}
   <div class="column-group half-top-space quarter-bottom-space">
     <div class="column all-20 large-25 medium-33 small-50 tiny-50">
       <a href="{$BASE_URL}pages/index.php">
@@ -29,13 +31,15 @@
     </div>
     <div class="message all-100 half-bottom-space">
       <h5 class="slab no-margin">
-        <i class="fa-cog fa"></i>
-        <a href="{$BASE_URL}pages/admin/homepage.php" class="black">Administração</a>
-        <strong>&gt;</strong>
-        <a href="{$smarty.server.REQUEST_URI}" class="black">{$titulo}</a>
+        <i class="fa fa-cog fa-fw"></i>
+        <a class="black" href="{$BASE_URL}pages/admin/homepage.php">Administração</a>
+        &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+        <a class="black" href="{$smarty.server.REQUEST_URI}">{$titulo}</a>
      </h5>
     </div>
   </div>
+  {/block}
+  {include file='common/messages.tpl'}
   {block name=content}
   {/block}
 </div>
