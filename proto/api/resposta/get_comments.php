@@ -4,12 +4,13 @@
 
   if (safe_check($_POST, 'idResposta')) {
 
-    $idResposta = safe_getId($_POST, 'idResposta');
-
     if (safe_check($_POST, 'ultimoComentario')) {
 
       try {
-        echo resposta_fetchCommentsAfter($idResposta, safe_getId($_POST, 'ultimoComentario'));
+        echo resposta_fetchCommentsAfter(
+          safe_getId($_POST, 'idResposta'),
+          safe_getId($_POST, 'ultimoComentario')
+        );
       }
       catch (PDOException $e) {
         http_response_code(400);
@@ -18,7 +19,7 @@
     else {
 
       try {
-        echo resposta_fetchCommentsJson($idResposta);
+        echo resposta_fetchCommentsJson(safe_getId($_POST, 'idResposta'));
       }
       catch (PDOException $e) {
         http_response_code(400);
