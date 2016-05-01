@@ -1,6 +1,8 @@
 <?
   include_once('../../config/init.php');
+  include_once('../../database/country.php');
   include_once('../../database/pergunta.php');
+  include_once('../../database/utilizador.php');
 
   $idUtilizador = 0;
 

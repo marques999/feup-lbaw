@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/pergunta.php');
+  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $smarty->display('pergunta/ask.tpl');

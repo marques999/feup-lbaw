@@ -4,26 +4,37 @@
   include_once('../../database/instituicao.php');
   include_once('../../database/utilizador.php');
 
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_redirect('utilizador/login.php');
+  }
+
+  if (!utilizador_isAdministrator($idUtilizador)) {
+     safe_redirect('403.php');
+  }
+
   if (safe_strcheck($_GET, 'id')) {
     $idInstituicao = safe_trim($_GET, 'id');
-	$queryInstituicao = instituicao_listBySigla($idInstituicao);
+    $queryInstituicao = instituicao_listBySigla($idInstituicao);
   }
   else {
     safe_redirect('404.php');
   }
 
   if ($queryInstituicao && is_array($queryInstituicao)) {
+
     $idInstituicao = $queryInstituicao['idinstituicao'];
-    $queryCategorias = categoria_listByInstituicao($idInstituicao);
-    $queryPerguntas = instituicao_fetchPerguntas($idInstituicao);
-    $isAdministrator = utilizador_isAdministrator($_SESSION['idUtilizador']);
+    $queryCategorias = categoria_listAllGrouped();
+
+    for ($i=0;$i<count($queryCategorias);$i++) {
+      $queryCategorias[$i]['json'] = json_decode($queryCategorias[$i]['json'], true);
+    }
+
     $smarty->assign('instituicao', $queryInstituicao);
     $smarty->assign('categorias', $queryCategorias);
-    $smarty->assign('perguntas', $queryPerguntas);
-    $smarty->assign('administrador', $isAdministrator);
-    $smarty->assign('categorias_count', count($queryCategorias));
-    $smarty->assign('perguntas_count', count($queryPerguntas));
-    $smarty->display('instituicao/view.tpl');
+    $smarty->display('instituicao/edit.tpl');
   }
   else {
     safe_redirect('404.php');

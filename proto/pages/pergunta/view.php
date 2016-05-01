@@ -2,8 +2,15 @@
   include_once('../../config/init.php');
   include_once('../../database/categoria.php');
   include_once('../../database/pergunta.php');
+  include_once('../../database/utilizador.php');
 
-  $idPergunta = safe_getId($_GET, 'id');
+  if (safe_check($_GET, 'id')) {
+    $idPergunta = safe_getId($_GET, 'id');
+  }
+  else {
+    safe_redirect('404.php');
+  }
+
   $queryPergunta = pergunta_listById($idPergunta);
 
   if ($queryPergunta && is_array($queryPergunta)) {
