@@ -19,6 +19,16 @@ function pergunta_listByAuthor($idUtilizador) {
   $stmt->execute();
   return $stmt->fetchAll();
 }
+function pergunta_verificarAutor($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("SELECT FROM Pergunta
+    WHERE idPergunta = :idPergunta
+    AND idAutor = :idUtilizador");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $result = $stmt->execute();
+  return $result && is_array($result);
+}
 function pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descricao) {
   global $db;
   if (isset($descricao)) {
@@ -33,6 +43,37 @@ function pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descric
   $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->bindParam(":titulo", $safeTitle, PDO::PARAM_STR);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_editarPergunta($idPergunta, $idCategoria, $titulo, $descricao) {
+  global $db;
+  $numberColumns = 0;
+  $queryString = "UPDATE Instituicao SET ";
+  if ($idCategoria!=null) {
+    $queryString .= "idCategoria = :idCategoria";
+    $numberColumns++;
+  }
+  if ($titulo!=null) {
+    $queryString .= ($numberColumns > 0 ? ', titulo = :titulo' : 'titulo = :titulo');
+    $numberColumns++;
+  }
+  if ($descricao!=null) {
+    $queryString .= ($numberColumns > 0 ? ', descricao = :descricao' : 'descricao = :descricao');
+    $numberColumns++;
+  }
+  $queryString .= ' WHERE idPergunta = :idPergunta';
+  $stmt = $db->prepare($queryString);
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  if ($idCategoria!=null) {
+    $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
+  }
+  if ($titulo!=null) {
+    $stmt->bindParam(':titulo', $titulo, PDO::PARAM_STR);
+  }
+  if ($descricao!=null) {
+    $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+  }
   $stmt->execute();
   return $stmt->rowCount();
 }
@@ -178,13 +219,14 @@ function pergunta_userVote($idUtilizador, $idPergunta) {
 }
 function pergunta_fetchRelacionadas($idCategoria, $idPergunta) {
   global $db;
-  $stmt = $db->prepare("SELECT Pergunta.idPergunta,
+  $stmt = $db->prepare("SELECT
+      Pergunta.idPergunta,
       Pergunta.titulo,
       Utilizador.username
     FROM CategoriaInstituicao
-    JOIN CategoriaInstituicao CategoriasRelacionadas USING(idInstituicao)
-    JOIN Pergunta ON Pergunta.idCategoria = CategoriasRelacionadas.idCategoria
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    INNER JOIN CategoriaInstituicao CategoriasRelacionadas USING(idInstituicao)
+    INNER JOIN Pergunta ON Pergunta.idCategoria = CategoriasRelacionadas.idCategoria
+    INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
     WHERE CategoriaInstituicao.idCategoria = :idCategoria
     AND Pergunta.idPergunta <> :idPergunta
     GROUP BY Pergunta.idPergunta, Utilizador.username
@@ -212,7 +254,8 @@ function pergunta_fetchVotesJson($idPergunta) {
 }
 function pergunta_fetchRespostas($idPergunta) {
   global $db;
-  $stmt = $db->prepare("SELECT Resposta.idResposta,
+  $stmt = $db->prepare("SELECT
+      Resposta.idResposta,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       Utilizador.username,
@@ -226,9 +269,9 @@ function pergunta_fetchRespostas($idPergunta) {
       COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
       Resposta.melhorResposta
     FROM Resposta
-    JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-    JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
+    INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+    INNER JOIN Utilizador USING(idUtilizador)
+    LEFT JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
     LEFT JOIN (SELECT idResposta,
         SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
         SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
@@ -249,17 +292,18 @@ function pergunta_fetchRespostas($idPergunta) {
 }
 function pergunta_fetchComments($idPergunta) {
   global $db;
-  $stmt = $db->prepare("SELECT ComentarioPergunta.idComentario,
+  $stmt = $db->prepare("SELECT
+      ComentarioPergunta.idComentario,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       Utilizador.removido,
       Contribuicao.descricao,
-      to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
+      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
     FROM ComentarioPergunta
-    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
-    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-    WHERE ComentarioPergunta.idPergunta = :idPergunta
-    ORDER BY ComentarioPergunta.idComentario");
+    INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
+    NATURAL JOIN Utilizador
+    WHERE idPergunta = :idPergunta
+    ORDER BY idComentario");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -273,13 +317,15 @@ function pergunta_fetchCommentsAfter($idPergunta, $ultimoComentario) {
       ComentarioPergunta.idComentario,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.removido,
       Contribuicao.descricao,
-      to_char(Contribuicao.dataHora, 'FMDay, DD Month YYYY HH24:MI') as dataHora
+      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
     FROM ComentarioPergunta
-    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
-    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-    WHERE ComentarioPergunta.idPergunta = :idPergunta
-    AND ComentarioPergunta.idComentario > :ultimoComentario");
+    INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
+    NATURAL JOIN Utilizador
+    WHERE idPergunta = :idPergunta
+    AND idComentario > :ultimoComentario
+    ORDER BY idComentario");
   $stmt->bindParam(":ultimoComentario", $ultimoComentario, PDO::PARAM_INT);
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
