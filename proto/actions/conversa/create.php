@@ -18,14 +18,15 @@
     safe_error(null, 'O corpo da mensagem não pode estar em branco!');
   }
 
-  try {
+  $idRemetente = safe_getId($_SESSION, 'idUtilizador');
 
-    $idRemetente = safe_getId($_SESSION, 'idUtilizador');
+  try {
+    
     $idDestinatario = safe_getId($_POST, 'idDestinatario');
     $safeTitulo = safe_trim($_POST, 'titulo');
 
     if (conversa_criarThread($idRemetente, $idDestinatario, $safeTitulo) < 1) {
-      safe_error(null, 'Erro desconhecido, tentou aceder a uma conversa inexistente?');
+      safe_error(null, 'Erro desconhecido: tentou criar uma conversa que já existe?');
     }
   }
   catch (PDOException $e) {
@@ -41,7 +42,7 @@
       safe_redirect("conversa/view.php?id=$idConversa");
     }
     else {
-      safe_error(null, 'Erro desconhecido, tentou aceder a uma conversa inexistente?');
+      safe_error(null, 'Erro desconhecido: tentou aceder a uma conversa inexistente?');
     }
   }
   catch (PDOException $e) {

@@ -1,26 +1,37 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/resposta.php');
+  include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
   }
 
-  if (!safe_check($_GET, 'id')) {
+  if (safe_check($_GET, 'id')) {
+    $idResposta = safe_getId($_GET, 'id');
+  }
+  else {
     safe_error(null, 'Deve especificar uma resposta primeiro!');
+  }
+
+  $isOriginalPoster = resposta_verificarAutor($idResposta, $idUtilizador);
+  $isAdministrator = utilizador_isAdministrator($idUtilizador);
+  $isModerator = utilizador_isModerator($idUtilizador);
+
+  if (!$isOriginalPoster && !$isModerator && !$isAdministrator) {
+    safe_redirect('403.php');
   }
 
   try {
 
-    $idResposta = safe_getId($_GET, 'id');
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-    $isSuperuser = utilizador_isAdministrator($idUtilizador) || utilizador_isModerator($idUtilizador);
-
-    if (resposta_apagarResposta($idResposta, $idUtilizador, $isSuperuser) > 0) {
-      safe_redirect("pergunta/view.php?id=1");
+    if (resposta_apagarResposta($idResposta, $idUtilizador) > 0) {
+      safe_redirect("pergunta/view.php?id=$idPergunta");
     }
     else {
-      safe_error(null, 'Erro na operação, tentou apagar uma resposta de outro utilizador?');
+      safe_error(null, 'Erro na operação: tentou apagar uma resposta inexistente?');
     }
   }
   catch (PDOException $e) {

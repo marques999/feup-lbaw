@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../config/salt.php');
+  include_once('../../database/utilizador.php');
 
   if (safe_strcheck($_POST, 'username') && safe_strcheck($_POST, 'password')) {
 

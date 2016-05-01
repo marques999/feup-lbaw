@@ -3,63 +3,50 @@
   include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
 
-  $userExists = users_usernameExists($_POST['username']);
-
-  if ($userExists) {
-    header("Location: ../message_register.php?id=1");
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    safe_error('utilizador/homepage.php', 'Já se encontra com sessão iniciada, não pode registar-se!');
   }
 
-  $emailExists = users_emailExists($_POST['email']);
-
-  if ($emailExists) {
-    header("Location: ../message_register.php?id=2");
-  }
-
-  if (safe_strcheck($_POST, 'username')) {
-    $_username = safe_trim($_POST, 'username');
+  if (safe_check($_POST, 'username')) {
+     $myUsername = safe_trim($_POST, 'username');
   }
   else {
-    safe_error("../register.php", 'Deve preencher um username no formulário de registo!');
+    safe_error(null, 'Deve especificar um username primeiro!');
   }
 
-  if (safe_strcheck($_POST, 'password')) {
-    $_password = create_hash($_POST, 'password');
+  if (safe_check($_POST, 'password')) {
+     $myPassword = safe_trim($_POST, 'password');
   }
   else {
-    safe_error("../register.php", 'Deve preencher uma password no formulário de registo!');
-  }
-
-  if (safe_strcheck($_POST, 'first-name') && safe_strcheck($_POST, 'last-name')) {
-    $_primeiroNome = safe_trim($_POST, 'first-name');
-    $_ultimoNome = safe_trim($_POST, 'last-name');
-  }
-  else {
-    safe_redirect("../register.php");
+    safe_error(null, 'Deve especificar uma palavra-passe primeiro!');
   }
 
   if (safe_strcheck($_POST, 'email')) {
-    $_email = safe_trim($_POST, 'email');
+    $myEmail = safe_trim($_POST, 'email');
   }
   else {
-    safe_error("../register.php", 'Deve preencher um endereço de e-mail no formulário!');
+    safe_error(null, 'Deve especificar um endereço de e-mail obrigatório!');
   }
 
-  $stmt = $db->prepare('INSERT INTO Utilizador(idUtilizador, username, password, primeiroNome, ultimoNome)
-    VALUES(DEFAULT, :username, :password, :email, :primeiroNome, :ultimoNome)');
-  $stmt->bindParam(':username', $_username, PDO::PARAM_STR);
-  $stmt->bindParam(':password', $_password, PDO::PARAM_STR);
-  $stmt->bindParam(':email', $_email, PDO::PARAM_STR);
-  $stmt->bindParam(':primeiroNome', $_primeiroNome, PDO::PARAM_STR);
-  $stmt->bindParam(':ultimoNome', $_ultimoNome, PDO::PARAM_STR);
+  if (safe_strcheck($_POST, 'primeiro-nome') && safe_strcheck($_POST, 'ultimo-nome')) {
+    $myFirstName = safe_trim($_POST, 'primeiro-nome');
+    $myLastName = safe_trim($_POST, 'ultimo-name');
+  }
+  else {
+    safe_error(null, 'Deve especificar um nome completo obrigatório!');
+  }
 
   try {
-    $stmt->execute();
+    
+    if (utilizador_inserirUtilizador($myUsername, $myPassword, $myEmail, $myFirstName, $myLastName) < 1) {
+      safe_error(null, 'Erro na operação: um utilizador com este username ou e-mail já existe?');
+    }
   }
   catch (PDOException $e) {
     safe_error(null, $e->getMessage());
   }
 
-  if (users_imageUploaded()) {
+  /*if (users_imageUploaded()) {
 
     $uploadDirectory = '{$BASE_URL}images/avatars/';
     $baseFilename = basename($_FILES['image']['name']);
@@ -86,67 +73,50 @@
     imagedestroy($originalImage);
     imagedestroy($resizedImage);
     imagedestroy($thumbnailImage);
-  }
+  }*/
 
-  $hasInstituicao = safe_check($_POST, 'instituicao');
-  $queryString = 'UPDATE Utilizador SET ';
   $numberColumns = 0;
 
-  if ($hasInstituicao) {
-    $queryString .= 'idInstituicao = :idInstituicao';
+  if (safe_check($_POST, 'instituicao')) {
+    $myInstituicao = safe_getId($_POST, 'instituicao');
     $numberColumns++;
   }
-
-  $hasLocalidade = safe_strcheck($_POST, 'localidade');
-
-  if ($hasLocalidade) {
-
-    if ($numberColumns > 0) {
-      $queryString .= ', ';
-    }
-
-    $queryString .= 'localidade = :localidade');
-    $numberColumns++;
+  else {
+    $myInstituicao = null;
   }
 
-  $hasCodigoPais = safe_strcheck($_POST, 'pais');
-
-  if ($hasCodigoPais) {
-
-    if ($numberColumns > 0) {
-      $queryString .= ', ';
-    }
-
-    $queryString .= 'codigoPais = :codigoPais';
+  if (safe_strcheck($_POST, 'localidade')) {
+    $myLocalidade = safe_trim($_POST, 'localidade');
     $numberColumns++;
+  }
+  else {
+    $myLocalidade = null;
+  }
+
+  if (safe_strcheck($_POST, 'codigo-pais')) {
+    $myCodigoPais = safe_trim($_POST, 'codigo-pais');
+    $numberColumns++;
+  }
+  else {
+    $myCodigoPais = null;
   }
 
   if ($numberColumns > 0) {
 
-    if ($hasInstituicao) {
-      $_instituicao = safe_getId($_POST, 'idInstituicao');
-      $stmt->bindParam(':idInstituicao', $_instituicao, PDO::PARAM_INT);
-    }
-
-    if ($hasLocalidade) {
-      $_localidade = safe_trim($_POST, 'localidade');
-      $stmt->bindParam(':localidade', $_localidade, PDO::PARAM_STR);
-    }
-
-    if ($hasCodigoPais) {
-      $_codigoPais = safe_trim($_POST, 'codigoPais');
-      $stmt->bindParam(':codigoPais', $_codigoPais, PDO::PARAM_STR);
-    }
-
     try {
-      $stmt->execute();
+      
+      if (utilizador_editarUtilizador($idUtilizador, null, null, null, $idInstituicao, $myLocalidade, $myCodigoPais) > 0) {
+        safe_redirect('utilizador/login.php');
+      }
+      else {
+        safe_error(null, 'Erro na operação: tentou alterar as informações de outro utilizador?');
+      }
     }
     catch (PDOException $e) {
       safe_error(null, $e->getMessage());
     }
-
-    if ($stmt->rowCount() > 0) {
-      safe_redirect('utilizador/login.php');
-    }
+  }
+  else {
+    safe_redirect('utilizador/login.php');
   }
 ?>

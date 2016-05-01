@@ -1,82 +1,72 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/pergunta.php');
-
+  include_once('../../database/utilizador.php');
+  
   if (safe_check($_SESSION, 'idUtilizador')) {
-
-    if (safe_check($_POST, 'idPergunta')) {
-
-      $hasCategoria = safe_check($_POST, 'idCategoria');
-      $queryString = "UPDATE Pergunta SET ";
-      $numberColumns = 0;
-
-      if ($hasCategoria) {
-        $queryString .= 'idCategoria = :idCategoria';
-        $numberColumns++;
-      }
-
-      $hasTitulo = safe_check($_POST, 'titulo');
-
-      if ($hasTitulo) {
-        $queryString += ($numberColumns > 0 ? : ' AND titulo = :titulo' : 'titulo = :titulo';
-        $numberColumns++;
-      }
-
-      $hasDescricao = safe_check($_POST, 'descricao');
-
-      if ($hasDescricao) {
-        $queryString += ($numberColumns > 0 ? ' AND descricao = :descricao' : 'descricao = :descricao');
-        $numberColumns++;
-      }
-
-      $queryString += ' WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador';
-
-      if ($numberColumns > 0) {
-
-        $idPergunta = safe_getId($_POST, 'idPergunta');
-        $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-        $stmt = $db->prepare($queryString);
-        $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-        $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-
-        if ($hasCategoria) {
-          $safeCategoria = safe_getId($_POST, 'idCategoria');
-          $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
-        }
-
-        if ($hasTitulo) {
-          $safeTitulo = safe_trim($_POST, 'titulo');
-          $stmt->bindParam(':titulo', $safeTitulo, PDO::PARAM_STR);
-        }
-
-        if ($hasDescricao) {
-          $safeDescricao = safe_trim($_POST, 'descricao');
-          $stmt->bindParam(':descricao', $safeDescricao, PDO::PARAM_STR);
-        }
-
-        try {
-          $stmt->execute();
-        }
-        catch (PDOException $e) {
-          safe_error(null, $e->getMessage());
-        }
-
-        if ($stmt->rowCount() > 0) {
-          safe_redirect("pergunta/view.php?id=$idPergunta");
-        }
-        else {
-          safe_error(null, 'Erro na operação, tentou editar uma pergunta de outro utilizador?');
-        }
-      }
-      else {
-         safe_error(null, 'Operação sem efeito, nenhum dos campos foi alterado...');
-      }
-    }
-    else {
-      safe_error(null, 'Deve especificar uma pergunta primeiro!');
-    }
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  }
+
+  if (safe_check($_POST, 'idPergunta')) {
+    $idPergunta = safe_getId($_POST, 'idPergunta');
+  }
+  else {
+    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+  }
+
+  $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
+  $isAdministrator = utilizador_isAdministrator($idUtilizador);
+  $isModerator = utilizador_isModerator($idUtilizador);
+
+  if (!$isOriginalPoster && !$isModerator && !$isAdministrator) {
+    safe_redirect('403.php');
+  }
+
+  $numberColumns = 0;
+
+  if (safe_check($_POST, 'idCategoria')) {
+    $myCategoria = safe_getId($_POST, 'idCategoria');
+    $numberColumns++;
+  }
+  else {
+    $myCategoria = null;
+  }
+
+  if (safe_strcheck($_POST, 'titulo')) {
+    $myTitulo = safe_trim($_POST, 'titulo');
+    $numberColumns++;
+  }
+  else {
+    $myTitulo = null;
+  }
+
+  if (safe_strcheck($_POST, 'descricao')) {
+    $myDescricao = safe_trim($_POST, 'descricao');
+    $numberColumns++;
+  }
+  else {
+    $myDescricao = null;
+  }
+
+  if ($numberColumns < 1) {
+    safe_error(null, 'Operação sem efeito, não foi enviada informação suficiente...');
+  }
+
+  try {
+    
+    $idPergunta = safe_getId($_POST, 'idPergunta');
+
+    if (pergunta_editarPergunta($idPergunta, $myCategoria, $myTitulo, $myDescricao) > 0) {
+      safe_redirect("pergunta/view.php?id=$idPergunta");
+    }
+    else {
+      safe_error(null, 'Erro desconhecido: tentou editar as informações de uma pergunta inexistente?');
+    }
+  }
+  catch (PDOException $e) {
+    safe_error(null, $e->getMessage());
   }
 ?>

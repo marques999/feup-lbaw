@@ -11,11 +11,6 @@
     safe_redirect('403.php');
   }
 
-  if (!safe_check($_POST, 'idInstituicao')) {
-    safe_error(null, 'Deve especificar uma instituição primeiro!');
-  }
-
-  $idInstituicao = safe_getId($_POST, 'idInstituicao');
   $numberColumns = 0;
 
   if (safe_strcheck($_POST, 'nome')) {
@@ -23,7 +18,7 @@
     $numberColumns++;
   }
   else {
-    $myNome = null;
+    safe_error(null, 'O nome da instituição não pode estar em branco!');
   }
 
   if (safe_strcheck($_POST, 'sigla')) {
@@ -31,7 +26,7 @@
     $numberColumns++;
   }
   else {
-    $mySigla = null;
+    safe_error(null, 'A sigla da instituição não pode estar em branco!');
   }
 
   if (safe_strcheck($_POST, 'morada')) {
@@ -64,11 +59,11 @@
 
   try {
 
-    if (instituicao_editarInstituicao($idInstituicao, $myNome, $mySigla, $myMorada, $myContacto, $myWebsite) > 0) {
+    if (instituicao_adicionarInstituicao($myNome, $mySigla, $myMorada, $myContacto, $myWebsite) > 0) {
       safe_redirect("instituicao/view.php?=$mySigla");
     }
     else {
-      safe_error(null, 'Erro desconhecido: tentou alterar uma instituição inexistente?');
+      safe_error(null, 'Erro desconhecido: tentou adicionar uma instituição que já existe?');
     }
   }
   catch (PDOException $e) {

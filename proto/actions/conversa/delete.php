@@ -9,13 +9,14 @@
   if (!safe_check($_GET, 'id')) {
     safe_error(null, 'Deve especificar uma conversa primeiro!');
   }
+  
+  $idConversa = safe_getId($_GET, 'id');
+  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  $isOriginalPoster = conversa_verificarAutor($idConversa, $idUtilizador);
 
   try {
 
-    $idConversa = safe_getId($_GET, 'id');
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-
-    if (conversa_delete($idConversa, $idUtilizador) > 0) {
+    if (conversa_apagarThread($idConversa, $idUtilizador) > 0) {
       safe_redirect("conversa/list.php");
     }
     else {

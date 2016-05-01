@@ -1,5 +1,6 @@
 <?
   include_once('../../config/init.php');
+  include_once('../../database/categoria.php');
   include_once('../../database/utilizador.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
@@ -10,17 +11,17 @@
     safe_redirect('403.php');
   }
 
-  if (!safe_check($_GET, 'id')) {
-    safe_error(null, 'Deve especificar um utilizador primeiro!');
+  if (!safe_strcheck($_POST, 'nome')) {
+    safe_error(null, 'O nome da categoria não pode estar em branco!');
   }
 
   try {
 
-    if (utilizador_banirUtilizador(safe_getId($_GET, 'id')) > 0) {
-      safe_redirect('admin/utilizadores.php');
+    if (categoria_adicionarCategoria(safe_trim($_POST, 'nome')) > 0) {
+      safe_redirect("categoria/view.php?=$idCategoria");
     }
     else {
-      safe_error(null, 'Erro na operação: tentou banir um utilizador inexistente?');
+      safe_error(null, 'Erro na operação, nenhum tuplo foi alterado!');
     }
   }
   catch (PDOException $e) {

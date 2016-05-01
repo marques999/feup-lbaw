@@ -10,17 +10,17 @@
     safe_redirect('403.php');
   }
 
-  if (!safe_check($_GET, 'id')) {
+  if (!safe_check($_POST, 'idInstituicao')) {
     safe_error(null, 'Deve especificar uma instituição primeiro!');
   }
 
   try {
 
-    if (instituicao_delete(safe_getId($_GET, 'id')) > 0) {
+    if (instituicao_apagarInstituicao(safe_trim($_POST, 'idInstituicao')) > 0) {
       safe_redirect('admin/instituicoes.php');
     }
     else {
-      safe_error(null, 'Erro desconhecido, tentou apagar uma instituição inexistente?');
+      safe_error(null, 'Erro desconhecido: tentou apagar uma instituição inexistente?');
     }
   }
   catch (PDOException $e) {
