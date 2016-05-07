@@ -50,15 +50,6 @@ GROUP BY idInstituicao
 ORDER BY sigla;
 
 /*--------------------------------------------*/
-/* LISTAR INSTITUIÇÕES RELACIONADAS           */
-/*--------------------------------------------*/
-SELECT Instituicao.idInstituicao, Instituicao.sigla
-FROM Categoria
-NATURAL JOIN CategoriaInstituicao
-INNER JOIN Instituicao USING(idInstituicao)
-WHERE idCategoria = :idCategoria;
-
-/*--------------------------------------------*/
 /* OBTER INFORMAÇÕES DA INSTITUIÇÃO           */
 /*--------------------------------------------*/
 

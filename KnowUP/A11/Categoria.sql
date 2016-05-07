@@ -1,39 +1,14 @@
 /*--------------------------------------------*/
-/* ADICIONAR CATEGORIA                        */
+/* SQL501: LISTAR CATEGORIAS                  */
 /*--------------------------------------------*/
-INSERT INTO Categoria(idCategoria, nome) VALUES(DEFAULT, :nome);
-
-/*--------------------------------------------*/
-/* EDITAR CATEGORIA                           */
-/*--------------------------------------------*/
-UPDATE Categoria SET nome = :nome WHERE idCategoria = :idCategoria;
-
-/*--------------------------------------------*/
-/* APAGAR CATEGORIA                           */
-/*--------------------------------------------*/
-DELETE FROM Categoria WHERE idCategoria = :idCategoria;
-
-/*--------------------------------------------*/
-/* LISTAR CATEGORIAS                          */
-/*--------------------------------------------*/
-SELECT Categoria.*, COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas
+SELECT Categoria.*, COUNT(DISTINCT idPergunta) AS numeroPerguntas
 FROM Categoria
 NATURAL LEFT JOIN Pergunta
 GROUP BY idCategoria
 ORDER BY nome;
 
 /*--------------------------------------------*/
-/* LISTAR CATEGORIAS MAIS POPULARES           */
-/*--------------------------------------------*/
-SELECT Categoria.*, COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas
-FROM Categoria
-INNER JOIN Pergunta USING(idCategoria)
-GROUP BY Categoria.idCategoria, Pergunta.idPergunta
-ORDER BY numeroPerguntas DESC
-LIMIT 5;
-
-/*--------------------------------------------*/
-/* LISTAR CATEGORIAS RELACIONADAS             */
+/* SQL502: LISTAR CATEGORIAS RELACIONADAS     */
 /*--------------------------------------------*/
 SELECT Categorias.idCategoria, Categorias.nome
 FROM Categoria
@@ -47,12 +22,21 @@ ORDER BY random()
 LIMIT 5;
 
 /*--------------------------------------------*/
-/* OBTER INFOMRAÇÕES DA CATEGORIA             */
+/* SQL503: LISTAR INSTITUIÇÕES ASSOCIADAS     */
+/*--------------------------------------------*/
+SELECT Instituicao.idInstituicao, Instituicao.sigla
+FROM Categoria
+NATURAL JOIN CategoriaInstituicao
+INNER JOIN Instituicao USING(idInstituicao)
+WHERE idCategoria = :idCategoria;
+
+/*--------------------------------------------*/
+/* SQL504: OBTER INFOMRAÇÕES DA CATEGORIA     */
 /*--------------------------------------------*/
 SELECT * FROM Categoria WHERE idCategoria = :idCategoria;
 
 /*--------------------------------------------*/
-/* OBTER PERGUNTAS DA CATEGORIA               */
+/* SQL505: OBTER PERGUNTAS DA CATEGORIA       */
 /*--------------------------------------------*/
 SELECT Pergunta.idPergunta,
        Utilizador.idUtilizador,
@@ -78,3 +62,28 @@ INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
 WHERE Pergunta.idCategoria = :idCategoria
 GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
 ORDER BY Pergunta.dataHora DESC;
+
+/*--------------------------------------------*/
+/* SQL506: EDITAR CATEGORIA                           */
+/*--------------------------------------------*/
+UPDATE Categoria SET nome = :nome WHERE idCategoria = :idCategoria;
+
+/*--------------------------------------------*/
+/* SQL507: ADICIONAR CATEGORIA                */
+/*--------------------------------------------*/
+INSERT INTO Categoria(idCategoria, nome) VALUES(DEFAULT, :nome);
+
+/*--------------------------------------------*/
+/* SQL508: APAGAR CATEGORIA                   */
+/*--------------------------------------------*/
+DELETE FROM Categoria WHERE idCategoria = :idCategoria;
+
+/*--------------------------------------------*/
+/* SQL509: LISTAR CATEGORIAS MAIS POPULARES   */
+/*--------------------------------------------*/
+SELECT Categoria.*, COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas
+FROM Categoria
+INNER JOIN Pergunta USING(idCategoria)
+GROUP BY Categoria.idCategoria, Pergunta.idPergunta
+ORDER BY numeroPerguntas DESC
+LIMIT 5;

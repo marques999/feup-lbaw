@@ -50,11 +50,3 @@ WHERE idConversa = :idConversa;
 /*--------------------------------------------*/
 INSERT INTO Mensagem(idMensagem, idConversa, idAutor, descricao)
 VALUES(DEFAULT, :idConversa, :idRemetente, :descricao);
-
-/*--------------------------------------------*/
-/* APAGAR MENSAGEM                            */
-/*--------------------------------------------*/
-DELETE FROM Menagem
-WHERE idConversa = :idConversa
-AND idMensagem = :idMensagem
-AND idAutor = :idUtilizador;

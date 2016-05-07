@@ -1,50 +1,15 @@
-/*--------------------------------------------*/
-/* REGISTAR UTILIZADOR                        */
-/*--------------------------------------------*/
-INSERT INTO Utilizador(idUtilizador, username, password, primeiroNome, ultimoNome)
-VALUES(DEFAULT, :username, :password, :email, :primeiroNome, :ultimoNome)
-
-/*--------------------------------------------*/
-/* APAGAR UTILIZADOR                          */
-/*--------------------------------------------*/
-UPDATE Utilizador SET removido = TRUE WHERE idUtilizador = :idUtilizador;
-
-/*--------------------------------------------*/
-/* BANIR UTILIZADOR                           */
-/*--------------------------------------------*/
-UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador;
-
-/*--------------------------------------------*/
-/* DENUNCIAR UTILIZADOR                       */
-/*--------------------------------------------*/
-INSERT INTO Report(idReport, idModerador, idUtilizador, descricao)
-VALUES(DEFAULT, :idModerador, :idUtilizador, :descricao);
-
-/*--------------------------------------------*/
-/* VERIFICAR PERMISSÕES DE ADMINISTRADOR      */
-/*--------------------------------------------*/
+/*-----------------------------------------------*/
+/* SQL101: VERIFICAR PERMISSÕES DE ADMINISTRADOR */
+/*-----------------------------------------------*/
 SELECT * FROM Administrador WHERE idAdministrador = :idUtilizador;
 
-/*--------------------------------------------*/
-/* VERIFICAR PERMISSÕES DE MODEAADOR          */
-/*--------------------------------------------*/
+/*-----------------------------------------------*/
+/* SQL102: VERIFICAR PERMISSÕES DE MODERADOR     */
+/*-----------------------------------------------*/
 SELECT * FROM Moderador WHERE idModerador = :idUtilizador;
 
 /*--------------------------------------------*/
-/* ALTERAR PASSWORD                           */
-/*--------------------------------------------*/
-UPDATE Utilizador SET password = :password WHERE idUtilizador = :idUtilizador;
-
-/*--------------------------------------------*/
-/* OBTER INFORMAÇÕES DA INSTITUIÇÃO           */
-/*--------------------------------------------*/
-SELECT idInstituicao, sigla
-FROM Utilizador
-LEFT JOIN Instituicao USING (idInstituicao)
-WHERE idUtilizador = :idUtilizador;
-
-/*--------------------------------------------*/
-/* OBTER INFORMAÇÕES DO UTILIZADOR            */
+/* SQL103: OBTER INFORMAÇÕES DO UTILIZADOR    */
 /*--------------------------------------------*/
 SELECT Utilizador.idUtilizador,
        Utilizador.username,
@@ -72,26 +37,35 @@ WHERE Utilizador.idUtilizador = :idUtilizador
 GROUP BY Utilizador.idUtilizador, Instituicao.idInstituicao;
 
 /*--------------------------------------------*/
-/* LISTAR RESPOSTAS DO UTILIZADOR             */
+/* SQL104: DENUNCIAR UTILIZADOR               */
 /*--------------------------------------------*/
-SELECT Resposta.idResposta,
-       Pergunta.idPergunta,
-       Pergunta.titulo,
-       Pergunta.ativa,
-       Contribuicao.descricao,
-       Contribuicao.dataHora,
-       Resposta.melhorResposta,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao
-FROM Resposta
-INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-LEFT JOIN VotoResposta USING(idResposta)
-INNER JOIN Pergunta USING (idPergunta)
-INNER JOIN Utilizador USING(idUtilizador)
-WHERE Contribuicao.idUtilizador = :idUtilizador
-GROUP BY Contribuicao.idContribuicao, Pergunta.idPergunta, Resposta.idResposta
-ORDER BY Contribuicao.dataHora DESC;
+INSERT INTO Report(idReport, idModerador, idUtilizador, descricao)
+VALUES(DEFAULT, :idModerador, :idUtilizador, :descricao);
+
+/*--------------------------------------------*/
+/* SQL105: REGISTAR UTILIZADOR                */
+/*--------------------------------------------*/
+INSERT INTO Utilizador(idUtilizador, username, password, primeiroNome, ultimoNome)
+VALUES(DEFAULT, :username, :password, :email, :primeiroNome, :ultimoNome)
+
+/*--------------------------------------------*/
+/* SQL106: ATUALIZAR UTILIZADOR               */
+/*--------------------------------------------*/
+
+/*--------------------------------------------*/
+/* SQL107: ALTERAR PASSWORD                   */
+/*--------------------------------------------*/
+UPDATE Utilizador SET password = :password WHERE idUtilizador = :idUtilizador;
+
+/*--------------------------------------------*/
+/* SQL108: BANIR UTILIZADOR                   */
+/*--------------------------------------------*/
+UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador;
+
+/*--------------------------------------------*/
+/* SQL109: APAGAR UTILIZADOR                  */
+/*--------------------------------------------*/
+UPDATE Utilizador SET removido = TRUE WHERE idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* LISTAR UTILIZADORES ATIVOS                 */
