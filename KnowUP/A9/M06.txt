@@ -4,14 +4,15 @@
 ^ URL            | ''/pages/instituicao/list.php''                                                                                   ||
 ^ Description    | Esta página permite visualizar uma lista ordenada alfabeticamente de todas as instituições existentes no sistema. ||
 ^ UI             | [[:lbaw1525:proj:a3#ui07blista_de_instituicoes|UI07b]]                                                            ||
+^ SQL            | [[#sql606listar_instituicoes|SQL606]]                                                                             ||
 ^ Permissions    | PUB                                                                                                               ||
 
 === R602: Criar instituição ===
-^ URL            | ''/pages/instituicao/new.php''                                                            ||
-^ Description    | Esta página permite criar uma nova instituição através do preenchimento de um formulário. ||
-^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                         ||
-^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                               ||
-^ Permissions    | ADM                                                                                       ||
+^ URL            | ''/pages/instituicao/new.php''                                                                                  ||
+^ Description    | Esta página permite criar uma nova instituição através do preenchimento de um formulário.                       ||
+^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                                               ||
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                                     ||
+^ Permissions    | ADM                                                                                                             ||
 
 === R603: Editar instituição ===
 ^ URL            | ''/pages/instituicao/edit.php''                                                            ||
@@ -29,6 +30,7 @@
 ^ Parameters     | +id: text | sigla da instituição                                                             |
 ^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]] ||
 ^ UI             | [[:lbaw1525:proj:a3#ui08pagina_da_instituicao|UI08]]                                        ||
+^ SQL            | [[#sql607listar_categorias_associadas|SQL607]], [[#sql608obter_informacoes_da_instituicao|SQL608]], [[#sql609obter_perguntas_da_instituicao|SQL609]]                                                               ||
 ^ Permissions    | PUB                                                                                         ||
 
 === R605: Adicionar instituição ===
@@ -42,6 +44,7 @@
 ^                | ?website: text                      | website da instituição                |
 ^ Redirects      | [[#r604pagina_da_instituicao|R604]] | Sucesso                               |
 ^                | [[#r602criar_instituicao|R602]]     | Erro                                  |
+^ SQL            | [[#sql601adicionar_instituicao|SQL601]]                                    ||
 ^ Permissions    | ADM                                                                        ||
 
 === R606: Atualizar instituição ===
@@ -56,16 +59,18 @@
 ^                | ?website: text                      | novo website da instituição (ou website atual se não tiver sido alterado no formulário)                |
 ^ Redirects      | [[#r604pagina_da_instituicao|R604]] | Sucesso                                                                                                |
 ^                | [[#r603editar_instituicao|R603]]    | Erro                                                                                                   |
+^ SQL            | [[#sql602editar_instituicao|SQL602]]                                                                                                        ||
 ^ Permissions    | ADM                                                                                                                                         ||
 
 === R607: Apagar instituição ===
-^ URL          | ''/actions/instituicao/delete.php''                        ||
-^ Description  | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                       ||
-^ Method       | GET                                                        ||
-^ Parameters   | +id: text                           | sigla da instituição  |
-^ Redirects    | [[#r803gerir_instituicoes|R803]]    | Sucesso               |
-^              | [[#r604pagina_da_instituicao|R604]] | Erro                  |
-^ Permissions  | ADM                                                        ||
+^ URL            | ''/actions/instituicao/delete.php''                                 ||
+^ Description    | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                       ||
+^ Method         | POST                                                                ||
+^ Parameters     | +idInstituicao: integer             | chave primária da instituição  |
+^ Redirects      | [[#r803gerir_instituicoes|R803]]    | Sucesso                        |
+^                | [[#r604pagina_da_instituicao|R604]] | Erro                           |
+^ SQL            | [[#sql603apagar_instituicao|SQL603]]                                ||
+^ Permissions    | ADM                                                                 ||
 
 === R608: Associar categoria ===
 ^ URL            | ''/api/instituicao/insert_categoria.php''                                            ||
@@ -77,6 +82,7 @@
 ^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                |
 ^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas  |
 ^                | 403 Forbidden           | se utilizador não tiver permissões suficientes              |
+^ SQL            | [[#sql604associar_categoria|SQL604]]                                                 ||
 ^ Permissions    | ADM                                                                                  ||
 
 === R609: Remover categoria ===
@@ -89,4 +95,5 @@
 ^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                |
 ^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas  |
 ^                | 403 Forbidden           | se utilizador não tiver permissões suficientes              |
+^ SQL            | [[#sql605retirar_categoria|SQL605]]                                                  ||
 ^ Permissions    | ADM                                                                                  ||

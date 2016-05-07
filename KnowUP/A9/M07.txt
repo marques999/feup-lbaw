@@ -4,6 +4,7 @@
 ^ URL            | ''/pages/conversa/list.php''                                                                                                     ||
 ^ Description    | Esta página permite aos utilizadores visualizarem as suas conversas, bem como as últimas mensagens recebidas para cada conversa. ||
 ^ UI             | [[:lbaw1525:proj:a3#ui10mensagens_privadas|UI10]]                                                                                ||
+^ SQL            | [[#sql703listar_conversas_do_utilizador|SQL703]]                                                                                 ||
 ^ Permissions    | MEM                                                                                                                              ||
 
 === R702: Página da conversa ===
@@ -12,34 +13,38 @@
 ^ Method         | GET                                                                                                                    ||
 ^ Parameters     | +id: integer | chave primária da conversa                                                                               |
 ^ UI             | [[:lbaw1525:proj:a3#ui11pagina_da_conversa|UI11]]                                                                      ||
+^ SQL            | [[#sql704obter_informacoes_da_conversa|SQL704]], [[#sql705obter_mensagens_da_conversa|SQL705]]                         ||
 ^ Permissions    | OWN                                                                                                                    ||
 
 === R703: Criar conversa ===
-^ URL            | ''/actions/conversa/create.php''                                                                                      ||
-^ Description    | Esta //action// permite criar uma nova conversa entre dois utilizadores com base na informação recebida. Uma nova conversa tem sempre uma mensagem associada. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova conversa, caso contrário regressa à página de mensagens privadas, sendo apresentada ao utilizador uma mensagem de erro. ||
-^ Method         | POST                                                                                                                  ||
-^ Request body   | +idDestinatario: integer         | chave primária do destinatário da conversa                                          |
-^                | +titulo: text                    | título da conversa                                                                  |
-^                | +descricao: text                 | conteúdo da mensagem                                                                |
-^ Redirects      | [[#r702pagina_da_conversa|R702]] | Sucesso                                                                             |
-^                | [[#r701mensagens_privadas|R701]] | Erro                                                                                |
-^ Permissions    | MEM                                                                                                                   ||
+^ URL            | ''/actions/conversa/create.php''                                              ||
+^ Description    | Esta //action// permite criar uma nova conversa entre dois utilizadores com base na informação recebida. Uma nova conversa tem sempre uma mensagem associada. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova conversa, caso contrário regressa à página de mensagens privadas, sendo apresentada ao utilizador uma mensagem de erro.                                                  ||
+^ Method         | POST                                                                          ||
+^ Request body   | +idDestinatario: integer         | chave primária do destinatário da conversa  |
+^                | +titulo: text                    | título da conversa                          |
+^                | +descricao: text                 | conteúdo da mensagem                        |
+^ Redirects      | [[#r702pagina_da_conversa|R702]] | Sucesso                                     |
+^                | [[#r701mensagens_privadas|R701]] | Erro                                        |
+^ SQL            | [[#sql701criar_conversa|SQL701]]                                              ||
+^ Permissions    | MEM                                                                           ||
 
 === R704: Enviar mensagem ===
-^ URL            | ''/actions/conversa/reply.php''                        ||
-^ Description    | Esta //action// insere uma mensagem na conversa escolhida com base na informação recebida. O utilizador é sempre reencaminhado para a página da conversa, sendo apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | POST                                                   ||
-^ Request body   | +idConversa: integer | chave primária da conversa       |
-^                | ?descricao: text     | conteúdo da mensagem             |
-^ Redirects      | [[#r702pagina_da_conversa|R702]]                       ||
-^ Permissions    | OWN                                                    ||
+^ URL            | ''/actions/conversa/reply.php''                   ||
+^ Description    | Esta //action// insere uma mensagem na conversa escolhida com base na informação recebida. O utilizador é sempre reencaminhado para a página da conversa, sendo apresentada uma mensagem de erro se esta operação falhar.                                             ||
+^ Method         | POST                                              ||
+^ Request body   | +idConversa: integer | chave primária da conversa  |
+^                | ?descricao: text     | conteúdo da mensagem        |
+^ Redirects      | [[#r702pagina_da_conversa|R702]]                  ||
+^ SQL            | [[#sql706enviar_mensagem|SQL706]]                 ||
+^ Permissions    | OWN                                               ||
 
 === R705: Apagar conversa ===
 ^ URL            | ''/actions/conversa/delete.php''                              ||
-^ Description    | Esta //action// apaga uma conversa com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de mensagens privadas, caso contrário regressa à página da conversa, sendo apresentada ao utilizador uma mensagem de erro.                                              ||
+^ Description    | Esta //action// apaga uma conversa com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de mensagens privadas, caso contrário regressa à página da conversa, sendo apresentada ao utilizador uma mensagem de erro.                                                                            ||
 ^ Method         | GET                                                           ||
 ^ Method         | GET                                                           ||
 ^ Parameters     | +id: integer                     | chave primária da conversa  |
 ^ Redirects      | [[#r701mensagens_privadas|R701]] | Sucesso                     |
 ^                | [[#r702pagina_da_conversa|R702]] | Erro                        |
+^ SQL            | [[#sql702apagar_conversa|SQL702]]                             ||
 ^ Permissions    | OWN                                                           ||

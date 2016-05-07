@@ -1,19 +1,20 @@
 ==== Módulo M03: Perguntas ====
 
 === R301: Página da pergunta ===
-^ URL            | ''/pages/pergunta/view.php''                                                                 ||
-^ Description    | Esta página permite visualizar uma pergunta, bem como as respetivas respostas e comentários. ||
-^ Method         | GET                                                                                          ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                     |
-^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r406registar_voto|R406]], [[#r407obter_comentarios|R407]], [[#r408inserir_comentario|R408]], [[#r409apagar_comentario|R409]]                                                                                 ||
-^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                            ||
-^ Permissions    | PUB                                                                                          ||
+^ URL            | ''/pages/pergunta/view.php''                                                                                                                  ||
+^ Description    | Esta página permite visualizar uma pergunta, bem como as respetivas respostas e comentários.                                                  ||
+^ Method         | GET                                                                                                                                           ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                                                                      |
+^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]], [[#r311obter_comentarios|R311]], [[#r312inserir_comentario|R312]], [[#r313apagar_comentario|R313]], [[#r406registar_voto|R406]], [[#r407obter_comentarios|R407]], [[#r408inserir_comentario|R408]], [[#r409apagar_comentario|R409]] ||
+^ UI             | [[:lbaw1525:proj:a3#ui05pagina_da_pergunta|UI05]]                                                                                             ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql301obter_informacoes_da_pergunta|SQL301]], [[#sql302obter_informacoes_do_utilizador|SQL302]], [[#sql303obter_respostas|SQL303]], [[#sql304listar_perguntas_relacionadas|SQL304]], [[#sql313obter_comentarios|SQL313]], [[#sql316verificar_autor_da_pergunta|SQL316]], [[#sql502listar_categorias_relacionadas|SQL502]]                                                                  ||
+^ Permissions    | PUB                                                                                                                                           ||
 
 === R302: Redigir pergunta ===
 ^ URL            | ''/pages/pergunta/ask.php''                                                                          ||
-^ Description    | Esta página permite publicar uma nova pergunta no sistema através do preenchimento de um formulário. ||
+^ Description    | Esta página permite publicar uma nova pergunta no sistema através do preenchimento de um formulário. Se for passado um ID como parâmetro, a pergunta ficará automaticamente associada a essa categoria.                                                                                                               |
 ^ Method         | GET                                                                                                  ||
-^ Parameters     | +id: integer | chave primária da categoria                                                            |
+^ Parameters     | ?id: integer | chave primária da categoria                                                            |
 ^ UI             | [[:lbaw1525:proj:a3#ui12fazer_pergunta|UI12]]                                                        ||
 ^ Permissions    | MEM                                                                                                  ||
 
@@ -23,45 +24,50 @@
 ^ Method         | GET                                                                                ||
 ^ Parameters     | +id: integer | chave primária da pergunta                                           |
 ^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                         ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql316verificar_autor_da_pergunta|SQL316]] ||
 ^ Permissions    | OP, MOD, ADM                                                                       ||
 
 === R304: Submeter pergunta ===
-^ URL            | ''/actions/pergunta/submit.php''                           ||
-^ Description    | Esta //action// permite introduzir uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova pergunta, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro.    ||
-^ Method         | POST                                                       ||
-^ Request body   | +titulo: text                    | título da pergunta       |
-^                | ?descricao: text                 | conteúdo da pergunta     |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                  |
-^                | [[#r302redigir_pergunta|R302]]   | Erro                     |
-^ Permissions    | MEM                                                        ||
+^ URL            | ''/actions/pergunta/submit.php''                        ||
+^ Description    | Esta //action// permite introduzir uma pergunta no sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova pergunta, caso contrário regressa à página de redação da pergunta, sendo apresentada ao utilizador uma mensagem de erro. ||
+^ Method         | POST                                                    ||
+^ Request body   | +titulo: text                    | título da pergunta    |
+^                | ?descricao: text                 | conteúdo da pergunta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso               |
+^                | [[#r302redigir_pergunta|R302]]   | Erro                  |
+^ SQL            | [[#sql305submeter_pergunta|SQL305]]                     ||
+^ Permissions    | MEM                                                     ||
 
 === R305: Atualizar pergunta ===
-^ URL            | ''/actions/pergunta/update.php''                                 ||
-^ Description    | Esta //action// permite atualizar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta já com as alterações feitas, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro.        ||
-^ Method         | POST                                                             ||
-^ Request body   | +idPergunta: integer             | chave primária da pergunta     |
-^                | ?titulo: text                    | novo título da pergunta        |
-^                | ?descricao: text                 | novo conteúdo da pergunta      |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                        |
-^                | [[#r303editar_pergunta|R303]]    | Erro                           |
-^ Permissions    | OP, MOD, ADM                                                     ||
+^ URL            | ''/actions/pergunta/update.php''                              ||
+^ Description    | Esta //action// permite atualizar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta já com as alterações feitas, caso contrário regressa à página de edição da pergunta, sendo apresentada ao utilizador uma mensagem de erro. ||
+^ Method         | POST                                                          ||
+^ Request body   | +idPergunta: integer             | chave primária da pergunta  |
+^                | ?titulo: text                    | novo título da pergunta     |
+^                | ?descricao: text                 | novo conteúdo da pergunta   |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                     |
+^                | [[#r303editar_pergunta|R303]]    | Erro                        |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql306atualizar_pergunta|SQL306]], [[#sql316verificar_autor_da_pergunta|SQL316]]                                    ||
+^ Permissions    | OP, MOD, ADM                                                  ||
 
 === R306: Fechar pergunta ===
-^ URL            | ''/actions/pergunta/close.php''                                                                                                   ||
-^ Description    | Esta //action// permite fechar uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser mais respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar.     ||
-^ Method         | GET                                                                                                                               ||
-^ Parameters     | +id: integer | chave primária da pergunta                                                                                          |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                                  ||
-^ Permissions    | OP, MOD, ADM                                                                                                                      ||
+^ URL            | ''/actions/pergunta/close.php''                                                                                                                                    ||
+^ Description    | Esta //action// permite fechar uma pergunta com base na informação recebida. Uma pergunta fechada não pode ser mais respondida, nem votada, nem classificada. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar.                                                                          ||
+^ Method         | GET                                                                                                                                                                ||
+^ Parameters     | +id: integer | chave primária da pergunta                                                                                                                           |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                                                                                   ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql307fechar_pergunta|SQL307]], [[#sql316verificar_autor_da_pergunta|SQL316]] ||
+^ Permissions    | OP, MOD, ADM                                                                                                                                                       ||
 
 === R307: Apagar pergunta ===
-^ URL            | ''/actions/pergunta/delete.php''                              ||
-^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador  uma mensagem de erro.                                                ||
-^ Method         | POST                                                          ||
-^ Parameters     | +idPergunta: integer             | chave primária da pergunta  |
-^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso                     |
-^                | [[#r301pagina_da_pergunta|R301]] | Erro                        |
-^ Permissions    | OP, ADM                                                       ||
+^ URL            | ''/actions/pergunta/delete.php''                                                                                                          ||
+^ Description    | Esta //action// permite apagar uma pergunta com base na informação recebida. Se as informações enviadas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página inicial, caso contrário regressa à página da pergunta, sendo apresentada ao utilizador uma mensagem de erro.     ||
+^ Method         | POST                                                                                                                                      ||
+^ Parameters     | +idPergunta: integer             | chave primária da pergunta                                                                              |
+^ Redirects      | [[#r303editar_pergunta|R303]]    | Sucesso                                                                                                 |
+^                | [[#r301pagina_da_pergunta|R301]] | Erro                                                                                                    |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql308apagar_pergunta|SQL308]], [[#sql316verificar_autor_da_pergunta|SQL316]] ||
+^ Permissions    | OP, ADM                                                                                                                                   ||
 
 === R308: Seguir pergunta ===
 ^ URL            | ''/api/pergunta/follow.php''                                                                     ||
@@ -72,6 +78,7 @@
 ^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                   |
 ^                | 400 Bad Request      | se a pergunta não existir ou se utilizador já for seguidor da pergunta     |
 ^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                             |
+^ SQL            | [[#sql309seguir_pergunta|SQL309]]                                                                ||
 ^ Permissions    | MEM                                                                                              ||
 
 === R309: Unfollow pergunta ===
@@ -83,6 +90,7 @@
 ^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                             |
 ^                | 400 Bad Request      | se a pergunta indicada não existir ou se utilizador não for seguidor da pergunta     |
 ^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                                       |
+^ SQL            | [[#sql310unfollow_pergunta|SQL310]]                                                                        ||
 ^ Permissions    | SEG                                                                                                        ||
 
 === R310: Registar voto ===
@@ -95,18 +103,20 @@
 ^ Returns        | 200 OK                   | se as informações enviadas pelo utilizador forem válidas           |
 ^                | 400 Bad Request          | se a pergunta indicada não existir                                 |
 ^                | 403 Forbidden            | se utilizador não tiver permissões suficientes                     |
+^ SQL            | [[#sql311registar_voto|SQL311]], [[#sql312obter_votos|SQL312]]                               ||
 ^ Permissions    | MEM                                                                                          ||
 
 === R311: Obter comentários ===
-^ URL            | ''/api/pergunta/get_comments.php''                                                                                    ||
-^ Description    | Este //AJAX request// permite obter todos os comentários a uma pergunta (se não for especificado um valor no campo //ultimoComentario// dos parâmetros) ou todos os comentários a partir do último comentário recebido (se for especificado um valor no campo //ultimoComentario//). ||
-^ Method         | POST                                                                                                                  ||
-^ Request body   | +idPergunta: integer       | chave primária da pergunta                                                                |
-^                | ?ultimoComentario: integer | último comentário recebido                                                                |
-^ Response body  | [[#json302obter_comentarios|JSON302]]                                                                                 ||
-^ Returns        | 200 OK                     | se as informações enviadas pelo utilizador forem válidas                                  |
-^                | 400 Bad Request            | se a pergunta indicada não existir                                                        |
-^ Permissions    | PUB                                                                                                                   ||
+^ URL            | ''/api/pergunta/get_comments.php''                                                    ||
+^ Description    | Este //AJAX request// permite obter todos os comentários a uma pergunta (se não for especificado um valor no campo //ultimoComentario// dos parâmetros) ou todos os comentários a partir do último comentário recebido (se for especificado um valor no campo //ultimoComentario//).                 ||
+^ Method         | POST                                                                                  ||
+^ Request body   | +idPergunta: integer       | chave primária da pergunta                                |
+^                | ?ultimoComentario: integer | último comentário recebido                                |
+^ Response body  | [[#json302obter_comentarios|JSON302]]                                                 ||
+^ Returns        | 200 OK                     | se as informações enviadas pelo utilizador forem válidas  |
+^                | 400 Bad Request            | se a pergunta indicada não existir                        |
+^ SQL            | [[#sql313obter_comentarios|SQL313]]                                                   ||
+^ Permissions    | PUB                                                                                   ||
 
 === R312: Inserir comentário ===
 ^ URL            | ''/api/pergunta/insert_comment.php''                                                               ||
@@ -118,6 +128,7 @@
 ^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                     |
 ^                | 400 Bad Request      | se a pergunta indicada não existir.                                          |
 ^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                               |
+^ SQL            | [[#sql314inserir_comentario|SQL314]]                                                               ||
 ^ Permissions    | MEM                                                                                                ||
 
 === R313: Apagar comentário ===
@@ -130,4 +141,5 @@
 ^ Returns        | 200 OK                 | se as informações enviadas pelo utilizador forem válidas                            |
 ^                | 400 Bad Request        | se a pergunta ou comentário indicados não existirem                                 |
 ^                | 403 Forbidden          | se utilizador não tiver permissões suficientes                                      |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql315apagar_comentario|SQL315]], [[#sql317verificar_autor_do_comentario|SQL317]]                                                                                ||
 ^ Permissions    | OWNC, MOD, ADM                                                                                              ||

@@ -14,15 +14,17 @@
 
 === R103: Página de perfil ===
 ^ URL           | ''/pages/utilizador/profile.php''                   ||
-^ Description   | Esta página permite visualizar as informações pessoais e as publicações de um utilizador (se for passado um //ID// como parâmetro) ou do próprio utilizador (se não forem passados quaisquer parâmetros).              ||
+^ Description   | Esta página permite visualizar as informações pessoais e as publicações de um utilizador (se for passado um //ID// como parâmetro) ou do próprio utilizador (se não forem passados quaisquer parâmetros).                                                          ||
 ^ Method        | GET                                                 ||
 ^ Parameters    | ?id: integer | chave primária do utilizador          |
 ^ UI            | [[:lbaw1525:proj:a3#ui09perfil_do_utilizador|UI09]] ||
+^ SQL           | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql101verificar_permissoes_de_moderador|SQL102]], [[#sql103obter_informacoes_do_utilizador|SQL103]], [[#sql317listar_perguntas_do_utilizador|SQL317]], [[#sql411ista_respostas_do_utilizador|SQL411]],                       ||
 ^ Permissions   | MEM, OWN                                            ||
+
 
 === R104: Página de report ===
 ^ URL           | ''/pages/utilizador/report.php''                                                                                  ||
-^ Description   | Esta página permite aos moderadores visualizar um histórico dos //reports// que submeteram. Se for passado um //ID// como parâmetro, permite denunciar um utilizador que não tenha cumprido com as normas de utilização deste serviço através do preenchimento de um formulário. ||
+^ Description   | Esta página permite aos moderadores visualizar um histórico dos //reports// que submeteram. Se for passado um //ID// como parâmetro, permite denunciar um utilizador que não tenha cumprido com as normas de utilização deste serviço através do preenchimento de um formulário.                                                    ||
 ^ Method        | GET                                                                                                               ||
 ^ Parameters    | ?id: integer | chave primária do utilizador a ser denunciado                                                      |
 ^ UI            | [[:lbaw1525:proj:axx|UIxx]]                                                                                       ||
@@ -30,14 +32,14 @@
 
 === R105: Notificações ===
 ^ URL           | ''/pages/utilizador/notifications.php''                              ||
-^ Description   | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou quando surgem novos seguidores. ||
+^ Description   | Esta página permite aos utilizadores consultar as notificações das perguntas que seguem no momento. Os utilizadores serão alertados sempre que forem publicadas novas respostas, novos comentários ou quando surgem novos seguidores.                                         ||
 ^ Method        | GET                                                                  ||
 ^ UI            | [[:lbaw1525:proj:a3#ui13notificacoes|UI13]]                          ||
 ^ Permissions   | OWN                                                                  ||
 
 === R106: Editar perfil ===
 ^ URL           | ''/pages/utilizador/edit.php''                                                                  ||
-^ Description   | Esta página permite aos utilizadores alterar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país). Se for passado um //ID// como parâmetro, permite ainda ao administraodr alterar as informações pessoais dos outros utilizadores. ||
+^ Description   | Esta página permite aos utilizadores alterar as suas informações pessoais (nome completo, endereço de e-mail, localidade e país). Se for passado um //ID// como parâmetro, permite ainda ao administraodr alterar as informações pessoais dos outros utilizadores.                                            ||
 ^ Method        | GET                                                                                             ||
 ^ Parameters    | ?id: integer | chave primária do utilizador                                                      |
 ^ UI            | [[:lbaw1525:proj:axx|UIxx]]                                                                     ||
@@ -51,7 +53,10 @@
 ^               | +descricao: text               | mensagem do moderador                     |
 ^ Redirects     | [[#r103pagina_de_perfil|R103]] | Sucesso                                   |
 ^               | [[#r104pagina_de_report|R104]] | Erro                                      |
+^ SQL           | [[#sql104denunciar_utilizador|SQL104]]                                    ||
 ^ Permissions   | MOD                                                                       ||
+
+- denunciar utilizador
 
 === R108: Iniciar sessão ===
 ^ URL           | ''/actions/utilizador/login.php''                                                                   ||
@@ -82,7 +87,10 @@
 ^               | ?codigoPais: text       | código do país do utilizador (tal como foi introduzido no formulário de registo) |
 ^ Redirects     | [[#r101pagina_de_autenticacao|R101]] | Sucesso  |
 ^               | [[#r102pagina_de_registo|R102]]      | Erro     |
+^ SQL           | [[#sql105registar_utilizador|SQL105]]          ||
 ^ Permissions   | PUB                                            ||
+
+- registar utilizador
 
 === R111: Atualizar utilizador ===
 ^ URL           | ''/actions/utilizador/update.php''                     ||
@@ -97,6 +105,7 @@
 ^               | ?codigoPais: text       | código do país do utilizador (ou país actual se não tiver sido alterado no formulário)                                |
 ^ Redirects     | [[#r103pagina_de_perfil|R103]] | Sucesso                |
 ^               | [[#r106editar_perfil|R106]]    | Erro                   |
+^ SQL           | [[#sql106atualizar_utilizador|SQL106]]                 ||
 ^ Permissions   | OWN, ADM                                               ||
 
 === R112: Banir utilizador ===
@@ -105,6 +114,7 @@
 ^ Method        | GET                                         ||
 ^ Request body  | +id: integer | chave primária do utilizador  |
 ^ Redirects     | [[#r804gerir_utilizadores|R804]]            ||
+^ SQL           | [[#sql107banir_utilizador|SQL107]]          ||
 ^ Permissions   | ADM                                         ||
 
 === R113: Apagar utilizador ===
@@ -114,4 +124,5 @@
 ^ Request body  | +idUtilizador: integer           | chave primária do utilizador                                        |
 ^ Redirects     | [[#r201pagina_inicial|R201]]     | Utilizador                                                          |
 ^               | [[#r804gerir_utilizadores|R804]] | Administrador                                                       |
+^ SQL           | [[#sql108apagar_utilizador|SQL108]]                                                                   ||
 ^ Permissions   | OWN, ADM                                                                                              ||

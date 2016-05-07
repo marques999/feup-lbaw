@@ -1,50 +1,55 @@
 ==== Módulo M04: Respostas ====
 
 === R401: Editar resposta ===
-^ URL            | ''/pages/resposta/edit.php''                                                       ||
-^ Description    | Esta página permite editar uma resposta através do preenchimento de um formulário. ||
-^ Method         | GET                                                                                 |
-^ Parameters     | +idp: integer | chave primária da pergunta                                          |
-^                | +idr: integer | chave primária da resposta                                          |
-^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                         ||
-^ Permissions    | OWNR, MOD, ADM                                                                     ||
+^ URL            | ''/pages/resposta/edit.php''                                                                                                                                ||
+^ Description    | Esta página permite editar uma resposta através do preenchimento de um formulário.                                                                          ||
+^ Method         | GET                                                                                                                                                          |
+^ Parameters     | +idp: integer | chave primária da pergunta                                                                                                                   |
+^                | +idr: integer | chave primária da resposta                                                                                                                   |
+^ UI             | [[:lbaw1525:proj:ax|UIxx]]                                                                                                                                  ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql410verificar_autor_da_resposta|SQL410]] ||
+^ Permissions    | OWNR, MOD, ADM                                                                                                                                              ||
 
 === R402: Submeter resposta ===
-^ URL            | ''/actions/resposta/submit.php''                                                                         ||
-^ Description    | Esta //action// permite publicar uma nova resposta a uma pergunta existente com base na informação recebida. O utilizador é sempre reencaminhado para a página da nova pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operações falhar.               ||
-^ Method         | POST                                                                                                     ||
-^ Request body   | +idPergunta: integer             | chave primária da pergunta                                             |
-^                | +descricao: text                 | conteúdo da resposta                                                   |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                                                         ||
-^ Permissions    | MEM                                                                                                      ||
+^ URL            | ''/actions/resposta/submit.php''                  ||
+^ Description    | Esta //action// permite publicar uma nova resposta a uma pergunta existente com base na informação recebida. O utilizador é sempre reencaminhado para a página da nova pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operações falhar.   |
+^ Method         | POST                                              ||
+^ Request body   | +idPergunta: integer | chave primária da pergunta  |
+^                | +descricao: text     | conteúdo da resposta        |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]                  ||
+^ SQL            | [[#sql401submeter_resposta|SQL401]]               ||
+^ Permissions    | MEM                                               ||
 
 === R403: Atualizar resposta ===
 ^ URL            | ''/actions/resposta/update.php''                              ||
-^ Description    | Esta //action// permite atualizar uma resposta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da resposta, sendo apresentada ao utilizador uma mensagem de erro.                            ||
+^ Description    | Esta //action// permite atualizar uma resposta com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e se as operações na base de dados executarem com sucesso, este é reencaminhado para a página da pergunta, caso contrário regressa à página de edição da resposta, sendo apresentada ao utilizador uma mensagem de erro. ||
 ^ Method         | POST                                                          ||
 ^ Request body   | +idPergunta: integer             | chave primária da pergunta  |
 ^                | +idResposta: integer             | chave primária da resposta  |
 ^                | ?descricao: text                 | novo conteúdo da resposta   |
 ^ Redirects      | [[#r301pagina_da_pergunta|R301]] | Sucesso                     |
 ^                | [[#r401editar_resposta|R401]]    | Erro                        |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql402atualizar_resposta|SQL402]], [[#sql410verificar_autor_da_resposta|SQL410]]                                    ||
 ^ Permissions    | OWNR, MOD, ADM                                                ||
 
 === R404: Apagar resposta ===
-^ URL            | ''/actions/resposta/delete.php''                          ||
-^ Description    | Esta //action// permite apagar uma resposta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operação falhar.      ||
-^ Method         | GET                                                       ||
-^ Parameters     | +idp: integer | chave primária da pergunta                 |
-^                | +idr: integer | chave primária da resposta                 |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                          ||
-^ Permissions    | OWNR, MOD, ADM                                            ||
+^ URL            | ''/actions/resposta/delete.php''           ||
+^ Description    | Esta //action// permite apagar uma resposta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se alguma destas operação falhar.                                ||
+^ Method         | GET                                        ||
+^ Parameters     | +idp: integer | chave primária da pergunta  |
+^                | +idr: integer | chave primária da resposta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]           ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql403apagar_resposta|SQL403]], [[#sql410verificar_autor_da_resposta|SQL410]]                 ||
+^ Permissions    | OWNR, MOD, ADM                             ||
 
 === R405: Destacar resposta ===
-^ URL            | ''/actions/resposta/favorite.php''                                   ||
-^ Description    | Esta //action// permite destacar a melhor resposta a uma pergunta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar. ||
-^ Method         | GET                                                                  ||
-^ Parameters     | +id: integer | chave primária da resposta                             |
-^ Redirects      | [[#r301pagina_da_pergunta|R301]]                                     ||
-^ Permissions    | OP, MOD, ADM                                                         ||
+^ URL            | ''/actions/resposta/favorite.php''        ||
+^ Description    | Esta //action// permite destacar a melhor resposta a uma pergunta com base na informação recebida. O utilizador é sempre reencaminhado para a página da pergunta, sendo-lhe apresentada uma mensagem de erro se esta operação falhar.                    ||
+^ Method         | GET                                       ||
+^ Parameters     | +id: integer | chave primária da resposta  |
+^ Redirects      | [[#r301pagina_da_pergunta|R301]]          ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql316verificar_autor_da_pergunta|SQL316]], [[#sql404destacar_resposta|SQL404]]                          ||
+^ Permissions    | OP, MOD, ADM                              ||
 
 === R406: Registar voto ===
 ^ URL            | ''/api/resposta/insert_vote.php''                                                            ||
@@ -56,18 +61,20 @@
 ^ Returns        | 200 OK                   | se as informações enviadas pelo utilizador forem válidas           |
 ^                | 400 Bad Request          | se a resposta indicada não existir                                 |
 ^                | 403 Forbidden            | se utilizador não tiver permissões suficientes                     |
+^ SQL            | [[#sql405registar_voto|SQL405]], [[#sql406obter_votos|SQL406]]                               ||
 ^ Permissions    | MEM                                                                                          ||
 
 === R407: Obter comentários ===
-^ URL            | ''/api/resposta/get_comments.php''                                                                                    ||
-^ Description    | Este //AJAX request// permite obter todos os comentários a uma resposta (se não for especificado um valor no campo //ultimoComentario// dos parâmetros) ou todos os comentários a partir do último comentário recebido (se for especificado um valor no campo //ultimoComentario//). ||
-^ Method         | POST                                                                                                                  ||
-^ Request body   | +idResposta: integer       | chave primária da resposta                                                                |
-^                | ?ultimoComentario: integer | último comentário recebido                                                                |
-^ Response body  | [[#json402obter_comentarios|JSON402]]                                                                                 ||
-^ Returns        | 200 OK                     | se as informações enviadas pelo utilizador forem válidas                                  |
-^                | 400 Bad Request            | se a resposta indicada não existir                                                        |
-^ Permissions    | PUB                                                                                                                   ||
+^ URL            | ''/api/resposta/get_comments.php''                                                    ||
+^ Description    | Este //AJAX request// permite obter todos os comentários a uma resposta (se não for especificado um valor no campo //ultimoComentario// dos parâmetros) ou todos os comentários a partir do último comentário recebido (se for especificado um valor no campo //ultimoComentario//).                 ||
+^ Method         | POST                                                                                  ||
+^ Request body   | +idResposta: integer       | chave primária da resposta                                |
+^                | ?ultimoComentario: integer | último comentário recebido                                |
+^ Response body  | [[#json402obter_comentarios|JSON402]]                                                 ||
+^ Returns        | 200 OK                     | se as informações enviadas pelo utilizador forem válidas  |
+^                | 400 Bad Request            | se a resposta indicada não existir                        |
+^ SQL            | [[#sql407obter_comentarios|SQL407]]                                                   ||
+^ Permissions    | PUB                                                                                   ||
 
 === R408: Inserir comentário ===
 ^ URL            | ''/api/resposta/insert_comment.php''                                                               ||
@@ -79,6 +86,7 @@
 ^ Returns        | 200 OK               | se as informações enviadas pelo utilizador forem válidas                     |
 ^                | 400 Bad Request      | se a resposta indicada não existir                                           |
 ^                | 403 Forbidden        | se utilizador não tiver permissões suficientes                               |
+^ SQL            | [[#sql408inserir_comentario|SQL408]]                                                               ||
 ^ Permissions    | MEM                                                                                                ||
 
 === R409: Apagar comentário ===
@@ -91,4 +99,5 @@
 ^ Returns        | 200 OK                 | se as informações enviadas pelo utilizador forem válidas                            |
 ^                | 400 Bad Request        | se a resposta ou comentário indicados não existirem                                 |
 ^                | 403 Forbidden          | se utilizador não tiver permissões suficientes                                      |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql409apagar_comentario|SQL409]], [[#sql411verificar_autor_do_comentario|SQL411]]                                                                                ||
 ^ Permissions    | OWNC, MOD, ADM                                                                                              ||
