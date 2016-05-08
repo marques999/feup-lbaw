@@ -105,24 +105,24 @@
 ^               | ?codigoPais: text       | código do país do utilizador (ou país actual se não tiver sido alterado no formulário)                                |
 ^ Redirects     | [[#r103pagina_de_perfil|R103]] | Sucesso                |
 ^               | [[#r106editar_perfil|R106]]    | Erro                   |
-^ SQL           | [[#sql106atualizar_utilizador|SQL106]]                 ||
+^ SQL           | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql106atualizar_utilizador|SQL106]] ||
 ^ Permissions   | OWN, ADM                                               ||
 
 === R112: Banir utilizador ===
-^ URL           | ''/actions/utilizador/ban.php''             ||
-^ Description   | Esta //action// desativa temporariamente a conta de um utilizador com base na informação recebida. A conta será desativada temporariamente, a sessão do utilizador em questão será terminada e o administrador reencaminhado a página de gestão dos utilizadores. Espera-se que esta operação tenha sempre sucesso.                                                      ||
-^ Method        | GET                                         ||
-^ Request body  | +id: integer | chave primária do utilizador  |
-^ Redirects     | [[#r804gerir_utilizadores|R804]]            ||
-^ SQL           | [[#sql107banir_utilizador|SQL107]]          ||
-^ Permissions   | ADM                                         ||
+^ URL           | ''/actions/utilizador/ban.php''                                                                  ||
+^ Description   | Esta //action// desativa temporariamente a conta de um utilizador com base na informação recebida. A conta será desativada temporariamente, a sessão do utilizador em questão será terminada e o administrador reencaminhado a página de gestão dos utilizadores. Espera-se que esta operação tenha sempre sucesso. ||
+^ Method        | GET                                                                                              ||
+^ Request body  | +id: integer | chave primária do utilizador                                                       |
+^ Redirects     | [[#r804gerir_utilizadores|R804]]                                                                 ||
+^ SQL           | [[#sql107banir_utilizador|SQL107]]                                                               ||
+^ Permissions   | ADM                                                                                              ||
 
 === R113: Apagar utilizador ===
 ^ URL           | ''/actions/utilizador/delete.php''                                                                    ||
-^ Description   | Esta //action// desativa permanentemente a conta de um utilizador com base na informação recebida. Caso tenha sido um administrador a invocar esta acção, este será reencaminhado para a página de gestão de utilizadores. Pelo contrário, se tiver sido um utilizador, a sua sessão será terminada e este será reencaminhado a página inicial como visitante. Espera-se que em ambos os casos esta operação tenha sempre sucesso.      ||
+^ Description   | Esta //action// desativa permanentemente a conta de um utilizador com base na informação recebida. Caso tenha sido um administrador a invocar esta acção, este será reencaminhado para a página de gestão de utilizadores. Pelo contrário, se tiver sido um utilizador, a sua sessão será terminada e este será reencaminhado a página inicial como visitante. Espera-se que em ambos os casos esta operação tenha sempre sucesso.                                                                                                         ||
 ^ Method        | POST                                                                                                  ||
 ^ Request body  | +idUtilizador: integer           | chave primária do utilizador                                        |
 ^ Redirects     | [[#r201pagina_inicial|R201]]     | Utilizador                                                          |
 ^               | [[#r804gerir_utilizadores|R804]] | Administrador                                                       |
-^ SQL           | [[#sql108apagar_utilizador|SQL108]]                                                                   ||
+^ SQL           | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql108apagar_utilizador|SQL108]]          ||
 ^ Permissions   | OWN, ADM                                                                                              ||

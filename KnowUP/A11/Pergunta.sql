@@ -15,25 +15,25 @@ SELECT Pergunta.idPergunta,
        COALESCE(TabelaSeguidores.count, 0) AS numeroSeguidores,
        COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
        COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-       COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao
+       votosPositivos - votosNegativos AS pontuacao
 FROM Pergunta
 JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
 JOIN Instituicao USING(idInstituicao)
 LEFT JOIN (SELECT idPergunta,
-  SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-  SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+  COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+  COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
   FROM VotoPergunta
-  WHERE idPergunta = :idPergunta
+  WHERE idPergunta = idPergunta
   GROUP BY idPergunta)
   AS TabelaVotos
   USING (idPergunta)
 LEFT JOIN (SELECT idPergunta, COUNT(*)
   FROM Seguidor
-  WHERE idPergunta = :idPergunta
+  WHERE idPergunta = idPergunta
   GROUP BY idPergunta)
   AS TabelaSeguidores
   USING (idPergunta)
-WHERE Pergunta.idPergunta = :idPergunta
+WHERE idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* SQL302: OBTER INFORMAÇÕES DO UTILIZADOR    */
@@ -41,17 +41,18 @@ WHERE Pergunta.idPergunta = :idPergunta
 SELECT VotoPergunta.valor, Seguidor.idSeguidor
 FROM Pergunta
 LEFT JOIN VotoPergunta 
-ON VotoPergunta.idPergunta = Pergunta.idPergunta 
-AND VotoPergunta.idAutor = :idUtilizador
-LEFT JOIN Seguidor 
-ON Seguidor.idPergunta = Pergunta.idPergunta 
-AND Seguidor.idSeguidor = :idUtilizador
+  ON VotoPergunta.idPergunta = Pergunta.idPergunta 
+  AND VotoPergunta.idAutor = :idUtilizador
+LEFT JOIN Seguidor
+  ON Seguidor.idPergunta = Pergunta.idPergunta
+  AND Seguidor.idSeguidor = :idUtilizador
 WHERE Pergunta.idPergunta = :idPergunta;
 
 /*--------------------------------------------*/
 /* SQL303: OBTER RESPOSTAS                    */
 /*--------------------------------------------*/
 SELECT Resposta.idResposta,
+       Resposta.melhorResposta,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Utilizador.username,
@@ -62,15 +63,14 @@ SELECT Resposta.idResposta,
        COALESCE(TabelaComentarios.count, 0) AS numeroComentarios,
        COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
        COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-       COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
-       Resposta.melhorResposta
+       votosPositivos - votosNegativos AS pontuacao
 FROM Resposta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
 INNER JOIN Utilizador USING(idUtilizador)
 LEFT JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
 LEFT JOIN (SELECT idResposta,
-  SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-  SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+  COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+  COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
   FROM VotoResposta
   GROUP BY idResposta)
   AS TabelaVotos
@@ -102,7 +102,7 @@ LIMIT 5;
 /*--------------------------------------------*/
 /* SQL305: SUBMETER PERGUNTA                  */
 /*--------------------------------------------*/
--- se utilizador não preencher formulário a descrição da pergunta
+-- se utilizador não preencher a descrição da pergunta no formulário 
 INSERT INTO Pergunta(idPergunta, idCategoria, idAutor, titulo)
 VALUES(DEFAULT, :idCategoria, :idUtilizador, :titulo);
 
@@ -155,9 +155,9 @@ SELECT registarVotoPergunta(:idPergunta, :idUtilizador, :valor);
 /*--------------------------------------------*/
 /* SQL312: OBTER VOTOS                        */
 /*--------------------------------------------*/
-SELECT COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(COUNT(*), 0) AS pontuacao
+SELECT COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+       COALESCE(SUM(valor), 0) AS pontuacao
 FROM VotoPergunta
 WHERE idPergunta = :idPergunta
 GROUP BY idPergunta;
@@ -193,13 +193,12 @@ ORDER BY idComentario;
 /*--------------------------------------------*/
 /* SQL314: INSERIR COMENTÁRIO                 */
 /*--------------------------------------------*/
-INSERT INTO Contribuicao(idContribuicao, idAutor, descricao)
-VALUES(DEFAULT, :idUtilizador, :descricao);
-
-SELECT contribuicao_idcontribuicao_seq AS idComentario;
-
-INSERT INTO ComentarioPergunta(idComentario, idPergunta)
-VALUES(:idComentario, :idPergunta);
+WITH NovoComentario AS (
+  INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
+  VALUES(DEFAULT, :idUtilizador, :descricao) RETURNING idContribuicao
+) INSERT INTO ComentarioPergunta(idComentario, idPergunta)
+  SELECT idContribuicao, :idPergunta
+  FROM NovoComentario;
 
 /*--------------------------------------------*/
 /* SQL315: APAGAR COMENTÁRIO                  */
@@ -210,7 +209,7 @@ AND idPergunta = :idPergunta;
 
 DELETE FROM Contribuicao
 WHERE idContribuicao = :idComentario
-AND idAutor = :idUtilizador;
+AND idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* SQL316: VERIFICAR AUTOR DA PERGUNTA        */
@@ -234,12 +233,12 @@ SELECT Pergunta.idPergunta,
        Pergunta.descricao,
        Pergunta.dataHora,
        Pergunta.ativa,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
        COALESCE(SUM(valor), 0) AS pontuacao
-    FROM Utilizador
-    JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
-    LEFT JOIN VotoPergunta USING(idPergunta)
-    WHERE Utilizador.idUtilizador = :idUtilizador
-    GROUP BY Pergunta.idPergunta
-    ORDER BY Pergunta.dataHora DESC;
+FROM Utilizador
+JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
+LEFT JOIN VotoPergunta USING(idPergunta)
+WHERE idUtilizador = :idUtilizador
+GROUP BY idPergunta
+ORDER BY dataHora DESC;

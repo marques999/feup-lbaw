@@ -1,8 +1,12 @@
 /*--------------------------------------------*/
 /* CRIAR CONVERSA                             */
 /*--------------------------------------------*/
-INSERT INTO Conversa(idConversa, idUtilizador1, idUtilizador2, titulo)
-VALUES(DEFAULT, :idRemetente, :idDestinatario, :titulo);
+WITH NovaConversa AS (
+	INSERT INTO Conversa(idConversa, idUtilizador1, idUtilizador2, titulo)
+	VALUES(DEFAULT, :idRemetente, :idDestinatario, :titulo) RETURNING idConversa
+) INSERT INTO Mensagem(idConversa, idAutor, descricao)
+	SELECT idConversa, :idRemetente, :descricao
+	FROM NovaConversa;
 
 /*--------------------------------------------*/
 /* APAGAR CONVERSA                            */
@@ -12,11 +16,36 @@ WHERE idConversa = :idConversa
 AND idUtilizador1 = :idUtilizador;
 
 /*--------------------------------------------*/
-/* LISTAR CONVERSAS DO UTILIZAODR             */
+/* LISTAR CONVERSAS                           */
 /*--------------------------------------------*/
-SELECT * FROM Conversa
-WHERE idUtilizador1 = :idUtilizador
-OR idUtilizador2 = :idUtilizador;
+SELECT Conversa.idConversa,
+       Conversa.titulo,
+       (CASE WHEN :idUtilizador = idUtilizador1 THEN ultimoAcesso1 ELSE ultimoAcesso2 END) AS ultimoAcesso,
+       Utilizador.idUtilizador AS idDestinatario,
+       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeDestinatario,
+       Instituicao.sigla,
+       (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa) AS numeroMensagens,
+       Mensagem1.idAutor AS idAutor,
+       AutorMensagem.username AS nomeAutor,
+       AutorMensagem.removido,
+       Mensagem1.descricao,
+       Mensagem1.dataHora
+FROM Conversa
+JOIN Utilizador 
+	ON Utilizador.idUtilizador = (CASE WHEN :idUtilizador = idUtilizador1 
+	THEN idUtilizador2 ELSE idUtilizador1 END)
+JOIN Mensagem Mensagem1 ON Mensagem1.idConversa = Conversa.idConversa
+LEFT OUTER JOIN Mensagem Mensagem2 
+	ON (Mensagem2.idConversa = Conversa.idConversa
+	AND Mensagem1.dataHora < Mensagem2.dataHora
+	OR Mensagem1.dataHora = Mensagem2.dataHora
+	AND Mensagem1.idMensagem < Mensagem2.idMensagem)
+JOIN Utilizador AutorMensagem ON AutorMensagem.idUtilizador = Mensagem1.idAutor
+JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
+WHERE (idUtilizador1 = :idUtilizador 
+	OR idUtilizador2 = :idUtilizador)
+	AND Mensagem2.idMensagem IS NULL
+ORDER BY Mensagem1.dataHora DESC;
 
 /*--------------------------------------------*/
 /* OBTER INFORMAÇÕES DA CONVERSA                */

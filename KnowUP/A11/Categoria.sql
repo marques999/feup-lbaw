@@ -10,7 +10,7 @@ ORDER BY nome;
 /*--------------------------------------------*/
 /* SQL502: LISTAR CATEGORIAS RELACIONADAS     */
 /*--------------------------------------------*/
-SELECT Categorias.idCategoria, Categorias.nome
+SELECT Categorias.*
 FROM Categoria
 INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
 INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
@@ -48,8 +48,8 @@ SELECT Pergunta.idPergunta,
        Pergunta.dataHora,
        Pergunta.ativa,
        COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
        COALESCE(SUM(valor), 0) AS pontuacao
 FROM Pergunta
 LEFT JOIN VotoPergunta USING(idPergunta)
@@ -59,12 +59,12 @@ LEFT JOIN (SELECT idPergunta, COUNT(*)
   AS TabelaRespostas
   USING (idPergunta)
 INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-WHERE Pergunta.idCategoria = :idCategoria
+WHERE idCategoria = :idCategoria
 GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
-ORDER BY Pergunta.dataHora DESC;
+ORDER BY dataHora DESC;
 
 /*--------------------------------------------*/
-/* SQL506: EDITAR CATEGORIA                           */
+/* SQL506: EDITAR CATEGORIA                   */
 /*--------------------------------------------*/
 UPDATE Categoria SET nome = :nome WHERE idCategoria = :idCategoria;
 
@@ -79,11 +79,11 @@ INSERT INTO Categoria(idCategoria, nome) VALUES(DEFAULT, :nome);
 DELETE FROM Categoria WHERE idCategoria = :idCategoria;
 
 /*--------------------------------------------*/
-/* SQL509: LISTAR CATEGORIAS MAIS POPULARES   */
+/* SQL509: LISTAR CATEGORIAS POPULARES        */
 /*--------------------------------------------*/
-SELECT Categoria.*, COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas
+SELECT Categoria.*, COUNT(DISTINCT idPergunta) AS numeroPerguntas
 FROM Categoria
 INNER JOIN Pergunta USING(idCategoria)
-GROUP BY Categoria.idCategoria, Pergunta.idPergunta
+GROUP BY idCategoria, idPergunta
 ORDER BY numeroPerguntas DESC
 LIMIT 5;

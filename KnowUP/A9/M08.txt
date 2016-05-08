@@ -4,29 +4,34 @@
 ^ URL            | ''/pages/admin/homepage.php''                                                                                                     ||
 ^ Description    | Esta página serve como portal ao administrador para gerir as categorias, as instituições e os utilizadores existentes no sistema. ||
 ^ UI             | [[:lbaw1525:proj:a3#ui15administracao|UI15]]                                                                                      ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]]                                                                           || 
 ^ Permissions    | ADM                                                                                                                               ||
 
 === R802: Gerir categorias ===
 ^ URL            | ''/pages/admin/categorias.php''                             ||
-^ Description    | Esta página permite ao administrador fazer a gestão das categorias existentes no sistema: visualizar uma lista de categorias, alterar informações sobre as categorias, apagar categorias.                            ||
+^ Description    | Esta página permite ao administrador fazer a gestão das categorias existentes no sistema: visualizar uma lista de categorias, alterar informações sobre as categorias, apagar categorias.                                                                    ||
 ^ AJAX Calls     | [[#r505adicionar_categoria|R505]]                           ||
 ^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                 ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]]     || 
 ^ Permissions    | ADM                                                         ||
 
 === R803: Gerir instituições ===
-^ URL            | ''/pages/admin/instituicoes.php''                                                             ||
-^ Description    | Esta página permite ao administrador fazer a gestão das instituições existentes no sistema: visualizar uma lista com as instituições, alterar informações sobre as instituições, apagar instituições, bem como associar ou remover categorias às instituições. ||
-^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]]                                   ||
-^ Permissions    | ADM                                                                                           ||
+^ URL            | ''/pages/admin/instituicoes.php''                           ||
+^ Description    | Esta página permite ao administrador fazer a gestão das instituições existentes no sistema: visualizar uma lista com as instituições, alterar informações sobre as instituições, apagar instituições, bem como associar ou remover categorias às instituições.         ||
+^ UI             | [[:lbaw1525:proj:a3#ui16gerir_categoriasinstituicoes|UI16]] ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]]     || 
+^ Permissions    | ADM                                                         ||
 
 === R804: Gerir utilizadores ===
-^ URL            | ''/pages/admin/utilizadores.php''                                                                 ||
-^ Description    | Esta página permite ao administrador fazer a gestão dos utilizadores existentes no sistema: pesquisar utilizadores, visualizar uma lista com os utilizadores, consultar os //reports// enviados pelos moderadores, banir utilizadores, bem como apagar utilizadores. ||
-^ UI             | [[:lbaw1525:proj:a3#ui17gerir_utilizadores|UI17]]                                                 ||
-^ Permissions    | ADM                                                                                               ||
+^ URL            | ''/pages/admin/utilizadores.php''                       ||
+^ Description    | Esta página permite ao administrador fazer a gestão dos utilizadores existentes no sistema: pesquisar utilizadores, visualizar uma lista com os utilizadores, consultar os //reports// enviados pelos moderadores, banir utilizadores, bem como apagar utilizadores.       ||
+^ UI             | [[:lbaw1525:proj:a3#ui17gerir_utilizadores|UI17]]       ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]] || 
+^ Permissions    | ADM                                                     ||
 
 === R805: Estatísticas ===
-^ URL            | ''/pages/admin/estatisticas.php''                                                                ||
-^ Description    | Esta página permite ao administrador consultar estatísticas de utilização deste serviço: utilizadores mais ativos nos últimos dias, utilizadores com mais perguntas, utilizadores com mais respostas, categorias mais populares, instituições mais populares, etc... ||
-^ UI             | [[:lbaw1525:proj:a3#ui18estatisticas|UI18]]                                                      ||
-^ Permissions    | ADM                                                                                              ||
+^ URL            | ''/pages/admin/estatisticas.php''                                                   ||
+^ Description    | Esta página permite ao administrador consultar estatísticas de utilização deste serviço: utilizadores mais ativos nos últimos dias, utilizadores com mais perguntas, utilizadores com mais respostas, categorias mais populares, instituições mais populares, etc...                              ||
+^ UI             | [[:lbaw1525:proj:a3#ui18estatisticas|UI18]]                                         ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql801obter_utilizadores_com_mais_perguntas|SQL801]], [[#sql802obter_utilizadores_com_mais_respostas|SQL802]], [[#sql803obter_categorias_mais_populares|SQL803]], [[#sql804obter_instituicoes_mais_populares|SQL804]] || 
+^ Permissions    | ADM                                                                                 ||
