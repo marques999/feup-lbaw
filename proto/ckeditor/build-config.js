@@ -51,6 +51,7 @@ var CKBUILDER_CONFIG = {
 	],
 	plugins : {
 		'basicstyles' : 1,
+		'blockquote' : 1,
 		'clipboard' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
