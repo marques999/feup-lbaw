@@ -23,6 +23,7 @@
   $isOriginalPoster = ($idUtilizador == $idAutor);
 
   if ($isOriginalPoster || $isAdministrator) {
+    $smarty->assign('titulo', 'Editar Pergunta');
     $smarty->display('pergunta/edit.tpl');
   }
   else {

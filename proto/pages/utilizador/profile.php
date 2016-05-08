@@ -2,6 +2,7 @@
   include_once('../../config/init.php');
   include_once('../../database/country.php');
   include_once('../../database/pergunta.php');
+  include_once('../../database/resposta.php');
   include_once('../../database/utilizador.php');
 
   $idUtilizador = 0;
@@ -30,9 +31,10 @@
     $smarty->assign('grupo', $grupoUtilizador);
     $smarty->assign('perguntas', pergunta_listByAuthor($idUtilizador));
     $smarty->assign('respostas', resposta_listByAuthor($idUtilizador));
+    $smarty->assign('titulo', $queryUtilizador['username']);
     $smarty->display('utilizador/profile.tpl');
   }
   else {
-    http_response_code(404);
+    safe_redirect('utilizador/login.php');
   }
 ?>

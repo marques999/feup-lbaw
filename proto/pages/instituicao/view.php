@@ -6,7 +6,7 @@
 
   if (safe_strcheck($_GET, 'id')) {
     $idInstituicao = safe_trim($_GET, 'id');
-	$queryInstituicao = instituicao_listBySigla($idInstituicao);
+    $queryInstituicao = instituicao_listBySigla($idInstituicao);
   }
   else {
     safe_redirect('404.php');
@@ -21,6 +21,7 @@
     $smarty->assign('categorias', $queryCategorias);
     $smarty->assign('perguntas', $queryPerguntas);
     $smarty->assign('administrador', $isAdministrator);
+    $smarty->assign('titulo', strtoupper($queryInstituicao['sigla']));
     $smarty->assign('categorias_count', count($queryCategorias));
     $smarty->assign('perguntas_count', count($queryPerguntas));
     $smarty->display('instituicao/view.tpl');

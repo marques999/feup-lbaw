@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
+  include_once('../../database/utilizador.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
@@ -18,7 +19,7 @@
 
     $idConversa = safe_getId($_POST, 'idConversa');
     $idRemetente = safe_getId($_SESSION, 'idUtilizador');
-    $safeDescricao = safe_trim($_POST, 'descricao');
+    $safeDescricao = $_POST['descricao'];
 
     if (conversa_enviarMensagem($idConversa, $idRemetente, $safeDescricao) > 0) {
       safe_redirect("conversa/view.php?id=$idConversa");

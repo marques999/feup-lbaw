@@ -16,17 +16,18 @@
   {/if}
   <nav class="ink-navigation half-vertical-space medium">
     <h5 class="slab half-vertical-space">
-      <i class="fa fa-hashtag"></i>&nbsp;Categorias
+      <i class="fa fa-hashtag"></i>
+      <span>Categorias</span>
     </h5>
     <ul class="menu vertical white">
-        <li><a href="list_questions.php">Ciências Forenses</a></li>
-        <li><a href="list_questions.php">Engenharia Física</a></li>
-        <li><a href="list_questions.php">Engenharia Informática</a></li>
-        <li><a href="list_questions.php">Estudos Portugueses</a></li>
-        <li class="heading"><a href="{$BASE_URL}pages/categoria/list.php">ver mais...</a></li>
+      {foreach $categorias as $categoria}
+      <li><a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a></li>
+      {/foreach}
+      <li class="heading"><a href="{$BASE_URL}pages/categoria/list.php">ver mais...</a></li>
     </ul>
     <h5 class="slab half-vertical-space">
-      <i class="fa fa-line-chart"></i>&nbsp;Populares
+      <i class="fa fa-line-chart"></i>
+      <span>Populares</span>
     </h5>
     <ul id="sidebar-filter" class="menu vertical white">
       <li id="filter-now"><a href="#">Neste momento</a></li>
@@ -36,7 +37,8 @@
       <li id="filter-year"><a href="#">Último ano</a></li>
     </ul>
     <h5 class="slab half-vertical-space">
-      <i class="fa fa-sort-a"></i>&nbsp;Ordenar
+      <i class="fa fa-sort-a"></i>
+      <span>Ordenar</span>
     </h5>
     <ul id="sidebar-sort" class="menu vertical white">
       <li id="sort-answers"><a href="#">Respostas</a></li>

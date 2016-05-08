@@ -30,7 +30,7 @@
           <img src="{$BASE_URL}/images/assets/header-256px.png" alt="">
         </a>
       </li>
-      <form action="{$BASE_URL}pages/pesquisa/results.php" class="ink-form ink-search all-20 medium">
+      <form action="{$BASE_URL}pages/pesquisa/pergunta.php" class="ink-form ink-search all-20 medium">
         <div class="control-group">
           <div class="control append-button" role="search">
             <span><input type="text" name="query" id="query"></span>

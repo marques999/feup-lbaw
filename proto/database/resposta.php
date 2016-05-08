@@ -1,4 +1,28 @@
 <?
+function resposta_listByAuthor($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("SELECT Resposta.idResposta,
+      Pergunta.idPergunta,
+      Pergunta.titulo,
+      Pergunta.ativa,
+      Contribuicao.descricao,
+      Contribuicao.dataHora,
+      Resposta.melhorResposta,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+      COALESCE(SUM(valor), 0) AS pontuacao
+    FROM Resposta
+    INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+    LEFT JOIN VotoResposta USING(idResposta)
+    INNER JOIN Pergunta USING (idPergunta)
+    INNER JOIN Utilizador USING(idUtilizador)
+    WHERE Contribuicao.idUtilizador = :idUtilizador
+    GROUP BY Contribuicao.idContribuicao, Pergunta.idPergunta, Resposta.idResposta
+    ORDER BY Contribuicao.dataHora DESC");
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
+}
 function resposta_verificarAutor($idContribuicao, $idUtilizador) {
   global $db;
   $stmt = $db->prepare("SELECT FROM Contribuicao
@@ -90,9 +114,9 @@ function resposta_registarVoto($idResposta, $idUtilizador, $valor) {
 function resposta_fetchVotos($idResposta) {
   global $db;
   $stmt = $db->prepare("SELECT
-    COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-    COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-    COALESCE(COUNT(*), 0) AS pontuacao
+    COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+    COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+    COALESCE(SUM(valor), 0) AS pontuacao
     FROM VotoResposta
     WHERE idResposta = :idResposta
     GROUP BY idResposta");
@@ -103,12 +127,12 @@ function resposta_fetchVotos($idResposta) {
 function resposta_fetchComments($idResposta) {
   global $db;
   $stmt = $db->prepare("SELECT
-      ComentarioResposta.idComentario,
+      Contribuicao.idContribuicao,
+      Contribuicao.descricao,
+      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-      Utilizador.removido,
-      Contribuicao.descricao,
-      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+      Utilizador.removido
     FROM ComentarioResposta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
     NATURAL JOIN Utilizador
@@ -120,17 +144,17 @@ function resposta_fetchComments($idResposta) {
 function resposta_fetchCommentsAfter($idResposta, $ultimoComentario) {
   global $db;
   $stmt = $db->prepare("SELECT
-      ComentarioResposta.idComentario,
+      Contribuicao.idContribuicao,
+      Contribuicao.descricao,
+      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-      Utilizador.removido,
-      Contribuicao.descricao,
-      to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+      Utilizador.removido
     FROM ComentarioResposta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
     NATURAL JOIN Utilizador
-    WHERE ComentarioResposta.idResposta = :idResposta
-    AND ComentarioResposta.idComentario > :ultimoComentario");
+    WHERE idResposta = :idResposta
+    AND idComentario > :ultimoComentario");
   $stmt->bindParam(":ultimoComentario", $ultimoComentario, PDO::PARAM_INT);
   $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
   $stmt->execute();
@@ -150,24 +174,24 @@ function resposta_getStats($filterBy) {
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       MAX(Contribuicao.idContribuicao) AS ultimaResposta,
       MAX(Contribuicao.dataHora) AS dataHora,
-      COALESCE(COUNT(Resposta.idResposta), 0) AS numeroRespostas
+      COALESCE(COUNT(Resposta.idResposta), 0) AS count
     FROM Resposta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
     NATURAL JOIN Utilizador
-    GROUP BY Utilizador.idUtilizador\n";
+    GROUP BY Utilizador.idUtilizador";
   if ($filterBy == 'day') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 day'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 day' ";
   }
   else if ($filterBy == 'week') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 week'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 week' ";
   }
   else if ($filterBy == 'month') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 month'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 month' ";
   }
   else if ($filterBy == 'year') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 year'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 year' ";
   }
-  $queryString .= "ORDER BY numeroRespostas DESC, dataHora DESC LIMIT 5";
+  $queryString .= "ORDER BY count DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
   return json_encode($stmt->fetchAll());
 }

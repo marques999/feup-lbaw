@@ -18,6 +18,7 @@
 
   if (utilizador_isModerator($idModerador) && $idModerador != $idUtilizador) {
     $smarty->assign('idUtilizador', $idUtilizador);
+    $smarty->assign('titulo', 'Denunciar Utilizador');
     $smarty->display('utilizador/report.tpl');
   }
   else {

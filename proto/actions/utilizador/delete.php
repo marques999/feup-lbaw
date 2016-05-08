@@ -5,7 +5,7 @@
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
   }
-  
+
   $idUtilizador = safe_getId($_POST, 'idUtilizador');
   $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
   $isAdministrator = utilizador_isAdministrator($idUtilizador);
@@ -22,7 +22,7 @@
   try {
 
     if (utilizador_apagarUtilizador($idUtilizador) < 1) {
-      
+
       if ($isAdministrator) {
         safe_redirect('admin/utilizadores.php');
       }

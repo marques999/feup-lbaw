@@ -2,7 +2,7 @@
   include_once('../../config/init.php');
   include_once('../../database/pergunta.php');
   include_once('../../database/utilizador.php');
-  
+
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
@@ -56,7 +56,7 @@
   }
 
   try {
-    
+
     $idPergunta = safe_getId($_POST, 'idPergunta');
 
     if (pergunta_editarPergunta($idPergunta, $myCategoria, $myTitulo, $myDescricao) > 0) {

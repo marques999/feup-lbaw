@@ -48,8 +48,8 @@ $(function(){
     
     
 <!-- FORM: nome da instituição -->
-<div class="control-group required column-group half-gutters">
-  <label for="nome" class="all-15 align-right">Nome:</label>
+<div class="control-group column-group half-gutters required">
+  <label for="nome" class="align-right all-15 small-20 tiny-20">Nome:</label>
   <div class="control all-85 append-symbol">
     <span>
     <input type="text" id="nome" name="nome" value="{$instituicao.nome}" data-rules="required|text[true,false]">
@@ -60,8 +60,8 @@ $(function(){
 
 
 <!-- FORM: sigla, contacto -->
-<div class="control-group required column-group half-gutters">
-  <label for="sigla" class="all-15 align-right">Sigla:</label>
+<div class="control-group column-group half-gutters required">
+  <label for="sigla" class="align-right all-15 small-20 tiny-20">Sigla:</label>
   <div class="control all-30">
     <input type="text" id="sigla" name="sigla" value="{$instituicao.sigla}" data-rules="required|alpha">
   </div>
@@ -73,8 +73,8 @@ $(function(){
 
 
 <!-- FORM: morada -->
-<div class="control-group required column-group half-gutters">
-  <label for="morada" class="all-15 align-right">Morada:</label>
+<div class="control-group column-group half-gutters required">
+  <label for="morada" class="align-right all-15 small-20 tiny-20">Morada:</label>
   <div class="control all-85 append-symbol">
     <span>
     <input type="text" id="morada" name="morada" value="{$instituicao.morada}" data-rules="required|text[true,true]">
@@ -85,8 +85,8 @@ $(function(){
 
 
 <!-- FORM: website -->
-<div class="control-group required column-group half-gutters">
-  <label for="website" class="all-15 align-right">Website:</label>
+<div class="control-group column-group half-gutters required">
+  <label for="website" class="align-right all-15 small-20 tiny-20">Website:</label>
   <div class="control all-85 append-symbol">
     <span>
     <input type="text" id="website" name="website" value="{$instituicao.website}" data-rules="required|url[true]">
@@ -101,7 +101,7 @@ $(function(){
 
 <!-- FORM: associar categorias -->
 <div class="control-group column-group half-gutters">
-  <label for="categorias" class="all-15 align-right">Categorias:</label>
+  <label for="categorias" class="align-right all-15 small-20 tiny-20">Categorias:</label>
     <div class="control all-70">
     <select id="categorias">
       {foreach $categorias as $this}

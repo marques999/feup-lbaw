@@ -4,7 +4,7 @@
   include_once('../../database/utilizador.php');
 
   if (safe_check($_POST, 'idUtilizador') && users_fileUploaded()) {
-    
+
     $uploadDirectory = $BASE_DIR . 'img/avatars/';
     $baseFilename = basename($_FILES['image']['name']);
     $fileExtension = strtolower(substr($baseFilename, strrpos($baseFilename, '.') + 1));

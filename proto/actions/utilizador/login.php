@@ -12,7 +12,13 @@
     if ($idUtilizador > 0) {
       $_SESSION['username'] = $myUsername;
       $_SESSION['idUtilizador'] = $idUtilizador;
-      safe_redirect('homepage.php');
+
+      if (safe_strcheck($_POST, 'location')) {
+        header('Location: ' . safe_trim($_POST, 'location'));
+      }
+      else {
+        safe_redirect('homepage.php');
+      }
     }
     else {
       safe_error(null, 'ERRO: não existe um utilizador com esta combinação na base de dados!');

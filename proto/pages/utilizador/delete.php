@@ -15,6 +15,7 @@
 
     if ($idUtilizador1 == $idUtilizador2 || utilizador_isAdministrator($idUtilizador1)) {
       $smarty->assign('idUtilizador', $idUtilizador2);
+      $smarty->assign('titulo', 'Apagar Utilizador');
       $smarty->display('utilizador/delete.tpl');
     }
     else {
@@ -23,6 +24,7 @@
   }
   else {
     $smarty->assign('idUtilizador', $idUtilizador1);
+    $smarty->assign('titulo', 'Apagar Utilizador');
     $smarty->display('utilizador/delete.tpl');
   }
 ?>

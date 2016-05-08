@@ -28,12 +28,13 @@
     $idInstituicao = $queryInstituicao['idinstituicao'];
     $queryCategorias = categoria_listAllGrouped();
 
-    for ($i=0;$i<count($queryCategorias);$i++) {
+    for ($i = 0; $i < count($queryCategorias); $i++) {
       $queryCategorias[$i]['json'] = json_decode($queryCategorias[$i]['json'], true);
     }
 
     $smarty->assign('instituicao', $queryInstituicao);
     $smarty->assign('categorias', $queryCategorias);
+    $smarty->assign('titulo', 'Editar Instituição');
     $smarty->display('instituicao/edit.tpl');
   }
   else {

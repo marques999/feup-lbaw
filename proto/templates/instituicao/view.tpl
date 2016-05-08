@@ -8,16 +8,24 @@
         <h4 class="quarter-vertical-space slab">{$instituicao.nome}</h4>
         <p class="condensed">
           <i class="fa fa-institution"></i>
-          {$categorias_count}
-          {if $categorias_count eq 1} categoria
-          {else} categorias
-          {/if}
+          {strip}
+          <span>
+            {$categorias_count}
+            {if $categorias_count eq 1} categoria
+            {else} categorias
+            {/if}
+          </span>
+          {/strip}
           &nbsp;
           <i class="fa fa-question-circle"></i>
-          {$perguntas_count}
-          {if $perguntas_count eq 1} pergunta
-          {else} perguntas
-          {/if}
+          {strip}
+          <span>
+            {$perguntas_count}
+            {if $perguntas_count eq 1} pergunta
+            {else} perguntas
+            {/if}
+          </span>
+          {/strip} 
         </p>
         <p class="medium quarter-vertical-space">
           <strong>Morada:</strong>

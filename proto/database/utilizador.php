@@ -184,30 +184,6 @@ function utilizador_getById($idUtilizador) {
   $stmt->execute();
   return $stmt->fetch();
 }
-function resposta_listByAuthor($idUtilizador) {
-  global $db;
-  $stmt = $db->prepare("SELECT Resposta.idResposta,
-      Pergunta.idPergunta,
-      Pergunta.titulo,
-      Pergunta.ativa,
-      Contribuicao.descricao,
-      Contribuicao.dataHora,
-      Resposta.melhorResposta,
-      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-      COALESCE(SUM(valor), 0) AS pontuacao
-    FROM Resposta
-    INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-    LEFT JOIN VotoResposta USING(idResposta)
-    INNER JOIN Pergunta USING (idPergunta)
-    INNER JOIN Utilizador USING(idUtilizador)
-    WHERE Contribuicao.idUtilizador = :idUtilizador
-    GROUP BY Contribuicao.idContribuicao, Pergunta.idPergunta, Resposta.idResposta
-    ORDER BY Contribuicao.dataHora DESC");
-  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
-  $stmt->execute();
-  return $stmt->fetchAll();
-}
 function utilizador_listarActivos() {
   global $db;
   $stmt = $db->query("SELECT Utilizador.idUtilizador,

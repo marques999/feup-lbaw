@@ -11,7 +11,9 @@
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {
-    $smarty->assign('categorias', categoria_listAll());
+    $queryCategorias = categoria_listAll();
+    $smarty->assign('numberRows', count($queryCategorias) / 4);
+    $smarty->assign('categorias', $queryCategorias);
     $smarty->assign('titulo', 'Gerir Categorias');
     $smarty->display('admin/categorias.tpl');
   }

@@ -10,6 +10,7 @@
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {
+    $smarty->assign('titulo', 'Nova Instituição');
     $smarty->display('instituicao/create.tpl');
   }
   else {

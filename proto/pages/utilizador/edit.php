@@ -15,11 +15,12 @@
     $idUtilizador2 = safe_getId($_GET, 'id');
 
     if ($idUtilizador1 == $idUtilizador2 || utilizador_isAdministrator($idUtilizador1)) {
-      $queryCountry = file_get_contents($BASE_URL . 'javascript/countries.json');
+      $queryCountry = file_get_contents($BASE_DIR . 'javascript/countries.json');
       $smarty->assign('idUtilizador', $idUtilizador2);
       $smarty->assign('utilizador', utilizador_getById($idUtilizador2));
       $smarty->assign('instituicoes', instituicao_listAll());
       $smarty->assign('paises', json_decode($queryCountry, true));
+      $smarty->assign('titulo', 'Editar Utilizador');
       $smarty->display('utilizador/edit.tpl');
     }
     else {
@@ -32,6 +33,7 @@
     $smarty->assign('utilizador', utilizador_getById($idUtilizador1));
     $smarty->assign('instituicoes', instituicao_listAll());
     $smarty->assign('paises', json_decode($queryCountry, true));
+    $smarty->assign('titulo', 'Editar Utilizador');
     $smarty->display('utilizador/edit.tpl');
   }
 ?>

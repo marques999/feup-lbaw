@@ -37,7 +37,7 @@
   }
 
   try {
-    
+
     if (utilizador_inserirUtilizador($myUsername, $myPassword, $myEmail, $myFirstName, $myLastName) < 1) {
       safe_error(null, 'Erro na operação: um utilizador com este username ou e-mail já existe?');
     }
@@ -104,7 +104,7 @@
   if ($numberColumns > 0) {
 
     try {
-      
+
       if (utilizador_editarUtilizador($idUtilizador, null, null, null, $idInstituicao, $myLocalidade, $myCodigoPais) > 0) {
         safe_redirect('utilizador/login.php');
       }

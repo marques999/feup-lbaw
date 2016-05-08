@@ -34,13 +34,13 @@ function conversa_obterConversas($idUtilizador) {
   $stmt = $db->prepare("SELECT
       Conversa.idConversa,
       Conversa.titulo,
-      (CASE WHEN :idUtilizador = idUtilizador1 THEN ultimoAcesso1 ELSE ultimoAcesso2 END) AS ultimoacesso,
-      Utilizador.idUtilizador AS iddestinatario,
-      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomedestinatario,
+      (CASE WHEN :idUtilizador = idUtilizador1 THEN ultimoAcesso1 ELSE ultimoAcesso2 END) AS ultimoAcesso,
+      Utilizador.idUtilizador AS idDestinatario,
+      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeDestinatario,
       Instituicao.sigla,
-      (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa) AS numeromensagens,
-      Mensagem1.idAutor AS idautor,
-      AutorMensagem.username AS nomeautor,
+      (SELECT COUNT(*) FROM Mensagem WHERE Mensagem.idConversa = Conversa.idConversa) AS numeroMensagens,
+      Mensagem1.idAutor AS idAutor,
+      AutorMensagem.username AS nomeAutor,
       AutorMensagem.removido,
       Mensagem1.descricao,
       Mensagem1.dataHora
@@ -54,7 +54,8 @@ function conversa_obterConversas($idUtilizador) {
     JOIN Utilizador AutorMensagem ON AutorMensagem.idUtilizador = Mensagem1.idAutor
     JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
     WHERE (idUtilizador1 = :idUtilizador OR idUtilizador2 = :idUtilizador)
-    AND Mensagem2.idMensagem IS NULL");
+    AND Mensagem2.idMensagem IS NULL
+    ORDER BY Mensagem1.dataHora DESC");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -81,10 +82,22 @@ function conversa_obterMensagens($idConversa) {
 function conversa_enviarMensagem($idConversa, $idRemetente, $descricao) {
   global $db;
   $stmt = $db->prepare('INSERT INTO Mensagem(idMensagem, idConversa, idAutor, descricao)
-    VALUES(DEFAULT, :idConversa, :idRemetente, :descricao');
+    VALUES(DEFAULT, :idConversa, :idRemetente, :descricao)');
   $stmt->bindParam(":idConversa", $idConversa, PDO::PARAM_INT);
   $stmt->bindParam(":idRemetente", $idRemetente, PDO::PARAM_INT);
   $stmt->bindParam(":descricao", $descricao, PDO::PARAM_STR);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function covnersa_apagarMensagem($idConversa, $idMensagem, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('DELETE FROM Menagem
+    WHERE idConversa = :idConversa
+    AND idMensagem = :idMensagem
+    AND idAutor = :idUtilizador');
+  $stmt->bindParam(":idConversa", $idConversa, PDO::PARAM_INT);
+  $stmt->bindParam(":idMensagem", $idMensagem, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
 }
@@ -97,7 +110,13 @@ function conversa_listAll($idUtilizador) {
 }
 function conversa_listById($idConversa) {
   global $db;
-  $stmt = $db->prepare("SELECT * FROM Conversa WHERE idConversa = :idConversa");
+  $stmt = $db->prepare("SELECT Conversa.*,
+    Utilizador1.removido AS remetenteRemovido,
+    Utilizador2.removido AS destinatarioRemovido
+    FROM Conversa
+    INNER JOIN Utilizador Utilizador1 ON Utilizador1.idUtilizador = Conversa.idUtilizador1
+    INNER JOIN Utilizador Utilizador2 ON Utilizador2.idUtilizador = Conversa.idUtilizador2
+    WHERE idConversa = :idConversa");
   $stmt->bindParam(":idConversa", $idConversa, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();

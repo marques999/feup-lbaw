@@ -25,6 +25,7 @@
     $smarty->assign('relacionadas', $queryRelacionadas);
     $smarty->assign('instituicoes', $queryInstituicoes);
     $smarty->assign('administrador', $isAdministrator);
+    $smarty->assign('titulo', $queryCategoria['nome']);
     $smarty->assign('perguntas_count', count($queryPerguntas));
     $smarty->assign('instituicoes_count', count($queryInstituicoes));
     $smarty->display('categoria/view.tpl');

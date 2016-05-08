@@ -4,13 +4,13 @@
   include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
-   $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
     safe_redirect('utilizador/login.php');
   }
 
-  if (safe_check($_GET, 'id') {
+  if (safe_check($_GET, 'id')) {
     $idConversa = safe_getId($_GET, 'id');
   }
   else {
@@ -31,6 +31,7 @@
     $queryMensagens = conversa_obterMensagens($idConversa);
     $smarty->assign('conversa', $queryConversa);
     $smarty->assign('mensagens', $queryMensagens);
+    $smarty->assign('titulo', $queryConversa.titulo);
     $smarty->display('conversa/view.tpl');
   }
   else {

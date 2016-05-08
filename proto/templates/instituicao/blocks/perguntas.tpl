@@ -39,7 +39,11 @@
       {if $pergunta.removido}
         {$pergunta.nomeutilizador}
       {else}
-        <a href="{$BASE_URL}pages/utilizador/profile.php?id={$pergunta.idutilizador}">{$pergunta.nomeutilizador}</a>
+        {strip}
+        <a href="{$BASE_URL}pages/utilizador/profile.php?id={$pergunta.idutilizador}">
+          {$pergunta.nomeutilizador}
+        </a>
+        {/strip}
       {/if}
       </strong>
       <span class="small">({$pergunta.username})</span>

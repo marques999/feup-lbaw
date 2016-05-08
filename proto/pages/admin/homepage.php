@@ -10,6 +10,7 @@
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {
+    $smarty->assign('titulo', 'Administração');
     $smarty->display('admin/homepage.tpl');
   }
   else {

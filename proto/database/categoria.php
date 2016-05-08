@@ -24,11 +24,22 @@ function categoria_apagarCategoria($idCategoria) {
 function categoria_listAll() {
   global $db;
   $stmt = $db->query("SELECT Categoria.*,
-    COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas
+    COUNT(DISTINCT idPergunta) AS numeroPerguntas
     FROM Categoria
     NATURAL LEFT JOIN Pergunta
     GROUP BY idCategoria
     ORDER BY nome");
+  return $stmt->fetchAll();
+}
+function categoria_listPopular() {
+  global $db;
+  $stmt = $db->query("SELECT Categoria.*,
+    COUNT(DISTINCT idPergunta) AS numeroPerguntas
+    FROM Categoria
+    INNER JOIN Pergunta USING(idCategoria)
+    GROUP BY idCategoria, idPergunta
+    ORDER BY numeroPerguntas DESC
+    LIMIT 5");
   return $stmt->fetchAll();
 }
 function categoria_listAllGrouped() {
@@ -52,14 +63,12 @@ function categoria_listById($idCategoria) {
 }
 function categoria_listByInstituicao($idInstituicao) {
   global $db;
-  $stmt = $db->prepare("SELECT
-    Categoria.idCategoria,
-    Categoria.nome
+  $stmt = $db->prepare("SELECT Categoria.*
     FROM Instituicao
     INNER JOIN CategoriaInstituicao USING(idInstituicao)
     INNER JOIN Categoria USING(idCategoria)
     WHERE idInstituicao = :idInstituicao
-    ORDER BY Categoria.nome");
+    ORDER BY nome");
   $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -67,12 +76,10 @@ function categoria_listByInstituicao($idInstituicao) {
 function categoria_listRelacionadas($idCategoria, $includeSelf) {
   global $db;
   if ($includeSelf) {
-    $stmt = $db->prepare("(SELECT
-      Categoria.idCategoria,
-      Categoria.nome
+    $stmt = $db->prepare("(SELECT Categoria.*
       FROM Categoria
       WHERE Categoria.idCategoria = :idCategoria)
-      UNION (SELECT Categorias.idCategoria, Categorias.nome
+      UNION (SELECT Categorias.*
       FROM Categoria
       INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
       INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
@@ -84,9 +91,7 @@ function categoria_listRelacionadas($idCategoria, $includeSelf) {
       LIMIT 4)");
   }
   else {
-    $stmt = $db->prepare("SELECT
-      Categorias.idCategoria,
-      Categorias.nome
+    $stmt = $db->prepare("SELECT Categorias.*
       FROM Categoria
       INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
       INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
@@ -114,8 +119,8 @@ function categoria_fetchPerguntas($idCategoria) {
       Pergunta.dataHora,
       Pergunta.ativa,
       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
       COALESCE(SUM(valor), 0) AS pontuacao
     FROM Pergunta
     LEFT JOIN VotoPergunta USING(idPergunta)
@@ -125,37 +130,35 @@ function categoria_fetchPerguntas($idCategoria) {
       AS TabelaRespostas
       USING (idPergunta)
     INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-    WHERE Pergunta.idCategoria = :idCategoria
+    WHERE idCategoria = :idCategoria
     GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
-    ORDER BY Pergunta.dataHora DESC");
+    ORDER BY dataHora DESC");
   $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
 }
 function categoria_getStats($filterBy) {
   global $db;
-  $queryString = "SELECT
-      Categoria.idCategoria,
-      Categoria.nome,
-      MAX(Pergunta.idPergunta) as ultimaPergunta,
-      MAX(Pergunta.dataHora) AS dataHora,
-      COALESCE(COUNT(Pergunta.idPergunta), 0) AS numeroPerguntas
+  $queryString = "SELECT Categoria.*,
+      MAX(idPergunta) as ultimaPergunta,
+      MAX(dataHora) AS dataHora,
+      COALESCE(COUNT(idPergunta), 0) AS numeroPerguntas
     FROM Categoria
     JOIN Pergunta USING(idCategoria)
-    GROUP BY Categoria.idCategoria, Pergunta.idPergunta\n";
+    GROUP BY idCategoria, idPergunta";
   if ($filterBy == 'day') {
-    $queryString .= "HAVING dataHora > current_date - interval '1 day'\n";
+    $queryString .= " HAVING dataHora > current_date - interval '1 day' ";
   }
   else if ($filterBy == 'week') {
-    $queryString .= "HAVING dataHora > current_date - interval '1 week'\n";
+    $queryString .= " HAVING dataHora > current_date - interval '1 week' ";
   }
   else if ($filterBy == 'month') {
-    $queryString .= "HAVING dataHora > current_date - interval '1 month'\n";
+    $queryString .= " HAVING dataHora > current_date - interval '1 month' ";
   }
   else if ($filterBy == 'year') {
-    $queryString .= "HAVING dataHora > current_date - interval '1 year'\n";
+    $queryString .= " HAVING dataHora > current_date - interval '1 year' ";
   }
-  $queryString .= "ORDER BY numeroPerguntas DESC, Pergunta.dataHora DESC LIMIT 5";
+  $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
   return json_encode($stmt->fetchAll());
 }

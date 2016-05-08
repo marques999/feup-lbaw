@@ -48,6 +48,7 @@
     $smarty->assign('follows', $userFollows);
     $smarty->assign('privileges', $userPrivileges);
     $smarty->assign('myscore', $userVote);
+    $smarty->assign('titulo', $queryPergunta['titulo']);
     $smarty->display('pergunta/view.tpl');
   }
   else {

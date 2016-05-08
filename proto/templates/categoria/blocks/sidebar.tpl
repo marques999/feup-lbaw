@@ -6,9 +6,15 @@
       <span>Instituições</span>
     </h5>
     <ul class="menu vertical white">
-    {foreach $instituicoes as $instituicao}
-      <li><a href="{$BASE_URL}pages/instituicao/view.php?id={$instituicao.sigla}">{$instituicao.sigla|upper}</a></li>
-    {/foreach}
+    {strip}
+      {foreach $instituicoes as $instituicao}
+      <li>
+        <a href="{$BASE_URL}pages/instituicao/view.php?id={$instituicao.sigla}">
+          {$instituicao.sigla|upper}
+        </a>
+      </li>
+      {/foreach}
+    {/strip}
     </ul>
   {/if}
   {if $relacionadas|count gt 0}
@@ -17,9 +23,13 @@
       <span>Relacionadas</span>
     </h5>
     <ul class="menu vertical white">
-    {foreach $relacionadas as $relacionada}
-      <li><a href="{$BASE_URL}pages/categoria/view.php?id={$relacionada.idcategoria}">{$relacionada.nome}</a></li>
-    {/foreach}
+      {strip}{foreach $relacionadas as $relacionada}
+      <li>
+        <a href="{$BASE_URL}pages/categoria/view.php?id={$relacionada.idcategoria}">
+          {$relacionada.nome}
+        </a>
+      </li>
+      {/foreach}{/strip}
     </ul>
   {/if}
     <h5 class="slab half-vertical-space">
@@ -39,14 +49,22 @@
       <span>Gestão</span>
     </h5>
     <ul class="menu vertical white">
-      <li><a href="{$BASE_URL}pages/categoria/edit.php">
-        <sup><strong>(Admin)</strong></sup>
-        <span>Editar categoria</span>
-      </a></li>
-      <li><a href="{$BASE_URL}pages/categoria/delete.php">
-        <sup><strong>(Admin)</strong></sup>
-        <span>Apagar categoria</span>
-      </a></li>
+    {strip}
+      <li>
+        <a href="{$BASE_URL}pages/categoria/edit.php">
+          <sup><strong>(Admin)</strong></sup>
+          <span>Editar categoria</span>
+        </a>
+      </li>
+    {/strip}
+    {strip}
+      <li>
+        <a href="{$BASE_URL}pages/categoria/delete.php">
+          <sup><strong>(Admin)</strong></sup>
+          <span>Apagar categoria</span>
+        </a>
+      </li>
+    {/strip}
     </ul>
   {/if}
   </nav>

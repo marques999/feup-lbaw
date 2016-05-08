@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
+  include_once('../../database/utilizador.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
@@ -9,7 +10,7 @@
   if (!safe_check($_GET, 'id')) {
     safe_error(null, 'Deve especificar uma conversa primeiro!');
   }
-  
+
   $idConversa = safe_getId($_GET, 'id');
   $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   $isOriginalPoster = conversa_verificarAutor($idConversa, $idUtilizador);

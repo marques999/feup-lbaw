@@ -1,29 +1,28 @@
 <?
 function pergunta_listByAuthor($idUtilizador) {
   global $db;
-  $stmt = $db->prepare("SELECT Pergunta.idPergunta,
+  $stmt = $db->prepare("SELECT
+      Pergunta.idPergunta,
       Pergunta.titulo,
       Pergunta.descricao,
       Pergunta.dataHora,
       Pergunta.ativa,
-      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
       COALESCE(SUM(valor), 0) AS pontuacao
     FROM Utilizador
     JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
     LEFT JOIN VotoPergunta USING(idPergunta)
-    WHERE Utilizador.idUtilizador = :idUtilizador
-    GROUP BY Pergunta.idPergunta
-    ORDER BY Pergunta.dataHora DESC");
+    WHERE idUtilizador = :idUtilizador
+    GROUP BY idPergunta
+    ORDER BY dataHora DESC");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
 }
 function pergunta_verificarAutor($idPergunta, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("SELECT FROM Pergunta
-    WHERE idPergunta = :idPergunta
-    AND idAutor = :idUtilizador");
+  $stmt = $db->prepare("SELECT FROM Pergunta WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $result = $stmt->execute();
@@ -49,7 +48,7 @@ function pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descric
 function pergunta_editarPergunta($idPergunta, $idCategoria, $titulo, $descricao) {
   global $db;
   $numberColumns = 0;
-  $queryString = "UPDATE Instituicao SET ";
+  $queryString = "UPDATE Pergunta SET ";
   if ($idCategoria!=null) {
     $queryString .= "idCategoria = :idCategoria";
     $numberColumns++;
@@ -79,9 +78,7 @@ function pergunta_editarPergunta($idPergunta, $idCategoria, $titulo, $descricao)
 }
 function pergunta_apagarPergunta($idPergunta, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("DELETE FROM Pergunta
-    WHERE idPergunta = :idPergunta
-    AND idAutor = :idUtilizador");
+  $stmt = $db->prepare("DELETE FROM Pergunta WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
@@ -89,9 +86,7 @@ function pergunta_apagarPergunta($idPergunta, $idUtilizador) {
 }
 function pergunta_fecharPergunta($idPergunta, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("UPDATE Pergunta SET ativa = FALSE
-    WHERE idPergunta = :idPergunta
-    AND idAutor = :idUtilizador");
+  $stmt = $db->prepare("UPDATE Pergunta SET ativa = FALSE WHERE idPergunta = :idPergunta AND idAutor = :idUtilizador");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
@@ -122,7 +117,8 @@ function pergunta_contarSeguidores($idPergunta) {
 }
 function pergunta_listById($idPergunta) {
   global $db;
-  $stmt = $db->prepare("SELECT Pergunta.idPergunta,
+  $stmt = $db->prepare("SELECT
+      Pergunta.idPergunta,
       Pergunta.idCategoria,
       Utilizador.idUtilizador,
       Utilizador.username,
@@ -136,25 +132,25 @@ function pergunta_listById($idPergunta) {
       COALESCE(TabelaSeguidores.count, 0) AS numeroSeguidores,
       COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
       COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-      COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao
+      votosPositivos - votosNegativos AS pontuacao
     FROM Pergunta
     JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
     JOIN Instituicao USING(idInstituicao)
     LEFT JOIN (SELECT idPergunta,
-        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+        COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
         FROM VotoPergunta
-        WHERE idPergunta = :idPergunta
+        WHERE idPergunta = idPergunta
         GROUP BY idPergunta)
         AS TabelaVotos
         USING (idPergunta)
     LEFT JOIN (SELECT idPergunta, COUNT(*)
         FROM Seguidor
-        WHERE idPergunta = :idPergunta
+        WHERE idPergunta = idPergunta
         GROUP BY idPergunta)
         AS TabelaSeguidores
         USING (idPergunta)
-    WHERE Pergunta.idPergunta = :idPergunta");
+    WHERE idPergunta = :idPergunta");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
@@ -184,16 +180,12 @@ function pergunta_inserirComentario($idPergunta, $idUtilizador, $descricao) {
 }
 function pergunta_removerComentario($idPergunta, $idComentario, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("DELETE FROM ComentarioPergunta
-    WHERE idComentario = :idComentario
-    AND idPergunta = :idPergunta");
+  $stmt = $db->prepare("DELETE FROM ComentarioPergunta WHERE idComentario = :idComentario AND idPergunta = :idPergunta");
   $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   if ($stmt->rowCount() > 0) {
-    $stmt = $db->prepare("DELETE FROM Contribuicao
-      WHERE idContribuicao = :idComentario
-      AND idAutor = :idUtilizador");
+    $stmt = $db->prepare("DELETE FROM Contribuicao WHERE idContribuicao = :idComentario AND idAutor = :idUtilizador");
     $stmt->bindParam(":idComentario", $idComentario, PDO::PARAM_INT);
     $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
     $stmt->execute();
@@ -239,9 +231,9 @@ function pergunta_fetchRelacionadas($idCategoria, $idPergunta) {
 function pergunta_fetchVotes($idPergunta) {
   global $db;
   $stmt = $db->prepare("SELECT
-      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-      COALESCE(COUNT(*), 0) AS pontuacao
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+      COALESCE(SUM(valor), 0) AS pontuacao
     FROM VotoPergunta
     WHERE idPergunta = :idPergunta
     GROUP BY idPergunta");
@@ -256,6 +248,7 @@ function pergunta_fetchRespostas($idPergunta) {
   global $db;
   $stmt = $db->prepare("SELECT
       Resposta.idResposta,
+      Resposta.melhorResposta,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       Utilizador.username,
@@ -266,15 +259,14 @@ function pergunta_fetchRespostas($idPergunta) {
       COALESCE(TabelaComentarios.count, 0) AS numeroComentarios,
       COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
       COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-      COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao,
-      Resposta.melhorResposta
+      votosPositivos - votosNegativos AS pontuacao
     FROM Resposta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
     INNER JOIN Utilizador USING(idUtilizador)
     LEFT JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
     LEFT JOIN (SELECT idResposta,
-        SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-        SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+        COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+        COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
         FROM VotoResposta
         GROUP BY idResposta)
         AS TabelaVotos
@@ -333,7 +325,8 @@ function pergunta_fetchCommentsAfter($idPergunta, $ultimoComentario) {
 }
 function pergunta_pesquisar($queryString) {
   global $db;
-  $stmt = $db->prepare("SELECT QueryPrincipal.idPergunta,
+  $stmt = $db->prepare("SELECT
+      QueryPrincipal.idPergunta,
       QueryPrincipal.idUtilizador,
       QueryPrincipal.nomeUtilizador,
       QueryPrincipal.titulo,
@@ -350,8 +343,8 @@ function pergunta_pesquisar($queryString) {
       WHERE query @@ pesquisa
       ORDER BY rank DESC) AS QueryPrincipal
     LEFT JOIN (SELECT idPergunta,
-      SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-      SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+      COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+      COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
       FROM VotoPergunta
       GROUP BY idPergunta)
       AS TabelaVotos
@@ -373,10 +366,10 @@ function pergunta_getStats($filterBy) {
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       MAX(Pergunta.idPergunta) AS ultimaPergunta,
       MAX(Pergunta.dataHora) AS dataHora,
-      COALESCE(COUNT(Pergunta.idPergunta), 0) AS numeroPerguntas
+      COALESCE(COUNT(Pergunta.idPergunta), 0) AS count
     FROM Pergunta
     LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-    GROUP BY Utilizador.idUtilizador\n";
+    GROUP BY idUtilizador\n";
   if ($filterBy == 'day') {
     $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 day'\n";
   }
@@ -389,23 +382,8 @@ function pergunta_getStats($filterBy) {
   else if ($filterBy == 'year') {
     $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 year'\n";
   }
-  $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
+  $queryString .= "ORDER BY count DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
   return json_encode($stmt->fetchAll());
-}
-function resposta_fetchComments($idResposta) {
-  global $db;
-  $stmt = $db->prepare("SELECT
-      Utilizador.idUtilizador,
-      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-      Contribuicao.descricao,
-      Contribuicao.dataHora
-    FROM ComentarioResposta
-    JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
-    JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idAutor
-    WHERE ComentarioResposta.idResposta = :idResposta");
-  $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
-  $stmt->execute();
-  return $stmt->fetchAll();
 }
 ?>

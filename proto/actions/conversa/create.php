@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
+  include_once('../../database/utilizador.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
@@ -21,7 +22,7 @@
   $idRemetente = safe_getId($_SESSION, 'idUtilizador');
 
   try {
-    
+
     $idDestinatario = safe_getId($_POST, 'idDestinatario');
     $safeTitulo = safe_trim($_POST, 'titulo');
 

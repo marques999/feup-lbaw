@@ -11,11 +11,19 @@
   {foreach $respostas as $resposta}
     <tr>
       <td class="medium">
+        {strip}
         <h5 class="quarter-vertical-space">
-          <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$resposta.idpergunta}#reply-{$resposta.idresposta}">{$resposta.titulo}</a>
+          <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$resposta.idpergunta}#reply-{$resposta.idresposta}">
+            {$resposta.titulo}
+          </a>
         </h5>
-        <small>{$resposta.datahora|date_format:"%A, %e %B %Y %H:%M"}</small>
-        <p class="quarter-vertical-space">{$resposta.descricao|strip_tags|truncate:210:"...":false:false}</p>
+        {/strip}
+        <small>
+          {$resposta.datahora|date_format:"%A, %e %B %Y %H:%M"}
+        </small>
+        <p class="quarter-vertical-space">
+          {$resposta.descricao|strip_tags|truncate:210:"...":false:false}
+        </p>
       </td>
       <td class="align-center">
         {if $resposta.pontuacao gt 0}

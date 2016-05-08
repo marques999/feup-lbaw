@@ -3,7 +3,10 @@
 <div class="align-center">
   <h1 class="slab">Eliminar Conta</h1>
   <p>Tem a certeza que deseja eliminar a sua conta <strong>{$USERNAME}</strong>?</p>
-  <p><strong>ATENÇÃO:&nbsp;</strong>Todas as suas publicações serão apagadas automaticamente e a sua sessão terminará a partir deste momento!</p>
+  <p>
+    <strong>ATENÇÃO:</strong>
+    <span>Todas as suas publicações serão apagadas automaticamente e a sua sessão terminará a partir deste momento!</span>
+  </p>
   <form action="actions/utilizador/delete.php" method="post" class="ink-form half-top-padding">
     <input type="hidden" name="idUtilizador" value="{$USERID}">
     <div class="control-group column-group half-gutters">

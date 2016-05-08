@@ -20,7 +20,7 @@
   }
 
   $numberColumns = 0;
-  
+
   if (safe_strcheck($_POST, 'email')) {
     $myEmail = safe_trim($_POST, 'email');
     $numberColumns++;
@@ -74,9 +74,9 @@
   }
 
   try {
-    
+
     if (utilizador_editarUtilizador($idUtilizador, $myFirstName, $myLastName, $myEmail, $myInstituicao, $myLocalidade, $myCodigoPais) > 0) {
-      
+
       if ($isAdministrator) {
         safe_redirect('admin/utilizadores.php');
       }

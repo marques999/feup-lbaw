@@ -6,9 +6,15 @@
       <span>{$instituicao.sigla|upper}</span>
     </h5>
     <ul class="menu vertical white">
-    {foreach $categorias as $categoria}
-      <li><a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a></li>
-    {/foreach}
+    {strip}
+      {foreach $categorias as $categoria}
+      <li>
+        <a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">
+          {$categoria.nome}
+        </a>
+      </li>
+      {/foreach}
+    {/strip}
     </ul>
   {/if}
     <h5 class="slab half-vertical-space">
@@ -16,18 +22,24 @@
       <span>Ligações Externas</span>
     </h5>
     <ul class="menu vertical white">
-      <li><a href="{$instituicao.website}/web_page.inicial">
-        <span>Página Oficial</span>
-        <i class="fa fa-external-link"></i>
-      </a></li>
-      <li><a href="{$instituicao.website}/cur_geral.cur_inicio">
-        <span>Cursos</span>
-        <i class="fa fa-external-link"></i>
-      </a></li>
-      <li><a href="https://moodle.up.pt">
-        <span>Moodle U.Porto</span>
-        <i class="fa fa-external-link"></i>
-      </a></li>
+      <li>
+        <a href="{$instituicao.website}/web_page.inicial">
+          <span>Página Oficial</span>
+          <i class="fa fa-external-link"></i>
+        </a>
+      </li>
+      <li>
+        <a href="{$instituicao.website}/cur_geral.cur_inicio">
+          <span>Cursos</span>
+          <i class="fa fa-external-link"></i>
+        </a>
+      </li>
+      <li>
+        <a href="https://moodle.up.pt">
+          <span>Moodle U.Porto</span>
+          <i class="fa fa-external-link"></i>
+        </a>
+      </li>
     </ul>
   {if $administrador}
     <h5 class="slab half-vertical-space">
@@ -35,13 +47,22 @@
       <span>Gestão</span>
     </h5>
     <ul class="menu vertical white">
-      <li><a href="{$BASE_URL}pages/instituicao/edit.php">
-        <sup><strong>(Admin)</strong></sup>
-        <span>Editar instituição</span>
-      </a></li>
-      <li><a href="{$BASE_URL}pages/instituicao/delete.php">
-        <sup><strong>(Admin)</strong></sup>
-        <span>Apagar instituição</a></li></span>
+    {strip}
+      <li>
+        <a href="{$BASE_URL}pages/instituicao/edit.php">
+          <sup><strong>(Admin)</strong></sup>
+          <span>Editar instituição</span>
+        </a>
+      </li>
+    {strip}
+    {/strip}
+      <li>
+        <a href="{$BASE_URL}pages/instituicao/delete.php">
+          <sup><strong>(Admin)</strong></sup>
+          <span>Apagar instituição</span>
+        </a>
+      </li>
+    {/strip}
     </ul>
   {/if}
   </nav>

@@ -16,7 +16,7 @@
   else {
     safe_error(null, 'Deve especificar uma pergunta primeiro!');
   }
-  
+
   $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
   $isAdministrator = utilizador_isAdministrator($idUtilizador);
 

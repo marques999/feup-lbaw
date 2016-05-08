@@ -97,9 +97,9 @@ function instituicao_listAll() {
       Instituicao.idInstituicao,
       Instituicao.nome,
       Instituicao.sigla,
-      COUNT(DISTINCT CategoriaInstituicao.idCategoria) AS numeroCategorias,
-      COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas,
-      COUNT(DISTINCT Utilizador.idUtilizador) AS numeroUtilizadores
+      COUNT(DISTINCT idCategoria) AS numeroCategorias,
+      COUNT(DISTINCT idPergunta) AS numeroPerguntas,
+      COUNT(DISTINCT idUtilizador) AS numeroUtilizadores
     FROM Instituicao
     NATURAL LEFT JOIN CategoriaInstituicao
     NATURAL LEFT JOIN Pergunta
@@ -148,8 +148,8 @@ function instituicao_fetchPerguntas($idInstituicao) {
       Pergunta.dataHora,
       Pergunta.ativa,
       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-      COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
       COALESCE(SUM(valor), 0) AS pontuacao
     FROM CategoriaInstituicao
     NATURAL JOIN Pergunta
@@ -162,7 +162,7 @@ function instituicao_fetchPerguntas($idInstituicao) {
       USING (idPergunta)
     WHERE CategoriaInstituicao.idInstituicao = :idInstituicao
     GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
-    ORDER BY Pergunta.dataHora DESC;");
+    ORDER BY dataHora DESC");
   $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -172,26 +172,27 @@ function instituicao_getStats($filterBy) {
   $queryString = "SELECT
       Instituicao.idInstituicao,
       Instituicao.sigla,
-      MAX(Pergunta.idPergunta) AS ultimaPergunta,
-      MAX(Pergunta.dataHora) AS dataHora,
-      COALESCE(COUNT(Pergunta.idPergunta), 0) AS numeroPerguntas
+      upper(Instituicao.sigla),
+      MAX(idPergunta) AS ultimaPergunta,
+      to_char(MAX(dataHora), 'FMDay, DD FMMonth YYYY HH24:MI') AS dataHora,
+      COALESCE(COUNT(idPergunta), 0) AS count
     FROM CategoriaInstituicao
     NATURAL JOIN Pergunta
     NATURAL JOIN Instituicao
-    GROUP BY Instituicao.idInstituicao;\n";
+    GROUP BY Instituicao.idInstituicao";
   if ($filterBy == 'day') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 day'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 day' ";
   }
   else if ($filterBy == 'week') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 week'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 week' ";
   }
   else if ($filterBy == 'month') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 month'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 month' ";
   }
   else if ($filterBy == 'year') {
-    $queryString .= "HAVING MAX(dataHora) > current_date - interval '1 year'\n";
+    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 year' ";
   }
-  $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
+  $queryString .= "ORDER BY count DESC, dataHora DESC LIMIT 5";
   $stmt = $db->query($queryString);
   return json_encode($stmt->fetchAll());
 }

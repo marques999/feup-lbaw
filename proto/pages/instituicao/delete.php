@@ -14,8 +14,8 @@
   }
 
   if (safe_strcheck($_GET, 'id')) {
-    $idInstituicao = safe_trim($_GET, 'id');
-    $smarty->assign('idInstituicao', $idInstituicao);
+    $smarty->assign('idInstituicao', safe_trim($_GET, 'id'));
+    $smarty->assign('titulo', 'Apagar Instituição');
     $smarty->display('instituicao/delete.tpl');
   }
   else {

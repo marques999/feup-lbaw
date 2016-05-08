@@ -11,11 +11,19 @@
   {foreach $perguntas as $pergunta}
     <tr>
       <td class="medium">
+        {strip}
         <h5 class="quarter-vertical-space">
-          <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$pergunta.idpergunta}">{$pergunta.titulo}</a>
+          <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$pergunta.idpergunta}">
+            {$pergunta.titulo}
+          </a>
         </h5>
-        <small>{$pergunta.datahora|date_format:"%A, %e %B %Y %H:%M"}</small>
-        <p class="quarter-vertical-space">{$pergunta.descricao|strip_tags|truncate:210:"...":false:false}</p>
+        {/strip}
+        <small>
+          {$pergunta.datahora|date_format:"%A, %e %B %Y %H:%M"}
+        </small>
+        <p class="quarter-vertical-space">
+          {$pergunta.descricao|strip_tags|truncate:210:"...":false:false}
+        </p>
       </td>
       <td class="align-center">
         {if $pergunta.pontuacao gt 0}

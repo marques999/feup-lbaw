@@ -7,6 +7,8 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
       Pergunta.idPergunta,
       Utilizador.idUtilizador,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.ativo,
+      Utilizador.removido,
       Pergunta.titulo,
       Pergunta.descricao,
       Pergunta.dataHora,
@@ -14,12 +16,12 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
       COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
       COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-      COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao
+      votosPositivos - votosNegativos AS pontuacao
     FROM Pergunta
     LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
     LEFT JOIN (SELECT idPergunta,
-      SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-      SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+      COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+      COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
       FROM VotoPergunta
       GROUP BY idPergunta)
       AS TabelaVotos

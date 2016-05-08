@@ -4,19 +4,33 @@
   <div class="message all-100 half-vertical-space">
     <h5 class="slab no-margin">
       <i class="fa fa-envelope fa-fw"></i>
-      <a href="{$BASE_URL}pages/conversa/list.php" class="black">Mensagens Privadas&nbsp;</a>
+      {strip}
+      <a href="{$BASE_URL}pages/conversa/list.php" class="black">
+        <span>Mensagens Privadas</span>
+      </a>
+      {/strip}
       <i class="fa fa-angle-right"></i>
-      <a href="{$BASE_URL}pages/conversa/view.php?id={$conversa.idconversa}" class="black">&nbsp;{$conversa.titulo}</a>
+      {strip}
+      <a href="{$BASE_URL}pages/conversa/view.php?id={$conversa.idconversa}" class="black">
+        <span>{$conversa.titulo}</span>
+      </a>
+      {/strip}
     </h5>
   </div>
   {foreach $mensagens as $mensagem}
   <div class="message column-group half-vertical-space">
     <div class="column all-15 medium-20 small-25 tiny-25">
-        {if $mensagem.removido}
-        <strong>{$mensagem.username}</strong>
-        {else}
-        <strong><a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">{$mensagem.username}</a></strong>
-        {/if}
+      {if $mensagem.removido}
+      <strong>{$mensagem.username}</strong>
+      {else}
+        {strip}
+        <strong>
+          <a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">
+            {$mensagem.username}
+          </a>
+        </strong>
+        {/strip}
+      {/if}
       <p class="medium no-margin">{$mensagem.sigla|upper}</p>
       <img class="avatar-medium half-vertical-space"
         src="{$mensagem.idutilizador|utilizador_getAvatar}"
@@ -36,33 +50,44 @@
           </small>
         </p>
       </div>
-      <div class="message-content half-bottom-space">
-        <p class="medium half-vertical-space">{$mensagem.descricao}</p>
+      <div class="message-content medium half-bottom-space">
+        {$mensagem.descricao}
       </div>
       <div class="message-buttons quarter-vertical-padding align-right">
         {if $mensagem.idutilizador neq $USERID and not $mensagem.removido}
         <small>
-          <a href="#" class="ink-button black"><i class="fa fa-pencil fa-fw"></i>&nbsp;Responder</a>
+          <a href="#reply-form" class="ink-button reply-button black">
+            <i class="fa fa-pencil fa-fw"></i>
+            <span>Responder</span>
+          </a>
         </small>
         <small>
-          <a href="#" class="ink-button black"><i class="fa fa-quote-right fa-fw"></i>&nbsp;Citar</a>
+          <a href="#reply-form" class="ink-button quote-button black">
+            <i class="fa fa-quote-right fa-fw"></i>
+            <span>Citar</span>
+          </a>
         </small>
         {/if}
       </div>
     </div>
   </div>
   {/foreach}
-  <div class="message half-vertical-space">
+  <div id="reply-form" class="message half-vertical-space">
     <h5 class="slab no-margin">
-      Responder
+      <span>Responder</span>
       <span class="push-right">
         <i class="fa fa-arrow-up fa-fw"></i>
       </span>
     </h5>
-    <form action="actions/conversa/reply.php" method="post" class="ink-form ink-formvalidator quarter-gutters">
-      <div class="control-group required half-vertical-space">
+    {if $conversa.remetenteremovido or $conversa.destinatarioremovido}
+    <p class="condensed half-vertical-space">Não pode responder a esta conversa :(</p>
+    {else}
+    <form action="{$BASE_URL}actions/conversa/reply.php" method="post" class="ink-form quarter-gutters">
+      <input name="idConversa" id="idConversa" type="hidden" value="{$conversa.idconversa}">
+      <div class="control-group half-vertical-space">
         <div class="control all-100">
-          <textarea name="descricao" id="descricao" rows="8" cols="60" data-rules="required" placeholder="Por favor escreva aqui a sua mensagem..."></textarea>
+          <textarea name="descricao" id="descricao" rows="8" cols="60">
+          </textarea>
         </div>
       </div>
       <div class="control-group">
@@ -79,7 +104,9 @@
       </div>
     </form>
   </div>
+  {/if}
 </div>
+<script type="text/javascript" src="{$BASE_URL}javascript/conversa.js"></script>
 {/block}
 {block name=footer}
 {/block}

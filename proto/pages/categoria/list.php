@@ -5,5 +5,6 @@
   $queryCategorias = categoria_listAll();
   $smarty->assign('numberRows', count($queryCategorias) / 4);
   $smarty->assign('categorias', $queryCategorias);
+  $smarty->assign('titulo', 'Categorias');
   $smarty->display('categoria/list.tpl');
 ?>

@@ -38,6 +38,7 @@ $(function() {
       {name: 'colors', groups: ['colors']},
       {name: 'about', groups: ['about']}
     ];
+    config.extraPlugins = 'blockquote';
     config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
   };
   CKEDITOR.replace('descricao');
@@ -49,6 +50,7 @@ $(function() {
   {block name=navigation}
   {include file='common/navigation.tpl'}
   {/block}
+  {include file='common/messages.tpl'}
   {block name=content}
   {/block}
   {block name=footer}

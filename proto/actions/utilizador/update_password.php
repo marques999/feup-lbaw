@@ -35,11 +35,11 @@
   if (!utilizador_validateId($idUtilizador, $oldPassword)) {
     safe_error(null, 'Erro na operação: a palavra-passe antiga não corresponde à actual!');
   }
-  
+
   if (utilizador_validateId($idUtilizador, $newPassword)) {
     safe_error(null, 'Erro na operação: introduza uma palavra-passe diferente da actual!');
   }
-  
+
   if ($newPassword != $confirmPassword) {
     safe_error(null, 'Erro na operação: as palavra-passes novas introduzidas não correspondem!');
   }
