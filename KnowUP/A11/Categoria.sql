@@ -18,22 +18,21 @@ INNER JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
 WHERE Categoria.idCategoria = :idCategoria
 AND Categorias.idCategoria <> Categoria.idCategoria
 GROUP BY Categorias.idCategoria
-ORDER BY random()
-LIMIT 5;
+ORDER BY random() LIMIT 5;
 
 /*--------------------------------------------*/
 /* SQL503: LISTAR INSTITUIÇÕES ASSOCIADAS     */
 /*--------------------------------------------*/
-SELECT Instituicao.idInstituicao, Instituicao.sigla
-FROM Categoria
+SELECT idInstituicao, sigla
+FROM Instituicao
 NATURAL JOIN CategoriaInstituicao
-INNER JOIN Instituicao USING(idInstituicao)
 WHERE idCategoria = :idCategoria;
 
 /*--------------------------------------------*/
 /* SQL504: OBTER INFOMRAÇÕES DA CATEGORIA     */
 /*--------------------------------------------*/
-SELECT * FROM Categoria WHERE idCategoria = :idCategoria;
+SELECT * FROM Categoria
+WHERE idCategoria = :idCategoria;
 
 /*--------------------------------------------*/
 /* SQL505: OBTER PERGUNTAS DA CATEGORIA       */
@@ -47,26 +46,23 @@ SELECT Pergunta.idPergunta,
        Pergunta.descricao,
        Pergunta.dataHora,
        Pergunta.ativa,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+       Pergunta.respostas,
+       Pergunta.pontuacao,
        COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
-       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos
 FROM Pergunta
+INNER JOIN Utilizador USING(idUtilizador)
 LEFT JOIN VotoPergunta USING(idPergunta)
-LEFT JOIN (SELECT idPergunta, COUNT(*)
-  FROM Resposta
-  GROUP BY idPergunta)
-  AS TabelaRespostas
-  USING (idPergunta)
-INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
 WHERE idCategoria = :idCategoria
-GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
+GROUP BY idPergunta, Utilizador.idUtilizador
 ORDER BY dataHora DESC;
 
 /*--------------------------------------------*/
 /* SQL506: EDITAR CATEGORIA                   */
 /*--------------------------------------------*/
-UPDATE Categoria SET nome = :nome WHERE idCategoria = :idCategoria;
+UPDATE Categoria
+SET nome = :nome
+WHERE idCategoria = :idCategoria;
 
 /*--------------------------------------------*/
 /* SQL507: ADICIONAR CATEGORIA                */
@@ -85,5 +81,4 @@ SELECT Categoria.*, COUNT(DISTINCT idPergunta) AS numeroPerguntas
 FROM Categoria
 INNER JOIN Pergunta USING(idCategoria)
 GROUP BY idCategoria, idPergunta
-ORDER BY numeroPerguntas DESC
-LIMIT 5;
+ORDER BY numeroPerguntas DESC LIMIT 5;

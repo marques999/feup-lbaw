@@ -12,13 +12,13 @@ SELECT Pergunta.idPergunta,
        Pergunta.descricao,
        Pergunta.dataHora,
        Pergunta.ativa,
+       Pergunta.pontuacao,
        COALESCE(TabelaSeguidores.count, 0) AS numeroSeguidores,
        COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
-       COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-       votosPositivos - votosNegativos AS pontuacao
+       COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos
 FROM Pergunta
-JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-JOIN Instituicao USING(idInstituicao)
+INNER JOIN Utilizador USING(idUtilizador)
+LEFT JOIN Instituicao USING(idInstituicao)
 LEFT JOIN (SELECT idPergunta,
   COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
   COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
@@ -40,9 +40,9 @@ WHERE idPergunta = :idPergunta;
 /*--------------------------------------------*/
 SELECT VotoPergunta.valor, Seguidor.idSeguidor
 FROM Pergunta
-LEFT JOIN VotoPergunta 
-  ON VotoPergunta.idPergunta = Pergunta.idPergunta 
-  AND VotoPergunta.idAutor = :idUtilizador
+LEFT JOIN VotoPergunta
+  ON VotoPergunta.idPergunta = Pergunta.idPergunta
+  AND VotoPergunta.idUtilizador = :idUtilizador
 LEFT JOIN Seguidor
   ON Seguidor.idPergunta = Pergunta.idPergunta
   AND Seguidor.idSeguidor = :idUtilizador
@@ -63,11 +63,11 @@ SELECT Resposta.idResposta,
        COALESCE(TabelaComentarios.count, 0) AS numeroComentarios,
        COALESCE(TabelaVotos.votosPositivos, 0) AS votosPositivos,
        COALESCE(TabelaVotos.votosNegativos, 0) AS votosNegativos,
-       votosPositivos - votosNegativos AS pontuacao
+       COALESCE(votosPositivos - votosNegativos, 0) AS pontuacao
 FROM Resposta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
 INNER JOIN Utilizador USING(idUtilizador)
-LEFT JOIN Instituicao ON Instituicao.idInstituicao = Utilizador.idInstituicao
+LEFT JOIN Instituicao USING(idInstituicao)
 LEFT JOIN (SELECT idResposta,
   COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
   COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
@@ -92,22 +92,21 @@ SELECT Pergunta.idPergunta,
 FROM CategoriaInstituicao
 INNER JOIN CategoriaInstituicao CategoriasRelacionadas USING(idInstituicao)
 INNER JOIN Pergunta ON Pergunta.idCategoria = CategoriasRelacionadas.idCategoria
-INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+INNER JOIN Utilizador USING(idUtilizador)
 WHERE CategoriaInstituicao.idCategoria = :idCategoria
 AND Pergunta.idPergunta <> :idPergunta
 GROUP BY Pergunta.idPergunta, Utilizador.username
-ORDER BY random()
-LIMIT 5;
+ORDER BY random() LIMIT 5;
 
 /*--------------------------------------------*/
 /* SQL305: SUBMETER PERGUNTA                  */
 /*--------------------------------------------*/
--- se utilizador não preencher a descrição da pergunta no formulário 
-INSERT INTO Pergunta(idPergunta, idCategoria, idAutor, titulo)
+-- se utilizador não preencher a descrição da pergunta no formulário
+INSERT INTO Pergunta(idPergunta, idCategoria, idUtilizador, titulo)
 VALUES(DEFAULT, :idCategoria, :idUtilizador, :titulo);
 
 -- se utilizador preencher formulário com a descrição da pergunta
-INSERT INTO Pergunta(idPergunta, idCategoria, idAutor, titulo, descricao)
+INSERT INTO Pergunta(idPergunta, idCategoria, idUtilizador, titulo, descricao)
 VALUES(DEFAULT, :idCategoria, :idUtilizador, :titulo, :descricao);
 
 /*--------------------------------------------*/
@@ -125,14 +124,14 @@ WHERE idPergunta = :idPergunta;
 UPDATE Pergunta
 SET ativa = FALSE
 WHERE idPergunta = :idPergunta
-AND idAutor = :idUtilizador;
+AND idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* SQL308: APAGAR PERGUNTA                    */
 /*--------------------------------------------*/
 DELETE FROM Pergunta
 WHERE idPergunta = :idPergunta
-AND idAutor = :idUtilizador;
+AND idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* SQL309: SEGUIR PERGUNTA                    */
@@ -165,24 +164,27 @@ GROUP BY idPergunta;
 /*--------------------------------------------*/
 /* SQL313: OBTER COMENTÁRIOS                  */
 /*--------------------------------------------*/
+
+-- se não for especificado nenhum comentário como referência
 SELECT ComentarioPergunta.idComentario,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Utilizador.removido,
        Contribuicao.descricao,
-       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') AS dataHora
 FROM ComentarioPergunta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
 NATURAL JOIN Utilizador
 WHERE idPergunta = :idPergunta
 ORDER BY idComentario;
 
+-- se for especificado um ultimoComentario como referência
 SELECT ComentarioPergunta.idComentario,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Utilizador.removido,
        Contribuicao.descricao,
-       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') AS dataHora
 FROM ComentarioPergunta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
 NATURAL JOIN Utilizador
@@ -193,20 +195,19 @@ ORDER BY idComentario;
 /*--------------------------------------------*/
 /* SQL314: INSERIR COMENTÁRIO                 */
 /*--------------------------------------------*/
+BEGIN TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 WITH NovoComentario AS (
   INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
   VALUES(DEFAULT, :idUtilizador, :descricao) RETURNING idContribuicao
 ) INSERT INTO ComentarioPergunta(idComentario, idPergunta)
   SELECT idContribuicao, :idPergunta
   FROM NovoComentario;
+COMMIT;
 
 /*--------------------------------------------*/
 /* SQL315: APAGAR COMENTÁRIO                  */
 /*--------------------------------------------*/
-DELETE FROM ComentarioPergunta
-WHERE idComentario = :idComentario
-AND idPergunta = :idPergunta;
-
 DELETE FROM Contribuicao
 WHERE idContribuicao = :idComentario
 AND idUtilizador = :idUtilizador;
@@ -214,9 +215,9 @@ AND idUtilizador = :idUtilizador;
 /*--------------------------------------------*/
 /* SQL316: VERIFICAR AUTOR DA PERGUNTA        */
 /*--------------------------------------------*/
-SELECT FROM Pergunta
+SELECT idPergunta FROM Pergunta
 WHERE idPergunta = :idPergunta
-AND idAutor = :idUtilizador;
+AND idUtilizador = :idUtilizador;
 
 /*--------------------------------------------*/
 /* SQL317: VERIFICAR AUTOR DO COMENTÀRIO      */
@@ -233,12 +234,12 @@ SELECT Pergunta.idPergunta,
        Pergunta.descricao,
        Pergunta.dataHora,
        Pergunta.ativa,
+       Pergunta.pontuacao,
        COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
-       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao
-FROM Utilizador
-JOIN Pergunta ON Utilizador.idUtilizador = Pergunta.idAutor
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos
+FROM Pergunta
+NATURAL JOIN Utilizador
 LEFT JOIN VotoPergunta USING(idPergunta)
-WHERE idUtilizador = :idUtilizador
+WHERE Pergunta.idUtilizador = :idUtilizador
 GROUP BY idPergunta
 ORDER BY dataHora DESC;

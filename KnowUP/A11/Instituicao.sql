@@ -1,40 +1,5 @@
 /*--------------------------------------------*/
-/* ADICIONAR INSTITUIÇÃO                      */
-/*--------------------------------------------*/
-INSERT INTO Instituicao(idInstituicao, nome, sigla, morada, contacto, website)
-VALUES(DEFAULT, :nome, :sigla, :morada, :contacto, :website);
-
-/*--------------------------------------------*/
-/* EDITAR INSTITUIÇÃO                         */
-/*--------------------------------------------*/
-UPDATE Instituicao
-SET nome = :nome,
-    sigla = :sigla,
-    morada = :morada,
-    contacto = :contacto,
-    website = website
-WHERE idInstituicao = :idInstituicao;
-
-/*--------------------------------------------*/
-/* APAGAR INSTITUIÇÃO                         */
-/*--------------------------------------------*/
-DELETE FROM Instituicao WHERE sigla = :sigla;
-
-/*--------------------------------------------*/
-/* ASSOCIAR CATEGORIA                         */
-/*--------------------------------------------*/
-INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria)
-VALUES(:idInstituicao, :idCategoria);
-
-/*--------------------------------------------*/
-/* RETIRAR CATEGORIA                          */
-/*--------------------------------------------*/
-DELETE FROM CategoriaInstituicao
-WHERE idInstituicao = :idInstituicao
-AND idCategoria = :idCategoria;
-
-/*--------------------------------------------*/
-/* LISTAR INSTITUIÇÕES                        */
+/* SQL601: LISTAR INSTITUIÇÕES                */
 /*--------------------------------------------*/
 SELECT Instituicao.idInstituicao,
        Instituicao.nome,
@@ -43,16 +8,24 @@ SELECT Instituicao.idInstituicao,
        COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas,
        COUNT(DISTINCT Utilizador.idUtilizador) AS numeroUtilizadores
 FROM Instituicao
-NATURAL LEFT JOIN CategoriaInstituicao
-NATURAL LEFT JOIN Pergunta
-NATURAL LEFT JOIN Utilizador
+LEFT JOIN CategoriaInstituicao USING(idInstituicao)
+LEFT JOIN Utilizador USING(idInstituicao)
+LEFT JOIN Pergunta USING (idCategoria)
 GROUP BY idInstituicao
 ORDER BY sigla;
 
 /*--------------------------------------------*/
-/* OBTER INFORMAÇÕES DA INSTITUIÇÃO           */
+/* SQL602: LISTAR CATEGORIAS ASSOCIADAS       */
 /*--------------------------------------------*/
+SELECT Categoria.*
+FROM CategoriaInstituicao
+NATURAL JOIN Categoria
+WHERE idInstituicao = :idInstituicao
+ORDER BY nome;
 
+/*--------------------------------------------*/
+/* SQL603: OBTER INFORMAÇÕES DA INSTITUIÇÃO   */
+/*--------------------------------------------*/
 -- no caso de ser passado um identificador
 SELECT * FROM Instituicao WHERE idInstituicao = :idInstituicao;
 
@@ -60,7 +33,7 @@ SELECT * FROM Instituicao WHERE idInstituicao = :idInstituicao;
 SELECT * FROM Instituicao WHERE sigla = :sigla;
 
 /*--------------------------------------------*/
-/* OBTER PERGUNTAS DA INSTITUIÇÃO             */
+/* SQL604: OBTER PERGUNTAS DA INSTITUIÇÃO     */
 /*--------------------------------------------*/
 SELECT Pergunta.idPergunta,
        Utilizador.idUtilizador,
@@ -71,19 +44,50 @@ SELECT Pergunta.idPergunta,
        Pergunta.descricao,
        Pergunta.dataHora,
        Pergunta.ativa,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao
+       Pergunta.respostas,
+       Pergunta.pontuacao,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos
 FROM CategoriaInstituicao
 NATURAL JOIN Pergunta
-INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+INNER JOIN Utilizador USING(idUtilizador)
 LEFT JOIN VotoPergunta USING(idPergunta)
-LEFT JOIN (SELECT idPergunta, COUNT(*)
-  FROM Resposta
-  GROUP BY idPergunta)
-  AS TabelaRespostas
-  USING (idPergunta)
 WHERE CategoriaInstituicao.idInstituicao = :idInstituicao
-GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
-ORDER BY Pergunta.dataHora DESC;
+GROUP BY idPergunta, Utilizador.idUtilizador
+ORDER BY dataHora DESC;
+
+/*--------------------------------------------*/
+/* SQL605: ADICIONAR INSTITUIÇÃO              */
+/*--------------------------------------------*/
+INSERT INTO Instituicao(idInstituicao, nome, sigla, morada, contacto, website)
+VALUES(DEFAULT, :nome, :sigla, :morada, :contacto, :website);
+
+/*--------------------------------------------*/
+/* SQL606: ATUALIZAR INSTITUIÇÃO              */
+/*--------------------------------------------*/
+UPDATE Instituicao
+SET nome = :nome,
+    sigla = :sigla,
+    morada = :morada,
+    contacto = :contacto,
+    website = website
+WHERE idInstituicao = :idInstituicao;
+
+/*--------------------------------------------*/
+/* SQL607: APAGAR INSTITUIÇÃO                 */
+/*--------------------------------------------*/
+DELETE FROM Instituicao
+WHERE idInstituicao = :idInstituicao;
+
+/*--------------------------------------------*/
+/* SQL608: ASSOCIAR CATEGORIA                 */
+/*--------------------------------------------*/
+INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria)
+VALUES(:idInstituicao, :idCategoria);
+
+/*--------------------------------------------*/
+/* SQL609: REMOVER CATEGORIA                  */
+/*--------------------------------------------*/
+DELETE FROM CategoriaInstituicao
+WHERE idInstituicao = :idInstituicao
+AND idCategoria = :idCategoria;

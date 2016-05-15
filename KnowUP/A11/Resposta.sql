@@ -1,8 +1,15 @@
 /*--------------------------------------------*/
 /* SQL401: SUBMETER RESPOSTA                  */
 /*--------------------------------------------*/
-INSERT INTO Contribuicao(idContribuicao, idUtilizador. descricao)
-VALUES(DEFAULT, :idUtilizador, :descricao);
+BEGIN TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+WITH NovaResposta AS (
+  INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
+  VALUES(DEFAULT, :idUtilizador, :descricao) RETURNING idContribuicao
+) INSERT INTO Resposta(idResposta, idPergunta)
+  SELECT idContribuicao, :idPergunta
+  FROM NovaResposta;
+COMMIT;
 
 /*--------------------------------------------*/
 /* SQL402: ATUALIZAR RESPOSTA                 */
@@ -15,7 +22,8 @@ AND idUtilizador = :idUtilizador;
 /*--------------------------------------------*/
 /* SQL403: APAGAR RESPOSTA                    */
 /*--------------------------------------------*/
-DELETE FROM Contribuicao WHERE idContribuicao = :idResposta;
+DELETE FROM Contribuicao
+WHERE idContribuicao = :idResposta;
 
 /*--------------------------------------------*/
 /* SQL404: DESTACAR RESPOSTA                  */
@@ -33,9 +41,9 @@ SELECT registarVotoResposta(:idResposta, :idUtilizador, :valor);
 /*--------------------------------------------*/
 /* SQL406: OBTER VOTOS                        */
 /*--------------------------------------------*/
-SELECT COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(COUNT(*), 0) AS pontuacao
+SELECT COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+       COALESCE(SUM(valor), 0) AS pontuacao
 FROM VotoResposta
 WHERE idResposta = :idResposta
 GROUP BY idResposta;
@@ -43,47 +51,48 @@ GROUP BY idResposta;
 /*--------------------------------------------*/
 /* SQL407: OBTER COMENTÁRIOS                  */
 /*--------------------------------------------*/
-SELECT ComentarioResposta.idComentario,
+
+-- se não for especificado nenhum comentário como referência
+SELECT Contribuicao.idContribuicao,
+       Contribuicao.descricao,
+       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       Utilizador.removido,
-       Contribuicao.descricao,
-       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+       Utilizador.removido
 FROM ComentarioResposta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
 NATURAL JOIN Utilizador
 WHERE idResposta = :idResposta;
 
-SELECT ComentarioResposta.idComentario,
+-- se for especificado um ultimoComentario como referência
+SELECT Contribuicao.idContribuicao,
+       Contribuicao.descricao,
+       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
        Utilizador.idUtilizador,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       Utilizador.removido,
-       Contribuicao.descricao,
-       to_char(Contribuicao.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
+       Utilizador.removido
 FROM ComentarioResposta
 INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
 NATURAL JOIN Utilizador
-WHERE ComentarioResposta.idResposta = :idResposta
-AND ComentarioResposta.idComentario > :ultimoComentario;
+WHERE idResposta = :idResposta
+AND idComentario > :ultimoComentario;
 
 /*--------------------------------------------*/
 /* SQL408: INSERIR COMENTÁRIO                 */
 /*--------------------------------------------*/
-INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
-    VALUES(DEFAULT, :idUtilizador, :descricao);
-
-SELECT contribuicao_idcontribuicao_seq AS idComentario;
-
-INSERT INTO ComentarioResposta(idComentario, idResposta)
-    VALUES(:idComentario, :idResposta);
+BEGIN TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+WITH NovoComentario AS (
+  INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
+  VALUES(DEFAULT, :idUtilizador, :descricao) RETURNING idContribuicao
+) INSERT INTO ComentarioResposta(idComentario, idResposta)
+  SELECT idContribuicao, :idResposta
+  FROM NovoComentario;
+COMMIT;
 
 /*--------------------------------------------*/
 /* SQL409: APAGAR COMENTÁRIO                  */
 /*--------------------------------------------*/
-DELETE FROM ComentarioResposta
-WHERE idComentario = :idComentario
-AND idResposta = :idResposta;
-
 DELETE FROM Contribuicao
 WHERE idContribuicao = :idComentario
 AND idUtilizador = :idUtilizador;
@@ -112,14 +121,14 @@ SELECT Resposta.idResposta,
        Contribuicao.descricao,
        Contribuicao.dataHora,
        Resposta.melhorResposta,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
        COALESCE(SUM(valor), 0) AS pontuacao
-FROM Resposta
-INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-LEFT JOIN VotoResposta USING(idResposta)
-INNER JOIN Pergunta USING (idPergunta)
+FROM Contribuicao
+INNER JOIN Resposta ON Contribuicao.idContribuicao = Resposta.idResposta
 INNER JOIN Utilizador USING(idUtilizador)
+INNER JOIN Pergunta USING (idPergunta)
+LEFT JOIN VotoResposta USING(idResposta)
 WHERE Contribuicao.idUtilizador = :idUtilizador
 GROUP BY Contribuicao.idContribuicao, Pergunta.idPergunta, Resposta.idResposta
 ORDER BY Contribuicao.dataHora DESC;
