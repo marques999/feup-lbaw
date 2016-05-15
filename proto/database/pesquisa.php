@@ -51,8 +51,8 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
       WHERE query @@ pesquisa
       ORDER BY rank DESC) AS QueryPrincipal
     LEFT JOIN (SELECT idPergunta,
-      SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END) AS votosPositivos,
-      SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END) AS votosNegativos
+      COUNT(valor) FILTER (WHERE valor = 1) AS votosPositivos,
+      COUNT(valor) FILTER (WHERE valor = -1) AS votosNegativos
       FROM VotoPergunta
       GROUP BY idPergunta)
       AS TabelaVotos
@@ -114,9 +114,6 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
   }
   else if ($sort == 'answers') {
     $queryString .= ' ORDER BY numeroRespostas';
-  }
-  else if ($sort == 'rank') {
-    $queryString .= ' ORDER BY rank';
   }
   else {
     if ($emptyQuery) {
