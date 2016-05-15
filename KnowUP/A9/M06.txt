@@ -4,15 +4,16 @@
 ^ URL            | ''/pages/instituicao/list.php''                                                                                   ||
 ^ Description    | Esta página permite visualizar uma lista ordenada alfabeticamente de todas as instituições existentes no sistema. ||
 ^ UI             | [[:lbaw1525:proj:a3#ui07blista_de_instituicoes|UI07b]]                                                            ||
-^ SQL            | [[#sql606listar_instituicoes|SQL606]]                                                                             ||
+^ SQL            | [[#sql601listar_instituicoes|SQL601]]                                                                             ||
 ^ Permissions    | PUB                                                                                                               ||
 
 === R602: Criar instituição ===
-^ URL            | ''/pages/instituicao/new.php''                                                                                  ||
-^ Description    | Esta página permite criar uma nova instituição através do preenchimento de um formulário.                       ||
-^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                                               ||
-^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                                     ||
-^ Permissions    | ADM                                                                                                             ||
+^ URL            | ''/pages/instituicao/new.php''                                                            ||
+^ Description    | Esta página permite criar uma nova instituição através do preenchimento de um formulário. ||
+^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                         ||
+^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                               ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]]                                   ||
+^ Permissions    | ADM                                                                                       ||
 
 === R603: Editar instituição ===
 ^ URL            | ''/pages/instituicao/edit.php''                                                            ||
@@ -21,6 +22,7 @@
 ^ Parameters     | +id: text | sigla da instituição                                                            |
 ^ AJAX Calls     | [[#r608associar_categoria|R608]], [[#r609remover_categoria|R609]]                          ||
 ^ UI             | [[:lbaw1525:proj:axx|UIxx]]                                                                ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]]                                    ||
 ^ Permissions    | ADM                                                                                        ||
 
 === R604: Página da instituição ===
@@ -30,26 +32,26 @@
 ^ Parameters     | +id: text | sigla da instituição                                                             |
 ^ AJAX Calls     | [[#r308seguir_pergunta|R308]], [[#r309unfollow_pergunta|R309]], [[#r310registar_voto|R310]] ||
 ^ UI             | [[:lbaw1525:proj:a3#ui08pagina_da_instituicao|UI08]]                                        ||
-^ SQL            | [[#sql607listar_categorias_associadas|SQL607]], [[#sql608obter_informacoes_da_instituicao|SQL608]], [[#sql609obter_perguntas_da_instituicao|SQL609]]                                                               ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql602listar_categorias_associadas|SQL602]], [[#sql603obter_informacoes_da_instituicao|SQL603]], [[#sql604obter_perguntas_da_instituicao|SQL604]]                                                               ||
 ^ Permissions    | PUB                                                                                         ||
 
 === R605: Adicionar instituição ===
-^ URL            | ''/actions/instituicao/submit.php''                                        ||
-^ Description    | Esta //action// permite adicionar uma nova institução ao sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova instituição, caso contrário regressa à página de criação de instituições, sendo apresentada ao utilizador uma mensagem de erro.                ||
-^ Method         | POST                                                                       ||
-^ Request body   | ?nome: text                         | nome da instituição                   |
-^                | ?sigla: text                        | sigla da instituição                  |
-^                | ?morada: text                       | morada da instituição                 |
-^                | ?contacto: text                     | telefone de contacto da instituição   |
-^                | ?website: text                      | website da instituição                |
-^ Redirects      | [[#r604pagina_da_instituicao|R604]] | Sucesso                               |
-^                | [[#r602criar_instituicao|R602]]     | Erro                                  |
-^ SQL            | [[#sql601adicionar_instituicao|SQL601]]                                    ||
-^ Permissions    | ADM                                                                        ||
+^ URL            | ''/actions/instituicao/submit.php''                                                              ||
+^ Description    | Esta //action// permite adicionar uma nova institução ao sistema com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página da nova instituição, caso contrário regressa à página de criação de instituições, sendo apresentada ao utilizador uma mensagem de erro. ||
+^ Method         | POST                                                                                             ||
+^ Request body   | ?nome: text                         | nome da instituição                                         |
+^                | ?sigla: text                        | sigla da instituição                                        |
+^                | ?morada: text                       | morada da instituição                                       |
+^                | ?contacto: text                     | telefone de contacto da instituição                         |
+^                | ?website: text                      | website da instituição                                      |
+^ Redirects      | [[#r604pagina_da_instituicao|R604]] | Sucesso                                                     |
+^                | [[#r602criar_instituicao|R602]]     | Erro                                                        |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql605adicionar_instituicao|SQL605]] ||
+^ Permissions    | ADM                                                                                              ||
 
 === R606: Atualizar instituição ===
 ^ URL            | ''/actions/instituicao/update.php''                                                                                                         ||
-^ Description    | Esta //action// permite alterar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição da instituição, sendo apresentada ao utilizador uma mensagem de erro.                                                                                             ||
+^ Description    | Esta //action// permite alterar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página de edição da instituição, sendo apresentada ao utilizador uma mensagem de erro. ||
 ^ Method         | POST                                                                                                                                        ||
 ^ Request body   | +idInstituicao: integer             | chave primária da instituição                                                                          |
 ^                | ?nome: text                         | novo nome da instituição (ou nome atual se não tiver sido alterado no formulário)                      |
@@ -59,41 +61,41 @@
 ^                | ?website: text                      | novo website da instituição (ou website atual se não tiver sido alterado no formulário)                |
 ^ Redirects      | [[#r604pagina_da_instituicao|R604]] | Sucesso                                                                                                |
 ^                | [[#r603editar_instituicao|R603]]    | Erro                                                                                                   |
-^ SQL            | [[#sql602editar_instituicao|SQL602]]                                                                                                        ||
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql606atualizar_instituicao|SQL606]]                                               ||
 ^ Permissions    | ADM                                                                                                                                         ||
 
 === R607: Apagar instituição ===
-^ URL            | ''/actions/instituicao/delete.php''                                 ||
-^ Description    | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro.                       ||
-^ Method         | POST                                                                ||
-^ Parameters     | +idInstituicao: integer             | chave primária da instituição  |
-^ Redirects      | [[#r803gerir_instituicoes|R803]]    | Sucesso                        |
-^                | [[#r604pagina_da_instituicao|R604]] | Erro                           |
-^ SQL            | [[#sql603apagar_instituicao|SQL603]]                                ||
-^ Permissions    | ADM                                                                 ||
+^ URL            | ''/actions/instituicao/delete.php''                                                           ||
+^ Description    | Esta //action// permite apagar uma instituição com base na informação recebida. Se as informações introduzidas pelo utilizador forem válidas e as operações na base de dados executarem com sucesso, este é reencaminhado para a página de gestão de instituições, caso contrário regressa à página da instutuição, sendo apresentada ao utilizador uma mensagem de erro. ||
+^ Method         | POST                                                                                          ||
+^ Parameters     | +idInstituicao: integer             | chave primária da instituição                            |
+^ Redirects      | [[#r803gerir_instituicoes|R803]]    | Sucesso                                                  |
+^                | [[#r604pagina_da_instituicao|R604]] | Erro                                                     |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql607apagar_instituicao|SQL607]] ||
+^ Permissions    | ADM                                                                                           ||
 
 === R608: Associar categoria ===
-^ URL            | ''/api/instituicao/insert_categoria.php''                                            ||
-^ Description    | Este //AJAX request// permite associar uma categoria a uma instituição.              ||
-^ Method         | POST                                                                                 ||
-^ Request body   | +idInstituicao: integer | chave primária da instituição                               |
-^                | +idCategoria: integer   | chave primária da categoria                                 |
-^ Response body  | Boolean                                                                              ||
-^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                |
-^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas  |
-^                | 403 Forbidden           | se utilizador não tiver permissões suficientes              |
-^ SQL            | [[#sql604associar_categoria|SQL604]]                                                 ||
-^ Permissions    | ADM                                                                                  ||
+^ URL            | ''/api/instituicao/insert_categoria.php''                                                     ||
+^ Description    | Este //AJAX request// permite associar uma categoria a uma instituição.                       ||
+^ Method         | POST                                                                                          ||
+^ Request body   | +idInstituicao: integer | chave primária da instituição                                        |
+^                | +idCategoria: integer   | chave primária da categoria                                          |
+^ Response body  | Boolean                                                                                       ||
+^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                         |
+^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas           |
+^                | 403 Forbidden           | se utilizador não tiver permissões suficientes                       |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql608associar_categoria|SQL608]] ||
+^ Permissions    | ADM                                                                                           ||
 
 === R609: Remover categoria ===
-^ URL            | ''/api/instituicao/remove_categoria.php''                                            ||
-^ Description    | Este //AJAX request// permite remover uma categoria da instituição escolhida.        ||
-^ Method         | POST                                                                                 ||
-^ Request body   | +idInstituicao: integer | chave primária da instituição                               |
-^                | +idCategoria: integer   | chave primária da categoria                                 |
-^ Response body  | Boolean                                                                              ||
-^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                |
-^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas  |
-^                | 403 Forbidden           | se utilizador não tiver permissões suficientes              |
-^ SQL            | [[#sql605retirar_categoria|SQL605]]                                                  ||
-^ Permissions    | ADM                                                                                  ||
+^ URL            | ''/api/instituicao/remove_categoria.php''                                                    ||
+^ Description    | Este //AJAX request// permite remover uma categoria da instituição escolhida.                ||
+^ Method         | POST                                                                                         ||
+^ Request body   | +idInstituicao: integer | chave primária da instituição                                       |
+^                | +idCategoria: integer   | chave primária da categoria                                         |
+^ Response body  | Boolean                                                                                      ||
+^ Returns        | 200 OK                  | se todas as operações executarem com sucesso                        |
+^                | 400 Bad Request         | se as informações enviadas pelo utilizador forem inválidas          |
+^                | 403 Forbidden           | se utilizador não tiver permissões suficientes                      |
+^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql609remover_categoria|SQL609]] ||
+^ Permissions    | ADM                                                                                          ||

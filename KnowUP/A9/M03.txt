@@ -12,7 +12,7 @@
 
 === R302: Redigir pergunta ===
 ^ URL            | ''/pages/pergunta/ask.php''                                                                          ||
-^ Description    | Esta página permite publicar uma nova pergunta no sistema através do preenchimento de um formulário. Se for passado um ID como parâmetro, a pergunta ficará automaticamente associada a essa categoria.                                                                                                               |
+^ Description    | Esta página permite publicar uma nova pergunta no sistema através do preenchimento de um formulário. Se for passado um ID como parâmetro, a pergunta ficará automaticamente associada a essa categoria.                                                                                                              ||
 ^ Method         | GET                                                                                                  ||
 ^ Parameters     | ?id: integer | chave primária da categoria                                                            |
 ^ UI             | [[:lbaw1525:proj:a3#ui12fazer_pergunta|UI12]]                                                        ||

@@ -18,14 +18,14 @@
 ^ Permissions    | PUB                                                                                         ||
 
 === R503: Editar categoria ===
-^ URL            | ''/actions/categoria/update.php''                   ||
-^ Description    | Esta //action// permite alterar uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página da categoria, sendo apresentada uma mensagem de erro se esta operação falhar.                                                       ||
-^ Method         | POST                                                ||
-^ Request body   | +idCategoria: integer | chave primária da categoria  |
-^                | ?nome: text           | novo nome da categoria       |
-^ Redirects      | [[#r502pagina_da_categoria|R502]]                   ||
+^ URL            | ''/actions/categoria/update.php''                                                           ||
+^ Description    | Esta //action// permite alterar uma categoria com base na informação recebida. O utilizador é sempre reencaminhado para a página da categoria, sendo apresentada uma mensagem de erro se esta operação falhar.                                                                                               ||
+^ Method         | POST                                                                                        ||
+^ Request body   | +idCategoria: integer | chave primária da categoria                                          |
+^                | ?nome: text           | novo nome da categoria                                               |
+^ Redirects      | [[#r502pagina_da_categoria|R502]]                                                           ||
 ^ SQL            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql506editar_categoria|SQL506]] ||
-^ Permissions    | ADM                                                 ||
+^ Permissions    | ADM                                                                                         ||
 
 === R504: Adicionar categoria ===
 ^ URL            | ''/api/categoria/insert.php''                                                                          ||
