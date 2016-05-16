@@ -9,9 +9,11 @@ RETURNS TRIGGER AS $votarPropriaPergunta$
 DECLARE
     AutorPergunta integer;
 BEGIN
-    SELECT Pergunta.idAutor INTO AutorPergunta
-    FROM Pergunta WHERE Pergunta.idPergunta = NEW.idPergunta;
-    IF (AutorPergunta = NEW.idAutor) THEN
+    SELECT idUtilizador INTO AutorPergunta
+    FROM Pergunta
+    WHERE idPergunta = NEW.idPergunta
+    LIMIT 1;
+    IF (AutorPergunta = NEW.idUtilizador) THEN
         RAISE EXCEPTION 'não pode classificar as suas próprias perguntas!';
         RETURN NULL;
     END IF;
@@ -34,11 +36,12 @@ RETURNS TRIGGER AS $votarPropriaResposta$
 DECLARE
     AutorResposta integer;
 BEGIN
-    SELECT Contribuicao.idAutor INTO AutorResposta
+    SELECT idUtilizador INTO AutorResposta
     FROM Resposta
-    JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-    WHERE Resposta.idResposta = NEW.idResposta;
-    IF (AutorResposta = NEW.idAutor) THEN
+    JOIN Contribuicao ON idContribuicao = idResposta
+    WHERE idResposta = NEW.idResposta
+    LIMIT 1;
+    IF (AutorResposta = NEW.idUtilizador) THEN
         RAISE EXCEPTION 'não pode classificar as suas próprias respostas!';
         RETURN NULL;
     END IF;
@@ -53,6 +56,67 @@ CREATE TRIGGER TRIGGER_votarPropriaResposta
     EXECUTE PROCEDURE votarPropriaResposta();
 
 /*--------------------------------------------*/
+/*     TRIGGER_calcularPontuacaoPergunta      */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION calcularPontuacaoPergunta()
+RETURNS TRIGGER AS $calcularPontuacaoPergunta$
+BEGIN
+    IF (TG_OP = 'INSERT') THEN
+        UPDATE Pergunta
+        SET pontuacao = pontuacao + NEW.valor
+        WHERE idPergunta = NEW.idPergunta;
+    ELSIF (TG_OP = 'UPDATE') THEN
+        UPDATE Pergunta
+        SET pontuacao = pontuacao - OLD.valor + NEW.valor
+        WHERE idPergunta = NEW.idPergunta;
+    ELSIF (TG_OP = 'DELETE') THEN
+        UPDATE Pergunta
+        SET pontuacao = pontuacao - OLD.valor
+        WHERE idPergunta = OLD.idPergunta;
+    END IF;
+    RETURN NULL;
+END;
+
+$calcularPontuacaoPergunta$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_calcularPontuacaoPergunta
+    AFTER INSERT OR DELETE ON VotoPergunta
+    FOR EACH ROW
+    EXECUTE PROCEDURE calcularPontuacaoPergunta();
+
+CREATE TRIGGER TRIGGER_atualizarPontuacaoPergunta
+    AFTER UPDATE OF valor ON VotoPergunta
+    FOR EACH ROW
+    EXECUTE PROCEDURE calcularPontuacaoPergunta();
+
+/*--------------------------------------------*/
+/*      TRIGGER_calcularNumeroRespostas       */
+/*--------------------------------------------*/
+
+CREATE OR REPLACE FUNCTION calcularNumeroRespostas()
+RETURNS TRIGGER AS $calcularNumeroRespostas$
+BEGIN
+    IF (TG_OP = 'INSERT') THEN
+        UPDATE Pergunta
+        SET respostas = respostas + 1
+        WHERE idPergunta = NEW.idPergunta;
+    ELSIF (TG_OP = 'DELETE') THEN
+        UPDATE Pergunta
+        SET respostas = respostas - 1
+        WHERE idPergunta = OLD.idPergunta;
+    END IF;
+    RETURN NEW;
+END;
+
+$calcularNumeroRespostas$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TRIGGER_calcularNumeroRespostas
+    AFTER INSERT OR DELETE ON Resposta
+    FOR EACH ROW
+    EXECUTE PROCEDURE calcularNumeroRespostas();
+
+/*--------------------------------------------*/
 /*         TRIGGER_responderPergunta          */
 /*--------------------------------------------*/
 
@@ -63,18 +127,18 @@ DECLARE
     AutorResposta INTEGER;
     PerguntaActiva BOOLEAN;
 BEGIN
-    SELECT Pergunta.ativa INTO PerguntaActiva
-    FROM Pergunta WHERE NEW.idPergunta = Pergunta.idPergunta
+    SELECT ativa INTO PerguntaActiva
+    FROM Pergunta WHERE idPergunta = NEW.idPergunta
     LIMIT 1;
     IF (NOT PerguntaActiva) THEN
         RAISE EXCEPTION 'não pode responder a uma pergunta fechada!';
         RETURN NULL;
     END IF;
-    SELECT Pergunta.idAutor INTO AutorPergunta
-    FROM Pergunta WHERE Pergunta.idPergunta = NEW.idPergunta
+    SELECT idUtilizador INTO AutorPergunta
+    FROM Pergunta WHERE idPergunta = NEW.idPergunta
     LIMIT 1;
-    SELECT Contribuicao.idAutor INTO AutorResposta
-    FROM Contribuicao WHERE Contribuicao.idContribuicao = NEW.idResposta
+    SELECT idUtilizador INTO AutorResposta
+    FROM Contribuicao WHERE idContribuicao = NEW.idResposta
     LIMIT 1;
     IF (AutorResposta = AutorPergunta) THEN
         RAISE EXCEPTION 'não pode responder às suas próprias perguntas!';
@@ -187,6 +251,7 @@ BEGIN
     REFRESH MATERIALIZED VIEW UtilizadoresPesquisa;
     RETURN NULL;
 END;
+
 $atualizarUtilizadores$ LANGUAGE plpgsql;
 
 CREATE TRIGGER TRIGGER_atualizarUtilizadores
@@ -203,7 +268,7 @@ CREATE OR REPLACE FUNCTION autofollowPergunta()
 RETURNS TRIGGER AS $autofollowPergunta$
 BEGIN
     INSERT INTO Seguidor(idSeguidor, idPergunta, dataInicio, dataAcesso)
-    VALUES(NEW.idAutor, NEW.idPergunta, NEW.dataHora, NEW.dataHora);
+    VALUES(NEW.idUtilizador, NEW.idPergunta, NEW.dataHora, NEW.dataHora);
     RETURN NEW;
     EXCEPTION WHEN unique_violation THEN
         RETURN NEW;
@@ -224,7 +289,7 @@ CREATE OR REPLACE FUNCTION autofollowResposta()
 RETURNS TRIGGER AS $autofollowResposta$
 BEGIN
     INSERT INTO Seguidor
-    SELECT Contribuicao.idAutor, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
+    SELECT Contribuicao.idUtilizador, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
     FROM Contribuicao
     WHERE Contribuicao.idContribuicao = NEW.idResposta
     LIMIT 1;
@@ -248,7 +313,7 @@ CREATE OR REPLACE FUNCTION autofollowComentario()
 RETURNS TRIGGER AS $autofollowComentario$
 BEGIN
     INSERT INTO Seguidor
-    SELECT Contribuicao.idAutor, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
+    SELECT Contribuicao.idUtilizador, NEW.idPergunta, Contribuicao.dataHora, Contribuicao.dataHora
     FROM Contribuicao
     WHERE Contribuicao.idContribuicao = NEW.idPergunta
     LIMIT 1;

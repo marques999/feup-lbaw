@@ -4,21 +4,29 @@ SET SCHEMA 'knowup';
 /*            registarVotoPergunta            */
 /*--------------------------------------------*/
 
--- registarVotoPergunta(idPergunta, idAutor, valor)
+-- registarVotoPergunta(idPergunta, idUtilizador, valor)
 
 CREATE OR REPLACE FUNCTION registarVotoPergunta(integer, integer, integer)
 RETURNS BOOLEAN AS $registarVotoPergunta$
+DECLARE
+    VotoActual INTEGER;
 BEGIN
     IF ($3 = 0) THEN
         RETURN FALSE;
     END IF;
-    IF EXISTS(SELECT 1 FROM VotoPergunta WHERE idPergunta = $1 AND idAutor = $2) THEN
-        UPDATE VotoPergunta
-        SET valor = $3 WHERE (idPergunta = $1 AND idAutor = $2);
+    SELECT valor INTO VotoActual FROM VotoPergunta WHERE idPergunta = $1 AND idUtilizador = $2;
+    IF FOUND THEN
+        IF VotoActual = $3 THEN
+            DELETE FROM VotoPergunta
+            WHERE idPergunta = $1 AND idUtilizador = $2;
+        ELSE
+            UPDATE VotoPergunta
+            SET valor = $3
+            WHERE idPergunta = $1 AND idUtilizador = $2;
+        END IF;
         RETURN TRUE;
     ELSE
-        INSERT INTO VotoPergunta(idPergunta, idAutor, valor)
-        VALUES ($1, $2, $3);
+        INSERT INTO VotoPergunta VALUES($1, $2, $3);
         RETURN TRUE;
     END IF;
     RETURN FALSE;
@@ -30,21 +38,29 @@ $registarVotoPergunta$ LANGUAGE plpgsql;
 /*            registarVotoResposta            */
 /*--------------------------------------------*/
 
--- registarVotoResposta(idResposta, idAutor, valor)
+-- registarVotoResposta(idResposta, idUtilizador, valor)
 
 CREATE OR REPLACE FUNCTION registarVotoResposta(integer, integer, integer)
 RETURNS BOOLEAN AS $registarVotoResposta$
+DECLARE
+    VotoActual INTEGER;
 BEGIN
     IF ($3 = 0) THEN
         RETURN FALSE;
     END IF;
-    IF EXISTS(SELECT 1 FROM VotoResposta WHERE idResposta = $1 AND idAutor = $2) THEN
-        UPDATE VotoResposta
-        SET valor = $3 WHERE (idResposta = $1 AND idAutor = $2);
+    SELECT valor INTO VotoActual FROM VotoResposta WHERE idPergunta = $1 AND idUtilizador = $2;
+    IF FOUND THEN
+        IF VotoActual = $3 THEN
+            DELETE FROM VotoResposta
+            WHERE idResposta = $1 AND idUtilizador = $2;
+        ELSE
+            UPDATE VotoResposta
+            SET valor = $3
+            WHERE idResposta = $1 AND idUtilizador = $2;
+        END IF;
         RETURN TRUE;
     ELSE
-        INSERT INTO VotoResposta(idResposta, idAutor, valor)
-        VALUES ($1, $2, $3);
+        INSERT INTO VotoResposta VALUES ($1, $2, $3);
         RETURN TRUE;
     END IF;
     RETURN FALSE;
@@ -64,9 +80,6 @@ BEGIN
     UPDATE Seguidor
     SET dataAcesso = now()
     WHERE idPergunta = $1 AND idSeguidor = $2;
-    UPDATE Pergunta
-    SET visualizacoes = visualizacoes + 1
-    WHERE idPergunta = $1;
     RETURN;
 END;
 
@@ -84,9 +97,11 @@ BEGIN
     UPDATE Conversa
     SET ultimoAcesso1 = now()
     WHERE idConversa = $1 AND idUtilizador1 = $2;
-    UPDATE Conversa
-    SET ultimoAcesso2 = now()
-    WHERE idConversa = $1 AND idUtilizador2 = $2;
+    IF NOT FOUND THEN
+        UPDATE Conversa
+        SET ultimoAcesso2 = now()
+        WHERE idConversa = $1 AND idUtilizador2 = $2;
+    END IF;
     RETURN;
 END;
 

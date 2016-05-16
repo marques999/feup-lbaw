@@ -192,7 +192,7 @@ ALTER TABLE Resposta ADD CONSTRAINT FK_Resposta_idResposta
 /*--------------------------------------------*/
 
 CREATE TABLE ComentarioPergunta (
-    idComentario    integer     NOT NULL,
+    idComentario    serial     NOT NULL,
     idPergunta      integer     NOT NULL
 );
 

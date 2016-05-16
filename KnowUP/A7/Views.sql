@@ -96,29 +96,24 @@ SELECT Pergunta.idPergunta,
 /*--------------------------------------------*/
 
 CREATE MATERIALIZED VIEW PerguntasPesquisa AS
-SELECT QueryPrincipal.idPergunta,
-       Utilizador.idUtilizador,
-       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       QueryPrincipal.titulo,
-       QueryPrincipal.conteudo,
-       QueryPrincipal.numeroRespostas,
-       QueryPrincipal.dataHora,
-       QueryPrincipal.ativa,
-       to_tsvector('portuguese', conteudo) AS pesquisa
-    FROM (SELECT Pergunta.idPergunta,
-          Pergunta.titulo,
-          Pergunta.idAutor,
-          Pergunta.ativa,
-          Pergunta.dataHora,
-          Pergunta.titulo || ' ' ||
-          COALESCE(Pergunta.descricao, '') ||
-          COALESCE(string_agg(Contribuicao.descricao, ' '), '') AS conteudo,
-          COALESCE(COUNT (DISTINCT Resposta.idResposta), 0) AS numeroRespostas
-          FROM Pergunta
-          LEFT JOIN Resposta USING(idPergunta)
-          LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-          GROUP BY idPergunta) AS QueryPrincipal
-    LEFT JOIN Utilizador ON Utilizador.idUtilizador = QueryPrincipal.idAutor;
+SELECT QueryPrincipal.*, to_tsvector('portuguese', conteudo) AS pesquisa
+FROM (SELECT Pergunta.idPergunta,
+             Utilizador.idUtilizador,
+             Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+             Utilizador.removido,
+             Pergunta.titulo,
+             Pergunta.dataHora,
+             Pergunta.pontuacao,
+             Pergunta.respostas,
+             Pergunta.ativa,
+             Pergunta.titulo || ' ' ||
+             COALESCE(Pergunta.descricao, '') ||
+             COALESCE(string_agg(Contribuicao.descricao, ' '), '') AS conteudo
+FROM Pergunta
+LEFT JOIN Resposta USING(idPergunta)
+LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
+LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+GROUP BY idPergunta, Utilizador.idUtilizador) AS QueryPrincipal;
 
 /*--------------------------------------------*/
 /* 5. PESQUISA FULL-TEXT DE UTILIZADORES      */
