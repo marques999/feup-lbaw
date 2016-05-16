@@ -1,0 +1,96 @@
+===== Módulo M01: Utilizadores =====
+
+^ Recurso                          ^ SQL                                                                                                        ^
+| **R101:** Pagina de autenticação | n/a                                                                                                        |
+| **R102:** Página de registo      | n/a                                                                                                        |
+| **R103:** Página de perfil       | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql103obter_informacoes_do_utilizador|SQL103]], [[#sql108alterar_password|SQL108]], [[#sql318listar_perguntas_do_utilizador|SQL318]], [[#sql412listar_respostas_do_utilizador|SQL412]]                                                                                                |
+| **R104:** Página de report       | [[#sql104listar_reports_por_moderador|SQL104]]                                                             |
+| **R105:** Notificações           | n/a                                                                                                        |
+| **R106:** Editar perfil          | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql103obter_informacoes_do_utilizador|SQL103]] |
+| **R107:** Denunciar utilizador   | [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql105denunciar_utilizador|SQL105]]                |
+| **R108:** Iniciar sessão         | n/a                                                                                                        |
+| **R109:** Terminar sessão        | n/a                                                                                                        |
+| **R110:** Registar utilizador    | [[#sql106registar_utilizador|SQL106]]                                                                      |
+| **R111:** Atualizar utilizador   | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql107atualizar_perfil|SQL107]]                |
+| **R112:** Banir utilizador       | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql109banir_utilizador|SQL109]]                |
+| **R113:** Apagar utilizador      | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql110apagar_utilizador|SQL110]]               |
+
+===== Módulo M02:** Pesquisa =====
+
+^ Recurso                          ^ SQL                                                                            ^
+| **R201:** Página inicial         | [[#sql101verificar_permissoes_de_administrador|SQL101]]                        |
+| **R202:** Página de resultados   | n/a                                                                            |
+| **R203:** Pesquisar perguntas    | n/a                                                                            |
+| **R204:** Pesquisar utilizadores | n/a                                                                            |
+| **R205:** Obter perguntas        | [[#sql201obter_perguntas|SQL201]], [[#sql203pesquisar_perguntas|SQL203]]       |
+| **R206:** Obter utilizadores     | [[#sql202obter_utilizadores|SQL202]], [[#sql204pesquisar_utilizadores|SQL204]] |
+
+===== Módulo M03:** Perguntas =====
+
+^ Recurso                      ^ SQL                                                            ^
+| **R301:** Página da pergunta | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql301obter_informacoes_da_pergunta|SQL301]], [[#sql302obter_informacoes_do_utilizador|SQL302]], [[#sql303obter_respostas|SQL303]], [[#sql304listar_perguntas_relacionadas|SQL304]], [[#sql313obter_comentarios|SQL313]], [[#sql316verificar_autor_da_pergunta|SQL316]], [[#sql502listar_categorias_relacionadas|SQL502]]                                                |
+| **R302:** Redigir pergunta   | [[#sql501listar_categorias|SQL501]]                            |
+| **R303:** Editar pergunta    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql301obter_informacoes_da_pergunta|SQL301]], [[#sql316verificar_autor_da_pergunta|SQL316]]  |
+| **R304:** Submeter pergunta  | [[#sql305submeter_pergunta|SQL305]]                            |
+| **R305:** Atualizar pergunta | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql306atualizar_pergunta|SQL306]], [[#sql316verificar_autor_da_pergunta|SQL316]]             |
+| **R306:** Fechar pergunta    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql307fechar_pergunta|SQL307]], [[#sql316verificar_autor_da_pergunta|SQL316]]                |
+| **R307:** Apagar pergunta    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql308apagar_pergunta|SQL308]], [[#sql316verificar_autor_da_pergunta|SQL316]]                                                   |
+| **R308:** Seguir pergunta    | [[#sql309seguir_pergunta|SQL309]]                              |
+| **R309:** Unfollow pergunta  | [[#sql310unfollow_pergunta|SQL310]]                            |
+| **R310:** Registar voto      | [[#sql311registar_voto|SQL311]], [[#sql312obter_votos|SQL312]] |
+| **R311:** Obter comentários  | [[#sql313obter_comentarios|SQL313]]                            |
+| **R312:** Inserir comentário | [[#sql314inserir_comentario|SQL314]]                           |
+| **R313:** Apagar comentário  | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql315apagar_comentario|SQL315]], [[#sql317verificar_autor_do_comentario|SQL317]]            |
+
+===== Módulo M04:** Respostas =====
+
+^ Recurso                      ^ SQL                                                                                                       ^
+| **R401:** Editar resposta    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql410verificar_autor_da_resposta|SQL410]]                                                                                              |
+| **R402:** Submeter resposta  | [[#sql401submeter_resposta|SQL401]]                                                                       |
+| **R403:** Atualizar resposta | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql402atualizar_resposta|SQL402]], [[#sql410verificar_autor_da_resposta|SQL410]]                                                        |
+| **R404:** Apagar resposta    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql403apagar_resposta|SQL403]], [[#sql410verificar_autor_da_resposta|SQL410]]                                                           |
+| **R405:** Destacar resposta  | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql316verificar_autor_da_pergunta|SQL316]], [[#sql404destacar_resposta|SQL404]]                                                         |
+| **R406:** Registar voto      | [[#sql405registar_voto|SQL405]], [[#sql406obter_votos|SQL406]]                                            |
+| **R407:** Obter comentários  | [[#sql407obter_comentarios|SQL407]]                                                                       |
+| **R408:** Inserir comentário | [[#sql408inserir_comentario|SQL408]]                                                                      |
+| **R409:** Apagar comentário  | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql102verificar_permissoes_de_moderador|SQL102]], [[#sql409apagar_comentario|SQL409]], [[#sql411verificar_autor_do_comentario|SQL411]]                                                       |
+
+===== Módulo M05: Categorias =====
+
+^ Recurso                       ^ SQL                                                                                            ^
+| **R501:** Listar categorias   | [[#sql501listar_categorias|SQL501]]                                                            |
+| **R502:** Página da categoria | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql502listar_categorias_relacionadas|SQL502]], [[#sql503listar_instituicoes_associadas|SQL503]], [[#sql504obter_informacoes_da_categoria|SQL504]], [[#sql505obter_perguntas_da_categoria|SQL505]]                                                                                   |
+| **R503:** Editar categoria    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql506editar_categoria|SQL506]]    |
+| **R504:** Adicionar categoria | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql507adicionar_categoria|SQL507]] |
+| **R505:** Apagar categoria    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql508apagar_categoria|SQL508]]    |
+
+===== Módulo M06: Instituições =====
+
+^ Recurso                         ^ SQL                                                                                                         ^
+| **R601:** Listar instituições   | [[#sql601listar_instituicoes|SQL601]]                                                                       |
+| **R602:** Criar instituição     | [[#sql101verificar_permissoes_de_administrador|SQL101]]                                                     |
+| **R603:** Editar instituição    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql603obter_informacoes_da_instituicao|SQL603]] |
+| **R604:** Página da instituição | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql602listar_categorias_associadas|SQL602]], [[#sql603obter_informacoes_da_instituicao|SQL603]], [[#sql604obter_perguntas_da_instituicao|SQL604]]                                            |
+| **R605:** Adicionar instituição | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql605adicionar_instituicao|SQL605]]            |
+| **R606:** Atualizar instituição | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql606atualizar_instituicao|SQL606]]            |
+| **R607:** Apagar instituição    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql607apagar_instituicao|SQL607]]               |
+| **R608:** Associar categoria    | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql608associar_categoria|SQL608]]               |
+| **R609:** Remover categoria     | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql609remover_categoria|SQL609]]                |
+
+===== Módulo M07: Mensagens =====
+
+^ Recurso                      ^ SQL                                                                                            ^
+| **R701:** Mensagens privada  | [[#sql701listar_conversa|SQL701]]                                                              |
+| **R702:** Página da conversa | [[#sql702obter_informacoes_da_conversa|SQL702]], [[#sql703obter_mensagens_da_conversa|SQL703]] |
+| **R703:** Criar conversa     | [[#sql704criar_conversa|SQL704]]                                                               |
+| **R704:** Enviar mensagem    | [[#sql705enviar_mensagem|SQL705]], [[#sql707verificar_autor|SQL707]]                           |
+| **R705:** Apagar conversa    | [[#sql706apagar_conversa|SQL706]], [[#sql707verificar_autor|SQL707]]                           |
+
+===== Módulo M08: Administração =====
+
+^ Recurso                           ^ SQL                                                                                             ^
+| **R801:** Portal de administração | [[#sql101verificar_permissoes_de_administrador|SQL101]]                                         |
+| **R802:** Gerir categorias        | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql501listar_categorias|SQL501]]    |
+| **R803:** Gerir instituições      | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql601listar_instituicoes|SQL601]]  |
+| **R804:** Gerir utilizadores      | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql202obter_utilizadores|SQL202]], [[#sql204pesquisar_utilizadores|SQL204]], [[#sql801listar_utilizadores_denunciados|SQL801]]                                           |
+| **R805:** Estatísticas            | [[#sql101verificar_permissoes_de_administrador|SQL101]], [[#sql802obter_utilizadores_com_mais_perguntas|SQL802]], [[#sql803obter_utilizadores_com_mais_respostas|SQL803]], [[#sql804obter_categorias_mais_populares|SQL804]], [[#sql805obter_instituicoes_mais_populares|SQL805]]                                |
