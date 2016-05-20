@@ -2,80 +2,83 @@
   include_once('../../config/init.php');
   include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_POST, 'utilizador-id')) {
-    safe_error(null, 'Deve especificar um utilizador primeiro!');
+  if (safe_check($_POST, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_POST, 'idUtilizador');
   }
-
-  $idUtilizador = safe_getId($_POST, 'utilizador-id');
-  $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
+  else {
+    safe_formerror('Deve especificar um utilizador primeiro!');
+  }
+  
   $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isOwner = ($idUtilizador == $idAdministrador);
 
-  if (!$isOwner && !$isAdministrator) {
+  if (($idUtilizador != $idAdministrador) && !$isAdministrator) {
     safe_redirect('403.php');
   }
 
   $numberColumns = 0;
 
   if (safe_strcheck($_POST, 'email')) {
-    $myEmail = safe_trim($_POST, 'email');
+    $email = safe_trim($_POST, 'email');
     $numberColumns++;
   }
   else {
-    $myEmail = null;
+    $email = null;
   }
 
   if (safe_strcheck($_POST, 'primeiro-nome')) {
-    $myFirstName = safe_trim($_POST, 'primeiro-nome');
+    $primeiroNome = safe_trim($_POST, 'primeiro-nome');
     $numberColumns++;
   }
   else {
-    $myFirstName = null;
+    $primeiroNome = null;
   }
 
   if (safe_strcheck($_POST, 'ultimo-nome')) {
-    $myLastName = safe_trim($_POST, 'ultimo-nome');
+    $ultimoNome = safe_trim($_POST, 'ultimo-nome');
     $numberColumns++;
   }
   else {
-    $myLastName = null;
+    $ultimoNome = null;
   }
 
   if (safe_check($_POST, 'instituicao')) {
-    $myInstituicao = safe_getId($_POST, 'instituicao');
+    $idInstituicao = safe_getId($_POST, 'instituicao');
     $numberColumns++;
   }
   else {
-    $myInstituicao = null;
+    $idInstituicao = null;
   }
 
   if (safe_strcheck($_POST, 'localidade')) {
-    $myLocalidade = safe_trim($_POST, 'localidade');
+    $localidade = safe_trim($_POST, 'localidade');
     $numberColumns++;
   }
   else {
-    $myLocalidade = null;
+    $localidade = null;
   }
 
   if (safe_strcheck($_POST, 'codigo-pais')) {
-    $myCodigoPais = safe_trim($_POST, 'codigo-pais');
+    $codigoPais = safe_trim($_POST, 'codigo-pais');
     $numberColumns++;
   }
   else {
-    $myCodigoPais = null;
+    $codigoPais = null;
   }
 
   if ($numberColumns < 1) {
-    safe_error(null, 'Operação sem efeito, nenhum campo foi alterado...');
+    safe_formerror('Erro na operação: não foi enviada informação suficiente!');
   }
 
   try {
 
-    if (utilizador_editarUtilizador($idUtilizador, $myFirstName, $myLastName, $myEmail, $myInstituicao, $myLocalidade, $myCodigoPais) > 0) {
+    if (utilizador_editarUtilizador($idUtilizador, $primeiroNome, $ultimoNome, $email, $idInstituicao, $localidade, $codigoPais) > 0) {
 
       if ($isAdministrator) {
         safe_redirect('admin/utilizadores.php');
@@ -85,10 +88,10 @@
       }
     }
     else {
-      safe_error('utilizador/edit.php', 'Erro na operação, utilizador inexistente?');
+      safe_formerror('Erro desconhecido: utilizador inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error('utilizador/edit.php', $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 ?>

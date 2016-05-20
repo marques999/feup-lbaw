@@ -2,28 +2,34 @@
   include_once('../../config/init.php');
   include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+  if (!utilizador_isAdministrator($idAdministrador) {
     safe_redirect('403.php');
   }
 
-  if (!safe_check($_GET, 'id')) {
-    safe_error(null, 'Deve especificar um utilizador primeiro!');
+  if (safe_check($_GET, 'id')) {
+    $idUtilizador = safe_getId($_GET, 'id');
+  }
+  else {
+    safe_error('Deve especificar um utilizador primeiro!');
   }
 
   try {
 
-    if (utilizador_banirUtilizador(safe_getId($_GET, 'id')) > 0) {
+    if (utilizador_banirUtilizador($idUtilizador) > 0) {
       safe_redirect('admin/utilizadores.php');
     }
     else {
-      safe_error(null, 'Erro na operação: tentou banir um utilizador inexistente?');
+      safe_error('Erro desconhecido: tentou banir um utilizador inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_error($e->getMessage());
   }
 ?>

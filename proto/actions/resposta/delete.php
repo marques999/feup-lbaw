@@ -7,14 +7,14 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
   if (safe_check($_GET, 'id')) {
     $idResposta = safe_getId($_GET, 'id');
   }
   else {
-    safe_error(null, 'Deve especificar uma resposta primeiro!');
+    safe_error('Deve especificar uma resposta primeiro!');
   }
 
   $isOriginalPoster = resposta_verificarAutor($idResposta, $idUtilizador);
@@ -31,10 +31,10 @@
       safe_redirect("pergunta/view.php?id=$idPergunta");
     }
     else {
-      safe_error(null, 'Erro na operação: tentou apagar uma resposta inexistente?');
+      safe_error('Erro na operação: tentou apagar uma resposta inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_error($e->getMessage());
   }
 ?>

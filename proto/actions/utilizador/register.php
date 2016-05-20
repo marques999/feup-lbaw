@@ -2,121 +2,134 @@
   include_once('../../config/init.php');
   include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
+  include_once('../../lib/imgupload.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/homepage.php', 'Já se encontra com sessão iniciada, não pode registar-se!');
   }
 
-  if (safe_check($_POST, 'username')) {
-     $myUsername = safe_trim($_POST, 'username');
+  if (safe_strcheck($_POST, 'username')) {
+    $username = safe_trim($_POST, 'username');
   }
   else {
-    safe_error(null, 'Deve especificar um username primeiro!');
+    safe_formerror('Deve especificar um username obrigatório!');
   }
 
-  if (safe_check($_POST, 'password')) {
-     $myPassword = safe_trim($_POST, 'password');
+  if (safe_strcheck($_POST, 'password')) {
+    $password = safe_trim($_POST, 'password');
   }
   else {
-    safe_error(null, 'Deve especificar uma palavra-passe primeiro!');
+    safe_formerror('Deve especificar uma palavra-passe obrigatória!');
   }
 
   if (safe_strcheck($_POST, 'email')) {
-    $myEmail = safe_trim($_POST, 'email');
+    $email = safe_trim($_POST, 'email');
   }
   else {
-    safe_error(null, 'Deve especificar um endereço de e-mail obrigatório!');
+    safe_formerror('Deve especificar um endereço de e-mail obrigatório!');
   }
 
   if (safe_strcheck($_POST, 'primeiro-nome') && safe_strcheck($_POST, 'ultimo-nome')) {
-    $myFirstName = safe_trim($_POST, 'primeiro-nome');
-    $myLastName = safe_trim($_POST, 'ultimo-name');
+    $primeiroNome = safe_trim($_POST, 'primeiro-nome');
+    $ultimoNome = safe_trim($_POST, 'ultimo-name');
   }
   else {
-    safe_error(null, 'Deve especificar um nome completo obrigatório!');
+    safe_formerror('Deve especificar um nome completo obrigatório!');
   }
 
   try {
 
-    if (utilizador_inserirUtilizador($myUsername, $myPassword, $myEmail, $myFirstName, $myLastName) < 1) {
-      safe_error(null, 'Erro na operação: um utilizador com este username ou e-mail já existe?');
+    if (utilizador_inserirUtilizador($username, $password, $email, $primeiroNome, $ultimoNome) < 1) {
+      safe_formerror('Erro desconhecido: um utilizador com este username ou e-mail já existe?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 
-  /*if (users_imageUploaded()) {
+  if (image_validateUpload()) {
 
-    $uploadDirectory = '{$BASE_URL}images/avatars/';
     $baseFilename = basename($_FILES['image']['name']);
-    $fileExtension = strtolower(substr($baseFilename, strrpos($baseFilename, '.') + 1));
-    $outputFilename = "{$thisUser}_original.{$fileExtension}";
-    $uploadFile = $uploadDirectory . $outputFilename;
-    $smallFile = "../img/avatars/{$thisUser}_small.{$fileExtension}";
-    $mediumFile = "../img/avatars/{$thisUser}.{$fileExtension}";
+    $targetDirectory = "{$BASE_DIR}images/avatars/";
+    $targetFile = "{$targetDirectory}{$baseFilename}";
+    $temporaryPath = $_FILES['image']['tmp_name'];
+    $fileExtension = pathinfo($targetFile, PATHINFO_EXTENSION);
+    $originalUrl = "{$targetDirectory}{$idUtilizador}_original.{$fileExtension}";
+    $smallUrl = "{$targetDirectory}{$idUtilizador}_small.{$fileExtension}";
+    $mediumUrl ="{$targetDirectory}{$idUtilizador}.{$fileExtension}";
 
-    if (!move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)){
-      header("Location: message_photo.php");
+    array_map('unlink', glob("{$targetDirectory}{$idUtilizador}.{jpg,jpeg,gif,png}", GLOB_BRACE));
+    array_map('unlink', glob("{$targetDirectory}{$idUtilizador}_original.{jpg,jpeg,gif,png}", GLOB_BRACE));
+    array_map('unlink', glob("{$targetDirectory}{$idUtilizador}_small.{jpg,jpeg,gif,png}", GLOB_BRACE));
+
+    if (!move_uploaded_file($temporaryPath, $originalUrl)) {
+      safe_formerror("Erro desconhecido: não foi possível escrever {$idUtilizador}_original.{$fileExtension} no filesystem!");
     }
 
-    $originalImage = image_readFile($uploadFile, $fileExtension);
+    $originalImage = image_readFile($originalUrl, $fileExtension);
 
     if ($originalImage == null) {
-      header("Location: ../message_photo.php");
+      safe_formerror('Deve especificar um formato de imagem válido!');
     }
 
-    $resizedImage = image_resize($originalImage, 400, $fileExtension);
-    $thumbnailImage = image_crop($resizedImage, 64, 64);
-    image_writeFile($resizedImage, $mediumFile, $fileExtension);
-    image_writeFile($thumbnailImage, $smallFile, $fileExtension);
+    $mediumImage = image_resize($originalImage, 500, $fileExtension);
+    $smallImage = image_crop($mediumImage, 64, 64);
+
+    if (!image_writeFile($mediumImage, $mediumUrl, $fileExtension)) {
+      safe_formerror("Erro desconhecido: não foi possível escrever {$idUtilizador}.{$fileExtension} no filesystem!");
+    }
+
+    if (!image_writeFile($smallImage, $smallUrl, $fileExtension)) {
+      safe_formerror("Erro desconhecido: não foi possível escrever {$idUtilizador}_small.{$fileExtension} no filesystem!");
+    }
+
     imagedestroy($originalImage);
-    imagedestroy($resizedImage);
-    imagedestroy($thumbnailImage);
-  }*/
+    imagedestroy($mediumImage);
+    imagedestroy($smallImage);
+
+    safe_redirect(null);
+  }
 
   $numberColumns = 0;
 
   if (safe_check($_POST, 'instituicao')) {
-    $myInstituicao = safe_getId($_POST, 'instituicao');
+    $idInstituicao = safe_getId($_POST, 'instituicao');
     $numberColumns++;
   }
   else {
-    $myInstituicao = null;
+    $idInstituicao = null;
   }
 
   if (safe_strcheck($_POST, 'localidade')) {
-    $myLocalidade = safe_trim($_POST, 'localidade');
+    $localidade = safe_trim($_POST, 'localidade');
     $numberColumns++;
   }
   else {
-    $myLocalidade = null;
+    $localidade = null;
   }
 
   if (safe_strcheck($_POST, 'codigo-pais')) {
-    $myCodigoPais = safe_trim($_POST, 'codigo-pais');
+    $codigoPais = safe_trim($_POST, 'codigo-pais');
     $numberColumns++;
   }
   else {
-    $myCodigoPais = null;
+    $codigoPais = null;
   }
 
-  if ($numberColumns > 0) {
+  if ($numberColumns < 1) {
+    safe_formerror('Erro na operação: não foi enviada informação suficiente!');
+  }
 
-    try {
+  try {
 
-      if (utilizador_editarUtilizador($idUtilizador, null, null, null, $idInstituicao, $myLocalidade, $myCodigoPais) > 0) {
-        safe_redirect('utilizador/login.php');
-      }
-      else {
-        safe_error(null, 'Erro na operação: tentou alterar as informações de outro utilizador?');
-      }
+    if (utilizador_editarUtilizador($idUtilizador, null, null, null, $idInstituicao, $localidade, $codigoPais) > 0) {
+      safe_redirect('utilizador/login.php');
     }
-    catch (PDOException $e) {
-      safe_error(null, $e->getMessage());
+    else {
+      safe_formerror('Erro desconhecido: tentou alterar as informações de um utilizador inexistente?');
     }
   }
-  else {
-    safe_redirect('utilizador/login.php');
+  catch (PDOException $e) {
+    safe_formerror($e->getMessage());
   }
 ?>

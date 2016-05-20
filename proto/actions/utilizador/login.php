@@ -3,29 +3,35 @@
   include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
 
-  if (safe_strcheck($_POST, 'username') && safe_strcheck($_POST, 'password')) {
+  if (safe_strcheck($_POST, 'username')) {
+    $username = safe_trim($_POST, 'username');
+  }
+  else {
+    safe_formerror('Deve especificar um username primeiro!');
+  }
 
-    $myUsername = safe_trim($_POST, 'username');
-    $myPassword = safe_trim($_POST, 'password');
-    $idUtilizador = utilizador_validateLogin($myUsername, $myPassword);
+  if (safe_strcheck($_POST, 'password')) {
+    $password = safe_trim($_POST, 'password');
+  }
+  else {
+    safe_formerror('Deve especificar uma palavra-passe primeiro!');
+  }
 
-    if ($idUtilizador > 0) {
-      $_SESSION['username'] = $myUsername;
-      $_SESSION['idUtilizador'] = $idUtilizador;
+  $idUtilizador = utilizador_validateLogin($username, $password);
 
-      if (safe_strcheck($_POST, 'location')) {
-        header('Location: ' . safe_trim($_POST, 'location'));
-      }
-      else {
-        safe_redirect('homepage.php');
-      }
+  if ($idUtilizador > 0) {
+
+    $_SESSION['username'] = $username;
+    $_SESSION['idUtilizador'] = $idUtilizador;
+
+    if (safe_strcheck($_POST, 'location')) {
+      header('Location: ' . safe_trim($_POST, 'location'));
     }
     else {
-      safe_error(null, 'ERRO: não existe um utilizador com esta combinação na base de dados!');
+      safe_redirect('homepage.php');
     }
   }
   else {
-    $_SESSION['error_messages'][] = 'ERRO: campos do formulário de login não foram preenchidos corretamente!';
-    $_SESSION['form_values'] = $_POST;
+    safe_formerror('Erro na operação: não existe um utilizador com esta combinação na base de dados!');
   }
 ?>

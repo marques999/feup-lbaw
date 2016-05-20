@@ -1,30 +1,35 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
-  include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_GET, 'id')) {
-    safe_error(null, 'Deve especificar uma conversa primeiro!');
+  if (safe_check($_GET, 'id')) {
+    $idConversa = safe_getId($_GET, 'id');
+  }
+  else {
+    safe_error('Deve especificar uma conversa primeiro!');
   }
 
-  $idConversa = safe_getId($_GET, 'id');
-  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  $isOriginalPoster = conversa_verificarAutor($idConversa, $idUtilizador);
+  if (!conversa_verificarAutor($idConversa, $idUtilizador)) {
+    safe_redirect('403.php');
+  }
 
   try {
 
-    if (conversa_apagarThread($idConversa, $idUtilizador) > 0) {
+    if (conversa_apagarConversa($idConversa, $idUtilizador) > 0) {
       safe_redirect("conversa/list.php");
     }
     else {
-      safe_error(null, 'Erro na operação, tentou apagar uma conversa de outro utilizador?');
+      safe_error('Erro desconhecido: tentou apagar uma conversa inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_error($e->getMessage());
   }
 ?>

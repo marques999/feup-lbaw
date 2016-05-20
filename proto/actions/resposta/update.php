@@ -7,25 +7,30 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_POST, 'idPergunta')) {
-    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+  if (safe_check($_POST, 'idPergunta')) {
+    $idPergunta = safe_getId($_POST, 'idPergunta');
+  }
+  else {
+    safe_formerror('Deve especificar uma pergunta primeiro!');
   }
 
-  if (!safe_check($_POST, 'idResposta')) {
-    safe_error(null, 'Deve especificar uma resposta primeiro!');
+  if (safe_check($_POST, 'idResposta')) {
+    $idResposta = safe_getId($_POST, 'idResposta');
+  }
+  else {
+    safe_formerror('Deve especificar uma resposta primeiro!');
   }
 
-  if (!safe_strcheck($_POST, 'descricao')) {
-    safe_error(null, 'O corpo da resposta não pode estar em branco!');
+  if (safe_strcheck($_POST, 'descricao')) {
+    $descricao = safe_trim($_POST, 'descricao');
+  }
+  else {
+    safe_formerror('O corpo da resposta não pode estar em branco!');
   }
 
-  $idPergunta = safe_getId($_POST, 'idPergunta');
-  $idResposta = safe_getId($_POST, 'idResposta');
-  $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  $paginaPergunta = "pergunta/view.php?id=$idPergunta#reply-$idResposta";
   $isOriginalPoster = resposta_verificarAutor($idResposta, $idUtilizador);
   $isAdministrator = utilizador_isAdministrator($idUtilizador);
   $isModerator = utilizador_isModerator($idUtilizador);
@@ -36,16 +41,14 @@
 
   try {
 
-    $safeMessage = safe_trim($_POST, 'descricao');
-
-    if (resposta_atualizarResposta($idResposta, $idUtilizador) > 0) {
-      safe_redirect($paginaPergunta);
+    if (resposta_atualizarResposta($idResposta, $idUtilizador, $descricao) > 0) {
+      safe_redirect("pergunta/view.php?id=$idPergunta#reply-$idResposta");
     }
     else {
-      safe_error($paginaPergunta, 'Erro na operação: tentou editar as informações de uma resposta inexistente?');
+      safe_formerror('Erro desconhecido: tentou editar uma resposta inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 ?>

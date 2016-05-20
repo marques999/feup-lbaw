@@ -7,14 +7,14 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
   if (safe_check($_POST, 'idPergunta')) {
     $idPergunta = safe_getId($_POST, 'idPergunta');
   }
   else {
-    safe_error(null, 'Deve especificar uma pergunta primeiro!');
+    safe_error('Deve especificar uma pergunta primeiro!');
   }
 
   $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
@@ -30,10 +30,10 @@
       safe_redirect(null);
     }
     else {
-      safe_error(null, 'Erro desconhecido: tentou apagar uma pergunta inexistente?');
+      safe_error('Erro desconhecido: tentou apagar uma pergunta inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_error($e->getMessage());
   }
 ?>

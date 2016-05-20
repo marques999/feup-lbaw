@@ -3,75 +3,112 @@
   include_once('../../database/instituicao.php');
   include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+  if (!utilizador_isAdministrator($idUtilizador)) {
     safe_redirect('403.php');
   }
 
-  if (!safe_check($_POST, 'idInstituicao')) {
-    safe_error(null, 'Deve especificar uma instituição primeiro!');
+  if (safe_check($_POST, 'idInstituicao')) {
+    $idInstituicao = safe_getId($_POST, 'idInstituicao');
+  }
+  else {
+    safe_formerror('Deve especificar uma instituição primeiro!');
   }
 
-  $idInstituicao = safe_getId($_POST, 'idInstituicao');
   $numberColumns = 0;
 
   if (safe_strcheck($_POST, 'nome')) {
-    $myNome = safe_trim($_POST, 'nome');
+    $nome = safe_trim($_POST, 'nome');
     $numberColumns++;
   }
   else {
-    $myNome = null;
+    $nome = null;
   }
 
   if (safe_strcheck($_POST, 'sigla')) {
-    $mySigla = safe_trim($_POST, 'sigla');
+    $sigla = safe_trim($_POST, 'sigla');
     $numberColumns++;
   }
   else {
-    $mySigla = null;
+    $sigla = null;
   }
 
   if (safe_strcheck($_POST, 'morada')) {
-    $myMorada = safe_trim($_POST, 'morada');
+    $morada = safe_trim($_POST, 'morada');
     $numberColumns++;
   }
   else {
-    $myMorada = null;
+    $morada = null;
   }
 
   if (safe_strcheck($_POST, 'contacto')) {
-    $myContacto = safe_trim($_POST, 'contacto');
+    $contacto = safe_trim($_POST, 'contacto');
     $numberColumns++;
   }
   else {
-    $myContacto = null;
+    $contacto = null;
   }
 
   if (safe_strcheck($_POST, 'website')) {
-    $myWebsite = safe_trim($_POST, 'website');
+    $website = safe_trim($_POST, 'website');
     $numberColumns++;
   }
   else {
-    $myWebsite = null;
+    $website = null;
   }
 
   if ($numberColumns < 1) {
-    safe_error(null, 'Operação sem efeito, não foi enviada informação suficiente...');
+    safe_formerror('Erro na operação: não foi enviada informação suficiente!');
   }
 
   try {
 
-    if (instituicao_editarInstituicao($idInstituicao, $myNome, $mySigla, $myMorada, $myContacto, $myWebsite) > 0) {
-      safe_redirect("instituicao/view.php?=$mySigla");
-    }
-    else {
-      safe_error(null, 'Erro desconhecido: tentou alterar uma instituição inexistente?');
+    if (instituicao_editarInstituicao($idInstituicao, $nome, $sigla, $morada, $contacto, $website) <= 0) {
+      safe_formerror('Erro desconhecido: tentou alterar uma instituição inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
+
+  if (safe_check($_POST, 'image') && image_validateUpload()) {
+
+    $baseFilename = basename($_FILES['image']['name']);
+    $targetDirectory = "{$BASE_DIR}images/instituicao/";
+    $targetFile = "{$targetDirectory}{$baseFilename}";
+    $temporaryPath = $_FILES['image']['tmp_name'];
+    $fileExtension = pathinfo($targetFile, PATHINFO_EXTENSION);
+    $resizedUrl = "{$targetDirectory}{$sigla}.{$fileExtension}";
+    $originalUrl = "{$targetDirectory}{$sigla}_original.{$fileExtension}";
+
+    array_map('unlink', glob("{$targetDirectory}{$sigla}.{jpg,jpeg,gif,png}", GLOB_BRACE));
+    array_map('unlink', glob("{$targetDirectory}{$sigla}_original.{jpg,jpeg,gif,png}", GLOB_BRACE));
+
+    if (!move_uploaded_file($temporaryPath, $originalUrl)) {
+      safe_formerror("Erro desconhecido: não foi possível escrever {$sigla}_original.{$fileExtension} no filesystem!");
+    }
+
+    $originalImage = image_readFile($originalUrl, $fileExtension);
+
+    if ($originalImage == null) {
+      safe_formerror('Deve especificar um formato de imagem válido!');
+    }
+
+    $resizedImage = image_advancedcrop($originalImage, 64, 64);
+
+    if (!image_writeFile($resizedImage, $resizedUrl, $fileExtension)) {
+      safe_formerror("Erro desconhecido: não foi possível escrever {$sigla}.{$fileExtension} no filesystem!");
+    }
+
+    imagedestroy($originalImage);
+    imagedestroy($resizedImage);
+  }
+
+  safe_redirect("instituicao/view.php?=$sigla");
 ?>

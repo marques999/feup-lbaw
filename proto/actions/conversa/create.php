@@ -1,52 +1,42 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
-  include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_POST, 'idDestinatario')) {
-    safe_error(null, 'Deve especificar um destinatário primeiro!');
+  if (safe_check($_POST, 'idDestinatario')) {
+    $idDestinatario = safe_getId($_POST, 'idDestinatario')
+  }
+  else {
+    safe_formerror('Deve especificar um destinatário primeiro!');
   }
 
-  if (!safe_strcheck($_POST, 'titulo')) {
-    safe_error(null, 'O assunto da conversa não pode estar em branco!');
+  if (safe_strcheck($_POST, 'titulo')) {
+    $titulo = safe_trim($_POST, 'titulo');
+  }
+  else {
+    safe_formerror('O assunto da conversa não pode estar em branco!');
   }
 
-  if (!safe_strcheck($_POST, 'descricao')) {
-    safe_error(null, 'O corpo da mensagem não pode estar em branco!');
+  if (safe_strcheck($_POST, 'descricao')) {
+    $descricao = safe_trim($_POST, 'descricao');
   }
-
-  $idRemetente = safe_getId($_SESSION, 'idUtilizador');
-
-  try {
-
-    $idDestinatario = safe_getId($_POST, 'idDestinatario');
-    $safeTitulo = safe_trim($_POST, 'titulo');
-
-    if (conversa_criarThread($idRemetente, $idDestinatario, $safeTitulo) < 1) {
-      safe_error(null, 'Erro desconhecido: tentou criar uma conversa que já existe?');
-    }
-  }
-  catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+  else {
+    safe_formerror('O corpo da mensagem não pode estar em branco!');
   }
 
   try {
 
-    $safeDescricao = safe_trim($_POST, 'descricao');
-    $idConversa = $db->lastInsertId('conversa_idconversa_seq');
-
-    if (conversa_enviarMensagem($idConversa, $idRemetente, $safeDescricao) > 0) {
-      safe_redirect("conversa/view.php?id=$idConversa");
-    }
-    else {
-      safe_error(null, 'Erro desconhecido: tentou aceder a uma conversa inexistente?');
+    if (conversa_criarConversa($idUtilizador, $idDestinatario, $titulo, $descricao) < 1) {
+      safe_formerror('Erro desconhecido: tentou criar uma conversa que já existe?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 ?>

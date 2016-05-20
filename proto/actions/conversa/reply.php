@@ -1,34 +1,38 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/conversa.php');
-  include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idRemetente = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_POST, 'idConversa')) {
-    safe_error(null, 'Deve especificar uma conversa primeiro!');
+  if (safe_check($_POST, 'idConversa')) {
+    $idConversa = safe_getId($_POST, 'idConversa');
+  }
+  else {
+    safe_formerror('Deve especificar uma conversa primeiro!');
   }
 
-  if (!safe_strcheck($_POST, 'descricao')) {
-    safe_error(null, 'O corpo da mensagem não pode estar em branco!');
+  if (safe_strcheck($_POST, 'descricao')) {
+    $descricao = $_POST['descricao'];
+  }
+  else {
+    safe_formerror('O corpo da mensagem não pode estar em branco!');
   }
 
   try {
 
-    $idConversa = safe_getId($_POST, 'idConversa');
-    $idRemetente = safe_getId($_SESSION, 'idUtilizador');
-    $safeDescricao = $_POST['descricao'];
-
-    if (conversa_enviarMensagem($idConversa, $idRemetente, $safeDescricao) > 0) {
+    if (conversa_enviarMensagem($idConversa, $idRemetente, $descricao) > 0) {
       safe_redirect("conversa/view.php?id=$idConversa");
     }
     else {
-      safe_error(null, 'Erro na operação, tentou aceder a uma conversa inexistente?');
+      safe_formerror('Erro desconhecido: tentou responder a uma conversa inexistente?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 ?>

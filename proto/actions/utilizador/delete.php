@@ -2,21 +2,24 @@
   include_once('../../config/init.php');
   include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  $idUtilizador = safe_getId($_POST, 'idUtilizador');
-  $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isOwner = $isAdministrator && ($idUtilizador != $idAdministrador);
+  $isAdministrator = utilizador_isAdministrator($idAdministrador);
 
-  if (!$isOwner && !$isAdministrator) {
+  if (safe_check($_POST, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_POST, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve especificar um utilizador primeiro!');    
+  }
+
+  if (!$isAdministrator && ($idUtilizador != $idAdministrador)) {
     safe_redirect('403.php');
-  }
-
-  if (!safe_check($_POST, 'idUtilizador')) {
-    safe_error(null, 'Deve especificar um utilizador primeiro!');
   }
 
   try {
@@ -41,10 +44,10 @@
       }
     }
     else {
-      safe_error(null, 'Erro na operação: tentou apagar uma conta de outro utilizador?');
+      safe_error('Erro desconhecido: tentou apagar uma conta de outro utilizador?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_error($e->getMessage());
   }
 ?>

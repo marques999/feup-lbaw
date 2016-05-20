@@ -1,6 +1,6 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../database/pesquisa.php');
+  include_once('../../database/pergunta.php');
 
   try {
     echo pergunta_pesquisar(

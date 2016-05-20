@@ -3,45 +3,44 @@
   include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
 
-  if (!safe_check($_SESSION, 'idUtilizador')) {
-    safe_error('utilizador/login.php', 'Deve estar autenticado para aceder a esta página!');
+  if (safe_check($_SESSION, 'idUtilizador')) {
+    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+  }
+  else {
+    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
   }
 
-  if (!safe_check($_POST, 'idUtilizador')) {
-    safe_error(null, 'Deve especificar um utilizador primeiro!');
+  if (safe_check($_POST, 'current-password')) {
+    $oldPassword = safe_trim($_POST, 'current-password');
+  }
+  else {
+    safe_formerror('Deve especificar a sua palavra-passe antiga!');
   }
 
-  if (!safe_check($_POST, 'current-password') || !safe_check($_POST, 'confirm-password')) {
-    safe_error(null, 'Deve especificar uma password primeiro!');
+  if (safe_strcheck($_POST, 'new-password')) {
+    $newPassword = safe_trim($_POST, 'new-password');
+  }
+  else {
+    safe_formerror('Deve especificar uma nova palavra-passe!');
   }
 
-  if (!safe_check($_POST, 'new-password')) {
-    safe_error(null, 'Deve especificar uma password primeiro!');
+  if (safe_strcheck($_POST, 'confirm-password')) {
+    $confirmPassword = safe_trim($_POST, 'confirm-password');
   }
-
-  $idUtilizador = safe_getId($_POST, 'idUtilizador');
-  $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isOwner = $idUtilizador == $idAdministrador;
-
-  if (!$isOwner && !$isAdministrator) {
-    safe_redirect('403.php');
-  }
-
-  $oldPassword = safe_trim($_POST, 'current-password');
-  $newPassword = safe_trim($_POST, 'new-password');
-  $confirmPassword = safe_trim($_POST, 'confirm-password');
-
-  if (!utilizador_validateId($idUtilizador, $oldPassword)) {
-    safe_error(null, 'Erro na operação: a palavra-passe antiga não corresponde à actual!');
-  }
-
-  if (utilizador_validateId($idUtilizador, $newPassword)) {
-    safe_error(null, 'Erro na operação: introduza uma palavra-passe diferente da actual!');
+  else {
+    safe_formerror('Deve confirmar a sua nova palavra-passe!');
   }
 
   if ($newPassword != $confirmPassword) {
-    safe_error(null, 'Erro na operação: as palavra-passes novas introduzidas não correspondem!');
+    safe_formerror('Erro na operação: as palavra-passes introduzidas não correspondem!');
+  }
+
+  if (!utilizador_validateId($idUtilizador, $oldPassword)) {
+    safe_formerror('Erro na operação: a palavra-passe antiga não corresponde à introduzida!');
+  }
+
+  if (utilizador_validateId($idUtilizador, $newPassword)) {
+    safe_formerror('Erro na operação: introduza uma palavra-passe diferente da actual!');
   }
 
   try {
@@ -50,10 +49,10 @@
       safe_redirect("utilizador/profile.php?id=$idUtilizador");
     }
     else {
-      safe_error(null, 'Erro na operação: tentou alterar as informaçoes de outro utilizador?');
+      safe_formerror('Erro na operação: tentou alterar as informações de outro utilizador?');
     }
   }
   catch (PDOException $e) {
-    safe_error(null, $e->getMessage());
+    safe_formerror($e->getMessage());
   }
 ?>
