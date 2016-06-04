@@ -14,8 +14,8 @@ function notificacao_novosComentarios($idSeguidor) {
     NATURAL JOIN Pergunta
     NATURAL JOIN ComentarioPergunta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
-    NATURAL JOIN Utilizador Autor
-    WHERE idSeguidor = :idSeguidor AND Contribuicao.dataHora >= dataAcesso");
+    INNER JOIN Utilizador Autor ON Autor.idUtilizador = Contribuicao.idUtilizador
+    WHERE idSeguidor = :idSeguidor");
   $stmt->bindParam(":idSeguidor", $idSeguidor, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -30,12 +30,16 @@ function notificacao_novosSeguidores($idSeguidor) {
       Utilizador.username,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
       Utilizador.removido,
-      Seguidor.dataInicio
+      Seguidor.dataInicio AS dataHora
     FROM Seguidor
     NATURAL JOIN Pergunta
-    INNER JOIN Seguidor Seguidores ON Seguidores.idPergunta = Pergunta.idPergunta AND Seguidores.idSeguidor <> Seguidor.idSeguidor
-    INNER JOIN Utilizador ON Utilizador.idUtilizador = Seguidores.idSeguidor
-    WHERE Seguidor.idSeguidor = :idSeguidor AND Seguidores.dataInicio >= Seguidor.dataAcesso");
+    INNER JOIN Seguidor Seguidores
+      ON Seguidores.idPergunta = Pergunta.idPergunta
+      AND Seguidores.idSeguidor <> Seguidor.idSeguidor
+    INNER JOIN Utilizador
+      ON Utilizador.idUtilizador = Seguidores.idSeguidor
+    WHERE Seguidor.idSeguidor = :idSeguidor
+    AND Seguidores.dataInicio >= Seguidor.dataAcesso");
   $stmt->bindParam(":idSeguidor", $idSeguidor, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -46,18 +50,18 @@ function notificacao_novasRespostas($idSeguidor) {
       Pergunta.idPergunta,
       Pergunta.titulo,
       Resposta.idResposta,
-      Autor.idUtilizador,
-      Autor.username,
-      Autor.primeiroNome || ' ' || Autor.ultimoNome AS nomeUtilizador,
-      Autor.removido,
+      Utilizador.idUtilizador,
+      Utilizador.username,
+      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.removido,
       Contribuicao.descricao,
       Contribuicao.dataHora
     FROM Seguidor
-    NATURAL JOIN Pergunta
-    NATURAL JOIN Resposta
+    INNER JOIN Pergunta USING(idPergunta)
+    INNER JOIN Resposta USING(idPergunta)
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-    NATURAL JOIN Utilizador Autor
-    WHERE idSeguidor = :idSeguidor AND Contribuicao.dataHora >= dataAcesso");
+    INNER JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idUtilizador
+    WHERE idSeguidor = :idSeguidor");
   $stmt->bindParam(":idSeguidor", $idSeguidor, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();

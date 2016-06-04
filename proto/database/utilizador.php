@@ -134,17 +134,7 @@ function utilizador_banirUtilizador($idUtilizador) {
   $stmt->execute();
   return $stmt->rowCount();
 }
-function utilizador_denunciarUtilizador($idModerador, $idUtilizador, $descricao) {
-  global $db;
-  $stmt = $db->prepare('INSERT INTO Report(idReport, idModerador, idUtilizador, descricao)
-    VALUES(DEFAULT, :idModerador, :idUtilizador, :descricao)');
-  $stmt->bindParam(':idModerador', $idModerador, PDO::PARAM_INT);
-  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
-  $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-  $stmt->execute();
-  return $stmt->rowCount();
-}
-function utilizador_fetchInstituicao($idUtilizador) {
+function utilizador_obterInstituicao($idUtilizador) {
   global $db;
   $stmt = $db->prepare('SELECT idInstituicao, sigla
     FROM Utilizador
@@ -170,16 +160,11 @@ function utilizador_getById($idUtilizador) {
       Utilizador.dataRegisto,
       Utilizador.ultimaSessao,
       Utilizador.ativo,
-      Utilizador.removido,
-      COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas,
-      COALESCE(COUNT(DISTINCT Resposta.idResposta), 0) AS numeroRespostas
+      Utilizador.removido
     FROM Utilizador
-    LEFT JOIN Contribuicao USING(idUtilizador)
-    LEFT JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
-    LEFT JOIN Pergunta ON Pergunta.idAutor = Utilizador.idUtilizador
     LEFT JOIN Instituicao USING(idInstituicao)
-    WHERE Utilizador.idUtilizador = :idUtilizador
-    GROUP BY Utilizador.idUtilizador, Instituicao.idInstituicao");
+    WHERE idUtilizador = :idUtilizador
+    GROUP BY idUtilizador, Instituicao.idInstituicao");
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
@@ -197,14 +182,14 @@ function utilizador_listarActivos() {
       COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas,
       COALESCE(COUNT(DISTINCT Resposta.idResposta), 0) AS numeroRespostas
     FROM Utilizador
+    LEFT JOIN Pergunta USING(idUtilizador)
     LEFT JOIN Contribuicao USING(idUtilizador)
     LEFT JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
-    LEFT JOIN Pergunta ON Pergunta.idAutor = Utilizador.idUtilizador
     LEFT JOIN Instituicao USING(idInstituicao)
-    WHERE Utilizador.ativo AND NOT Utilizador.removido
-    AND Utilizador.idUtilizador <> 1
-    GROUP BY Utilizador.idUtilizador, Instituicao.sigla
-    ORDER BY Utilizador.idUtilizador");
+    WHERE ativo AND NOT removido
+    AND idUtilizador <> 1
+    GROUP BY idUtilizador, sigla
+    ORDER BY idUtilizador");
   return $stmt->fetchAll();
 }
 function utilizador_listarBanidos() {
@@ -220,14 +205,14 @@ function utilizador_listarBanidos() {
       COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas,
       COALESCE(COUNT(DISTINCT Resposta.idResposta), 0) AS numeroRespostas
     FROM Utilizador
+    LEFT JOIN Pergunta USING(idUtilizador)
     LEFT JOIN Contribuicao USING(idUtilizador)
     LEFT JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
-    LEFT JOIN Pergunta ON Pergunta.idAutor = Utilizador.idUtilizador
     LEFT JOIN Instituicao USING(idInstituicao)
-    WHERE NOT Utilizador.ativo AND NOT Utilizador.removido
-    AND Utilizador.idUtilizador <> 1
-    GROUP BY Utilizador.idUtilizador, Instituicao.sigla
-    ORDER BY Utilizador.idUtilizador");
+    WHERE NOT ativo AND NOT removido
+    AND idUtilizador <> 1
+    GROUP BY idUtilizador, sigla
+    ORDER BY idUtilizador");
   return $stmt->fetchAll();
 }
 function utilizador_listarRemovidos() {
@@ -243,15 +228,106 @@ function utilizador_listarRemovidos() {
       COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas,
       COALESCE(COUNT(DISTINCT Resposta.idResposta), 0) AS numeroRespostas
     FROM Utilizador
+    LEFT JOIN Pergunta USING(idUtilizador)
     LEFT JOIN Contribuicao USING(idUtilizador)
     LEFT JOIN Resposta ON Resposta.idResposta = Contribuicao.idContribuicao
-    LEFT JOIN Pergunta ON Pergunta.idAutor = Utilizador.idUtilizador
     LEFT JOIN Instituicao USING(idInstituicao)
-    WHERE Utilizador.removido
-    AND Utilizador.idUtilizador <> 1
-    GROUP BY Utilizador.idUtilizador, Instituicao.sigla
-    ORDER BY Utilizador.idUtilizador");
+    WHERE removido
+    AND idUtilizador <> 1
+    GROUP BY idUtilizador, sigla
+    ORDER BY idUtilizador");
   return $stmt->fetchAll();
+}
+function utilizador_pesquisar($query, $filter, $sort, $order) {
+  global $db;
+  $emptyQuery = empty($query);
+  if ($emptyQuery) {
+    $queryString = "SELECT
+      Utilizador.idUtilizador,
+      Utilizador.username,
+      Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.email
+    FROM Utilizador";
+  }
+  else {
+    $queryString = "SELECT
+      UtilizadoresPesquisa.idUtilizador,
+      UtilizadoresPesquisa.username,
+      UtilizadoresPesquisa.nomeUtilizador,
+      UtilizadoresPesquisa.email,
+      ts_rank_cd(UtilizadoresPesquisa.pesquisa, query) AS rank
+    FROM UtilizadoresPesquisa, plainto_tsquery('english', :stringPesquisa) AS query
+    WHERE query @@ pesquisa";
+  }
+  if ($filter == 'active') {
+    if ($emptyQuery) {
+      $queryString .= ' WHERE ativo AND NOT removido';
+    }
+    else {
+      $queryString .= ' AND ativo AND NOT removido';
+    }
+  }
+  else if ($filter == 'removed') {
+    if ($emptyQuery) {
+      $queryString .= ' WHERE removido';
+    }
+    else {
+      $queryString .= ' AND removido';
+    }
+  }
+  else if ($filter == 'banned') {
+    if ($emptyQuery) {
+      $queryString .= ' WHERE NOT ativo AND NOT removido';
+    }
+    else {
+      $queryString .= ' AND NOT ativo AND NOT removido';
+    }
+  }
+  if ($sort == 'username') {
+    $queryString .= ' ORDER BY username';
+  }
+  else if ($sort == 'email') {
+    $queryString .= ' ORDER BY email';
+  }
+  else if ($sort == 'name') {
+    $queryString .= ' ORDER BY nomeUtilizador';
+  }
+  else if ($sort == 'date') {
+    $queryString .= ' ORDER BY dataRegisto';
+  }
+  else {
+    if ($emptyQuery) {
+      $queryString .= ' ORDER BY idUtilizador';
+    }
+    else {
+      $queryString .= ' ORDER BY rank';
+    }
+  }
+  if ($order == 'descending') {
+    $queryString .= ' DESC';
+  }
+  else if ($order == 'ascending') {
+    $queryString .= ' ASC';
+  }
+  else {
+    if ($sort == 'rank') {
+      $queryString .= ' DESC';
+    }
+    else {
+      $queryString .= ' ASC';
+    }
+  }
+  $stmt = $db->prepare($queryString);
+  if (!$emptyQuery)  {
+    $stmt->bindParam(':stringPesquisa', $query, PDO::PARAM_STR);
+  }
+  try {
+    $stmt->execute();
+  }
+  catch (PDOException $e) {
+    return false;
+  }
+  return json_encode($stmt->fetchAll());
 }
 function utilizador_getAvatar($idUtilizador) {
   $avatarLocation = glob("../../images/avatars/{$idUtilizador}.{jpg,jpeg,gif,png}", GLOB_BRACE);

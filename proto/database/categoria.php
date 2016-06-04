@@ -1,16 +1,16 @@
 <?
-function categoria_adicionarCategoria($nomeCategoria) {
+function categoria_adicionarCategoria($nome) {
   global $db;
   $stmt = $db->prepare("INSERT INTO Categoria(idCategoria, nome) VALUES(DEFAULT, :nome)");
-  $stmt->bindParam(":nome", $nomeCategoria, PDO::PARAM_STR);
+  $stmt->bindParam(":nome", $nome, PDO::PARAM_STR);
   $stmt->execute();
   return $stmt->rowCount();
 }
-function categoria_editarCategoria($idCategoria, $nomeCategoria) {
+function categoria_editarCategoria($idCategoria, $nome) {
   global $db;
   $stmt = $db->prepare("UPDATE Categoria SET nome = :nome WHERE idCategoria = :idCategoria");
   $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
-  $stmt->bindParam(':nome', $nomeCategoria, PDO::PARAM_STR);
+  $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
   $stmt->execute();
   return $stmt->rowCount();
 }
@@ -21,7 +21,14 @@ function categoria_apagarCategoria($idCategoria) {
   $stmt->execute();
   return $stmt->rowCount();
 }
-function categoria_listAll() {
+function categoria_listById($idCategoria) {
+  global $db;
+  $stmt = $db->prepare("SELECT * FROM Categoria WHERE idCategoria = :idCategoria");
+  $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetch();
+}
+function categoria_listarCategorias() {
   global $db;
   $stmt = $db->query("SELECT Categoria.*,
     COUNT(DISTINCT idPergunta) AS numeroPerguntas
@@ -31,18 +38,7 @@ function categoria_listAll() {
     ORDER BY nome");
   return $stmt->fetchAll();
 }
-function categoria_listPopular() {
-  global $db;
-  $stmt = $db->query("SELECT Categoria.*,
-    COUNT(DISTINCT idPergunta) AS numeroPerguntas
-    FROM Categoria
-    INNER JOIN Pergunta USING(idCategoria)
-    GROUP BY idCategoria, idPergunta
-    ORDER BY numeroPerguntas DESC
-    LIMIT 5");
-  return $stmt->fetchAll();
-}
-function categoria_listAllGrouped() {
+function categoria_listarCategoriasJson() {
   global $db;
   $stmt = $db->query("SELECT
       Instituicao.sigla,
@@ -54,59 +50,43 @@ function categoria_listAllGrouped() {
     ORDER BY Instituicao.idInstituicao");
   return $stmt->fetchAll();
 }
-function categoria_listById($idCategoria) {
+function categoria_listarPopulares() {
   global $db;
-  $stmt = $db->prepare("SELECT * FROM Categoria WHERE idCategoria = :idCategoria");
+  $stmt = $db->query("SELECT Categoria.*,
+    COUNT(DISTINCT idPergunta) AS numeroPerguntas
+    FROM Categoria
+    INNER JOIN Pergunta USING(idCategoria)
+    GROUP BY idCategoria, idPergunta
+    ORDER BY numeroPerguntas DESC
+    LIMIT 5");
+  return $stmt->fetchAll();
+}
+function categoria_listarRelacionadas($idCategoria) {
+  global $db;
+  $stmt = $db->prepare("SELECT Categorias.*
+    FROM Categoria
+    INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
+    INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
+    INNER JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
+    WHERE Categoria.idCategoria = :idCategoria
+    AND Categorias.idCategoria <> Categoria.idCategoria
+    GROUP BY Categorias.idCategoria
+    ORDER BY random() LIMIT 5");
   $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
   $stmt->execute();
-  return $stmt->fetch();
+  return $stmt->fetchAll();
 }
-function categoria_listByInstituicao($idInstituicao) {
+function categoria_listarInstituicoes($idCategoria) {
   global $db;
-  $stmt = $db->prepare("SELECT Categoria.*
+  $stmt = $db->prepare("SELECT idInstituicao, sigla
     FROM Instituicao
-    INNER JOIN CategoriaInstituicao USING(idInstituicao)
-    INNER JOIN Categoria USING(idCategoria)
-    WHERE idInstituicao = :idInstituicao
-    ORDER BY nome");
-  $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
-  $stmt->execute();
-  return $stmt->fetchAll();
-}
-function categoria_listRelacionadas($idCategoria, $includeSelf) {
-  global $db;
-  if ($includeSelf) {
-    $stmt = $db->prepare("(SELECT Categoria.*
-      FROM Categoria
-      WHERE Categoria.idCategoria = :idCategoria)
-      UNION (SELECT Categorias.*
-      FROM Categoria
-      INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
-      INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
-      INNER JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
-      WHERE Categoria.idCategoria = :idCategoria
-      AND Categorias.idCategoria <> Categoria.idCategoria
-      GROUP BY Categorias.idCategoria
-      ORDER BY random()
-      LIMIT 4)");
-  }
-  else {
-    $stmt = $db->prepare("SELECT Categorias.*
-      FROM Categoria
-      INNER JOIN CategoriaInstituicao CI1 USING(idCategoria)
-      INNER JOIN CategoriaInstituicao CI2 USING(idInstituicao)
-      INNER JOIN Categoria Categorias ON Categorias.idCategoria = CI2.idCategoria
-      WHERE Categoria.idCategoria = :idCategoria
-      AND Categorias.idCategoria <> Categoria.idCategoria
-      GROUP BY Categorias.idCategoria
-      ORDER BY random()
-      LIMIT 5");
-  }
+    NATURAL JOIN CategoriaInstituicao
+    WHERE idCategoria = :idCategoria");
   $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
 }
-function categoria_fetchPerguntas($idCategoria) {
+function categoria_listarPerguntas($idCategoria) {
   global $db;
   $stmt = $db->prepare("SELECT
       Pergunta.idPergunta,
@@ -118,48 +98,18 @@ function categoria_fetchPerguntas($idCategoria) {
       Pergunta.descricao,
       Pergunta.dataHora,
       Pergunta.ativa,
-      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+      Pergunta.respostas,
+      Pergunta.pontuacao,
       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
-      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
-      COALESCE(SUM(valor), 0) AS pontuacao
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos
     FROM Pergunta
+    INNER JOIN Utilizador USING(idUtilizador)
     LEFT JOIN VotoPergunta USING(idPergunta)
-    LEFT JOIN (SELECT idPergunta, COUNT(*)
-      FROM Resposta
-      GROUP BY idPergunta)
-      AS TabelaRespostas
-      USING (idPergunta)
-    INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
     WHERE idCategoria = :idCategoria
-    GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
+    GROUP BY idPergunta, Utilizador.idUtilizador
     ORDER BY dataHora DESC");
   $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
-}
-function categoria_getStats($filterBy) {
-  global $db;
-  $queryString = "SELECT Categoria.*,
-      MAX(idPergunta) as ultimaPergunta,
-      MAX(dataHora) AS dataHora,
-      COALESCE(COUNT(idPergunta), 0) AS numeroPerguntas
-    FROM Categoria
-    JOIN Pergunta USING(idCategoria)
-    GROUP BY idCategoria, idPergunta";
-  if ($filterBy == 'day') {
-    $queryString .= " HAVING dataHora > current_date - interval '1 day' ";
-  }
-  else if ($filterBy == 'week') {
-    $queryString .= " HAVING dataHora > current_date - interval '1 week' ";
-  }
-  else if ($filterBy == 'month') {
-    $queryString .= " HAVING dataHora > current_date - interval '1 month' ";
-  }
-  else if ($filterBy == 'year') {
-    $queryString .= " HAVING dataHora > current_date - interval '1 year' ";
-  }
-  $queryString .= "ORDER BY numeroPerguntas DESC, dataHora DESC LIMIT 5";
-  $stmt = $db->query($queryString);
-  return json_encode($stmt->fetchAll());
 }
 ?>

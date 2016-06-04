@@ -74,8 +74,7 @@ function instituicao_apagarInstituicao($idInstituicao) {
 }
 function instituicao_associarCategoria($idInstituicao, $idCategoria) {
   global $db;
-  $stmt = $db->prepare("INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria)
-    VALUES(:idInstituicao, :idCategoria)");
+  $stmt = $db->prepare("INSERT INTO CategoriaInstituicao(idInstituicao, idCategoria) VALUES(:idInstituicao, :idCategoria)");
   $stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
   $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
@@ -91,42 +90,12 @@ function instituicao_removerCategoria($idInstituicao, $idCategoria) {
   $stmt->execute();
   return json_encode($stmt->rowCount());
 }
-function instituicao_listAll() {
-  global $db;
-  $stmt = $db->query("SELECT
-      Instituicao.idInstituicao,
-      Instituicao.nome,
-      Instituicao.sigla,
-      COUNT(DISTINCT idCategoria) AS numeroCategorias,
-      COUNT(DISTINCT idPergunta) AS numeroPerguntas,
-      COUNT(DISTINCT idUtilizador) AS numeroUtilizadores
-    FROM Instituicao
-    NATURAL LEFT JOIN CategoriaInstituicao
-    NATURAL LEFT JOIN Pergunta
-    NATURAL LEFT JOIN Utilizador
-    GROUP BY idInstituicao
-    ORDER BY sigla");
-  return $stmt->fetchAll();
-}
 function instituicao_listById($idInstituicao) {
   global $db;
   $stmt = $db->prepare("SELECT * FROM Instituicao WHERE idInstituicao = :idInstituicao");
   $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
-}
-function instituicao_listByCategoria($idCategoria) {
-  global $db;
-  $stmt = $db->prepare("SELECT
-    Instituicao.idInstituicao,
-    Instituicao.sigla
-    FROM Categoria
-    NATURAL JOIN CategoriaInstituicao
-    INNER JOIN Instituicao USING(idInstituicao)
-    WHERE idCategoria = :idCategoria");
-  $stmt->bindParam(':idCategoria', $idCategoria, PDO::PARAM_INT);
-  $stmt->execute();
-  return $stmt->fetchAll();
 }
 function instituicao_listBySigla($siglaInstituicao) {
   global $db;
@@ -135,7 +104,35 @@ function instituicao_listBySigla($siglaInstituicao) {
   $stmt->execute();
   return $stmt->fetch();
 }
-function instituicao_fetchPerguntas($idInstituicao) {
+function instituicao_listarInstituicoes() {
+  global $db;
+  $stmt = $db->query("SELECT
+      Instituicao.idInstituicao,
+      Instituicao.nome,
+      Instituicao.sigla,
+      COUNT(DISTINCT CategoriaInstituicao.idCategoria) AS numeroCategorias,
+      COUNT(DISTINCT Pergunta.idPergunta) AS numeroPerguntas,
+      COUNT(DISTINCT Utilizador.idUtilizador) AS numeroUtilizadores
+    FROM Instituicao
+    LEFT JOIN CategoriaInstituicao USING(idInstituicao)
+    LEFT JOIN Utilizador USING(idInstituicao)
+    LEFT JOIN Pergunta USING (idCategoria)
+    GROUP BY idInstituicao
+    ORDER BY sigla");
+  return $stmt->fetchAll();
+}
+function instituicao_listarCategorias($idInstituicao) {
+  global $db;
+  $stmt = $db->prepare("SELECT Categoria.*
+    FROM CategoriaInstituicao
+    NATURAL JOIN Categoria
+    WHERE idInstituicao = :idInstituicao
+    ORDER BY nome");
+  $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
+}
+function instituicao_listarPerguntas($idInstituicao) {
   global $db;
   $stmt = $db->prepare("SELECT
       Pergunta.idPergunta,
@@ -147,53 +144,19 @@ function instituicao_fetchPerguntas($idInstituicao) {
       Pergunta.descricao,
       Pergunta.dataHora,
       Pergunta.ativa,
-      COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
+      Pergunta.respostas,
+      Pergunta.pontuacao,
       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
-      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
-      COALESCE(SUM(valor), 0) AS pontuacao
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos
     FROM CategoriaInstituicao
     NATURAL JOIN Pergunta
-    INNER JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    INNER JOIN Utilizador USING(idUtilizador)
     LEFT JOIN VotoPergunta USING(idPergunta)
-    LEFT JOIN (SELECT idPergunta, COUNT(*)
-      FROM Resposta
-      GROUP BY idPergunta)
-      AS TabelaRespostas
-      USING (idPergunta)
     WHERE CategoriaInstituicao.idInstituicao = :idInstituicao
-    GROUP BY Pergunta.idPergunta, TabelaRespostas.count, Utilizador.idUtilizador
+    GROUP BY idPergunta, Utilizador.idUtilizador
     ORDER BY dataHora DESC");
   $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
-}
-function instituicao_getStats($filterBy) {
-  global $db;
-  $queryString = "SELECT
-      Instituicao.idInstituicao,
-      Instituicao.sigla,
-      upper(Instituicao.sigla),
-      MAX(idPergunta) AS ultimaPergunta,
-      to_char(MAX(dataHora), 'FMDay, DD FMMonth YYYY HH24:MI') AS dataHora,
-      COALESCE(COUNT(idPergunta), 0) AS count
-    FROM CategoriaInstituicao
-    NATURAL JOIN Pergunta
-    NATURAL JOIN Instituicao
-    GROUP BY Instituicao.idInstituicao";
-  if ($filterBy == 'day') {
-    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 day' ";
-  }
-  else if ($filterBy == 'week') {
-    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 week' ";
-  }
-  else if ($filterBy == 'month') {
-    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 month' ";
-  }
-  else if ($filterBy == 'year') {
-    $queryString .= " HAVING MAX(dataHora) > current_date - interval '1 year' ";
-  }
-  $queryString .= "ORDER BY count DESC, dataHora DESC LIMIT 5";
-  $stmt = $db->query($queryString);
-  return json_encode($stmt->fetchAll());
 }
 ?>
