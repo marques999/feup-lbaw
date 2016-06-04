@@ -1,4 +1,4 @@
-<?
+afe_trim<?
   include_once('../../config/init.php');
   include_once('../../database/instituicao.php');
   include_once('../../database/utilizador.php');
@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (!utilizador_isAdministrator($idUtilizador)) {
@@ -24,7 +24,7 @@
   $numberColumns = 0;
 
   if (safe_strcheck($_POST, 'nome')) {
-    $nome = safe_trim($_POST, 'nome');
+    $nome = safe_trimAll($_POST, 'nome');
     $numberColumns++;
   }
   else {
@@ -32,7 +32,7 @@
   }
 
   if (safe_strcheck($_POST, 'sigla')) {
-    $sigla = safe_trim($_POST, 'sigla');
+    $sigla = safe_trimAll($_POST, 'sigla');
     $numberColumns++;
   }
   else {
@@ -40,7 +40,7 @@
   }
 
   if (safe_strcheck($_POST, 'morada')) {
-    $morada = safe_trim($_POST, 'morada');
+    $morada = safe_trimAll($_POST, 'morada');
     $numberColumns++;
   }
   else {
@@ -48,7 +48,7 @@
   }
 
   if (safe_strcheck($_POST, 'contacto')) {
-    $contacto = safe_trim($_POST, 'contacto');
+    $contacto = safe_trimAll($_POST, 'contacto');
     $numberColumns++;
   }
   else {
@@ -56,7 +56,7 @@
   }
 
   if (safe_strcheck($_POST, 'website')) {
-    $website = safe_trim($_POST, 'website');
+    $website = safe_trimAll($_POST, 'website');
     $numberColumns++;
   }
   else {

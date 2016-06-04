@@ -1,13 +1,13 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
-
+  include_once('../../lib/PhpSalt.php');
+  
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (safe_check($_POST, 'current-password')) {

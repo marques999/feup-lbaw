@@ -10,7 +10,7 @@
         pergunta_registarVoto(
           safe_getId($_POST, 'idPergunta'),
           safe_getId($_SESSION, 'idUtilizador'),
-          $_POST['votoUtilizador']
+          safe_getVote($_POST, 'votoUtilizador')
         );
       }
       catch (PDOException $e) {
@@ -18,7 +18,7 @@
       }
 
       try {
-        echo pergunta_fetchVotesJson($idPergunta);
+        echo pergunta_fetchVotesJson(safe_getId($_POST, 'idPergunta'));
       }
       catch (PDOException $e) {
         http_response_code(400);

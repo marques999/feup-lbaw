@@ -6,7 +6,7 @@
     $idModerador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (!utilizador_isModerator($idModerador)) {

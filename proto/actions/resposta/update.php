@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (safe_check($_POST, 'idPergunta')) {
@@ -25,7 +25,7 @@
   }
 
   if (safe_strcheck($_POST, 'descricao')) {
-    $descricao = safe_trim($_POST, 'descricao');
+    $descricao = safe_trimAll($_POST, 'descricao');
   }
   else {
     safe_formerror('O corpo da resposta não pode estar em branco!');

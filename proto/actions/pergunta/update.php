@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (safe_check($_POST, 'idPergunta')) {
@@ -27,8 +27,8 @@
 
   $numberColumns = 0;
 
-  if (safe_check($_POST, 'idCategoria')) {
-    $idCategoria = safe_getId($_POST, 'idCategoria');
+  if (safe_check($_POST, 'categoria')) {
+    $idCategoria = safe_getId($_POST, 'categoria');
     $numberColumns++;
   }
   else {
@@ -36,7 +36,7 @@
   }
 
   if (safe_strcheck($_POST, 'titulo')) {
-    $titulo = safe_trim($_POST, 'titulo');
+    $titulo = safe_trimAll($_POST, 'titulo');
     $numberColumns++;
   }
   else {

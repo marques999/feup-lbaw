@@ -6,7 +6,7 @@
     $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   $isAdministrator = utilizador_isAdministrator($idAdministrador);
@@ -15,7 +15,7 @@
     $idUtilizador = safe_getId($_POST, 'idUtilizador');
   }
   else {
-    safe_error('Deve especificar um utilizador primeiro!');    
+    safe_error('Deve especificar um utilizador primeiro!');
   }
 
   if (!$isAdministrator && ($idUtilizador != $idAdministrador)) {

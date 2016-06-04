@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (!utilizador_isAdministrator($idUtilizador)) {
@@ -15,7 +15,7 @@
   }
 
   if (safe_check($_POST, 'idInstituicao')) {
-    $idInstituicao = safe_trim($_POST, 'idInstituicao');
+    $idInstituicao = safe_trimAll($_POST, 'idInstituicao');
   }
   else {
     safe_error('Deve especificar uma instituição primeiro!');

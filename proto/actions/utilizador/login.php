@@ -1,8 +1,8 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
-
+  include_once('../../lib/PhpSalt.php');
+  
   if (safe_strcheck($_POST, 'username')) {
     $username = safe_trim($_POST, 'username');
   }

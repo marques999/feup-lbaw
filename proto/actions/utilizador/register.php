@@ -1,37 +1,37 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../config/salt.php');
   include_once('../../database/utilizador.php');
-  include_once('../../lib/imgupload.php');
-
+  include_once('../../lib/ImageUpload.php');
+  include_once('../../lib/PhpSalt.php');
+  
   if (safe_check($_SESSION, 'idUtilizador')) {
     safe_error('utilizador/homepage.php', 'Já se encontra com sessão iniciada, não pode registar-se!');
   }
 
   if (safe_strcheck($_POST, 'username')) {
-    $username = safe_trim($_POST, 'username');
+    $username = safe_trimAll($_POST, 'username');
   }
   else {
     safe_formerror('Deve especificar um username obrigatório!');
   }
 
   if (safe_strcheck($_POST, 'password')) {
-    $password = safe_trim($_POST, 'password');
+    $password = safe_trimAll($_POST, 'password');
   }
   else {
     safe_formerror('Deve especificar uma palavra-passe obrigatória!');
   }
 
   if (safe_strcheck($_POST, 'email')) {
-    $email = safe_trim($_POST, 'email');
+    $email = safe_trimAll($_POST, 'email');
   }
   else {
     safe_formerror('Deve especificar um endereço de e-mail obrigatório!');
   }
 
   if (safe_strcheck($_POST, 'primeiro-nome') && safe_strcheck($_POST, 'ultimo-nome')) {
-    $primeiroNome = safe_trim($_POST, 'primeiro-nome');
-    $ultimoNome = safe_trim($_POST, 'ultimo-name');
+    $primeiroNome = safe_trimAll($_POST, 'primeiro-nome');
+    $ultimoNome = safe_trimAll($_POST, 'ultimo-name');
   }
   else {
     safe_formerror('Deve especificar um nome completo obrigatório!');
@@ -101,7 +101,7 @@
   }
 
   if (safe_strcheck($_POST, 'localidade')) {
-    $localidade = safe_trim($_POST, 'localidade');
+    $localidade = safe_trimAll($_POST, 'localidade');
     $numberColumns++;
   }
   else {
@@ -109,7 +109,7 @@
   }
 
   if (safe_strcheck($_POST, 'codigo-pais')) {
-    $codigoPais = safe_trim($_POST, 'codigo-pais');
+    $codigoPais = safe_trimAll($_POST, 'codigo-pais');
     $numberColumns++;
   }
   else {

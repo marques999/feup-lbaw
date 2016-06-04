@@ -10,7 +10,7 @@
       if (safe_strcheck($_POST, 'nome')) {
 
         try {
-          echo categoria_adicionarCategoria(safe_trim($_POST, 'nome'));
+          echo categoria_adicionarCategoria(safe_trimAll($_POST, 'nome'));
         }
         catch (PDOException $e) {
           http_response_code(400);

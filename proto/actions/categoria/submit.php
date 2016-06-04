@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
   if (!utilizador_isAdministrator($idUtilizador)) {
@@ -15,7 +15,7 @@
   }
 
   if (safe_strcheck($_POST, 'nome')) {
-    $nome = safe_trim($_POST, 'nome');
+    $nome = safe_trimAll($_POST, 'nome');
   }
   else {
     safe_formerror('O nome da categoria não pode estar em branco!');

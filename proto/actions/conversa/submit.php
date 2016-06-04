@@ -3,14 +3,14 @@
   include_once('../../database/conversa.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
+    $idRemetente = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
 
-  if (safe_check($_POST, 'idDestinatario')) {
-    $idDestinatario = safe_getId($_POST, 'idDestinatario')
+  if (safe_check($_POST, 'destinatario')) {
+    $idDestinatario = safe_getId($_POST, 'destinatario');
   }
   else {
     safe_formerror('Deve especificar um destinatário primeiro!');
@@ -32,7 +32,12 @@
 
   try {
 
-    if (conversa_criarConversa($idUtilizador, $idDestinatario, $titulo, $descricao) < 1) {
+    $idConversa = conversa_criarConversa($idRemetente, $idDestinatario, $titulo, $descricao);
+    
+    if ($idConversa > 0) {
+      safe_redirect("conversa/view.php?id=$idConversa");
+    }
+    else {
       safe_formerror('Erro desconhecido: tentou criar uma conversa que já existe?');
     }
   }

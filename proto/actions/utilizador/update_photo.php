@@ -1,14 +1,14 @@
 <?
   include_once('../../config/init.php');
-  include_once('../../lib/imgupload.php');
+  include_once('../../lib/ImageUpload.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_error('Deve estar autenticado para aceder a esta página!', 'utilizador/login.php');
+    safe_login();
   }
-  
+
   if (!safe_check($_POST, 'avatar')) {
     safe_formerror('Deve especificar uma imagem diferente da atual!');
   }

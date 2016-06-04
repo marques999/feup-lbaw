@@ -10,7 +10,7 @@
         echo resposta_inserirComentario(
           safe_getId($_POST, 'idResposta'),
           safe_getId($_SESSION, 'idUtilizador'),
-          safe_trim($_POST, 'descricao')
+          safe_trimAll($_POST, 'descricao')
         );
       }
       catch (PDOException $e) {

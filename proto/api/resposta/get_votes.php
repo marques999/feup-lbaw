@@ -5,7 +5,7 @@
   if (safe_check($_POST, 'idResposta')) {
 
     try {
-      echo resposta_fetchVotosJson(safe_getId($_POST, 'idResposta'));
+      echo resposta_fetchVotosJson(safe_getId($_POST, 'idPergunta'));
     }
     catch (PDOException $e) {
       http_response_code(400);
