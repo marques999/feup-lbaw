@@ -1,11 +1,62 @@
-.overlay,.slab{color:#fff}
-.overlay,body{margin:0 auto}
-#responsive-bg{position:fixed;top:-50%;left:-50%;width:200%;height:200%}
-#responsive-bg img{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;min-width:50%;min-height:50%}
-.overlay{background-color:#121111;opacity:.75}
-h2,h4{color:#ddd}
-hr{border-style:dashed;border-color:#333;border-width:1px}
-body{width:100%;position:fixed;top:4em}
-h4{font-weight:400}
-.ink-form fieldset legend{font-size:1.438em;font-weight:700;width:100%;border-bottom:2px dashed #222}
-.huge-button{font-size:5em}
+.overlay, .slab {
+  color: white;
+}
+
+.overlay, body {
+  margin: 0 auto;
+}
+
+#responsive-bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%
+}
+
+#responsive-bg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%
+}
+
+.overlay {
+  background-color: #121111;
+  opacity: 0.75;
+}
+
+h2, h4 {
+  color: #ddd;
+}
+
+hr {
+  border-style: dashed;
+  border-color: #333;
+  border-width: 1px;
+}
+
+body {
+  width: 100%;
+  position: fixed;
+  top: 4.0em;
+}
+
+h4 {
+  font-weight: 400;
+}
+
+.ink-form fieldset legend {
+  font-size :1.438em;
+  font-weight: 700;
+  width: 100%;
+  border-bottom: 2px dashed #222;
+}
+
+.huge-button {
+  font-size: 5.0em;
+}

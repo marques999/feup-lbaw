@@ -2,25 +2,19 @@ var queryParameters = parseParameters();
 var lastFilter = queryParameters['filter'] || 'year';
 var lastSort = queryParameters['sort'] || 'date';
 var lastOrder = queryParameters['order'] || 'descending';
-var lastQuery = queryParameters['query'];
+var lastQuery = $_GET('query');
 
-/*
- * locationHashChanged()
- */
 function locationHashChanged() {
   queryParameters = parseParameters();
   lastFilter = queryParameters['filter'] || 'year';
   lastSort = queryParameters['sort'] || 'date';
   lastOrder = queryParameters['order'] || 'descending';
-  lastQuery = queryParameters['query'];
+  lastQuery = $_GET('query');
   fetchQuestions();
 }
 
 window.onhashchange = locationHashChanged;
 
-/*
- * parseParameters()
- */
 function parseParameters() {
 
   var vars = {};
@@ -42,9 +36,21 @@ function parseParameters() {
   return vars;
 }
 
-/*
- * changeTarget()
- */
+function $_GET(variable) {
+
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+
+  for (var i=0;i<vars.length;i++) {
+
+    var pair = vars[i].split("=");
+
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+}
+
 function changeTarget() {
 
   var newTarget = '';
@@ -70,9 +76,6 @@ function changeTarget() {
   }
 };
 
-/*
- * fetchQuestions()
- */
 function fetchQuestions() {
   $.getJSON("../../api/pesquisa/get_perguntas.php", {
       query: lastQuery,
@@ -86,28 +89,20 @@ function fetchQuestions() {
   });
 };
 
-/*
- * getCurrentSort()
- */
 function getCurrentSort() {
   return $('#sidebar-sort #sort-' + lastSort + '-' + lastOrder);
 };
 
-/*
- * getCurrentFilter()
- */
 function getCurrentFilter() {
   return $('#sidebar-filter #filter-' + lastFilter);
 };
 
-/*
- * $(document.ready)
- */
 $(function() {
+
   fetchQuestions();
   getCurrentFilter().addClass('active');
   getCurrentSort().addClass('active');
-  //-------------------------------------------------------
+
   $('#sidebar-filter li').click(function() {
     event.preventDefault();
     var currentFilter = $(this).get(0).id.split('-')[1];
@@ -117,7 +112,7 @@ $(function() {
       changeTarget();
     }
   });
-  //-------------------------------------------------------
+
   $('#sidebar-sort li').click(function() {
     event.preventDefault();
     var idArguments = $(this).get(0).id.split('-');
@@ -132,9 +127,6 @@ $(function() {
   });
 });
 
-/*
- * printQuestions(jsonObject)
- */
 function printQuestions(jsonObject) {
 
   var domElement = $('div#content').empty();
@@ -157,17 +149,17 @@ function printQuestions(jsonObject) {
       thisObject.badge = '';
     }
     else {
-      thisObject.badge = '<span class="ink-badge black small">\n<i class="fa fa-check"></i>\n<span>fechada</span>\n</span>';
+      thisObject.badge = '<span class="small">\n<i class="fa fa-check"></i>\n<span>fechada</span>\n</span>';
     }
 
     if (thisObject.removido) {
       thisObject.linkautor = '<span class="medium">' + thisObject.nomeutilizador + '</span>';
     }
     else {
-      thisObject.linkautor = '<a class="medium" href="../pages/utilizador/profile.php?id=' + thisObject.idutilizador + '">' + thisObject.nomeutilizador + '</a>';
+      thisObject.linkautor = '<a class="medium" href="../utilizador/profile.php?id=' + thisObject.idutilizador + '">' + thisObject.nomeutilizador + '</a>';
     }
 
-    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pages/pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{numerorespostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pages/pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
+    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{respostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate highlight no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
 
     if (i != jsonObject.length - 1) {
       domElement.append('<hr>');
@@ -175,9 +167,6 @@ function printQuestions(jsonObject) {
   }
 };
 
-/*
- * printUtilizador(jsonObject)
- */
 function printUtilizador(jsonObject) {
 
   var domElement = $('div#content').empty();
@@ -186,6 +175,6 @@ function printUtilizador(jsonObject) {
 
     var thisObject = jsonObject[i];
 
-    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pages/pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{numerorespostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pages/pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
+    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{numerorespostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pages/pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
   }
 }

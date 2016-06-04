@@ -1,6 +1,3 @@
-/*
- * $(document.ready)
- */
 $(function(){
   $('a.quote-button').click(function(){
     CKEDITOR.instances.descricao.insertHtml('<blockquote>' +

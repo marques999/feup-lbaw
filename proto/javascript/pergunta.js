@@ -1,4 +1,5 @@
 var refreshStatus = [];
+var userVote = 0;
 var answerCommentCount = [];
 var lastCommentId = [];
 
@@ -11,27 +12,61 @@ var questionCommentId = -1;
  * $(document.ready)
  */
 $(function() {
-  $("#answers a.ink-toggle").click(function() {
-    fetchAnswerComments(
-      $(this).data('id'),
-      $(this));
-  });
-  $(".question-action-buttons .follow-button").click(function() {
-    followPergunta(
-      $(this),
-      $(this.parentNode.parentNode.parentNode).get(0).id);
-  });
-  $(".question-vote-buttons .vote-positive").click(function() {
+  CKEDITOR.editorConfig = function(config) {
+    config.language = 'pt';
+    config.height = 400;
+    config.toolbarGroups = [
+      {name: 'clipboard', groups: ['clipboard', 'undo']},
+      {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+      {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+      {name: 'links', groups: ['links']},
+      {name: 'insert', groups: ['insert']},
+      {name: 'forms', groups: ['forms']},
+      {name: 'tools', groups: ['tools']},
+      {name: 'document', groups: ['mode', 'document', 'doctools']},
+      {name: 'others', groups: ['others']},
+      {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+      {name: 'styles', groups: ['styles']},
+      {name: 'colors', groups: ['colors']},
+      {name: 'about', groups: ['about']}
+    ];
+    config.extraPlugins = 'blockquote';
+    config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
+  };
+  CKEDITOR.replace('descricao');
+  var questionVotePositive = $(".question-vote-buttons .vote-positive");
+  var questionVoteNegative = $(".question-vote-buttons .vote-negative");
+  var questionFollowButton = $(".question-action-buttons .follow-button");
+  if (questionVotePositive.hasClass('active')) {
+    userVote = 1;
+  }
+  else if (questionVoteNegative.hasClass('active')) {
+    userVote = -1;
+  }
+  if (questionFollowButton.hasClass('active')) {
+    userFollowsQuestion = true;
+  }
+  questionVotePositive.click(function() {
     registarVotoPergunta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
       1);
   });
-  $(".question-vote-buttons .vote-negative").click(function() {
+  questionVoteNegative.click(function() {
     registarVotoPergunta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
       -1);
+  });
+  questionFollowButton.click(function() {
+    followPergunta(
+      $(this),
+      $(this.parentNode.parentNode.parentNode).get(0).id);
+  });
+  $("#answers a.ink-toggle").click(function() {
+    fetchAnswerComments(
+      $(this).data('id'),
+      $(this));
   });
   $(".reply-buttons .vote-positive").click(function() {
     registarVotoResposta(
@@ -89,39 +124,32 @@ function submeterComentarioResposta(commentsForm)
   });
 };
 
-/*
- * fetchVotosPergunta(thisId, domElement)
- */
-function fetchVotosPergunta(thisId, domElement)
-{
-  $.post("../../api/pergunta/get_votes.php",
-  {
-    idPergunta: thisId
-  },
-  function(jsonString)
-  {
-    var jsonObject = JSON.parse(jsonString);
-    domElement.find('.vote-positive strong').text(jsonObject['votospositivos']);
-    domElement.find('.vote-negative strong').text(jsonObject['votosnegativos']);
-  });
-};
-
-/*
- * fetchVotosPergunta(thisId, domElement)
- */
-function fetchVotosResposta(thisId, domElement)
-{
-  $.post("../../api/resposta/get_votes.php",
-  {
-    idResposta: thisId
-  },
-  function(jsonString)
-  {
-    var jsonObject = JSON.parse(jsonString);
-    domParent.find('.vote-positive strong').text(jsonObject['votospositivos']);
-    domParent.find('.vote-negative strong').text(jsonObject['votosnegativos']);
-  });
-};
+var loadingCommentText = '<i class="fa fa-spinner fa-spin fa-fw"></i>';
+var loadingVoteText = '<i class="fa fa-refresh fa-spin fa-fw"></i>';
+var positiveVoteText = '<i class="fa fa-thumbs-up fa-fw"></i>\n' +
+                       '<span>{labelpositive}&nbsp;</span>\n' +
+                       '<strong>{votospositivos}</strong>';
+var negativeVoteText = '<i class="fa fa-thumbs-down fa-fw"></i>\n' +
+                       '<span>{labelnegative}&nbsp;</span>\n' +
+                       '<strong>{votosnegativos}</strong>';
+var followButtonText = '<i class="fa fa-feed fa-fw"></i>\n' +
+                       '<span>Follow&nbsp;</span>\n' +
+                       '<strong>{count}</strong>';
+var unfollowButtonText = '<i class="fa fa-check fa-fw"></i>\n' +
+                         '<span>Following&nbsp;</span>\n' +
+                         '<strong>{count}</strong>';
+var commentWrapperNoAuthor = '<div class="column half-vertical-space">\n' +
+                             '<img class="push-left all-5 img-circle quarter-right-space" ' +
+                             'src="../../images/avatars/{idutilizador}_small.png" alt="">\n' +
+                             '{nomeutilizador}\n' +
+                             '<small>{datahora}</small>\n' +
+                             '<p class="fw-medium">{descricao}</p></div>';
+var commentWrapper = '<div class="column half-vertical-space">\n' +
+                     '<img class="push-left all-5 img-circle quarter-right-space" ' +
+                     'src="../../images/avatars/{idutilizador}_small.png" alt="">\n' +
+                     '<a href="../utilizador/profile.php?id={idutilizador}">{nomeutilizador}</a>\n' +
+                     '<small>{datahora}</small>\n' +
+                     '<p class="fw-medium">{descricao}</p></div>';
 
 /*
  * registarVotoPergunta(domElement, nodeId, valor)
@@ -143,7 +171,7 @@ function registarVotoPergunta(domElement, nodeId, valor)
     },
     beforeSend: function()
     {
-      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html(loadingVoteText);
     },
     success: function(jsonString)
     {
@@ -153,16 +181,35 @@ function registarVotoPergunta(domElement, nodeId, valor)
         var positiveButton =  domParent.find('.vote-positive');
         var negativeButton = domParent.find('.vote-negative');
 
-        if (valor == 1)
+        jsonObject['labelpositive'] = 'Gosto';
+        jsonObject['labelnegative'] = 'Não gosto';
+
+        if (valor == userVote)
         {
-          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gostei&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
-          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gosto&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+          positiveButton.removeClass('active');
+          negativeButton.removeClass('active');
+          userVote = 0;
         }
-        else if (valor == -1)
+        else
         {
-          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gosto&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
-          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gostei&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+          if (valor == 1)
+          {
+            jsonObject['labelpositive'] = 'Gostei';
+            positiveButton.addClass('active');
+            negativeButton.removeClass('active');
+          }
+          else if (valor == -1)
+          {
+            jsonObject['labelnegative'] = 'Não gostei';
+            positiveButton.removeClass('active');
+            negativeButton.addClass('active');
+          }
+
+          userVote = valor;
         }
+
+        positiveButton.html(nano(positiveVoteText, jsonObject));
+        negativeButton.html(nano(negativeVoteText, jsonObject));
       }
       else
       {
@@ -196,7 +243,7 @@ function registarVotoResposta(domElement, nodeId, valor)
     },
     beforeSend: function()
     {
-      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html(loadingVoteText);
     },
     success: function(jsonString)
     {
@@ -206,16 +253,35 @@ function registarVotoResposta(domElement, nodeId, valor)
         var positiveButton =  domParent.find('.vote-positive');
         var negativeButton = domParent.find('.vote-negative');
 
-        if (valor == 1)
+        jsonObject['labelpositive'] = 'Gosto';
+        jsonObject['labelnegative'] = 'Não gosto';
+
+        if (valor == userVote)
         {
-          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gostei&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
-          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gosto&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+          positiveButton.removeClass('active');
+          negativeButton.removeClass('active');
+          userVote = 0;
         }
-        else if (valor == -1)
+        else
         {
-          positiveButton.html(nano('<i class="fa fa-thumbs-up fa-fw"></i>\n<span>Gosto&nbsp;</span>\n<strong>{votospositivos}</strong>', jsonObject));
-          negativeButton.html(nano('<i class="fa fa-thumbs-down fa-fw"></i>\n<span>Não gostei&nbsp;</span>\n<strong>{votosnegativos}</strong>', jsonObject));
+          if (valor == 1)
+          {
+            jsonObject['labelpositive'] = 'Gostei';
+            positiveButton.addClass('active');
+            negativeButton.removeClass('active');
+          }
+          else if (valor == -1)
+          {
+            jsonObject['labelnegative'] = 'Não gostei';
+            positiveButton.removeClass('active');
+            negativeButton.addClass('active');
+          }
+
+          userVote = valor;
         }
+
+        positiveButton.html(nano(positiveVoteText, jsonObject));
+        negativeButton.html(nano(negativeVoteText, jsonObject));
       }
       else
       {
@@ -231,7 +297,7 @@ function registarVotoResposta(domElement, nodeId, valor)
 
 function followPergunta(domElement, nodeId)
 {
-  if (domElement.hasClass('active'))
+  if (userFollowsQuestion)
   {
     return __unfollowPergunta(domElement, nodeId);
   }
@@ -239,11 +305,6 @@ function followPergunta(domElement, nodeId)
   {
     return __followPergunta(domElement, nodeId);
   }
-}
-
-function __updateFollow(booleanValue)
-{
-  userFollowsQuestion = booleanValue;
 }
 
 function __followPergunta(domElement, nodeId)
@@ -261,14 +322,14 @@ function __followPergunta(domElement, nodeId)
     },
     beforeSend: function()
     {
-      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html(loadingVoteText);
     },
     success: function(jsonString)
     {
       if (jsonString)
       {
-        domElement.html(nano('<i class="fa fa-check fa-fw"></i>\n<span>Following&nbsp;</span>\n<strong>{count}</strong>', JSON.parse(jsonString)));
-        domElement.addClass('active');
+        domElement.html(nano(unfollowButtonText, JSON.parse(jsonString))).addClass('active');
+        userFollowsQuestion = true;
       }
       else
       {
@@ -297,14 +358,14 @@ function __unfollowPergunta(domElement, nodeId)
     },
     beforeSend: function()
     {
-      strongTag.html('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      strongTag.html(loadingVoteText);
     },
     success: function(jsonString)
     {
       if (jsonString)
       {
-        domElement.html(nano('<i class="fa fa-feed fa-fw"></i>\n<span>Follow&nbsp;</span>\n<strong>{count}</strong>', JSON.parse(jsonString)));
-        domElement.removeClass('active');
+        domElement.html(nano(followButtonText, JSON.parse(jsonString))).removeClass('active');
+        userFollowsQuestion = false;
       }
       else
       {
@@ -313,7 +374,6 @@ function __unfollowPergunta(domElement, nodeId)
     },
     error: function()
     {
-
       strongTag.text(previousCount);
     }
   });
@@ -322,13 +382,12 @@ function __unfollowPergunta(domElement, nodeId)
 /*
  * insertComment(domElement, jsonObject)
  */
-function insertComment(domElement, jsonObject) {
-  if (jsonObject.removido) {
-    domElement.append(nano('<div class="column half-vertical-space"><img class="push-left all-5 img-circle quarter-right-space" src="../../images/avatars/{idutilizador}_small.png" alt="">{nomeutilizador}\n<small>{datahora}</small><p class="fw-medium">{descricao}</p></div>', jsonObject));
-  }
-  else {
-    domElement.append(nano('<div class="column half-vertical-space"><img class="push-left all-5 img-circle quarter-right-space" src="../../images/avatars/{idutilizador}_small.png" alt=""><a href="../utilizador/profile.php?id={idutilizador}">{nomeutilizador}</a>\n<small>{datahora}</small><p class="fw-medium">{descricao}</p></div>', jsonObject));
-  }
+function insertComment(domElement, jsonObject)
+{
+  domElement.append(nano(
+    jsonObject.removido ? commentWrapperNoAuthor : commentWrapper,
+    jsonObject)
+  );
 };
 
 /*
@@ -362,7 +421,7 @@ function fetchQuestionComments(thisId, currentNode)
     },
     beforeSend: function()
     {
-      parentNode = currentNode.parent().append('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+      parentNode = currentNode.parent().append(loadingCommentText);
       nodeContent = currentNode.detach();
     },
     success: function(jsonString)
@@ -418,7 +477,7 @@ function fetchAnswerComments(thisId, currentNode)
     },
     beforeSend: function()
     {
-      parentNode = currentNode.parent().append('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+      parentNode = currentNode.parent().append(loadingCommentText);
       nodeContent = currentNode.detach();
     },
     success: function(jsonString)
@@ -460,7 +519,7 @@ function refreshQuestionComments(thisId, currentNode)
     },
     beforeSend: function()
     {
-      buttonTag.html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+      buttonTag.html(loadingCommentText);
     },
     success: function(jsonString)
     {
@@ -494,7 +553,7 @@ function refreshAnswerComments(thisId, currentNode)
     },
     beforeSend: function()
     {
-      buttonTag.html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+      buttonTag.html(loadingCommentText);
     },
     success: function(jsonString)
     {
