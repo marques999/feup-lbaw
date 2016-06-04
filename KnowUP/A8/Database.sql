@@ -276,34 +276,34 @@ INSERT INTO Moderador VALUES(5);
 /*--------------------------------------------*/
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em pixeis dos tamanhos de folhas A3, A4 e A5 para saber qual a mais adequada para o meu projeto de desenho', '2016-03-21 14:30:07', false);
+VALUES(DEFAULT, 54, 8, 'Qual o tamanho dos vários tipos principais de folhas em pixels?', 'Necessito de saber o tamanho exacto, em <em>pixels</em>, dos tamanhos de folhas A3, A4 e A5. Tenho um projeto de desenho em curso e queria saber qual a mais adequada.', '2015-11-04 12:30:07', false, 0, 1);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-04-10 16:45:22', true);
+VALUES(DEFAULT, 12, 4, 'O que fazer no final do curso?', 'Bom dia, gostaria de saber se depois de terminar o meu curso com média superior a 18 poderia ir trabalhar para o CSI em Miami?', '2016-01-03 22:45:13', true, 1, 0);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 55, 2, 'O que fazer quando tudo o resto falha?', '<p>O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um grave problema:</p><p>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.</p><p>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.</p><p>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', '2015-09-23 16:45:22', true);
+VALUES(DEFAULT, 55, 2, 'O que fazer quando tudo o resto falha?', 'O meu projeto de ordenamento do território em Valongo estava a correr sobre rodas, até que me deparei com um <strong>grave problema</strong>:<br>A migração da pecuária, especialmente gado bovino, está a destruir o parque da escola preparatória de Valongo.<br>As crianças foram contaminadas devido ao contacto com os dejectos que os animais amontoavam no escorrega.<br>Gostaria assim de perguntar aos estudantes de direito que acção legal poderia tomar contra os pastores locais.', '2016-03-22 16:45:41', true, -6, 0);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2015-11-10 19:44:32', false);
+VALUES(DEFAULT, 17, 6, 'Qual o numero de dentes de um ser humano adulto?', NULL, '2016-04-15 19:44:32', false, 2, 1);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2015-09-25 04:23:54', true);
+VALUES(DEFAULT, 28, 2, 'Como faço para mudar de curso?', 'Gostaria de saber quais os requisitos para mudar para o curso de Agronomia. Estou desapontado com a minha escolha e gostaria de mudar', '2016-05-05 04:23:54', true, -2, 0);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol', '2015-09-25 14:56:43', false);
+VALUES(DEFAULT, 13, 3, 'Dor de cabeça: Ibuprofeno ou paracetamol?', 'Ultimamente tenho tido dores de cabeça enquanto estudo e gostaria de saber se deveria tomar ibuprofeno ou paracetamol.', '2016-05-15 14:56:43', false, 4, 5);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 5, 7, 'O que significa ASCII?', NULL, '2016-01-10 19:44:32', true);
+VALUES(DEFAULT, 5, 7, 'O que significa ASCII?', 'Estou a aprender a programar em C e muitos tutoriais referem esse termo que eu desconheço. O que poderá ser?', '2016-05-28 19:44:32', true, -1, 4);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2015-12-24 19:43:32', false);
+VALUES(DEFAULT, 42, 5, 'Lápis normal ou lápis de cera?', 'Quero saber qual o mais adequado para uma pintura rupestre de Penafiel. Obrigado!', '2016-05-31 07:15:29', false, 2, 1);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 38, 8, 'Alguma ideia para uma curta metragem?', 'Need help! Please answer fast...', '2016-03-23 17:43:52', true);
+VALUES(DEFAULT, 38, 8, 'Alguma ideia para uma curta metragem?', 'Preciso de ajuda urgente! Por favor respondam rápido, é para um trabalho que tenho de entregar amanhã...', '2016-06-03 22:45:22', true, 4, 2);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade...', '2016-03-24 19:40:10', false);
+VALUES(DEFAULT, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade.', '2016-06-04 12:30:07', false, 1, 1);
 
 /*--------------------------------------------*/
 /*                Contribuiçao                */
@@ -432,6 +432,7 @@ INSERT INTO ComentarioResposta VALUES(19, 10);
 INSERT INTO VotoPergunta VALUES(1, 4, 1);
 INSERT INTO VotoPergunta VALUES(1, 5, 1);
 INSERT INTO VotoPergunta VALUES(1, 8, 1);
+INSERT INTO VotoPergunta VALUES(2, 2, 1);
 INSERT INTO VotoPergunta VALUES(3, 3, -1);
 INSERT INTO VotoPergunta VALUES(3, 4, -1);
 INSERT INTO VotoPergunta VALUES(3, 5, -1);
@@ -528,7 +529,13 @@ INSERT INTO Conversa
 VALUES(DEFAULT, 3, 2, 'PARABÉNS!!!!!', '2016-04-07 09:54:12', '2016-04-07 09:53:44');
 
 INSERT INTO Conversa
-VALUES(DEFAULT, 6, 4, 'presente de aniversário', '2016-04-07 12:30:06', '2016-05-21 11:34:50');
+VALUES(DEFAULT, 6, 4, 'presente de aniversário', '2016-04-07 12:30:06', '2016-04-11 11:34:50');
+
+INSERT INTO Conversa
+VALUES(DEFAULT, 4, 7, 'Marx, o verdadeiro?', '2016-05-21 19:42:11', '2016-05-21 11:34:50');
+
+INSERT INTO Conversa
+VALUES(DEFAULT, 2, 8, 'Neko Daisuki :3', '2016-06-04 08:39:50', '2016-06-03 11:34:50');
 
 /*--------------------------------------------*/
 /*                  Mensagem                  */
@@ -578,6 +585,15 @@ VALUES(DEFAULT, 5, 2, 'Obrigado Pedro Melo! :D Logo à noite há bolo de morango
 
 INSERT INTO Mensagem
 VALUES(DEFAULT, 6, 4, 'Tenho aqui um papel cor-de-rosa todo bonito, acho que ele vai gostar x)', '2016-04-07 11:25:31');
+
+INSERT INTO Mensagem
+VALUES(DEFAULT, 7, 3, 'Gostava de saber quem na realidade você é...', '2016-04-07 11:25:31');
+
+INSERT INTO Mensagem
+VALUES(DEFAULT, 8, 2, 'Hakase da nyaaaan~~~', '2016-06-03 19:43:11');
+
+INSERT INTO Mensagem
+VALUES(DEFAULT, 8, 2, '<p>Moe desu!</p>', '2016-06-03 19:43:58');
 
 /*--------------------------------------------*/
 /*                   Report                   */

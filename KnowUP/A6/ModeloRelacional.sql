@@ -135,11 +135,13 @@ ALTER TABLE Moderador ADD CONSTRAINT FK_Moderador_idModerador
 CREATE TABLE Pergunta (
     idPergunta      serial      NOT NULL,
     idCategoria     integer     NOT NULL,
-    idAutor         integer     NOT NULL,
+    idUtilizador    integer     NOT NULL,
     titulo          text        NOT NULL,
     descricao       text        NULL,
     dataHora        timestamp   DEFAULT current_timestamp,
-    ativa           boolean     DEFAULT true
+    ativa           boolean     DEFAULT true,
+	pontuacao       integer     DEFAULT 0,
+    respostas       integer     DEFAULT 0
 );
 
 ALTER TABLE Pergunta ADD CONSTRAINT PK_Pergunta
@@ -147,8 +149,8 @@ ALTER TABLE Pergunta ADD CONSTRAINT PK_Pergunta
 ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idCategoria
     FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria)
     ON DELETE CASCADE;
-ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idAutor
-    FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idUtilizador
+    FOREIGN KEY (idUtilizador) REFERENCES Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -157,15 +159,15 @@ ALTER TABLE Pergunta ADD CONSTRAINT FK_Pergunta_idAutor
 
 CREATE TABLE Contribuicao (
     idContribuicao  serial      NOT NULL,
-    idAutor         integer     NOT NULL,
+    idUtilizador    integer     NOT NULL,
     descricao       text        NOT NULL,
     dataHora        timestamp   DEFAULT current_timestamp
 );
 
 ALTER TABLE Contribuicao ADD CONSTRAINT PK_Contribuicao
     PRIMARY KEY (idContribuicao);
-ALTER TABLE Contribuicao ADD CONSTRAINT FK_Contribuicao_idAutor
-    FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE Contribuicao ADD CONSTRAINT FK_Contribuicao_idUtilizador
+    FOREIGN KEY (idUtilizador) REFERENCES Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -228,20 +230,20 @@ ALTER TABLE ComentarioResposta ADD CONSTRAINT FK_ComentarioResposta_idResposta
 /*--------------------------------------------*/
 
 CREATE TABLE VotoPergunta (
-    idPergunta  integer     NOT NULL,
-    idAutor     integer     NOT NULL,
-    valor       integer     DEFAULT 0
+    idPergunta      integer     NOT NULL,
+    idUtilizador    integer     NOT NULL,
+    valor           integer     DEFAULT 0
 );
 
 ALTER TABLE VotoPergunta ADD CONSTRAINT PK_VotoPergunta
-    PRIMARY KEY (idPergunta, idAutor);
+    PRIMARY KEY (idPergunta, idUtilizador);
 ALTER TABLE VotoPergunta ADD CONSTRAINT CK_VotoPergunta_Valor
     CHECK (valor = 1 OR valor = 0 OR valor = -1);
 ALTER TABLE VotoPergunta ADD CONSTRAINT FK_VotoPergunta_idPergunta
     FOREIGN KEY (idPergunta) REFERENCES Pergunta(idPergunta)
     ON DELETE CASCADE;
-ALTER TABLE VotoPergunta ADD CONSTRAINT FK_VotoPergunta_idAutor
-    FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE VotoPergunta ADD CONSTRAINT FK_VotoPergunta_idUtilizador
+    FOREIGN KEY (idUtilizador) REFERENCES Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -249,20 +251,20 @@ ALTER TABLE VotoPergunta ADD CONSTRAINT FK_VotoPergunta_idAutor
 /*--------------------------------------------*/
 
 CREATE TABLE VotoResposta (
-    idResposta  integer     NOT NULL,
-    idAutor     integer     NOT NULL,
-    valor       integer     DEFAULT 0
+    idResposta      integer     NOT NULL,
+    idUtilizador    integer     NOT NULL,
+    valor           integer     DEFAULT 0
 );
 
 ALTER TABLE VotoResposta ADD CONSTRAINT PK_VotoResposta
-    PRIMARY KEY (idResposta, idAutor);
+    PRIMARY KEY (idResposta, idUtilizador);
 ALTER TABLE VotoResposta ADD CONSTRAINT CK_VotoResposta_Valor
     CHECK (valor = 1 OR valor = 0 OR valor = -1);
  ALTER TABLE VotoResposta ADD CONSTRAINT FK_VotoResposta_idResposta
     FOREIGN KEY (idResposta) REFERENCES Resposta(idResposta)
     ON DELETE CASCADE;
-ALTER TABLE VotoResposta ADD CONSTRAINT FK_VotoResposta_idAutor
-    FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE VotoResposta ADD CONSTRAINT FK_VotoResposta_idUtilizador
+    FOREIGN KEY (idUtilizador) REFERENCES Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
@@ -314,7 +316,7 @@ ALTER TABLE Conversa ADD CONSTRAINT FK_Conversa_idUtilizador2
 CREATE TABLE Mensagem (
     idMensagem      serial      NOT NULL,
     idConversa      integer     NOT NULL,
-    idAutor         integer     NOT NULL,
+    idUtilizador    integer     NOT NULL,
     descricao       text        NOT NULL,
     dataHora        timestamp   DEFAULT current_timestamp
 );
@@ -324,8 +326,8 @@ ALTER TABLE Mensagem ADD CONSTRAINT PK_Mensagem
 ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idConversa
     FOREIGN KEY (idConversa) REFERENCES Conversa(idConversa)
     ON DELETE CASCADE;
-ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idAutor
-    FOREIGN KEY (idAutor) REFERENCES Utilizador(idUtilizador)
+ALTER TABLE Mensagem ADD CONSTRAINT FK_Mensagem_idUtilizador
+    FOREIGN KEY (idUtilizador) REFERENCES Utilizador(idUtilizador)
     ON DELETE CASCADE;
 
 /*--------------------------------------------*/
