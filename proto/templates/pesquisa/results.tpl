@@ -1,7 +1,9 @@
 {extends file='common/header.tpl'}
 {block name=content}
 <div class="ink-grid column-group push-center gutters half-bottom-padding">
-  {include file='pesquisa/sidebar.tpl'}
+  <div class="column all-20 medium-25 small-100 tiny-100">
+    {include file='pesquisa/sidebar.tpl'}
+  </div>
   <div class="column all-80 medium-75 small-100 tiny-100">
   <h3 class="slab half-top-padding">Resultados da pesquisa</h3>
 

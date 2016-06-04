@@ -1,5 +1,6 @@
 {extends file='admin/common/pagina.tpl'}
 {block name=content}
+{include file='common/messages.tpl'}
 {if $ativos_count gt 0}
 <h3 class="condensed all-75">Utilizadores Activos
   <span class="fw-300 medium">({$ativos_count})</span>
@@ -24,6 +25,7 @@
       <th data-sortable="true">Perguntas</th>
       <th data-sortable="true">Respostas</th>
       <th data-sortable="true">Atividade</th>
+      <th data-sortable="false">Acções</th>
     </tr>
   </thead>
   <tbody class="align-center">
@@ -41,6 +43,12 @@
       <td class="medium">{$utilizador.numerorespostas}</td>
       <td>
         <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
+      </td>
+      <td class="medium">
+        <a href="{$BASE_URL}pages/utilizador/ban.php?id={$utilizador.idutilizador}"
+           class="ink-button medium">banir</a>
+        <a href="{$BASE_URL}pages/utilizador/delete.php?id={$utilizador.idutilizador}"
+           class="ink-button medium">apagar</a>
       </td>
     </tr>
   {/foreach}
@@ -71,6 +79,7 @@
       <th data-sortable="true">Perguntas</th>
       <th data-sortable="true">Respostas</th>
       <th data-sortable="true">Atividade</th>
+      <th data-sortable="false">Acções</th>
     </tr>
   </thead>
   <tbody class="align-center">
@@ -88,6 +97,10 @@
       <td class="medium">{$utilizador.numerorespostas}</td>
       <td>
         <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
+      </td>
+      <td class="medium">
+        <button class="ink-button medium" href="{$BASE_URL}pages/categoria/list.php">banir</button>
+        <button class="ink-button medium" href="{$BASE_URL}pages/instituicao/list.php">apagar</button>
       </td>
     </tr>
   {/foreach}
@@ -115,11 +128,12 @@
 <table class="ink-table alternating hover">
   <thead>
     <tr>
-      <th>Username</th>
-      <th>E-mail</th>
-      <th>Perguntas</th>
-      <th>Respostas</th>
-      <th style="width:25%">Acções</th>
+      <th data-sortable="true">Username</th>
+      <th data-sortable="true">E-mail</th>
+      <th data-sortable="true">Perguntas</th>
+      <th data-sortable="true">Respostas</th>
+      <th data-sortable="true">Atividade</th>
+      <th data-sortable="false">Acções</th>
     </tr>
   </thead>
   <tbody>
@@ -148,6 +162,10 @@
             <span>Apagar</span>
           </button>
         </small>
+      </td>
+      <td class="medium">
+        <button class="ink-button medium" href="{$BASE_URL}pages/categoria/list.php">banir</button>
+        <button class="ink-button medium" href="{$BASE_URL}pages/instituicao/list.php">apagar</button>
       </td>
     </tr>
   {/foreach}

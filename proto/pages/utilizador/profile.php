@@ -27,10 +27,14 @@
       $grupoUtilizador = 'Moderadores';
     }
 
+    $queryPerguntas = pergunta_listByAuthor($idUtilizador);
+    $queryRespostas = resposta_listByAuthor($idUtilizador);
     $smarty->assign('utilizador', $queryUtilizador);
     $smarty->assign('grupo', $grupoUtilizador);
-    $smarty->assign('perguntas', pergunta_listByAuthor($idUtilizador));
-    $smarty->assign('respostas', resposta_listByAuthor($idUtilizador));
+    $smarty->assign('perguntas', $queryPerguntas);
+    $smarty->assign('respostas', $queryRespostas);
+    $smarty->assign('perguntas_count', count($queryPerguntas));
+    $smarty->assign('respostas_count', count($queryRespostas));
     $smarty->assign('titulo', $queryUtilizador['username']);
     $smarty->display('utilizador/profile.tpl');
   }

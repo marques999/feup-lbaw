@@ -7,11 +7,11 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {
-    $smarty->assign('instituicoes', instituicao_listAll());
+    $smarty->assign('instituicoes', instituicao_listarInstituicoes());
     $smarty->assign('titulo', 'Gerir Instituições');
     $smarty->display('admin/instituicoes.tpl');
   }

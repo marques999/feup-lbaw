@@ -6,7 +6,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {

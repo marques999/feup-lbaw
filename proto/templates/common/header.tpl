@@ -24,7 +24,6 @@
 {block name=navigation}
 {include file='common/navigation.tpl'}
 {/block}
-{include file='common/messages.tpl'}
 {block name=content}
 {/block}
 {block name=footer}
@@ -36,15 +35,15 @@ $(function() {
   })
 });
 </script>
-<footer id="footer" class="clearfix medium fixed horizontal-padding">
+  <footer id="footer" class="clearfix medium fixed horizontal-padding">
   <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
     <li><a href="about.php">About</a></li>
     <li><a href="sitemap.php">Sitemap</a></li>
     <li><a href="contacts.php">Contacts</a></li>
   </ul>
   <p class="note medium no-margin half-vertical-padding">
-     <i class="fa fa-copyright"></i>
-     <span>2016 KnowUP! - Collaborative Q&A</span>
+    <i class="fa fa-copyright"></i>
+    <span>2016 KnowUP! - Collaborative Q&A</span>
   </p>
 </footer>
 {/block}

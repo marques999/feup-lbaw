@@ -1,47 +1,16 @@
 {extends file='common/header.tpl'}
 {block name=content}
-<div class="ink-grid column-group push-center gutters half-bottom-padding">
-  {include file='instituicao/blocks/sidebar.tpl'}
-  <div class="column half-top-padding all-80 medium-75 small-100 tiny-100">
-    <div class="column-group quarter-gutters message half-bottom-space">
-      <div class="column all-75 medium-65 quarter-vertical-padding">
-        <h4 class="quarter-vertical-space slab">{$instituicao.nome}</h4>
-        <p class="condensed">
-          <i class="fa fa-institution"></i>
-          {strip}
-          <span>
-            {$categorias_count}
-            {if $categorias_count eq 1} categoria
-            {else} categorias
-            {/if}
-          </span>
-          {/strip}
-          &nbsp;
-          <i class="fa fa-question-circle"></i>
-          {strip}
-          <span>
-            {$perguntas_count}
-            {if $perguntas_count eq 1} pergunta
-            {else} perguntas
-            {/if}
-          </span>
-          {/strip} 
-        </p>
-        <p class="medium quarter-vertical-space">
-          <strong>Morada:</strong>
-          <addr>{$instituicao.morada}</addr>
-        </p>
-        <p class="medium quarter-vertical-space">
-          <strong>Telefone:</strong>
-          <span>{$instituicao.contacto}</span>
-        </p>
-      </div>
-      <div class="column all-25 medium-35 quarter-padding">
-        <img src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
-      </div>
+<div class="ink-grid content-drawer column-group gutters bottom-padding">
+  <div class="column all-20 medium-25 small-100 tiny-100">
+    {include file='instituicao/view-sidebar.tpl'}
+  </div>
+  <div class="column all-80 medium-75 small-100 tiny-100 half-vertical-padding">
+  	{include file='common/messages.tpl'}
+    <div class="column-group message">
+      {include file='instituicao/view-information.tpl'}
     </div>
-    <div class="column-group quarter-gutters">
-    {include file='instituicao/blocks/perguntas.tpl'}
+    <div class="column-group half-vertical-space">
+      {include file='instituicao/view-questions.tpl'}
     </div>
   </div>
 </div>

@@ -3,28 +3,27 @@
   include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
-    $idUtilizador1 = safe_getId($_SESSION, 'idUtilizador');
+    $idAdministrador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (safe_check($_GET, 'id')) {
 
-    $idUtilizador2 = safe_getId($_GET, 'id');
+    $idUtilizador = safe_getId($_GET, 'id');
 
-    if ($idUtilizador1 == $idUtilizador2 || utilizador_isAdministrator($idUtilizador1)) {
-      $smarty->assign('idUtilizador', $idUtilizador2);
-      $smarty->assign('titulo', 'Apagar Utilizador');
-      $smarty->display('utilizador/delete.tpl');
+    if ($idAdministrador == $idUtilizador || utilizador_isAdministrator($idAdministrador)) {
+      $smarty->assign('idUtilizador', $idUtilizador);
     }
     else {
       safe_redirect('403.php');
     }
   }
   else {
-    $smarty->assign('idUtilizador', $idUtilizador1);
-    $smarty->assign('titulo', 'Apagar Utilizador');
-    $smarty->display('utilizador/delete.tpl');
+    $smarty->assign('idUtilizador', $idAdministrador); 
   }
+
+  $smarty->assign('titulo', 'Apagar Utilizador');
+  $smarty->display('utilizador/delete.tpl');
 ?>

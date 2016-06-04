@@ -3,11 +3,11 @@
   include_once('../database/categoria.php');
   include_once('../database/utilizador.php');
 
-  $queryCategorias = categoria_listPopular();
+  $queryCategorias = categoria_listarPopulares();
   
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador'); 
-    $queryInstituicao = utilizador_fetchInstituicao($idUtilizador);
+    $queryInstituicao = utilizador_obterInstituicao($idUtilizador);
     $isAdministrator = utilizador_isAdministrator($idUtilizador);
     $smarty->assign('instituicao', $queryInstituicao);
     $smarty->assign('administrador', $isAdministrator);

@@ -1,5 +1,6 @@
 {extends file='admin/common/pagina.tpl'}
 {block name=content}
+{include file='common/messages.tpl'}
 <div class="column-group">
   <div class="column all-80 medium-70 small-60 tiny-50">
     <h3 class="condensed">Instituições
@@ -16,7 +17,7 @@
 <div class="column-group half-gutters">
   {foreach $instituicoes as $instituicao}
   <div class="column all-25 large-33 medium-50 small-100 tiny-100">
-    <div class="message">
+    <div class="message hoverable">
       <img class="all-100" src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
       <div class="quarter-vertical-padding">
         <b class="no-margin">

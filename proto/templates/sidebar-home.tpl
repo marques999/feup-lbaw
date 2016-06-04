@@ -6,7 +6,7 @@
       <a class="black" href="{$BASE_URL}pages/admin/homepage.php">Administração</a>
     </h5>
   </div>
-  {elseif $instituicao != ''}
+  {elseif $instituicao}
   <div class="message half-vertical-space">
     <h5 class="slab no-margin">
       <i class="fa fa-institution"></i>

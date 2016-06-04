@@ -7,7 +7,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (safe_check($_GET, 'id')) {
@@ -17,7 +17,7 @@
     safe_redirect('conversa/list.php');
   }
 
-  $queryConversa = conversa_listById($idConversa);
+  $queryConversa = conversa_listarInformacoes($idConversa);
 
   if ($queryConversa && is_array($queryConversa)) {
     $idRemetente = safe_getId($queryConversa, 'idutilizador1');

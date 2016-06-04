@@ -7,11 +7,11 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (utilizador_isAdministrator($idUtilizador)) {
-    $queryCategorias = categoria_listAll();
+    $queryCategorias = categoria_listarCategorias();
     $smarty->assign('numberRows', count($queryCategorias) / 4);
     $smarty->assign('categorias', $queryCategorias);
     $smarty->assign('titulo', 'Gerir Categorias');

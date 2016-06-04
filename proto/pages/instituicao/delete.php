@@ -6,7 +6,7 @@
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
-    safe_redirect('utilizador/login.php');
+    safe_login();
   }
 
   if (!utilizador_isAdministrator($idUtilizador)) {
@@ -14,7 +14,7 @@
   }
 
   if (safe_strcheck($_GET, 'id')) {
-    $smarty->assign('idInstituicao', safe_trim($_GET, 'id'));
+    $smarty->assign('idInstituicao', safe_trimAll($_GET, 'id'));
     $smarty->assign('titulo', 'Apagar Instituição');
     $smarty->display('instituicao/delete.tpl');
   }
