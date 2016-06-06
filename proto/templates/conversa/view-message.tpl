@@ -4,13 +4,9 @@
     {if $mensagem.removido}
     <strong>{$mensagem.username}</strong>
     {else}
-    {strip}
     <strong>
-      <a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">
-        {$mensagem.username}
-      </a>
+      <a href="{$BASE_URL}pages/utilizador/profile.php?id={$mensagem.idutilizador}">{$mensagem.username}</a>
     </strong>
-    {/strip}
     {/if}
     <p class="medium no-margin">{$mensagem.sigla|upper}</p>
     <img class="avatar-medium half-vertical-space"
@@ -18,7 +14,7 @@
       alt="{$mensagem.username}">
   </div>
   <div class="column all-85 medium-80 small-75 tiny-75">
-    <div class="message-header">
+    <div>
       {if $mensagem@index gt 0}
       <b>RE: {$conversa.titulo}</b>
       {else}
@@ -31,21 +27,7 @@
         </small>
       </p>
     </div>
-    <div class="message-content medium half-bottom-space">
-      {$mensagem.descricao}
-    </div>
-    <div class="message-buttons condensed medium quarter-vertical-padding align-right">
-      {if $mensagem.idutilizador neq $USERID and not $mensagem.removido}
-        <a href="#reply-form" class="ink-button reply-button black">
-          <i class="fa fa-pencil fa-fw"></i>
-          <span>Responder</span>
-        </a>
-        <a href="#reply-form" class="ink-button quote-button black">
-          <i class="fa fa-quote-right fa-fw"></i>
-          <span>Citar</span>
-        </a>
-      {/if}
-    </div>
+    <div class="medium">{$mensagem.descricao}</div>
   </div>
 </div>
 {/foreach}

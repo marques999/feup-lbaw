@@ -13,7 +13,7 @@
 
     $idUtilizador = safe_getId($_GET, 'id');
 
-    if ($idAdministrador == $idUtilizador || utilizador_isAdministrator($idAdministrador)) {
+    if ($idAdministrador == $idUtilizador || safe_checkAdministrador()) {
       $smarty->assign('idUtilizador', $idUtilizador);
     }
     else {
@@ -21,7 +21,7 @@
     }
   }
   else {
-    $smarty->assign('idUtilizador', $idAdministrador); 
+    $smarty->assign('idUtilizador', $idAdministrador);
   }
 
   $smarty->assign('titulo', 'Apagar Utilizador');

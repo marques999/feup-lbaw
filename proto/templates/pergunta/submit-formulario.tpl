@@ -3,10 +3,20 @@
     <strong>Pergunta</strong>
   </label>
   <div class="control medium">
-    {if $pergunta.titulo}
-    <input name="titulo" id="titulo" type="text"data-rules="required|text[true,true]" placeholder="Por favor escreva a sua pergunta aqui..." value="{$pergunta.titulo}">
+    {if $FORM_VALUES.titulo}
+     <input name="titulo" id="titulo"
+            type="text" data-rules="required|text[true,true]"
+            value="{$FORM_VALUES.titulo}"
+            placeholder="Por favor escreva a sua pergunta aqui...">
+    {elseif $pergunta.titulo}
+    <input name="titulo" id="titulo"
+           type="text" data-rules="required|text[true,true]"
+           value="{$pergunta.titulo}"
+           placeholder="Por favor escreva a sua pergunta aqui...">
     {else}
-    <input name="titulo" id="titulo" type="text" data-rules="required|text[true,true]" placeholder="Por favor escreva a sua pergunta aqui...">
+    <input name="titulo" id="titulo"
+           type="text" data-rules="required|text[true,true]"
+           placeholder="Por favor escreva a sua pergunta aqui...">
     {/if}
   </div>
 </div>
@@ -19,7 +29,7 @@
       {foreach $select as $this}
         <optgroup label="{$this.sigla|upper}">
         {foreach $this.json as $categoria}
-          {if $categoria.idcategoria eq $pergunta.idcategoria}
+          {if $categoria.idcategoria eq $idCategoria or $categoria.idcategoria eq $FORM_VALUES.idcategoria}
           <option label="{$categoria.nome}" value="{$categoria.idcategoria}" selected>{$categoria.nome}</option>
           {else}
           <option label="{$categoria.nome}" value="{$categoria.idcategoria}">{$categoria.nome}</option>
@@ -37,7 +47,9 @@
   <div class="control medium">
     {strip}
     <textarea name="descricao" id="descricao" rows="8" cols="60">
-      {if $pergunta.descricao}
+      {if $FORM_VALUES.descricao}
+        {$FORM_VALUES.descricao}
+      {elseif $pergunta.descricao}
         {$pergunta.descricao}
       {/if}
     </textarea>

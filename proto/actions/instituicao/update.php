@@ -1,16 +1,12 @@
-afe_trim<?
+<?
   include_once('../../config/init.php');
   include_once('../../database/instituicao.php');
-  include_once('../../database/utilizador.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  }
-  else {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_login();
   }
 
-  if (!utilizador_isAdministrator($idUtilizador)) {
+  if (!safe_checkAdministrador()) {
     safe_redirect('403.php');
   }
 
@@ -77,7 +73,7 @@ afe_trim<?
     safe_formerror($e->getMessage());
   }
 
-  if (safe_check($_POST, 'image') && image_validateUpload()) {
+  if (image_validateFormat()) {
 
     $baseFilename = basename($_FILES['image']['name']);
     $targetDirectory = "{$BASE_DIR}images/instituicao/";

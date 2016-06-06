@@ -18,7 +18,8 @@
           <strong>Remetente</strong>
         </label>
         <div class="control medium">
-          <input name="nome-remetente" id="nome-remetente" type="text" value="{$USERNAME}" disabled>
+          <input name="nome-remetente" id="nome-remetente" type="text"
+                 value="{$USERNAME}" disabled>
         </div>
       </div>
       <div class="control-group all-50 required">
@@ -26,7 +27,8 @@
           <strong>Destinatário</strong>
         </label>
         <div class="control medium">
-          <input name="nome-destinatario" id="nome-destinatario" type="text" value="{$utilizador.username}" disabled>
+          <input name="nome-destinatario" id="nome-destinatario" type="text"
+                 value="{$utilizador.username}" disabled>
         </div>
       </div>
     </div>
@@ -35,7 +37,16 @@
         <strong>Assunto</strong>
       </label>
       <div class="control medium">
-        <input name="titulo" id="titulo" type="text" data-rules="required|text[true,true]" placeholder="Por favor introduza um assunto para esta mensagem...">
+        {if $FORM_VALUES.titulo}
+        <input name="titulo" id="titulo" type="text"
+               data-rules="required|text[true,true]"
+               value="{$FORM_VALUES.titulo}"
+               placeholder="Por favor introduza um assunto para esta mensagem...">
+        {else}
+        <input name="titulo" id="titulo" type="text"
+               data-rules="required|text[true,true]"
+               placeholder="Por favor introduza um assunto para esta mensagem...">
+        {/if}
       </div>
     </div>
     <div class="control-group required">
@@ -43,7 +54,18 @@
         <strong>Mensagem</strong>
       </label>
       <div class="control medium">
-         <textarea name="descricao" id="descricao" type="text" data-rules="required|text[true,true]" rows="10" placeholder="Por favor escreva um texto sucinto onde indique as razões pelas quais está a denunciar este utilizador."></textarea>
+        {if $FORM_VALUES.descricao}
+        <textarea name="descricao" id="descricao" type="text"
+                   data-rules="required|text[true,true]" rows="10"
+                   placeholder="Por favor escreva aqui a sua mensagem...">
+           {$FORM_VALUES.descricao}
+        </textarea>
+        {else}
+        <textarea name="descricao" id="descricao" type="text"
+                   data-rules="required|text[true,true]" rows="10"
+                   placeholder="Por favor escreva aqui a sua mensagem...">
+        </textarea>
+        {/if}
       </div>
     </div>
     <div class="control-group push-right">

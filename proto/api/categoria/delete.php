@@ -1,11 +1,10 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/categoria.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    if (utilizador_isAdministrator(safe_getId($_SESSION, 'idUtilizador'))) {
+    if (safe_checkAdministrador()) {
 
       if (safe_check($_POST, 'idCategoria')) {
 

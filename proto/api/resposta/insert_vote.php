@@ -18,7 +18,7 @@
       }
 
       try {
-        echo resposta_fetchVotosJson(safe_getId($_POST, 'idPergunta'));
+        echo resposta_fetchVotosJson(safe_getId($_POST, 'idResposta'));
       }
       catch (PDOException $e) {
         http_response_code(400);

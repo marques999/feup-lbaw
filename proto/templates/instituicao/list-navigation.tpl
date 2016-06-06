@@ -1,14 +1,19 @@
-<div class="column all-66 large-50 medium-40 small-40 tiny-100">
-  <h3 class="condensed">Instituições
+<div class="column all-66 large-50 medium-40 small-30 tiny-100">
+  <h3 class="condensed">
+    <span>Instituições</span>
     <span>|</span>
     <span class="fw-300 medium">{$instituicoes|count}</span>
   </h3>
 </div>
-<div class="column all-33 large-50 medium-60 small-60 tiny-100">
+<div class="column all-33 large-50 medium-60 small-70 tiny-100">
   <nav class="ink-navigation medium push-right">
     <ul class="pagination pills">
-      <li><a href="{$BASE_URL}pages/categoria/list.php">por categoria</a></li>
-      <li class="active"><a href="{$BASE_URL}pages/instituicao/list.php">por instituição</a></li>
+      <li>
+        <a href="{$BASE_URL}pages/categoria/list.php">por categoria</a>
+      </li>
+      <li class="active">
+        <a href="{$BASE_URL}pages/instituicao/list.php">por instituição</a>
+      </li>
     </ul>
   </nav>
 </div>

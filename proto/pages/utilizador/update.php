@@ -10,13 +10,12 @@
     safe_login();
   }
 
-  $queryCountry = file_get_contents('../../javascript/countries.json');
-
   if (safe_check($_GET, 'id')) {
 
     $idUtilizador = safe_getId($_GET, 'id');
+    $queryCountry = file_get_contents('../../javascript/countries.json');
 
-    if ($idAdministrador == $idUtilizador || utilizador_isAdministrator($idAdministrador)) {
+    if ($idAdministrador == $idUtilizador || safe_checkAdministrador()) {
       $smarty->assign('idUtilizador', $idUtilizador);
       $smarty->assign('utilizador', utilizador_getById($idUtilizador));
       $smarty->assign('instituicoes', instituicao_listarInstituicoes());

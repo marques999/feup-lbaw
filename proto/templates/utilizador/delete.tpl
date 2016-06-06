@@ -1,7 +1,8 @@
 {extends file='other/header.tpl'}
 {block name=content}
 <div class="align-center">
-  <h1 class="slab">Apagar utilizador</h1>
+  {include file='common/messages.tpl'}
+  <h1 class="slab">Apagar Utilizador</h1>
   <p>Tem a certeza que deseja eliminar a sua conta <strong>{$USERNAME}</strong>?</p>
   <p>
     <strong>ATENÇÃO:</strong>

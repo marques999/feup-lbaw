@@ -1,34 +1,25 @@
-{extends file='admin/common/pagina.tpl'}
+{extends file='admin/pagina.tpl'}
 {block name=content}
-<div class="column-group half-gutters">
-{include file='common/messages.tpl'}
-{foreach $categorias as $categoria}
-<div class="column all-25 large-33 medium-50 small-50 tiny-100">
-  <div class="message hoverable">
-    <a class="condensed black" href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a>
-    <span class="action-buttons push-right" data-target="{$categoria.idcategoria}">
-      <a class="black medium ink-tooltip edit-button"
-         data-tip-text="Editar categoria"
-         data-tip-where="up"
-         data-tip-color="black"
-         id="update-category">
-      <i class="fa fa-pencil fa-fw"></i>
+<div class="column-group">
+  <div class="column all-80 medium-70 small-60 tiny-50">
+    <h3 class="condensed">Categorias
+      <span class="fw-300 medium">({$categorias|count})</span>
+    </h3>
+  </div>
+  <div class="column all-20 medium-30 small-40 tiny-50 align-right">
+    <a href="{$BASE_URL}pages/categoria/submit.php" class="ink-button medium">
+      <i class="fa fa-plus"></i>
+      <span>Adicionar categoria</span>
     </a>
-    <a class="black medium ink-tooltip delete-button"
-        data-tip-text="Apagar categoria"
-        data-tip-where="up"
-        data-tip-color="black"
-        id="delete-category">
-      <i class="fa fa-close fa-fw"></i>
-    </a>
-    </span>
-    <span class="category-information push-right">
-      <span>{$categoria.numeroperguntas}</span>
-      <i class="fa fa-question-circle fa-fw"></i>
-    </span>
   </div>
 </div>
-{/foreach}
+{include file='common/messages.tpl'}
+<div class="column-group half-gutters">
+  {foreach $categorias as $categoria}
+  <div class="column all-25 large-33 medium-50 small-50 tiny-100">
+    {include file='admin/categorias-information.tpl'}
+  </div>
+  {/foreach}
 </div>
 <script type="text/javascript" src="{$BASE_URL}javascript/admin-categoria.js"></script>
 {/block}

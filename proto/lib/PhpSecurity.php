@@ -11,6 +11,18 @@ function safe_getId($array, $id)
 	return $safeId < 0 ? 0 : $safeId;
 }
 
+function safe_checkAdministrador()
+{
+	global $_SESSION;
+	return $_SESSION['permissions'] == 'AD6tkUOG';
+}
+
+function safe_checkModerador()
+{
+	global $_SESSION;
+	return $_SESSION['permissions']  == 'GQ7h3hBA';
+}
+
 function safe_getVote($array, $id)
 {
 	if (!isset($array[$id]) || !is_numeric($array[$id]))

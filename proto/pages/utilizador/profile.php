@@ -20,10 +20,10 @@
 
     $grupoUtilizador = 'Utilizadores';
 
-    if (utilizador_isAdministrator($idUtilizador)) {
+    if (safe_checkAdministrador()) {
       $grupoUtilizador = 'Administradores';
     }
-    else if (utilizador_isModerator($idUtilizador)) {
+    else if (safe_checkModerador()) {
       $grupoUtilizador = 'Moderadores';
     }
 

@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/pergunta.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
@@ -17,11 +16,9 @@
     safe_formerror('Deve especificar uma pergunta primeiro!');
   }
 
-  $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isModerator = utilizador_isModerator($idUtilizador);
-
-  if (!$isOriginalPoster && !$isModerator && !$isAdministrator) {
+  if (!pergunta_verificarAutor($idPergunta, $idUtilizador)
+      && !safe_checkModerador()
+      && !safe_checkAdministrador()) {
     safe_redirect('403.php');
   }
 

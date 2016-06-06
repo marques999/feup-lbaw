@@ -1,11 +1,25 @@
 <input name="location" id="location" type="hidden" value="{$location}">
 <fieldset>
   <legend class="slab align-center">Autenticação</legend>
+  {if $FORM_VALUES.location}
+  <input name="location" id="location" type="hidden" value="{$FORM_VALUES.location}">
+  {else}
+  <input name="location" id="location" type="hidden" value="{$location}">
+  {/if}
   <div class="control-group column-group half-gutters">
     <label for="username" class="all-20 align-right">Username:</label>
     <div class="control append-symbol all-75">
       <span>
-        <input name="username" id="username" type="text" data-rules="required|alpha_numeric" placeholder="Por favor introduza o seu username">
+        {if $FORM_VALUES.username}
+        <input name="username" id="username"
+               type="text" data-rules="required|alpha_numeric"
+               values="{$FORM_VALUES.username}"
+               placeholder="Por favor introduza o seu username">
+        {else}
+        <input name="username" id="username"
+               type="text" data-rules="required|alpha_numeric"
+               placeholder="Por favor introduza o seu username">
+        {/if}
         <i class="fa fa-user"></i>
       </span>
     </div>
@@ -14,7 +28,9 @@
     <label for="password" class="all-20 align-right">Password:</label>
     <div class="control append-symbol all-75">
       <span>
-        <input name="password" id="password" type="password" data-rules="required|text[true,false]" placeholder="Por favor introduza a sua palavra-passe">
+        <input name="password" id="password"
+               type="password" data-rules="required|text[true,false]"
+               placeholder="Por favor introduza a sua palavra-passe">
         <i class="fa fa-key"></i>
       </span>
     </div>

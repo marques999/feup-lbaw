@@ -1,6 +1,16 @@
 {foreach $respostas as $resposta}
-<article id="reply-{$resposta.idresposta}">
-  <div class="column all-100">
+{if $resposta.melhorresposta}
+<section id="reply-{$resposta.idresposta}" class="message">
+{else}
+<section id="reply-{$resposta.idresposta}">
+{/if}
+  <div class="column">
+    {if $resposta.melhorresposta}
+    <div class="push-right positive-score condensed">
+      <i class="fa fa-check"></i>
+      <strong>melhor resposta</strong>
+    </div>
+    {/if}
     {if not $resposta.removido}
     <div class="ink-dropdown quarter-vertical-space"
          data-target="#answer{$resposta.idresposta}-dropdown"
@@ -21,7 +31,7 @@
             <span>Ver Perfil</span>
           </a>
         </li>
-        {if $moderador}
+        {if $MODERADOR and $USERID neq $pergunta.idutilizador}
         <li>
           <a href="{$BASE_URL}pages/utilizador/report.php?id={$resposta.idutilizador}">
             <i class="fa fa-flag fa-fw"></i>
@@ -31,22 +41,22 @@
         {else}
         <li class="disabled">
           <a href="#">
-            <i class="fa fa-flag fa-fw"></i>
+            <i class="fa fa-fw fa-flag"></i>
             <span>Denunciar</span>
           </a>
         </li>
         {/if}
-        {if not $USERID or $USERID eq $pergunta.idutilizador}
+        {if not $USERID or $USERID eq $resposta.idutilizador}
         <li class="disabled">
           <a href="#">
-            <i class="fa fa-envelope fa-fw"></i>
+            <i class="fa fa-fw fa-envelope"></i>
             <span>Enviar Mensagem</span>
           </a>
         </li>
         {else}
         <li>
           <a href="{$BASE_URL}pages/conversa/view.php?id={$resposta.idutilizador}">
-            <i class="fa fa-envelope fa-fw"></i>
+            <i class="fa fa-fw fa-envelope"></i>
             <span>Enviar Mensagem</span>
           </a>
         </li>
@@ -77,7 +87,7 @@
     </div>
   </div>
   <div class="column all-100">
-    <div class="medium quarter-vertical-padding align-justify">
+    <div class="no-margin medium answer-content quarter-top-padding align-justify">
       {$resposta.descricao}
     </div>
     <p class="condensed quarter-bottom-space">
@@ -96,7 +106,7 @@
       <div class="control-group">
         <input type="hidden" name="idResposta" value="{$resposta.idresposta}">
         <div class="control all-80 small-70 tiny-60">
-          <input type="text" name="descricao" id="descricao" placeholder="Escreva um comentário...">
+          <input type="text" name="comentario" id="comentario" placeholder="Escreva um comentário...">
         </div>
         <div class="control all-20 small-30 tiny-40">
            <button type="submit" id="submit" name="submit" class="ink-button black all-100">Submeter</button>
@@ -108,25 +118,41 @@
   </div>
   {if $USERID and $pergunta.ativa}
   <div class="medium no-margin button-toolbar">
-    {if $USERID eq $pergunta.idutilizador}
-    <div class="button-group">
-      <button class="ink-button black">
-        <i class="fa fa-heart fa-fw"></i>
-        <span>Destacar</span>
+    {if $USERID eq $resposta.idutilizador or $USERID eq $pergunta.idutilizador or $MODERADOR or $ADMINISTRADOR}
+    <div class="button-group answer-action-buttons">
+      {if $USERID eq $resposta.idutilizador or $MODERADOR or $ADMINISTRADOR}
+      {if not $resposta.melhorresposta}
+      <button class="ink-button edit-button black">
+        <i class="fa fa-pencil fa-fw"></i>
+        <span class="hide-small hide-tiny">Editar</span>
       </button>
+      {/if}
+      <a class="ink-button delete-button black"
+         href="{$BASE_URL}actions/resposta/delete.php?idp={$pergunta.idpergunta}&idr={$resposta.idresposta}">
+        <i class="fa fa-trash fa-fw"></i>
+        <span class="hide-small hide-tiny">Apagar</span>
+      </a>
+      {/if}
+      {if not $resposta.melhorresposta and ($USERID eq $pergunta.idutilizador or $MODERADOR or $ADMINISTRADOR)}
+      <a class="ink-button black"
+         href="{$BASE_URL}actions/resposta/favorite.php?idp={$pergunta.idpergunta}&idr={$resposta.idresposta}">
+        <i class="fa fa-heart fa-fw"></i>
+        <span class="hide-small hide-tiny">Destacar</span>
+      </a>
+      {/if}
     </div>
     {/if}
     <div class="reply-buttons button-group">
-    {if $USERID eq $pergunta.idutilizador or $USERID eq $resposta.idutilizador}
+    {if $USERID eq $resposta.idutilizador}
       <button class="ink-button black">
         <i class="fa fa-thumbs-up fa-fw"></i>
         <span>Gostos&nbsp;</span>
-        <strong>{$pergunta.votospositivos}</strong>
+        <strong>{$resposta.votospositivos}</strong>
       </button>
       <button class="ink-button black">
         <i class="fa fa-thumbs-down fa-fw"></i>
         <span>Não gostos&nbsp;</span>
-        <strong>{$pergunta.votosnegativos}</strong>
+        <strong>{$resposta.votosnegativos}</strong>
       </button>
     {else}
       {if $resposta.valor eq 1}
@@ -153,14 +179,14 @@
         <i class="fa fa-thumbs-down fa-fw"></i>
         <span>Não gosto&nbsp;</span>
         <strong>{$resposta.votosnegativos}</strong>
-      </button>    
+      </button>
       {/if}
     {/if}
     </div>
   </div>
   {/if}
-{if not $resposta@last}
+</section>
+{if not $resposta.melhorresposta and not $resposta@last}
 <hr class="half-vertical-space">
 {/if}
-</article>
 {/foreach}

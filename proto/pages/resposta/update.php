@@ -18,13 +18,11 @@
   }
 
   $queryResposta = resposta_listById($idResposta);
-  $idAutor = safe_getId($queryPergunta, 'idutilizador');
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isModerator = utilizador_isModerator($idUtilizador);
+  $idAutor = safe_getId($queryResposta, 'idutilizador');
 
-  if ($idUtilizador == $idAutor || $isModerator || $isAdministrator) {
+  if ($idUtilizador == $idAutor || safe_checkModerador() || safe_checkAdministrador()) {
     $smarty->assign('titulo', 'Editar Resposta');
-    $smarty->display('resposta/edit.tpl');
+    $smarty->display('resposta/update.tpl');
   }
   else {
     safe_redirect('403.php');

@@ -25,8 +25,16 @@ function pergunta_verificarAutor($idPergunta, $idUtilizador) {
   $stmt = $db->prepare("SELECT FROM Pergunta WHERE idPergunta = :idPergunta AND idUtilizador = :idUtilizador");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-  $result = $stmt->execute();
+  $stmt->execute();
+  $result = $stmt->fetch();
   return $result && is_array($result);
+}
+function pergunta_visitarPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("SELECT visitarPergunta(:idPergunta, :idUtilizador)");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
 }
 function pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descricao) {
   global $db;
@@ -81,17 +89,22 @@ function pergunta_editarPergunta($idPergunta, $idCategoria, $titulo, $descricao)
 }
 function pergunta_apagarPergunta($idPergunta, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("DELETE FROM Pergunta WHERE idPergunta = :idPergunta AND idUtilizador = :idUtilizador");
+  $stmt = $db->prepare("DELETE FROM Pergunta WHERE idPergunta = :idPerguntad");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function pergunta_activarPergunta($idPergunta, $idUtilizador) {
+  global $db;
+  $stmt = $db->prepare("UPDATE Pergunta SET ativa = TRUE WHERE idPergunta = :idPergunta");
+  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
 }
 function pergunta_fecharPergunta($idPergunta, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("UPDATE Pergunta SET ativa = FALSE WHERE idPergunta = :idPergunta AND idUtilizador = :idUtilizador");
+  $stmt = $db->prepare("UPDATE Pergunta SET ativa = FALSE WHERE idPergunta = :idPergunta");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
-  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
 }

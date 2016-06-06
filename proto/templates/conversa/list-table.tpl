@@ -1,5 +1,5 @@
 <thead>
-  <th style="width:25%">Conversa</th>
+  <th>Conversa</th>
   <th>Mensagens</th>
   <th>Última Mensagem</th>
   <th style="width:20%">Autor</th>

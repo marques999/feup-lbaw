@@ -4,13 +4,13 @@
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
-    if (safe_check($_POST, 'idPergunta') && safe_strcheck($_POST, 'descricao')) {
+    if (safe_check($_POST, 'idPergunta') && safe_strcheck($_POST, 'comentario')) {
 
       try {
         echo pergunta_inserirComentario(
           safe_getId($_POST, 'idPergunta'),
           safe_getId($_SESSION, 'idUtilizador'),
-          safe_trimAll($_POST, 'descricao')
+          safe_trimAll($_POST, 'comentario')
         );
       }
       catch (PDOException $e) {

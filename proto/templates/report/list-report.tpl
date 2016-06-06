@@ -4,7 +4,7 @@
     <div class="report-close push-right">
        <small>
         <a href="#reply-form" class="black remove-button">
-          <i class="fa fa-close fa-fw"></i>
+          <i class="fa fa-fw fa-close"></i>
         </a>
       </small>
     </div>

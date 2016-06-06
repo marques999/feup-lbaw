@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/resposta.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
@@ -24,24 +23,22 @@
     safe_formerror('Deve especificar uma resposta primeiro!');
   }
 
-  if (safe_strcheck($_POST, 'descricao')) {
-    $descricao = safe_trimAll($_POST, 'descricao');
+  if (safe_strcheck($_POST, 'resposta')) {
+    $descricao = safe_trim($_POST, 'resposta');
   }
   else {
     safe_formerror('O corpo da resposta não pode estar em branco!');
   }
 
   $isOriginalPoster = resposta_verificarAutor($idResposta, $idUtilizador);
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isModerator = utilizador_isModerator($idUtilizador);
 
-  if (!$isOriginalPoster && !$isModerator && !$isAdministrator) {
+  if (!$isOriginalPoster && !safe_checkModerador() && !safe_checkAdministrador()) {
     safe_redirect('403.php');
   }
 
   try {
 
-    if (resposta_atualizarResposta($idResposta, $idUtilizador, $descricao) > 0) {
+    if (resposta_editarResposta($idResposta, $descricao) > 0) {
       safe_redirect("pergunta/view.php?id=$idPergunta#reply-$idResposta");
     }
     else {

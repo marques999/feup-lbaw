@@ -9,7 +9,7 @@
     safe_login();
   }
 
-  if (utilizador_isAdministrator($idUtilizador)) {
+  if (safe_checkAdministrador()) {
     $smarty->assign('titulo', 'Nova Instituição');
     $smarty->display('instituicao/submit.tpl');
   }

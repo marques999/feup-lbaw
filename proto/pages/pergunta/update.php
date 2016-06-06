@@ -18,12 +18,10 @@
     safe_redirect('404.php');
   }
 
-  $queryPergunta = pergunta_listarInformacoes($idPergunta);  
+  $queryPergunta = pergunta_listarInformacoes($idPergunta);
   $idAutor = safe_getId($queryPergunta, 'idutilizador');
-  $isModerator = utilizador_isModerator($idUtilizador);
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
 
-  if ($idUtilizador == $idAutor || $isModerator || $isAdministrator) {
+  if ($idUtilizador == $idAutor || safe_checkModerador() || safe_checkAdministrador()) {
 
     $idCategoria = safe_getId($queryPergunta, 'idcategoria');
     $queryCategorias = categoria_listarCategoriasJson();
@@ -31,10 +29,23 @@
     $queryRespostas = pergunta_obterRespostas($idPergunta);
     $queryRelacionadas = pergunta_listarRelacionadas($idCategoria, $idPergunta);
 
+    uasort($queryRespostas, function($a, $b) {
+
+      if ($a['melhorresposta'] === true) {
+        return false;
+      }
+
+      if ($b['melhorresposta'] === true) {
+        return true;
+      }
+
+      return $a['datahora'] > $b['datahora'];
+    });
+
     for ($i = 0; $i < count($queryCategorias); $i++) {
       $queryCategorias[$i]['json'] = json_decode($queryCategorias[$i]['json'], true);
     }
-    
+
     $smarty->assign('pergunta', $queryPergunta);
     $smarty->assign('select', $queryCategorias);
     $smarty->assign('categorias', $queryCategoriasRelacionadas);

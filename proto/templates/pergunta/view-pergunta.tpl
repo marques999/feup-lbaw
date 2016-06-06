@@ -1,13 +1,5 @@
 <h3 class="slab quarter-vertical-space">
-  {strip}
-    {$pergunta.titulo}
-  {if not $pergunta.ativa}
-  <span class="ink-badge black small">
-    <i class="fa fa-check"></i>
-  {/strip}
-    <span class="medium">fechada</span>
-  </span>
-  {/if}
+  {$pergunta.titulo}
 </h3>
 <div class="column all-100">
   {if not $pergunta.removido}
@@ -30,7 +22,7 @@
           <span>Ver Perfil</span>
         </a>
       </li>
-      {if $moderador}
+      {if $MODERADOR and $USERID neq $pergunta.idutilizador}
       <li>
         <a href="{$BASE_URL}pages/utilizador/report.php?id={$pergunta.idutilizador}">
           <i class="fa fa-flag fa-fw"></i>
@@ -84,8 +76,12 @@
 </div>
 <div class="column all-100 quarter-vertical-space">
   {if $pergunta.descricao}
-  <div class="medium quarter-vertical-padding align-justify">
+  <div class="column quarter-vertical-padding align-justify medium">
     {$pergunta.descricao}
+  </div>
+  {else}
+  <div class="column quarter-vertical-padding align-justify">
+    <small>Nenhuma descrição disponível.</small>
   </div>
   {/if}
   <p class="condensed no-margin">
@@ -102,7 +98,7 @@
     <div class="control-group">
       <input type="hidden" name="idPergunta" value="{$pergunta.idpergunta}">
       <div class="control all-80 small-70 tiny-60">
-        <input type="text" name="descricao" id="descricao" placeholder="Escreva um comentário...">
+        <input type="text" name="comentario" id="comentario" placeholder="Escreva um comentário...">
       </div>
       <div class="control all-20 small-30 tiny-40">
          <button type="submit" id="submit" name="submit" class="ink-button black all-100">Submeter</button>
@@ -140,10 +136,17 @@
 {if $USERID and $pergunta.ativa}
 <div class="button-toolbar">
   <div class="button-group question-action-buttons">
+    {if $USERID and $USERID eq $pergunta.idutilizador}
+    <button class="ink-button medium black">
+      <i class="fa fa-pencil fa-fw"></i>
+      <span>Responder</span>
+    </button>
+    {else}
     <a href="#reply-form" class="ink-button medium black">
       <i class="fa fa-pencil fa-fw"></i>
       <span>Responder</span>
     </a>
+    {/if}
     {if $utilizador.idseguidor}
     <button class="ink-button follow-button medium black active">
       <i class="fa fa-check fa-fw"></i>
@@ -193,7 +196,7 @@
       <i class="fa fa-thumbs-down fa-fw"></i>
       <span>Não gosto&nbsp;</span>
       <strong>{$pergunta.votosnegativos}</strong>
-    </button>    
+    </button>
     {/if}
   {/if}
   </div>

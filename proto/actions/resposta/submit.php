@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/resposta.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
@@ -18,7 +17,7 @@
   }
 
   if (safe_strcheck($_POST, 'descricao')) {
-    $descricao = safe_trimAll($_POST, 'descricao');
+    $descricao = safe_trim($_POST, 'descricao');
   }
   else {
     safe_formerror('O corpo da resposta não pode estar em branco!');
@@ -29,7 +28,7 @@
     $idResposta = resposta_inserirResposta($idPergunta, $idUtilizador, $descricao);
 
     if ($idResposta > 0) {
-      safe_redirect("pergunta/view.php?=$idPergunta#reply-$idResposta");
+      safe_redirect("pergunta/view.php?id=$idPergunta#reply-$idResposta");
     }
     else {
       safe_formerror('Erro desconhecido: outra resposta com este identificador já existe?');

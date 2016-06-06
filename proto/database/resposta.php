@@ -32,6 +32,7 @@ function resposta_listById($idContribuicao) {
       Pergunta.dataHora,
       Contribuicao.descricao,
       Contribuicao.dataHora,
+      Contribuicao.idUtilizador,
       Resposta.melhorResposta
     FROM Contribuicao
     INNER JOIN Resposta ON idContribuicao = idResposta
@@ -44,12 +45,13 @@ function resposta_listById($idContribuicao) {
 }
 function resposta_verificarAutor($idContribuicao, $idUtilizador) {
   global $db;
-  $stmt = $db->prepare("SELECT FROM Contribuicao
+  $stmt = $db->prepare("SELECT idUtilizador FROM Contribuicao
     WHERE idContribuicao = :idContribuicao
     AND idUtilizador = :idUtilizador");
   $stmt->bindParam(":idContribuicao", $idContribuicao, PDO::PARAM_INT);
   $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
-  $result = $stmt->execute();
+  $stmt->execute();
+  $result = $stmt->fetch();
   return $result && is_array($result);
 }
 function resposta_inserirResposta($idPergunta, $idUtilizador, $descricao) {
@@ -71,24 +73,21 @@ function resposta_inserirResposta($idPergunta, $idUtilizador, $descricao) {
   }
   return 0;
 }
-function resposta_editarResposta($idResposta, $descricao) {
+function resposta_editarResposta($idContribuicao, $descricao) {
   global $db;
   $stmt = $db->prepare("UPDATE Contribuicao
     SET descricao = :descricao
-    WHERE idContribuicao = :idResposta
-    AND idUtilizador = :idUtilizador");
-  $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
+    WHERE idContribuicao = :idContribuicao");
+  $stmt->bindParam(":idContribuicao", $idContribuicao, PDO::PARAM_INT);
   $stmt->bindParam(":descricao", $descricao, PDO::PARAM_STR);
   $stmt->execute();
   return $stmt->rowCount();
 }
-function resposta_apagarResposta($idResposta, $idUtilizador) {
+function resposta_apagarResposta($idContribuicao, $idUtilizador) {
   global $db;
   $stmt = $db->prepare("DELETE FROM Contribuicao
-    WHERE idContribuicao = :idComentario
-    AND idUtilizador = :idUtilizador");
-  $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
-  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+    WHERE idContribuicao = :idContribuicao");
+  $stmt->bindParam(":idContribuicao", $idContribuicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
 }
@@ -105,6 +104,7 @@ function resposta_destacarResposta($idPergunta, $idResposta) {
 }
 function resposta_inserirComentario($idResposta, $idUtilizador, $descricao) {
   global $db;
+  $db->beginTransaction();
   $stmt = $db->prepare("WITH NovoComentario AS (
     INSERT INTO Contribuicao(idContribuicao, idUtilizador, descricao)
     VALUES(DEFAULT, :idUtilizador, :descricao) RETURNING idContribuicao
@@ -112,14 +112,14 @@ function resposta_inserirComentario($idResposta, $idUtilizador, $descricao) {
     SELECT idContribuicao, :idResposta
     FROM NovoComentario");
   $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
-  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);  
+  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
   $stmt->bindParam(":descricao", $descricao, PDO::PARAM_STR);
   $stmt->execute();
+  $db->commit();
   return json_encode($stmt->rowCount());
 }
 function resposta_removerComentario($idResposta, $idComentario, $idUtilizador) {
   global $db;
-  $db->beginTransaction();
   $stmt = $db->prepare("DELETE FROM ComentarioResposta
     WHERE idComentario = :idComentario
     AND idResposta = :idResposta");
@@ -134,7 +134,6 @@ function resposta_removerComentario($idResposta, $idComentario, $idUtilizador) {
     $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
     $stmt->execute();
   }
-  $db->commit();
   return json_encode($stmt->rowCount());
 }
 function resposta_registarVoto($idResposta, $idUtilizador, $valor) {
@@ -148,9 +147,9 @@ function resposta_registarVoto($idResposta, $idUtilizador, $valor) {
 function resposta_fetchVotos($idResposta) {
   global $db;
   $stmt = $db->prepare("SELECT
-    COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
-    COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
-    COALESCE(SUM(valor), 0) AS pontuacao
+      COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
+      COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
+      COALESCE(SUM(valor), 0) AS pontuacao
     FROM VotoResposta
     WHERE idResposta = :idResposta
     GROUP BY idResposta");
@@ -170,7 +169,8 @@ function resposta_fetchComments($idResposta) {
     FROM ComentarioResposta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
     NATURAL JOIN Utilizador
-    WHERE idResposta = :idResposta");
+    WHERE idResposta = :idResposta
+    ORDER BY idContribuicao");
   $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -188,7 +188,8 @@ function resposta_fetchCommentsAfter($idResposta, $ultimoComentario) {
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioResposta.idComentario
     NATURAL JOIN Utilizador
     WHERE idResposta = :idResposta
-    AND idComentario > :ultimoComentario");
+    AND idComentario > :ultimoComentario
+    ORDER BY idContribuicao");
   $stmt->bindParam(":ultimoComentario", $ultimoComentario, PDO::PARAM_INT);
   $stmt->bindParam(":idResposta", $idResposta, PDO::PARAM_INT);
   $stmt->execute();

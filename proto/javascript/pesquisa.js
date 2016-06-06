@@ -1,17 +1,53 @@
 var queryParameters = parseParameters();
-var lastFilter = queryParameters['filter'] || 'year';
-var lastSort = queryParameters['sort'] || 'date';
-var lastOrder = queryParameters['order'] || 'descending';
+var defaultCallback = null;
+var defaultFilter = null;
+var defaultSort = null;
+var defaultOrder = null;
+var lastFilter = queryParameters['filter'] || defaultFilter;
+var lastSort = queryParameters['sort'] || defaultSort;
+var lastOrder = queryParameters['order'] || defaultOrder;
 var lastQuery = $_GET('query');
 
 function locationHashChanged() {
   queryParameters = parseParameters();
-  lastFilter = queryParameters['filter'] || 'year';
-  lastSort = queryParameters['sort'] || 'date';
-  lastOrder = queryParameters['order'] || 'descending';
+  lastFilter = queryParameters['filter'] || defaultFilter;
+  lastSort = queryParameters['sort'] || defaultSort;
+  lastOrder = queryParameters['order'] || defaultOrder;
   lastQuery = $_GET('query');
-  fetchQuestions();
-}
+  executeCallback();
+};
+
+function setCallback(myCallback) {
+  defaultCallback = myCallback;
+};
+
+function setDefaults(myFilter, mySort, myOrder) {
+  
+  defaultFilter = myFilter;
+
+  if (lastFilter == null) {
+    lastFilter = myFilter;
+  }
+  
+  defaltSort = mySort;
+
+  if (lastSort == null) {
+    lastSort = mySort;
+  }  
+
+  defaultOrder = myOrder;
+
+  if (lastOrder == null) {
+    lastOrder = myOrder;
+  }
+};
+
+function executeCallback() {
+
+  if (defaultCallback != null) {
+    defaultCallback.call();
+  }
+};
 
 window.onhashchange = locationHashChanged;
 
@@ -34,7 +70,7 @@ function parseParameters() {
   }
 
   return vars;
-}
+};
 
 function $_GET(variable) {
 
@@ -49,7 +85,7 @@ function $_GET(variable) {
       return pair[1];
     }
   }
-}
+};
 
 function changeTarget() {
 
@@ -76,48 +112,37 @@ function changeTarget() {
   }
 };
 
-function fetchQuestions() {
-  $.getJSON("../../api/pesquisa/get_perguntas.php", {
-      query: lastQuery,
-      filter: lastFilter,
-      sort: lastSort,
-      order: lastOrder
-  }).done(function(jsonString) {
-    printQuestions(jsonString);
-    getCurrentFilter().addClass('active');
-    getCurrentSort().addClass('active');
-  });
-};
-
 function getCurrentSort() {
-  return $('#sidebar-sort #sort-' + lastSort + '-' + lastOrder);
+  return $('li.sort-' + lastSort + '-' + lastOrder);
 };
 
 function getCurrentFilter() {
-  return $('#sidebar-filter #filter-' + lastFilter);
+  return $('li.filter-' + lastFilter);
 };
 
-$(function() {
+function registerFilter(domElement) {
 
-  fetchQuestions();
-  getCurrentFilter().addClass('active');
-  getCurrentSort().addClass('active');
+  domElement.click(function() {
 
-  $('#sidebar-filter li').click(function() {
     event.preventDefault();
-    var currentFilter = $(this).get(0).id.split('-')[1];
+    var currentFilter = $(this).data('filter');
+
     if (currentFilter !== lastFilter) {
       getCurrentFilter().removeClass('active');
       lastFilter = currentFilter;
       changeTarget();
     }
   });
+};
 
-  $('#sidebar-sort li').click(function() {
+function registerSort(domElement) {
+
+  domElement.click(function() {
+
     event.preventDefault();
-    var idArguments = $(this).get(0).id.split('-');
-    var currentSort = idArguments[1];
-    var currentOrder = idArguments[2];
+    var currentSort = $(this).data('sort');
+    var currentOrder = $(this).data('order');
+
     if (currentSort !== lastSort || currentOrder !== lastOrder) {
       getCurrentSort().removeClass('active');
       lastSort = currentSort;
@@ -125,56 +150,4 @@ $(function() {
       changeTarget();
     }
   });
-});
-
-function printQuestions(jsonObject) {
-
-  var domElement = $('div#content').empty();
-
-  for (var i = 0; i < jsonObject.length; i++) {
-
-    var thisObject = jsonObject[i];
-
-    if (thisObject.pontuacao > 0) {
-      thisObject.scoretype = 'positive-score';
-    }
-    else if(thisObject.pontuacao < 0) {
-      thisObject.scoretype = 'negative-score';
-    }
-    else {
-      thisObject.scoretype = '';
-    }
-
-    if (thisObject.ativa) {
-      thisObject.badge = '';
-    }
-    else {
-      thisObject.badge = '<span class="small">\n<i class="fa fa-check"></i>\n<span>fechada</span>\n</span>';
-    }
-
-    if (thisObject.removido) {
-      thisObject.linkautor = '<span class="medium">' + thisObject.nomeutilizador + '</span>';
-    }
-    else {
-      thisObject.linkautor = '<a class="medium" href="../utilizador/profile.php?id=' + thisObject.idutilizador + '">' + thisObject.nomeutilizador + '</a>';
-    }
-
-    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{respostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate highlight no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
-
-    if (i != jsonObject.length - 1) {
-      domElement.append('<hr>');
-    }
-  }
 };
-
-function printUtilizador(jsonObject) {
-
-  var domElement = $('div#content').empty();
-
-  for (var i = 0; i < jsonObject.length; i++) {
-
-    var thisObject = jsonObject[i];
-
-    domElement.append(nano('<div><h5 class="slab quarter-vertical-space"><a class="black" href="../pergunta/view.php?id={idpergunta}">{titulo}</a>{badge}</h5><div class="condensed author-panel quarter-vertical-space"><div><p class="no-margin">{linkautor}\n&bull;\n<small>{datahora}</small>\n&bull;\n<span class="medium">\n<strong>{numerorespostas}</strong>\nrespostas\n</span>\n&bull;\n<span class="medium"><strong class="{scoretype}">{pontuacao}</strong>\npontos</span></p></div></div><p class="medium truncate no-margin align-justify">{descricao}\n<a class="black fw-700" href="../pages/pergunta/view.php?id={idpergunta}">ver mais <i class="fa fa-arrow-circle-right"></i></a></p></div>', thisObject));
-  }
-}

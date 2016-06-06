@@ -5,6 +5,10 @@
     unset($_SESSION['username']);
   }
 
+  if (isset($_SESSION['permissions'])) {
+  	unset($_SESSION['permissions']);
+  }
+
   if (isset($_SESSION['idUtilizador'])) {
     unset($_SESSION['idUtilizador']);
   }

@@ -7,15 +7,15 @@
       return false;
     }
 
-    if (!file_exists($_FILES['image']['tmp_name'])) {
+    if (!file_exists($_FILES['avatar']['tmp_name'])) {
       return false;
     }
 
-    if (!is_uploaded_file($_FILES['image']['tmp_name'])) {
+    if (!is_uploaded_file($_FILES['avatar']['tmp_name'])) {
       return false;
     }
 
-    return getimagesize($_FILES["fileToUpload"]["tmp_name"]) !== false;
+    return getimagesize($_FILES["avatar"]["tmp_name"]) !== false;
   }
 
   function image_writeFile($img, $dst, $ext) {

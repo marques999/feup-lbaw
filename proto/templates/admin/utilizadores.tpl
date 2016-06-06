@@ -1,175 +1,37 @@
-{extends file='admin/common/pagina.tpl'}
+{extends file='admin/pagina.tpl'}
 {block name=content}
 {include file='common/messages.tpl'}
 {if $ativos_count gt 0}
-<h3 class="condensed all-75">Utilizadores Activos
-  <span class="fw-300 medium">({$ativos_count})</span>
-</h3>
-<form class="ink-form medium all-25">
-  <div class="column-group horizontal-gutters">
-    <div class="control-group">
-      <div class="control append-symbol">
-      <span>
-        <input type="text" name="search" placeholder="Pesquisar utilizador...">
-        <i class="fa fa-search"></i>
-      </span>
-      </div>
-    </div>
-  </div>
-</form>
-<table class="ink-table alternating hover">
-  <thead>
-    <tr>
-      <th data-sortable="true">Username</th>
-      <th data-sortable="true">E-mail</th>
-      <th data-sortable="true">Perguntas</th>
-      <th data-sortable="true">Respostas</th>
-      <th data-sortable="true">Atividade</th>
-      <th data-sortable="false">Acções</th>
-    </tr>
-  </thead>
-  <tbody class="align-center">
-  {foreach $ativos as $utilizador}
-    <tr>
-      <td class="align-left">
-        <i class="fa fa-user"></i>
-         <a href="{$BASE_URL}pages/utilizador/profile.php?id={$utilizador.idutilizador}">{$utilizador.nomeutilizador}</a>
-        <small>({$utilizador.username})</small>
-      </td>
-      <td>
-        <small>{$utilizador.email}</small>
-      </td>
-      <td class="medium">{$utilizador.numeroperguntas}</td>
-      <td class="medium">{$utilizador.numerorespostas}</td>
-      <td>
-        <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
-      </td>
-      <td class="medium">
-        <a href="{$BASE_URL}pages/utilizador/ban.php?id={$utilizador.idutilizador}"
-           class="ink-button medium">banir</a>
-        <a href="{$BASE_URL}pages/utilizador/delete.php?id={$utilizador.idutilizador}"
-           class="ink-button medium">apagar</a>
-      </td>
-    </tr>
-  {/foreach}
-  </tbody>
-</table>
+  <h3 class="condensed all-75">Utilizadores Activos
+    <span class="fw-300 medium">({$ativos_count})</span>
+  </h3>
+  <form class="ink-form medium all-25">
+    {include file='admin/utilizadores-formulario.tpl'}
+  </form>
+  <table class="ink-table alternating hover">
+  {include file='admin/utilizadores-ativos.tpl'}
+  </table>
 {/if}
 {if $inativos_count gt 0}
-<h3 class="condensed all-75">Utilizadores Inativos
-  <span class="fw-300 medium">({$inativos_count})</span>
-</h3>
-<form class="ink-form medium all-25">
-  <div class="column-group horizontal-gutters">
-    <div class="control-group">
-      <div class="control append-symbol">
-      <span>
-        <input type="text" name="search" placeholder="Pesquisar utilizador...">
-        <i class="fa fa-search"></i>
-      </span>
-      </div>
-    </div>
-  </div>
-</form>
-<table class="ink-table alternating hover">
-  <thead>
-    <tr>
-      <th data-sortable="true">Username</th>
-      <th data-sortable="true">E-mail</th>
-      <th data-sortable="true">Perguntas</th>
-      <th data-sortable="true">Respostas</th>
-      <th data-sortable="true">Atividade</th>
-      <th data-sortable="false">Acções</th>
-    </tr>
-  </thead>
-  <tbody class="align-center">
-  {foreach $inativos as $utilizador}
-    <tr>
-      <td class="align-left">
-        <i class="fa fa-user"></i>
-        <a href="{$BASE_URL}pages/utilizador/profile.php?id={$utilizador.idutilizador}">{$utilizador.nomeutilizador}</a>
-        <small>({$utilizador.username})</small>
-      </td>
-      <td>
-        <small>{$utilizador.email}</small>
-      </td>
-      <td class="medium">{$utilizador.numeroperguntas}</td>
-      <td class="medium">{$utilizador.numerorespostas}</td>
-      <td>
-        <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
-      </td>
-      <td class="medium">
-        <button class="ink-button medium" href="{$BASE_URL}pages/categoria/list.php">banir</button>
-        <button class="ink-button medium" href="{$BASE_URL}pages/instituicao/list.php">apagar</button>
-      </td>
-    </tr>
-  {/foreach}
-  </tbody>
-</table>
+  <h3 class="condensed all-75">Utilizadores Inativos
+    <span class="fw-300 medium">({$inativos_count})</span>
+  </h3>
+  <form class="ink-form medium all-25">
+    {include file='admin/utilizadores-formulario.tpl'}
+  </form>
+  <table class="ink-table alternating hover">
+    {include file='admin/utilizadores-inativos.tpl'}
+  </table>
 {/if}
 {if $banidos_count gt 0}
-<div class="top-space">
-<h3 class="condensed all-75">Utilizadores Banidos
-  <span class="fw-300 medium">({$banidos_count})</span>
-</h3>
-<form class="ink-form medium all-25">
-  <div class="column-group horizontal-gutters">
-    <div class="control-group">
-      <div class="control append-symbol">
-      <span>
-        <input type="text" name="search" placeholder="Pesquisar utilizador...">
-        <i class="fa fa-search"></i>
-      </span>
-      </div>
-    </div>
-  </div>
-</form>
-</div>
-<table class="ink-table alternating hover">
-  <thead>
-    <tr>
-      <th data-sortable="true">Username</th>
-      <th data-sortable="true">E-mail</th>
-      <th data-sortable="true">Perguntas</th>
-      <th data-sortable="true">Respostas</th>
-      <th data-sortable="true">Atividade</th>
-      <th data-sortable="false">Acções</th>
-    </tr>
-  </thead>
-  <tbody>
-  {foreach $banidos as $utilizador}
-    <tr class="align-center">
-      <td class="align-left">
-        <i class="fa fa-user"></i>
-        <a href="{$BASE_URL}pages/utilizador/profile.php?id={$utilizador.idutilizador}">{$utilizador.nomeutilizador}</a>
-        <small>({$utilizador.username})</small>
-      </td>
-      <td>
-        <small>{$utilizador.email}</small>
-      </td>
-      <td class="medium">{$utilizador.numeroperguntas}</td>
-      <td class="medium">{$utilizador.numerorespostas}</td>
-      <td>
-        <small>
-          <button class="ink-button">
-            <i class="fa fa-check"></i>
-            <span>Activar</span>
-          </button>
-        </small>
-        <small>
-          <button class="ink-button">
-            <i class="fa fa-user-times"></i>
-            <span>Apagar</span>
-          </button>
-        </small>
-      </td>
-      <td class="medium">
-        <button class="ink-button medium" href="{$BASE_URL}pages/categoria/list.php">banir</button>
-        <button class="ink-button medium" href="{$BASE_URL}pages/instituicao/list.php">apagar</button>
-      </td>
-    </tr>
-  {/foreach}
-  </tbody>
-</table>
+  <h3 class="condensed all-75">Utilizadores Banidos
+    <span class="fw-300 medium">({$banidos_count})</span>
+  </h3>
+  <form class="ink-form medium all-25">
+    {include file='admin/utilizadores-formulario.tpl'}
+  </form>
+  <table class="ink-table alternating hover">
+    {include file='admin/utilizadores-banidos.tpl'}
+  </table>
 {/if}
 {/block}

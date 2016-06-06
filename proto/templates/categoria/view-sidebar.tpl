@@ -6,13 +6,13 @@
   </h5>
   <ul class="menu vertical white">
   {strip}
-    {foreach $instituicoes as $instituicao}
-    <li>
-      <a href="{$BASE_URL}pages/instituicao/view.php?id={$instituicao.sigla}">
-        {$instituicao.sigla|upper}
-      </a>
-    </li>
-    {/foreach}
+  {foreach $instituicoes as $instituicao}
+  <li>
+    <a href="{$BASE_URL}pages/instituicao/view.php?id={$instituicao.sigla}">
+      {$instituicao.sigla|upper}
+    </a>
+  </li>
+  {/foreach}
   {/strip}
   </ul>
 {/if}
@@ -22,27 +22,18 @@
     <span>Relacionadas</span>
   </h5>
   <ul class="menu vertical white">
-    {strip}{foreach $relacionadas as $relacionada}
+    {strip}
+    {foreach $relacionadas as $relacionada}
     <li>
       <a href="{$BASE_URL}pages/categoria/view.php?id={$relacionada.idcategoria}">
         {$relacionada.nome}
       </a>
     </li>
-    {/foreach}{/strip}
+    {/foreach}
+    {/strip}
   </ul>
 {/if}
-  <h5 class="slab half-vertical-space">
-    <i class="fa fa-line-chart fa-fw"></i>
-    <span>Populares</span>
-  </h5>
-  <ul class="menu vertical white">
-    <li class="active"><a href="#">Neste momento</a></li>
-    <li><a href="#">Últimas 24h</a></li>
-    <li><a href="#">Últimas 48h</a></li>
-    <li><a href="#">Última semana</a></li>
-    <li><a href="#">Último mês</a></li>
-  </ul>
-{if $administrador}
+{if $ADMINISTRADOR}
   <h5 class="slab half-vertical-space">
     <i class="fa fa-cog"></i>
     <span>Gestão</span>

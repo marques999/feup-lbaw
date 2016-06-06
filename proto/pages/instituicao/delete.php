@@ -9,16 +9,19 @@
     safe_login();
   }
 
-  if (!utilizador_isAdministrator($idUtilizador)) {
-    safe_redirect('403.php');
+  if (safe_strcheck($_GET, 'id')) {
+    $idInstituicao = safe_trimAll($_GET, 'id');
+  }
+  else {
+    safe_redirect('404.php');
   }
 
-  if (safe_strcheck($_GET, 'id')) {
-    $smarty->assign('idInstituicao', safe_trimAll($_GET, 'id'));
+  if (safe_checkAdministrador()) {
+    $smarty->assign('idInstituicao', $idInstituicao);
     $smarty->assign('titulo', 'Apagar Instituição');
     $smarty->display('instituicao/delete.tpl');
   }
   else {
-    safe_redirect('404.php');
+    safe_redirect('403.php');
   }
 ?>

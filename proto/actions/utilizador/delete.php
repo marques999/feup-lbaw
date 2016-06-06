@@ -9,7 +9,7 @@
     safe_login();
   }
 
-  $isAdministrator = utilizador_isAdministrator($idAdministrador);
+  $isAdministrator = safe_checkAdministrador();
 
   if (safe_check($_POST, 'idUtilizador')) {
     $idUtilizador = safe_getId($_POST, 'idUtilizador');

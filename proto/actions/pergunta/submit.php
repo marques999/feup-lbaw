@@ -10,8 +10,8 @@
     safe_login();
   }
 
-  if (safe_check($_POST, 'idCategoria')) {
-    $idCategoria = safe_getId($_POST, 'idCategoria');
+  if (safe_check($_POST, 'categoria')) {
+    $idCategoria = safe_getId($_POST, 'categoria');
   }
   else {
     safe_formerror('A categoria da pergunta não pode estar em branco!');
@@ -25,7 +25,7 @@
   }
 
   if (safe_strcheck($_POST, 'descricao')) {
-    $descricao = safe_trimAll($_POST, 'descricao');
+    $descricao = safe_trim($_POST, 'descricao');
   }
   else {
     $descricao = null;
@@ -36,7 +36,7 @@
     $idPergunta = pergunta_inserirPergunta($idUtilizador, $idCategoria, $titulo, $descricao);
 
     if ($idPergunta > 0) {
-      safe_redirect("pergunta/view.php?=$idPergunta");
+      safe_redirect("pergunta/view.php?id=$idPergunta");
     }
     else {
       safe_formerror('Erro desconhecido: outra pergunta com este identificador já existe?');

@@ -17,10 +17,7 @@
     safe_error('Deve especificar uma pergunta primeiro!');
   }
 
-  $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-
-  if (!$isOriginalPoster && !$isAdministrator) {
+  if (!pergunta_verificarAutor($idPergunta, $idUtilizador) && !safe_checkAdministrador()) {
     safe_redirect('403.php');
   }
 

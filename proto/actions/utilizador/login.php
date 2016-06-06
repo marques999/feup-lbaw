@@ -22,7 +22,19 @@
   if ($idUtilizador > 0) {
 
     $_SESSION['username'] = $username;
-    $_SESSION['idUtilizador'] = $idUtilizador;
+    $_SESSION['idUtilizador'] = $idUtilizador; 
+
+    if (utilizador_isAdministrator($_SESSION['idUtilizador'])) {
+      $_SESSION['permissions'] = 'AD6tkUOG';
+    }
+    else if (utilizador_isModerator($_SESSION['idUtilizador'])) {
+      $_SESSION['permissions'] = 'GQ7h3hBA';
+    }
+    else {
+      $_SESSION['permissions'] = 'G2nuvUgG';
+    }
+
+    utilizador_registarVisita($idUtilizador);
 
     if (safe_strcheck($_POST, 'location')) {
       header('Location: ' . safe_trim($_POST, 'location'));

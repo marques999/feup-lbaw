@@ -2,14 +2,11 @@
   include_once('../../config/init.php');
   include_once('../../database/utilizador.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  }
-  else {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_login();
   }
 
-  if (utilizador_isAdministrator($idUtilizador)) {
+  if (safe_checkAdministrador()) {
     $queryActivos = utilizador_listarActivos();
     $queryBanidos = utilizador_listarBanidos();
     $queryInativos = utilizador_listarRemovidos();

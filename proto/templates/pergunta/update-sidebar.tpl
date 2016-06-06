@@ -1,6 +1,6 @@
 <nav class="ink-navigation medium vertical-padding">
   <h5 class="slab half-vertical-space">
-    <i class="fa fa-institution"></i>
+    <i class="fa fa-fw fa-institution"></i>
     <span>Categorias</span>
   </h5>
   <ul class="menu vertical white">
@@ -19,7 +19,7 @@
   {/strip}
   </ul>
   <h5 class="slab half-vertical-space">
-    <i class="fa fa-exchange"></i>
+    <i class="fa fa-fw fa-exchange"></i>
     <span>Relacionadas</span>
   </h5>
   <ul class="menu vertical white">

@@ -1,24 +1,17 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/instituicao.php');
-  include_once('../../database/utilizador.php');
 
-  if (safe_check($_SESSION, 'idUtilizador')) {
-    $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
-  }
-  else {
+  if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_login();
   }
 
-  if (!utilizador_isAdministrator($idUtilizador)) {
+  if (!safe_checkAdministrador()) {
     safe_redirect('403.php');
   }
 
-  $numberColumns = 0;
-
   if (safe_strcheck($_POST, 'nome')) {
     $nome = safe_trimAll($_POST, 'nome');
-    $numberColumns++;
   }
   else {
     safe_formerror('O nome da instituição não pode estar em branco!');
@@ -26,7 +19,6 @@
 
   if (safe_strcheck($_POST, 'sigla')) {
     $sigla = safe_trimAll($_POST, 'sigla');
-    $numberColumns++;
   }
   else {
     safe_formerror('A sigla da instituição não pode estar em branco!');
@@ -34,7 +26,6 @@
 
   if (safe_strcheck($_POST, 'morada')) {
     $morada = safe_trimAll($_POST, 'morada');
-    $numberColumns++;
   }
   else {
     $morada = null;
@@ -42,7 +33,6 @@
 
   if (safe_strcheck($_POST, 'contacto')) {
     $contacto = safe_trimAll($_POST, 'contacto');
-    $numberColumns++;
   }
   else {
     $contacto = null;
@@ -50,14 +40,9 @@
 
   if (safe_strcheck($_POST, 'website')) {
     $website = safe_trimAll($_POST, 'website');
-    $numberColumns++;
   }
   else {
     $website = null;
-  }
-
-  if ($numberColumns < 1) {
-    safe_formerror('Erro na operação: não foi enviada informação suficiente!');
   }
 
   try {
@@ -70,7 +55,7 @@
     safe_formerror($e->getMessage());
   }
 
-  if (safe_check($_POST, 'image') && image_validateUpload()) {
+  if (image_validateFormat()) {
 
     $baseFilename = basename($_FILES['image']['name']);
     $targetDirectory = "{$BASE_DIR}images/instituicao/";

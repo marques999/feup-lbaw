@@ -2,7 +2,7 @@
 {block name=content}
 <div class="ink-grid content-drawer column-group half-gutters">
   <div class="column half-padding all-100 xlarge-30 large-40 medium-40">
-    {if $USERID}
+    {if $USERID and $utilizador.codigopais}
     <div class="half-padding push-right">
       <img src="{$BASE_URL}images/flags/{$utilizador.codigopais}.png" alt="">
     </div>
@@ -18,7 +18,7 @@
         {$utilizador.nomeutilizador}
       </p>
       <div class="align-center quarter-vertical-space">
-        <a href="{$BASE_URL}pages/user/update-avatar.php?id={$utilizador.idutilizador}">
+        <a href="{$BASE_URL}pages/utilizador/update.php">
           <img class="half-vertical-space" src="{$utilizador.idutilizador|utilizador_getAvatar}" alt="{$utilizador.username}">
         </a>
       </div>
@@ -62,16 +62,15 @@
       {if $utilizador.localidade or $utilizador.codigopais}
       <strong>Localização:</strong>
       {/if}
-      {if $utilizador.localidade}
-        {$utilizador.localidade},
-      {/if}
-      {if $utilizador.codigopais}
-        {$utilizador.codigopais|utilizador_getCountry}
-      {/if}
+      {strip}
+        {if $utilizador.localidade}
+          {$utilizador.localidade}
+        {/if}
+        {if $utilizador.codigopais}
+          , {$utilizador.codigopais|utilizador_getCountry}
+        {/if}
+      {/strip}
     </p>
-    {/if}
-    {if $USERID eq $utilizador.idutilizador}
-      {include file='utilizador/profile-password.tpl'}
     {/if}
   </div>
   <div class="column half-padding all-100 xlarge-70 large-60 medium-60">

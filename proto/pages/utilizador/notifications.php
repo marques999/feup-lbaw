@@ -2,14 +2,14 @@
   include_once('../../config/init.php');
   include_once('../../database/notificacao.php');
   include_once('../../database/utilizador.php');
-  
+
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
   }
   else {
     safe_login();
   }
-  
+
   $queryResposta = notificacao_novasRespostas($idUtilizador);
   $querySeguidores = notificacao_novosSeguidores($idUtilizador);
   $queryComentarios = notificacao_novosComentarios($idUtilizador);
@@ -30,7 +30,7 @@
   }
 
   $queryNotificacoes = $queryResposta + $querySeguidores + $queryComentarios;
-  
+
   uasort($queryNotificacoes, function($a, $b){
       return $a['datahora'] < $b['datahora'];
   });

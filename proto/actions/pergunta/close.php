@@ -1,7 +1,6 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/pergunta.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
     $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
@@ -17,24 +16,22 @@
     safe_error('Deve especificar uma pergunta primeiro!');
   }
 
-  $isOriginalPoster = pergunta_verificarAutor($idPergunta, $idUtilizador);
-  $isAdministrator = utilizador_isAdministrator($idUtilizador);
-  $isModerator = utilizador_isModerator($idUtilizador);
+  if (pergunta_verificarAutor($idPergunta, $idUtilizador) || safe_checkModerador() || safe_checkAdministrador()) {
 
-  if (!$isOriginalPoster && !$isModerator && !$isAdministrator) {
+    try {
+
+      if (pergunta_fecharPergunta($idPergunta) > 0) {
+        safe_redirect("pergunta/view.php?id=$idPergunta");
+      }
+      else {
+        safe_error('Erro desconhecido: tentou fechar uma pergunta inexistente?');
+      }
+    }
+    catch (PDOException $e) {
+      safe_error($e->getMessage());
+    }
+  }
+  else {
     safe_redirect('403.php');
-  }
-
-  try {
-
-    if (pergunta_fecharPergunta($idPergunta, $idUtilizador) > 0) {
-      safe_redirect("pergunta/view.php?id=$idPergunta");
-    }
-    else {
-      safe_error('Erro desconhecido: tentou fechar uma pergunta inexistente?');
-    }
-  }
-  catch (PDOException $e) {
-    safe_error($e->getMessage());
   }
 ?>

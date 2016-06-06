@@ -13,7 +13,7 @@
       <td class="align-left">Palavra-passe</td>
       <td>
         <small>* * * * * * * *</small>
-        <a class="medium" id="update-password">(alterar)</a>
+        <a class="medium" href="{$BASE_URL}pages/utilizador/password.php">(alterar)</a>
       </td>
     </tr>
     {/if}

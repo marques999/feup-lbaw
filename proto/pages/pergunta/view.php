@@ -8,7 +8,7 @@
     $idPergunta = safe_getId($_GET, 'id');
   }
   else {
-    safe_login();
+    safe_redirect('404.php');
   }
 
   $queryPergunta = pergunta_listarInformacoes($idPergunta);
@@ -22,19 +22,34 @@
     $queryComentarios = pergunta_obterComentarios($idPergunta);
     $queryCategorias = pergunta_listarCategorias($idCategoria);
     $queryRelacionadas = pergunta_listarRelacionadas($idCategoria, $idPergunta);
-    $isAdministrator = utilizador_isAdministrator($idUtilizador);
-    $isModerator = utilizador_isModerator($idUtilizador);
     $queryUtilizador = pergunta_informacoesUtilizador($idUtilizador, $idPergunta);
     $userPrivileges = 'User';
 
     if ($idAutor == $idUtilizador) {
       $userPrivileges = 'OP';
     }
-    else if ($isAdministrator) {
+    else if (safe_checkAdministrador()) {
       $userPrivileges = 'Admin';
     }
-    else if ($isModerator) {
+    else if (safe_checkModerador()) {
       $userPrivileges = 'MOD';
+    }
+
+    uasort($queryRespostas, function($a, $b) {
+
+      if ($a['melhorresposta'] === true) {
+        return false;
+      }
+
+      if ($b['melhorresposta'] === true) {
+        return true;
+      }
+
+      return $a['datahora'] > $b['datahora'];
+    });
+
+    if ($queryUtilizador['idseguidor'] > 0) {
+      pergunta_visitarPergunta($idPergunta, $idUtilizador);
     }
 
     $smarty->assign('pergunta', $queryPergunta);
@@ -42,8 +57,6 @@
     $smarty->assign('respostas', $queryRespostas);
     $smarty->assign('comentarios', $queryComentarios);
     $smarty->assign('relacionadas', $queryRelacionadas);
-    $smarty->assign('administrador', $isAdministrator);
-    $smarty->assign('moderador', $isModerator);
     $smarty->assign('privileges', $userPrivileges);
     $smarty->assign('utilizador', $queryUtilizador);
     $smarty->assign('titulo', $queryPergunta['titulo']);

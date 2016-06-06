@@ -2,15 +2,17 @@
   <h4 class="quarter-vertical-space slab">{$categoria.nome}</h4>
   <p class="condensed">
     <i class="fa fa-institution"></i>
-    {$instituicoes_count}
-    {if $instituicoes_count eq 1} instituição
-    {else} instituições
+    {if $instituicoes_count eq 1}
+    <span>{$instituicoes_count} instituição</span>
+    {else}
+    <span>{$instituicoes_count} instituições</span>
     {/if}
     &nbsp;
     <i class="fa fa-question-circle"></i>
-    {$perguntas_count}
-    {if $perguntas_count eq 1} pergunta
-    {else} perguntas
+    {if $perguntas_count eq 1}
+    <span>{$perguntas_count} pergunta</span>
+    {else}
+    <span>{$perguntas_count} perguntas</span>
     {/if}
   </p>
   {if $descricao}
@@ -31,7 +33,7 @@
   </p>
   {/if}
   <p class="no-margin quarter-vertical-padding">
-    <a class="ink-button black medium" href="{$BASE_URL}pages/pergunta/ask.php?id={$categoria.idcategoria}">
+    <a class="ink-button black medium" href="{$BASE_URL}pages/pergunta/submit.php?id={$categoria.idcategoria}">
       <i class="fa fa-plus"></i>
       <span>&nbsp;Fazer pergunta</span>
     </a>

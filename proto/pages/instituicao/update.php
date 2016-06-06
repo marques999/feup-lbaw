@@ -11,8 +11,8 @@
     safe_login();
   }
 
-  if (!utilizador_isAdministrator($idUtilizador)) {
-     safe_redirect('403.php');
+  if (!safe_checkAdministrador()) {
+    safe_redirect('403.php');
   }
 
   if (safe_strcheck($_GET, 'id')) {

@@ -11,7 +11,7 @@
     <td class="medium">
       <b>
         {strip}
-        <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$comentario.idpergunta}">
+        <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$notificacao.idpergunta}">
           {$notificacao.titulo}
         </a>
         <span class="ink-badge black">{$notificacao.accao1}</span>
@@ -24,15 +24,11 @@
     </td>
     <td class="align-center">
       <i class="fa fa-user"></i>
-      {strip}
       {if $notificacao.removido}
         {$notificacao.username}
       {else}
-      <a href="{$BASE_URL}pages/utilizador/profile.php?id={$notificacao.idutilizador}">
-        {$notificacao.username}
-      </a>
+      <a href="{$BASE_URL}pages/utilizador/profile.php?id={$notificacao.idutilizador}">{$notificacao.username}</a>
       {/if}
-      {/strip}
       <p>
         <small>{$notificacao.datahora|date_format:"%A, %e %B %Y %H:%M"}</small>
       </p>

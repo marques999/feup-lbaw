@@ -21,25 +21,122 @@
 <script type="text/javascript" src="{$BASE_URL}javascript/holder.min.js"></script>
 <script type="text/javascript" src="{$BASE_URL}javascript/autoload.min.js"></script>
 </head>
-{block name=navigation}
-{include file='common/navigation.tpl'}
-{/block}
+<body class="ink-drawer">
+<nav class="left-drawer ink-navigation">
+  <ul class="menu vertical black">
+    <li id="heading-pesquisa" class="heading">
+      <span>Pesquisa</span>
+    </li>
+    <li class="search">
+      <form action="{$BASE_URL}pages/pesquisa/pergunta.php" method="GET" class="docsearch" role="search">
+        {if $FORM_VALUES.query}
+        <input type="search" class="search-field" name="query"
+               autocomplete="off" tabindex="-1"
+              value="{$FORM_VALUES.query}">
+        {else}
+        <input type="search" class="search-field" name="query"
+               autocomplete="off" tabindex="-1">
+        {/if}
+        <span class="fa fa-search"></span>
+      </form>
+    </li>
+    {block name=navigation}
+    {/block}
+    <li class="heading">
+      <span>Navegação</span>
+    </li>
+    <li id="nav-perguntar">
+      <a href="{$BASE_URL}pages/categoria/list.php">
+        <i class="fa fa-fw fa-question-circle"></i>
+        <span>Perguntar</span>
+      </a>
+    </li>
+    <li>
+      <a href="{$BASE_URL}pages/categoria/list.php">
+        <i class="fa fa-fw fa-database"></i>
+        <span>Categorias</span>
+      </a>
+    </li>
+    <li>
+      <a href="{$BASE_URL}pages/instituicao/list.php">
+        <i class="fa fa-fw fa-institution"></i>
+        <span>Instituições</span>
+      </a>
+    </li>
+      <li>
+      <a href="{$BASE_URL}pages/instituicao/list.php">
+        <i class="fa fa-fw fa-search"></i>
+        <span>Pesquisa avançada</span>
+      </a>
+    </li>
+    {if $USERNAME}
+    <li class="heading">
+      <span>Utilizador</span>
+    </li>
+    <li>
+      <a href="{$BASE_URL}pages/utilizador/profile.php">
+        <i class="fa fa-fw fa-user"></i>
+        <span>Ver perfil</span>
+      </a>
+    </li>
+    {if $ADMINISTRADOR}
+    <li>
+      <a href="{$BASE_URL}pages/admin/homepage.php">
+        <i class="fa fa-fw fa-key"></i>
+        <span>Administração</span>
+      </a>
+    </li>
+    {/if}
+    <li>
+      <a href="{$BASE_URL}pages/utilizador/profile.php#questions">
+        <i class="fa fa-fw fa-cog"></i>
+        <span>Gerir publicações</span>
+      </a>
+    </li>
+    {if $MODERADOR}
+    <li>
+      <a href="{$BASE_URL}pages/utilizador/report.php">
+        <i class="fa fa-fw fa-cog"></i>
+        <span>Gerir reports</span>
+      </a>
+    </li>
+    {/if}
+    <li>
+      <a href="{$BASE_URL}actions/utilizador/logout.php">
+        <i class="fa fa-fw fa-door"></i>
+        <span>Terminar sessão</span>
+      </a>
+    </li>
+    {/if}
+  </ul>
+</nav>
+<header id="header-container">
+  <nav id="header-menu" class="ink-navigation">
+    <ul class="menu horizontal black hide-all show-small show-tiny">
+    {if $USERNAME}
+      {include file='common/navigation-user.tpl'}
+    {else}
+      {include file='common/navigation-guest.tpl'}
+    {/if}
+    </ul>
+  </nav>
+</header>
 {block name=content}
 {/block}
 {block name=footer}
 <script>
 $(function() {
-  $("ul#footer-links").hide();
+  $("#footer-links").hide();
   $("#footer").hover(function() {
-    $("ul#footer-links").stop(!0, !0).slideToggle("fast");
+    $("#footer-links").stop(!0, !0).slideToggle("fast");
   })
 });
 </script>
-  <footer id="footer" class="clearfix medium fixed horizontal-padding">
+<footer id="footer" class="medium fixed horizontal-padding">
   <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
-    <li><a href="about.php">About</a></li>
-    <li><a href="sitemap.php">Sitemap</a></li>
-    <li><a href="contacts.php">Contacts</a></li>
+    <li><a href="{$BASE_URL}pages/about.php">About</a></li>
+    <li><a href="{$BASE_URL}pages/sitemap.php">Sitemap</a></li>
+    <li><a href="{$BASE_URL}pages/contacts.php">Contacts</a></li>
   </ul>
   <p class="note medium no-margin half-vertical-padding">
     <i class="fa fa-copyright"></i>

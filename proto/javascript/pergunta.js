@@ -1,6 +1,8 @@
 var refreshStatus = [];
 var userVote = 0;
 var answerCommentCount = [];
+var answerContent = [];
+var answerFormEnabled = [];
 var lastCommentId = [];
 
 var userFollowsQuestion = false;
@@ -8,91 +10,193 @@ var questionRefreshStatus = false;
 var questionCommentCount = 0;
 var questionCommentId = -1;
 
-/*
- * $(document.ready)
- */
-$(function() {
-  CKEDITOR.editorConfig = function(config) {
-    config.language = 'pt';
-    config.height = 400;
-    config.toolbarGroups = [
-      {name: 'clipboard', groups: ['clipboard', 'undo']},
-      {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
-      {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
-      {name: 'links', groups: ['links']},
-      {name: 'insert', groups: ['insert']},
-      {name: 'forms', groups: ['forms']},
-      {name: 'tools', groups: ['tools']},
-      {name: 'document', groups: ['mode', 'document', 'doctools']},
-      {name: 'others', groups: ['others']},
-      {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
-      {name: 'styles', groups: ['styles']},
-      {name: 'colors', groups: ['colors']},
-      {name: 'about', groups: ['about']}
-    ];
-    config.extraPlugins = 'blockquote';
-    config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
-  };
-  CKEDITOR.replace('descricao');
+$(function()
+{
+  var answerEditButton = $(".answer-action-buttons .edit-button");
   var questionVotePositive = $(".question-vote-buttons .vote-positive");
   var questionVoteNegative = $(".question-vote-buttons .vote-negative");
   var questionFollowButton = $(".question-action-buttons .follow-button");
-  if (questionVotePositive.hasClass('active')) {
+
+  if (questionVotePositive.hasClass('active'))
+  {
     userVote = 1;
   }
-  else if (questionVoteNegative.hasClass('active')) {
+  else if (questionVoteNegative.hasClass('active'))
+  {
     userVote = -1;
   }
-  if (questionFollowButton.hasClass('active')) {
+
+  if (questionFollowButton.hasClass('active'))
+  {
     userFollowsQuestion = true;
   }
-  questionVotePositive.click(function() {
+
+  questionVotePositive.click(function()
+  {
     registarVotoPergunta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
       1);
   });
-  questionVoteNegative.click(function() {
+
+  questionVoteNegative.click(function()
+  {
     registarVotoPergunta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
       -1);
   });
-  questionFollowButton.click(function() {
+
+  answerEditButton.click(function()
+  {
+    editarResposta(
+      $(this),
+      $(this.parentNode.parentNode.parentNode));
+  });
+
+  questionFollowButton.click(function()
+  {
     followPergunta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id);
   });
-  $("#answers a.ink-toggle").click(function() {
+
+  $("#answers .show-comments").click(function()
+  {
     fetchAnswerComments(
       $(this).data('id'),
       $(this));
   });
-  $(".reply-buttons .vote-positive").click(function() {
+
+  $(".reply-buttons .vote-positive").click(function()
+  {
     registarVotoResposta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
        1);
   });
-  $(".reply-buttons .vote-negative").click(function() {
+
+  $(".reply-buttons .vote-negative").click(function()
+  {
     registarVotoResposta(
       $(this),
       $(this.parentNode.parentNode.parentNode).get(0).id,
       -1);
   });
-  $('.question-comments-form').submit(function(event) {
+
+  $('.question-comments-form').submit(function(event)
+  {
     submeterComentarioPergunta($(this));
     event.preventDefault();
   });
-  $('.answer-comments-form').submit(function(event) {
+
+  $('.answer-comments-form').submit(function(event)
+  {
     submeterComentarioResposta($(this));
     event.preventDefault();
   });
 });
 
-/*
- * submeterComentarioPergunta(commentsForm)
- */
+
+var answerForm = '<form action="../../actions/resposta/update.php" method="POST" class="ink-form ink-formvalidator">' +
+    '<input type="hidden" name="idPergunta" id="idPergunta" value="{idpergunta}">' +
+    '<input type="hidden" name="idResposta" id="idResposta" value="{idresposta}">' +
+    '<div class="control-group column-group quarter-gutters">'+
+      '<div class="control">' +
+        '<textarea name="resposta" id="resposta" rows="8" cols="60">{descricao}</textarea>'+
+      '</div></div>' +
+    '<div class="control-group column-group quarter-gutters">' +
+      '<div class="push-right">'+
+        '<button class="ink-button submit-button green" type="submit">'+
+          '<i class="fa fa-check"></i>\n'+
+          '<span>Submeter</span>'+
+        '</button><button class="ink-button cancel-button red" type="reset">'+
+          '<i class="fa fa-close"></i>\n'+
+          '<span>Cancelar</span>'+
+        '</button></div></div></form>';
+
+function anularEdicao(parentElement)
+{
+  var nodeId = parentElement.get(0).id;
+  var answerBox = parentElement.find('.answer-content');
+  
+  if (answerFormEnabled[nodeId]) {
+
+    answerBox.stop(!0, !0).fadeOut(200, function() {
+
+      if (ckeditorInstance != null) {
+        ckeditorInstance.destroy();
+        ckeditorInstance = null;
+      }
+    
+      answerBox.html(answerContent[nodeId]).fadeIn(200);
+      answerContent[nodeId] = null;
+      answerFormEnabled[nodeId] = false;
+    });
+  }
+};
+
+function editarResposta(domElement, parentElement)
+{
+  var nodeId = parentElement.get(0).id;
+  var answerBox = parentElement.find('.answer-content');
+  
+  if (answerFormEnabled[nodeId]) {
+    anularEdicao(parentElement);
+  }
+  else if (ckeditorInstance != null) {
+    alert('Por favor termine a edição da resposta anterior antes de editar outra resposta!');
+  }
+  else {
+    
+    var myContent = {};
+    var nodeQuestion = $('.question-section').get(0).id;
+    var previousContent = answerBox.html();
+    
+    myContent['idpergunta'] = nodeQuestion.substring(nodeQuestion.indexOf('-') + 1, nodeQuestion.length);
+    myContent['idresposta'] = nodeId.substring(nodeId.indexOf('-') + 1, nodeId.length);
+    myContent['descricao'] = previousContent; 
+    answerContent[nodeId] = previousContent;
+   
+    answerBox.stop(!0, !0).fadeOut(200, function()
+    {
+      answerBox.html(nano(answerForm, myContent)).fadeIn(200);
+      
+      answerBox.find('.cancel-button').click(function()
+      {
+        anularEdicao(parentElement);
+      });
+  
+      ckeditorInstance = CKEDITOR.replace('resposta');
+      answerFormEnabled[nodeId] = true;
+    });
+    
+    CKEDITOR.editorConfig = function(config) {
+      config.language = 'pt';
+      config.height = 400;
+      config.toolbarGroups = [
+        {name: 'clipboard', groups: ['clipboard', 'undo']},
+        {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+        {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+        {name: 'links', groups: ['links']},
+        {name: 'insert', groups: ['insert']},
+        {name: 'forms', groups: ['forms']},
+        {name: 'tools', groups: ['tools']},
+        {name: 'document', groups: ['mode', 'document', 'doctools']},
+        {name: 'others', groups: ['others']},
+        {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+        {name: 'styles', groups: ['styles']},
+        {name: 'colors', groups: ['colors']},
+        {name: 'about', groups: ['about']}
+      ];
+      config.extraPlugins = 'blockquote';
+      config.removeButtons = 'Underline,Subscript,Superscript,PasteFromWord,PasteText,About,Outdent,Indent,Maximize,Source,Anchor,Scayt';
+    };
+  }
+};
+
+var ckeditorInstance = null;
+
 function submeterComentarioPergunta(commentsForm)
 {
   var thisId = commentsForm.find($("input[name=idPergunta]")).val();
@@ -105,11 +209,8 @@ function submeterComentarioPergunta(commentsForm)
       refreshQuestionComments(thisId, commentsForm);
     }
   });
-}
+};
 
-/*
- * submeterComentarioResposta(commentsForm)
- */
 function submeterComentarioResposta(commentsForm)
 {
   var thisId = commentsForm.find($("input[name=idResposta]")).val();
@@ -140,20 +241,17 @@ var unfollowButtonText = '<i class="fa fa-check fa-fw"></i>\n' +
                          '<strong>{count}</strong>';
 var commentWrapperNoAuthor = '<div class="column half-vertical-space">\n' +
                              '<img class="push-left all-5 img-circle quarter-right-space" ' +
-                             'src="../../images/avatars/{idutilizador}_small.png" alt="">\n' +
+                             'src="../../pages/avatar.php?id={idutilizador}&thumbnail=yes" alt="">\n' +
                              '{nomeutilizador}\n' +
                              '<small>{datahora}</small>\n' +
                              '<p class="fw-medium">{descricao}</p></div>';
 var commentWrapper = '<div class="column half-vertical-space">\n' +
                      '<img class="push-left all-5 img-circle quarter-right-space" ' +
-                     'src="../../images/avatars/{idutilizador}_small.png" alt="">\n' +
+                     'src="../../pages/avatar.php?id={idutilizador}&thumbnail=yes" alt="">\n' +
                      '<a href="../utilizador/profile.php?id={idutilizador}">{nomeutilizador}</a>\n' +
                      '<small>{datahora}</small>\n' +
                      '<p class="fw-medium">{descricao}</p></div>';
 
-/*
- * registarVotoPergunta(domElement, nodeId, valor)
- */
 function registarVotoPergunta(domElement, nodeId, valor)
 {
   var domParent = domElement.parent();
@@ -223,9 +321,6 @@ function registarVotoPergunta(domElement, nodeId, valor)
   });
 };
 
-/*
- * registarVotoResposta(domElement, nodeId, valor)
- */
 function registarVotoResposta(domElement, nodeId, valor)
 {
   var domParent = domElement.parent();
@@ -379,9 +474,6 @@ function __unfollowPergunta(domElement, nodeId)
   });
 }
 
-/*
- * insertComment(domElement, jsonObject)
- */
 function insertComment(domElement, jsonObject)
 {
   domElement.append(nano(
@@ -390,16 +482,11 @@ function insertComment(domElement, jsonObject)
   );
 };
 
-/*
- * getAnswerTarget(answerId)
- */
-function getAnswerTarget(answerId) {
+function getAnswerTarget(answerId)
+{
   return '#reply' + answerId + '-comments';
 }
 
-/*
- * fetchQuestionComments(idPergunta)
- */
 function fetchQuestionComments(thisId, currentNode)
 {
   if (refreshStatus[thisId])
@@ -444,9 +531,6 @@ function fetchQuestionComments(thisId, currentNode)
   });
 };
 
-/*
- * fetchAnswerComments(idResposta)
- */
 function fetchAnswerComments(thisId, currentNode)
 {
   if (refreshStatus[thisId])
@@ -500,9 +584,6 @@ function fetchAnswerComments(thisId, currentNode)
   });
 };
 
-/*
- * refreshQuestionComments(thisId, currentNode)
- */
 function refreshQuestionComments(thisId, currentNode)
 {
   var buttonTag = currentNode.find('button#submit');
@@ -534,9 +615,6 @@ function refreshQuestionComments(thisId, currentNode)
   });
 };
 
-/*
- * refreshAnswerComments(thisId, currentNode)
- */
 function refreshAnswerComments(thisId, currentNode)
 {
   var buttonTag = currentNode.find('button#submit');
@@ -568,57 +646,58 @@ function refreshAnswerComments(thisId, currentNode)
   });
 };
 
-/*
- * printAnswerComments(idResposta, jsonObject)
- */
-function printAnswerComments(idResposta, jsonObject) {
-
-  if (jsonObject.length < 1) {
+function printAnswerComments(idResposta, jsonObject)
+{
+  if (jsonObject.length < 1)
+  {
     refreshStatus[idResposta] = true;
   }
 
-  if (refreshStatus[idResposta]) {
+  if (refreshStatus[idResposta])
+  {
     return;
   }
 
   var domElement = $(getAnswerTarget(idResposta));
 
-  if (domElement.is(":visible")) {
-
-    for (var i = 0; i < jsonObject.length; i++) {
+  if (domElement.is(":visible"))
+  {
+    for (var i = 0; i < jsonObject.length; i++)
+    {
       insertComment(domElement, jsonObject[i]);
       answerCommentCount[idResposta]++;
     }
 
-    lastCommentId[idResposta] = jsonObject[jsonObject.length - 1].idcomentario;
+    lastCommentId[idResposta] = jsonObject[jsonObject.length - 1]['idcontribuicao'];
     refreshStatus[idResposta] = true;
   }
 };
 
-/*
- * printQuestionComments(idPegunta, jsonObject)
- */
-function printQuestionComments(idPergunta, jsonObject) {
-
-  if (jsonObject.length < 1) {
+function printQuestionComments(idPergunta, jsonObject)
+{
+  if (jsonObject.length < 1)
+  {
     questionRefreshStatus = true;
   }
 
-  if (questionRefreshStatus) {
+  if (questionRefreshStatus)
+  {
     return;
   }
 
   var domElement = $('#question-comments');
 
-  if (questionCommentId == -1) {
+  if (questionCommentId == -1)
+  {
     domElement.children().not(':first').remove();
   }
 
-  for (var i = 0; i < jsonObject.length; i++) {
+  for (var i = 0; i < jsonObject.length; i++)
+  {
     insertComment(domElement, jsonObject[i]);
     questionCommentCount++;
   }
 
-  questionCommentId = jsonObject[jsonObject.length - 1].idcomentario;
+  questionCommentId = jsonObject[jsonObject.length - 1]['idcontribuicao'];
   questionRefreshStatus = true;
 };

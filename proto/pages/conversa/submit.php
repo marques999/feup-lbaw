@@ -13,7 +13,7 @@
     $idDestinatario = safe_getId($_GET, 'id');
   }
   else {
-    safe_formerror("O identificador do destinatário não pode estar em branco!");
+    safe_formerror("Deve especificar um destinatário primeiro!");
   }
 
   if ($idRemetente != $idDestinatario) {

@@ -10,22 +10,22 @@
     safe_login();
   }
 
-  if (safe_check($_POST, 'current-password')) {
-    $oldPassword = safe_trim($_POST, 'current-password');
+  if (safe_check($_POST, 'current_password')) {
+    $oldPassword = safe_trim($_POST, 'current_password');
   }
   else {
     safe_formerror('Deve especificar a sua palavra-passe antiga!');
   }
 
-  if (safe_strcheck($_POST, 'new-password')) {
-    $newPassword = safe_trim($_POST, 'new-password');
+  if (safe_strcheck($_POST, 'new_password')) {
+    $newPassword = safe_trim($_POST, 'new_password');
   }
   else {
     safe_formerror('Deve especificar uma nova palavra-passe!');
   }
 
-  if (safe_strcheck($_POST, 'confirm-password')) {
-    $confirmPassword = safe_trim($_POST, 'confirm-password');
+  if (safe_strcheck($_POST, 'confirm_password')) {
+    $confirmPassword = safe_trim($_POST, 'confirm_password');
   }
   else {
     safe_formerror('Deve confirmar a sua nova palavra-passe!');

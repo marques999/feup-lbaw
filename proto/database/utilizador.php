@@ -15,6 +15,12 @@ function utilizador_isModerator($idUtilizador) {
   $result = $stmt->fetch();
   return $result && is_array($result);
 }
+function utilizador_registarVisita($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('SELECT registarVisita(:idUtilizador)');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+}
 function utilizador_validateLogin($username, $password) {
   global $db;
   $stmt = $db->prepare('SELECT * FROM Utilizador WHERE username = :username');
@@ -38,15 +44,18 @@ function utilizador_validateId($idUtilizador, $password) {
 }
 function utilizador_inserirUtilizador($username, $password, $email, $primeiroNome, $ultimoNome) {
   global $db;
-  $stmt = $db->prepare('INSERT INTO Utilizador(idUtilizador, username, password, primeiroNome, ultimoNome)
+  $stmt = $db->prepare('INSERT INTO Utilizador(idUtilizador, username, password, email, primeiroNome, ultimoNome)
     VALUES(DEFAULT, :username, :password, :email, :primeiroNome, :ultimoNome)');
   $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-  $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+  $stmt->bindParam(':password', create_hash($password), PDO::PARAM_STR);
   $stmt->bindParam(':email', $email, PDO::PARAM_STR);
   $stmt->bindParam(':primeiroNome', $primeiroNome, PDO::PARAM_STR);
   $stmt->bindParam(':ultimoNome', $ultimoNome, PDO::PARAM_STR);
   $stmt->execute();
-  return $stmt->rowCount();
+  if($stmt->rowCount()){
+    return $db->lastInsertId('utilizador_idutilizador_seq');
+  }
+  return 0;
 }
 function utilizador_editarUtilizador($idUtilizador, $primeiroNome, $ultimoNome, $email, $idInstituicao, $localidade, $codigoPais) {
   global $db;
@@ -246,7 +255,8 @@ function utilizador_pesquisar($query, $filter, $sort, $order) {
       Utilizador.idUtilizador,
       Utilizador.username,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-      Utilizador.email
+      Utilizador.email,
+      to_char(Utilizador.ultimaSessao, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora
     FROM Utilizador";
   }
   else {
@@ -255,6 +265,7 @@ function utilizador_pesquisar($query, $filter, $sort, $order) {
       UtilizadoresPesquisa.username,
       UtilizadoresPesquisa.nomeUtilizador,
       UtilizadoresPesquisa.email,
+      to_char(UtilizadoresPesquisa.ultimaSessao, 'FMDay, DD FMMonth YYYY HH24:MI') AS dataHora,
       ts_rank_cd(UtilizadoresPesquisa.pesquisa, query) AS rank
     FROM UtilizadoresPesquisa, plainto_tsquery('english', :stringPesquisa) AS query
     WHERE query @@ pesquisa";
@@ -292,8 +303,8 @@ function utilizador_pesquisar($query, $filter, $sort, $order) {
   else if ($sort == 'name') {
     $queryString .= ' ORDER BY nomeUtilizador';
   }
-  else if ($sort == 'date') {
-    $queryString .= ' ORDER BY dataRegisto';
+  else if ($sort == 'session') {
+    $queryString .= ' ORDER BY ultimaSessao';
   }
   else {
     if ($emptyQuery) {

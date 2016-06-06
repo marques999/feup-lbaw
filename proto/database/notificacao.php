@@ -15,7 +15,8 @@ function notificacao_novosComentarios($idSeguidor) {
     NATURAL JOIN ComentarioPergunta
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = ComentarioPergunta.idComentario
     INNER JOIN Utilizador Autor ON Autor.idUtilizador = Contribuicao.idUtilizador
-    WHERE idSeguidor = :idSeguidor");
+    WHERE idSeguidor = :idSeguidor
+    AND Contribuicao.dataHora >= dataAcesso");
   $stmt->bindParam(":idSeguidor", $idSeguidor, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
@@ -61,7 +62,8 @@ function notificacao_novasRespostas($idSeguidor) {
     INNER JOIN Resposta USING(idPergunta)
     INNER JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
     INNER JOIN Utilizador ON Utilizador.idUtilizador = Contribuicao.idUtilizador
-    WHERE idSeguidor = :idSeguidor");
+    WHERE idSeguidor = :idSeguidor
+    AND Contribuicao.dataHora >= dataAcesso");
   $stmt->bindParam(":idSeguidor", $idSeguidor, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();

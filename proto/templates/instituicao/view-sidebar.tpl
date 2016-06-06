@@ -6,13 +6,13 @@
   </h5>
   <ul class="menu vertical white">
   {strip}
-    {foreach $categorias as $categoria}
-    <li>
-      <a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">
-        {$categoria.nome}
-      </a>
-    </li>
-    {/foreach}
+  {foreach $categorias as $categoria}
+  <li>
+    <a href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">
+      <span>{$categoria.nome}</span>
+    </a>
+  </li>
+  {/foreach}
   {/strip}
   </ul>
 {/if}
@@ -40,7 +40,7 @@
       </a>
     </li>
   </ul>
-{if $administrador}
+{if $ADMINISTRADOR}
   <h5 class="slab half-vertical-space">
     <i class="fa fa-cog"></i>
     <span>Gestão</span>
@@ -48,17 +48,17 @@
   <ul class="menu vertical white">
   {strip}
     <li>
-      <a href="{$BASE_URL}pages/instituicao/update.php">
+      <a href="{$BASE_URL}pages/instituicao/update.php?id={$instituicao.sigla}">
         <sup><strong>(Admin)</strong></sup>
-        <span>Editar instituição</span>
+        <span>&nbsp;Editar instituição</span>
       </a>
     </li>
   {strip}
   {/strip}
     <li>
-      <a href="{$BASE_URL}pages/instituicao/delete.php">
+      <a href="{$BASE_URL}pages/instituicao/delete.php?id={$instituicao.sigla}">
         <sup><strong>(Admin)</strong></sup>
-        <span>Apagar instituição</span>
+        <span>&nbsp;Apagar instituição</span>
       </a>
     </li>
   {/strip}

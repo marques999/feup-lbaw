@@ -1,5 +1,3 @@
-<form action="{$BASE_URL}actions/instituicao/update.php" method="post" class="ink-form ink-formvalidator all-100 xlarge-60 large-75 medium-85 push-center" data-lang="pt_PT">
-{include file='common/messages.tpl'}
 <input type="hidden" id="idInstituicao" name="idInstituicao" value="{$instituicao.idinstituicao}">
 <div class="control-group half-gutters required">
   <label for="nome" class="condensed">
@@ -7,26 +5,50 @@
   </label>
   <div class="control medium append-symbol">
     <span>
-      <input id="nome" name="nome" type="text" value="{$instituicao.nome}" data-rules="required|text[true,false]">
+      {if $FORM_VALUES.nome}
+      <input id="nome" name="nome" type="text"
+             value="{$FORM_VALUES.nome}"
+             data-rules="required|text[true,false]">
+      {else}
+      <input id="nome" name="nome" type="text"
+             value="{$instituicao.nome}"
+             data-rules="required|text[true,false]">
+      {/if}
       <i class="fa fa-institution"></i>
     </span>
   </div>
 </div>
 <div class="column-group half-gutters">
-  <div class="control-group all-60 required">
+  <div class="control-group all-40 required">
     <label for="sigla" class="condensed">
       <strong>Sigla</strong>
     </label>
     <div class="control medium">
-      <input type="text" id="sigla" name="sigla" value="{$instituicao.sigla}" data-rules="required|alpha">
+      {if $FORM_VALUES.sigla}
+      <input type="text" id="sigla" name="sigla"
+             value="{$FORM_VALUES.sigla}"
+             data-rules="required|alpha">
+      {else}
+      <input type="text" id="sigla" name="sigla"
+            value="{$instituicao.sigla}"
+            data-rules="required|alpha">
+      {/if}
     </div>
   </div>
-  <div class="control-group all-40">
+  <div class="control-group all-60">
     <label for="contacto" class="condensed">
       <strong>Contacto</strong>
     </label>
     <div class="control medium">
-      <input type="text" id="contacto" name="contacto" value="{$instituicao.contacto}" data-rules="required|phone[PT]">
+      {if $FORM_VALUES.contacto}
+      <input type="text" id="contacto" name="contacto"
+             value="{$FORM_VALUES.contacto}"
+             data-rules="required|phone[PT]">
+      {else}
+      <input type="text" id="contacto" name="contacto"
+             value="{$instituicao.contacto}"
+             data-rules="required|phone[PT]">
+      {/if}
     </div>
   </div>
 </div>
@@ -36,7 +58,15 @@
   </label>
   <div class="control medium append-symbol">
     <span>
-      <input type="text" id="morada" name="morada" value="{$instituicao.morada}" data-rules="required|text[true,true]">
+      {if $FORM_VALUES.morada}
+      <input type="text" id="morada" name="morada"
+             value="{$FORM_VALUES.morada}"
+             data-rules="required|text[true,true]">
+      {else}
+      <input type="text" id="morada" name="morada"
+             value="{$instituicao.morada}"
+             data-rules="required|text[true,true]">
+      {/if}
       <i class="fa fa-envelope-o"></i>
     </span>
   </div>
@@ -47,7 +77,15 @@
   </label>
   <div class="control medium append-symbol">
     <span>
-      <input type="text" id="website" name="website" value="{$instituicao.website}" data-rules="required|url[true]">
+      {if $FORM_VALUES.website}
+      <input type="text" id="website" name="website"
+             value="{$FORM_VALUES.website}"
+             data-rules="required|url[true]">
+      {else}
+      <input type="text" id="website" name="website"
+             value="{$instituicao.website}"
+             data-rules="required|url[true]">
+      {/if}
       <i class="fa fa-globe"></i>
     </span>
   </div>
@@ -100,4 +138,3 @@
     </button>
   </div>
 </div>
-</form>

@@ -18,7 +18,7 @@
     $readOnly = true;
   }
 
-  if (utilizador_isModerator($idModerador)) {
+  if (safe_checkModerador()) {
 
     if ($readOnly || $idModerador == $idUtilizador) {
       $queryReports = report_listarReports();

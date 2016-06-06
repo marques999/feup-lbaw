@@ -2,7 +2,6 @@
   include_once('../../config/init.php');
   include_once('../../database/comentario.php');
   include_once('../../database/pergunta.php');
-  include_once('../../database/utilizador.php');
 
   if (safe_check($_SESSION, 'idUtilizador')) {
 
@@ -12,10 +11,8 @@
       $idPergunta = safe_getId($_POST, 'idPergunta');
       $idUtilizador = safe_getId($_SESSION, 'idUtilizador');
       $isOriginalPoster = comentario_verificarAutor($idComentario, $idUtilizador);
-      $isAdministrator = utilizador_isAdministrator($idUtilizador);
-      $isModerator = utilizador_isModerator($idUtilizador);
 
-      if ($isOriginalPoster || $isModerator || $isAdministrator) {
+      if ($isOriginalPoster || safe_checkModerador() || safe_checkAdministrador()) {
 
         try {
           echo pergunta_removerComentario($idPergunta, $idComentario, $idUtilizador);
