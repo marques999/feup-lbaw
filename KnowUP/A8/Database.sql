@@ -373,7 +373,7 @@ INSERT INTO Contribuicao
 VALUES(18, 2, '<p>Desde que cumpra as normas deste website, sim &eacute; permitido.</p>', '2016-04-10 19:43:32');
 
 INSERT INTO Contribuicao
-VALUES(19, 7, '<p>Obrigado, tentarei sempre seguir as regras!</p>', '2016-04-10 20:41:14');
+VALUES(19, 7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:41:14');
 
 INSERT INTO Contribuicao
 VALUES(20, 2, '<p>Finalmente consigo&nbsp;<strong>editar respostas</strong> aqui no site...</p>', '2016-06-02 17:54:08.109931');
