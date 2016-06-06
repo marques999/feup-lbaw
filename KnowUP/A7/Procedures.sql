@@ -86,23 +86,18 @@ END;
 $visitarPergunta$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
-/*                lerMensagens                */
+/*               registarVisita               */
 /*--------------------------------------------*/
 
--- lerMensagens(idConversa, idUtilizador)
+-- registarVisita(idUtilizador)
 
-CREATE OR REPLACE FUNCTION lerMensagens(integer, integer)
-RETURNS VOID AS $lerMensagens$
+CREATE OR REPLACE FUNCTION registarVisita(integer)
+RETURNS VOID AS $registarVisita$
 BEGIN
-    UPDATE Conversa
-    SET ultimoAcesso1 = now()
-    WHERE idConversa = $1 AND idUtilizador1 = $2;
-    IF NOT FOUND THEN
-        UPDATE Conversa
-        SET ultimoAcesso2 = now()
-        WHERE idConversa = $1 AND idUtilizador2 = $2;
-    END IF;
+    UPDATE Utilizador
+    SET ultimaSessao = now()
+    WHERE idUtilizador = $1;
     RETURN;
 END;
 
-$lerMensagens$ LANGUAGE plpgsql;
+$registarVisita$ LANGUAGE plpgsql;

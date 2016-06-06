@@ -238,6 +238,7 @@ SELECT UtilizadoresPesquisa.idUtilizador,
        UtilizadoresPesquisa.username,
        UtilizadoresPesquisa.nomeUtilizador,
        UtilizadoresPesquisa.email,
+       UtilizadoresPesquisa.ultimaSessao,
        ts_rank_cd(UtilizadoresPesquisa.pesquisa, query) AS rank
   FROM UtilizadoresPesquisa, plainto_tsquery('english', :stringPesquisa) AS query
   WHERE query @@ pesquisa

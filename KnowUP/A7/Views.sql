@@ -124,6 +124,7 @@ SELECT Utilizador.idUtilizador,
        Utilizador.username,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Utilizador.email,
+       Utilizador.ultimaSessao,
        to_tsvector('english', Utilizador.username || ' ' ||
            Utilizador.primeiroNome || ' ' ||
            Utilizador.ultimoNome || ' ' ||
