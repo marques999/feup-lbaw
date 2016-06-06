@@ -1,6 +1,8 @@
 SET SCHEMA 'knowup';
 
 DROP INDEX IF EXISTS Categoria_IDX_Pesquisa;
+DROP INDEX IF EXISTS CategoriaInstituicao_IDX_Lookup
+DROP INDEX IF EXISTS Contribuicao_IDX_Lookup;
 DROP INDEX IF EXISTS Contribuicao_IDX_MaisRecentes;
 DROP INDEX IF EXISTS Pergunta_IDX_Lookup;
 DROP INDEX IF EXISTS Pergunta_IDX_MaisRecentes;
