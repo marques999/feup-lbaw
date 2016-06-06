@@ -305,66 +305,87 @@ VALUES(DEFAULT, 38, 8, 'Alguma ideia para uma curta metragem?', 'Preciso de ajud
 INSERT INTO Pergunta
 VALUES(DEFAULT, 24, 7, 'Tópicos externos', 'Boa noite, queria saber se é permitido discutir assuntos futebolísticos dentro da comunidade não relacionados diretamente com a faculdade.', '2016-06-04 12:30:07', false, 1, 1);
 
+INSERT INTO Pergunta
+VALUES(DEFAULT, 23, 1, 'Como se joga basquetebol?', 'Há anos que tenho feito esta pergunta, não me consegui convencer com nenhuma resposta até ao momento...', '2016-06-05 00:26:06.924639', true, 0, 2);
+
+INSERT INTO Pergunta
+VALUES(DEFAULT, 24, 2, 'Como se joga futebol?', 'Há anos que tenho feito esta pergunta, não me consegui convencer com nenhuma resposta até ao momento...', '2016-06-05 00:29:49.051084', true, -1, 0);
+
+INSERT INTO Pergunta
+VALUES(DEFAULT, 51, 3, 'sabes quem eu sou?', NULL, '2016-06-05 23:48:44.672975', true, 0, 1);
+
 /*--------------------------------------------*/
 /*                Contribuiçao                */
 /*--------------------------------------------*/
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels: <br> Folha A4: <br> 2480 px de largura <br> 3508 px de altura <br> <br> Folha A3: <br> 3508 px de largura <br> 4960 px de altura <br> <br> Folha A5: <br> 1754 px de largura <br> 2480 px de altura', '2016-03-21 14:35:33');
+VALUES(1, 7, '1 cm equivale a 28,34 pixels. Sendo assim, 1 mm equivale a 2,83 pixels. Confira abaixo o tamanho da Folha A4, em pixels:<br>Folha A4:<br>2480 px de largura<br>3508 px de altura<br><br>Folha A3:<br>3508 px de largura<br>4960 px de altura<br><br>Folha A5:<br>1754 px de largura <br>2480 px de altura', '2016-03-21 14:35:33');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 8, 'Muito obrigado, rápido e esclarecedor como sempre!', '2016-03-21 14:49:33');
+VALUES(2, 8, 'Muito obrigado, rápido e esclarecedor como sempre!', '2016-03-21 14:49:33');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, 'Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila.', '2015-11-10 20:42:45');
+VALUES(3, 5, '<p>Um humano adulto tem normalmente 32 dentes, dezesseis na mandíbula e dezesseis na maxila.</p>', '2015-11-10 20:42:45');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, 'Na minha opinião devias tomar paracetamol.', '2015-09-25 14:58:01');
+VALUES(4, 5, '<p>Na minha opinião devias tomar paracetamol.</p>', '2016-05-11 14:58:01');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 2, 'Eu acho que devia ser ibuprofeno, também é anti-inflamatório!','2015-09-25 15:02:13');
+VALUES(5, 2, '<p>Eu acho que devia ser ibuprofeno, também é anti-inflamatório!</p>', '2016-05-11 15:02:13');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, 'Se a dor for leve, apesar de constante, penso que o mais aconselhado seria paracetamol, pois é menos prejudicial à saude @marques999', '2015-09-25 15:05:46');
+VALUES(6, 5, '<p>Se a dor for leve, apesar de constante, penso que o mais aconselhado seria paracetamol, pois é menos prejudicial à saude @marques999</p>', '2016-05-11 15:05:46');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 2, 'Sim, de certa forma tens razão, ainda que ele possa ter uma inflamação. Eu diria ibuprofeno pois também é anti-inflamatório. Se não tomar muitas vezes nao há problemas @darklord', '2015-09-25 15:26:53');
+VALUES(7, 2, '<p>Sim, de certa forma tens razão, ainda que ele possa ter uma inflamação. Eu diria ibuprofeno pois também é anti-inflamatório. Se não tomar muitas vezes nao há problemas @penicilina</p>', '2016-05-11 15:26:53');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, 'A dor é muito forte? @mellus', '2015-09-25 15:30:22');
+VALUES(8, 5, 'A dor é muito forte? @mellus', '2016-05-11 15:30:22');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 3, 'Não, só que como é persistente perturba-me o estudo', '2015-09-25 18:20:10');
+VALUES(9, 3, 'Não, só que como é persistente perturba-me o estudo', '2016-05-11 15:21:10');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, 'Então o paracetamol é o mais indicado devido à falta de outros sintomas @mellus @marques999', '2015-09-25 19:41:21');
+VALUES(10, 5, 'Então o paracetamol é o mais indicado devido à falta de outros sintomas @mellus @marques999', '2016-05-11 19:41:21');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 6, 'Muito obrigado! PS: Qual é a farmácia mais próxima do S.João?', '2015-09-25 20:36:41');
+VALUES(11, 6, 'Muito obrigado! PS: Qual é a farmácia mais próxima do S.João?', '2016-05-11 20:36:41');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 2, 'Vai ao Amial, há uma aberta de certeza.', '2015-09-25 20:40:12');
+VALUES(12, 2, 'Vai ao Amial, há uma aberta de certeza.', '2016-05-11 20:40:12');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, '<blockquote>ASCII (acrónimo para <em>American Standard Code for Information Interchange</em>, que em português significa "código padrão americano para intercâmbio de informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.</blockquote><p>Fonte: <a href="http://pt.stackoverflow.com/tags/ascii/info">Wikipédia</a></p>', '2016-01-10 21:14:22');
+VALUES(13, 5, '<blockquote>ASCII (acrónimo para <em>American Standard Code for Information Interchange</em>, que em português significa "código padrão americano para intercâmbio de informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.</blockquote><p>Fonte: <a href="http://pt.stackoverflow.com/tags/ascii/info">Wikipédia</a></p>', '2016-06-29 21:14:22');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 6, 'Preciso de fazer algum <em>include<em> para usar no meu codigo em C++?','2016-01-11 09:54:09');
+VALUES(14, 6, '<p>Preciso de fazer algum <em>include</em> para usar no meu c&oacute;digo em C++?</p>', '2016-06-01 09:54:09');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 8, 'Tendo em conta a minha experiência em uso de todo o tipo de lápis, aconselho cera para ambientes rurais, e normal para ambientes urbanos. Cabe agora a ti descobrir que paisagem queres pintar exatamente.', '2015-12-24 22:22:22');
+VALUES(15, 8, '<p>Tendo em conta a minha experiência em uso de todo o tipo de lápis, aconselho cera para ambientes rurais, e normal para ambientes urbanos. Cabe agora a ti descobrir que paisagem queres pintar exatamente.</p>', '2015-12-24 22:22:22');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 5, '<em>Star Wars</em> é sempre um bom tema...', '2016-03-24 19:43:32');
+VALUES(16, 5, '<p><em>Star Wars</em> &eacute; sempre um bom tema...</p>', '2016-03-24 19:43:32');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 3, 'Papel cor-de-rosa dava um bom nome. Em relação ao tema, aproveitando a ideia do @darklord eu diria uma comédia romântica com bonecos do <em>Star Wars</em>. Deve ser incrivel!!!', '2016-03-24 20:11:52');
+VALUES(17, 3, '<p>Papel cor-de-rosa dava um bom nome. Em rela&ccedil;&atilde;o ao tema, aproveitando a ideia do @darklord eu diria uma com&eacute;dia rom&acirc;ntica com bonecos do <em>Star Wars</em>. Deve ser incrivel!!!</p>', '2016-03-24 20:11:52');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 2, 'Desde que cumpra as normas deste website, sim é permitido.', '2016-04-10 19:43:32');
+VALUES(18, 2, '<p>Desde que cumpra as normas deste website, sim &eacute; permitido.</p>', '2016-04-10 19:43:32');
 
 INSERT INTO Contribuicao
-VALUES(DEFAULT, 7, 'Obrigado, tentarei sempre seguir as regras!', '2016-04-10 20:41:14');
+VALUES(19, 7, '<p>Obrigado, tentarei sempre seguir as regras!</p>', '2016-04-10 20:41:14');
+
+INSERT INTO Contribuicao
+VALUES(20, 2, '<p>Finalmente consigo&nbsp;<strong>editar respostas</strong> aqui no site...</p>', '2016-06-02 17:54:08.109931');
+
+INSERT INTO Contribuicao
+VALUES(21, 4, '<p>Eu sei!</p>', '2016-06-05 13:31:01.720051');
+
+INSERT INTO Contribuicao
+VALUES(22, 4, '<p>Queres saber a resposta?</p>', '2016-06-05 13:31:33.773765');
+
+INSERT INTO Contribuicao
+VALUES(23, 2, '<h3>Manel????</h3>', '2016-06-06 00:10:13.991778');
 
 /*--------------------------------------------*/
 /*                  Resposta                  */
@@ -383,31 +404,44 @@ INSERT INTO Resposta VALUES(15, 8, true);
 INSERT INTO Resposta VALUES(16, 9, false);
 INSERT INTO Resposta VALUES(17, 9, false);
 INSERT INTO Resposta VALUES(18, 10, false);
+INSERT INTO Resposta VALUES(20, 7, false);
+INSERT INTO Resposta VALUES(21, 11, true);
+INSERT INTO Resposta VALUES(22, 11, false);
+INSERT INTO Resposta VALUES(23, 13, true);
 
 /*--------------------------------------------*/
 /*                  Seguidor                  */
 /*--------------------------------------------*/
 
-INSERT INTO Seguidor VALUES(8, 1, '2016-03-21 14:30:07', '2016-04-01 17:10:08');
 INSERT INTO Seguidor VALUES(7, 1, '2016-03-21 14:35:33', '2016-03-22 09:14:59');
-INSERT INTO Seguidor VALUES(4, 2, '2016-04-10 16:45:22', '2016-04-15 08:08:38');
+INSERT INTO Seguidor VALUES(8, 1, '2016-03-21 14:30:07', '2016-04-01 17:10:08');
+INSERT INTO Seguidor VALUES(2, 2, '2016-06-01 13:21:41', '2016-06-06 14:40:41');
+INSERT INTO Seguidor VALUES(4, 2, '2016-06-05 18:36:46', '2016-06-05 18:36:46');
+INSERT INTO Seguidor VALUES(8, 2, '2016-03-21 14:49:33', '2016-03-21 14:49:33');
 INSERT INTO Seguidor VALUES(2, 3, '2015-09-23 16:45:22', '2016-02-24 12:18:05');
-INSERT INTO Seguidor VALUES(6, 4, '2015-11-10 19:44:32', '2016-01-02 19:38:22');
+INSERT INTO Seguidor VALUES(5, 3, '2015-11-10 20:42:45', '2015-11-10 20:42:45');
 INSERT INTO Seguidor VALUES(5, 4, '2015-11-10 20:42:45', '2016-04-07 05:22:32');
+INSERT INTO Seguidor VALUES(6, 4, '2015-11-10 19:44:32', '2016-01-02 19:38:22');
 INSERT INTO Seguidor VALUES(2, 5, '2015-09-25 04:23:54', '2016-02-24 07:52:20');
+INSERT INTO Seguidor VALUES(2, 6, '2015-09-25 15:26:53', '2016-02-24 22:42:54');
 INSERT INTO Seguidor VALUES(3, 6, '2015-09-25 14:56:43', '2015-12-24 02:32:12');
 INSERT INTO Seguidor VALUES(5, 6, '2015-09-25 15:05:46', '2016-04-25 18:26:44');
-INSERT INTO Seguidor VALUES(2, 6, '2015-09-25 15:26:53', '2016-02-24 22:42:54');
-INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', '2016-06-09 15:32:47');
+INSERT INTO Seguidor VALUES(2, 7, '2016-06-06 13:54:30', '2016-06-06 14:27:20');
 INSERT INTO Seguidor VALUES(5, 7, '2016-01-10 21:14:22', '2016-04-01 23:02:30');
 INSERT INTO Seguidor VALUES(6, 7, '2016-01-11 09:54:09', '2016-01-12 18:38:10');
+INSERT INTO Seguidor VALUES(7, 7, '2016-01-10 19:44:32', '2016-06-09 15:32:47');
 INSERT INTO Seguidor VALUES(5, 8, '2015-12-24 19:43:32', '2016-05-23 20:56:57');
 INSERT INTO Seguidor VALUES(8, 8, '2015-12-24 22:22:22', '2016-04-30 11:24:37');
-INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', '2016-04-17 16:00:51');
-INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', '2016-04-12 04:44:26');
 INSERT INTO Seguidor VALUES(3, 9, '2016-03-24 20:11:41', '2016-03-28 10:12:19');
-INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', '2016-06-09 04:22:36');
+INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', '2016-04-12 04:44:26');
+INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', '2016-04-17 16:00:51');
 INSERT INTO Seguidor VALUES(2, 10, '2016-04-10 19:43:32', '2016-02-24 17:20:53');
+INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', '2016-06-09 04:22:36');
+INSERT INTO Seguidor VALUES(2, 12, '2016-06-06 14:26:04', '2016-06-06 14:27:01');
+INSERT INTO Seguidor VALUES(1, 12, '2016-06-05 00:26:06', '2016-06-05 00:26:06');
+INSERT INTO Seguidor VALUES(3, 14, '2016-06-05 23:48:44', '2016-06-05 23:49:02');
+INSERT INTO Seguidor VALUES(8, 15, '2015-12-24 22:22:22', '2015-12-24 22:22:22');
+INSERT INTO Seguidor VALUES(2, 15, '2016-06-06 11:38:10', '2016-06-06 14:27:23');
 
 /*--------------------------------------------*/
 /*             ComentarioPergunta             */
@@ -423,7 +457,7 @@ INSERT INTO ComentarioPergunta VALUES(9, 6);
 INSERT INTO ComentarioResposta VALUES(2, 1);
 INSERT INTO ComentarioResposta VALUES(11, 10);
 INSERT INTO ComentarioResposta VALUES(12, 10);
-INSERT INTO ComentarioResposta VALUES(19, 10);
+INSERT INTO ComentarioResposta VALUES(19, 18);
 
 /*--------------------------------------------*/
 /*                VotoPergunta                */
@@ -467,6 +501,9 @@ INSERT INTO VotoPergunta VALUES(9, 4, 1);
 INSERT INTO VotoPergunta VALUES(9, 6, 1);
 INSERT INTO VotoPergunta VALUES(9, 8, 1);
 INSERT INTO VotoPergunta VALUES(10, 2, 1);
+INSERT INTO VotoPergunta VALUES(12, 3, -1);
+INSERT INTO VotoPergunta VALUES(13, 3, -1);
+INSERT INTO VotoPergunta VALUES(13, 2, 1);
 
 /*--------------------------------------------*/
 /*                VotoResposta                */
@@ -534,9 +571,6 @@ VALUES(DEFAULT, 6, 4, 'presente de aniversário', '2016-04-07 12:30:06', '2016-0
 INSERT INTO Conversa
 VALUES(DEFAULT, 4, 7, 'Marx, o verdadeiro?', '2016-05-21 19:42:11', '2016-05-21 11:34:50');
 
-INSERT INTO Conversa
-VALUES(DEFAULT, 2, 8, 'Neko Daisuki :3', '2016-06-04 08:39:50', '2016-06-03 11:34:50');
-
 /*--------------------------------------------*/
 /*                  Mensagem                  */
 /*--------------------------------------------*/
@@ -588,12 +622,6 @@ VALUES(DEFAULT, 6, 4, 'Tenho aqui um papel cor-de-rosa todo bonito, acho que ele
 
 INSERT INTO Mensagem
 VALUES(DEFAULT, 7, 3, 'Gostava de saber quem na realidade você é...', '2016-04-07 11:25:31');
-
-INSERT INTO Mensagem
-VALUES(DEFAULT, 8, 2, 'Hakase da nyaaaan~~~', '2016-06-03 19:43:11');
-
-INSERT INTO Mensagem
-VALUES(DEFAULT, 8, 2, '<p>Moe desu!</p>', '2016-06-03 19:43:58');
 
 /*--------------------------------------------*/
 /*                   Report                   */
