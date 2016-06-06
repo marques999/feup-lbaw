@@ -31,7 +31,7 @@ SELECT Pergunta.idPergunta,
         GROUP BY idPergunta)
         AS TabelaRespostas
         USING (idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idUtilizador
     GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
     ORDER BY Pergunta.dataHora DESC;
 
@@ -58,7 +58,7 @@ SELECT Pergunta.idPergunta,
         GROUP BY idPergunta)
         AS TabelaRespostas
         USING (idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idUtilizador
     GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
     ORDER BY pontuacao DESC;
 
@@ -86,7 +86,7 @@ SELECT Pergunta.idPergunta,
         AS TabelaRespostas
         USING (idPergunta)
     LEFT JOIN Resposta USING(idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idUtilizador
     WHERE Resposta.idPergunta IS NULL
     GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
     ORDER BY Pergunta.dataHora DESC;
@@ -112,7 +112,7 @@ FROM (SELECT Pergunta.idPergunta,
 FROM Pergunta
 LEFT JOIN Resposta USING(idPergunta)
 LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idUtilizador
 GROUP BY idPergunta, Utilizador.idUtilizador) AS QueryPrincipal;
 
 /*--------------------------------------------*/

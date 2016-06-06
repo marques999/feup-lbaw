@@ -762,11 +762,11 @@ INSERT INTO Seguidor VALUES(5, 9, '2016-03-24 19:43:32', '2016-04-12 04:44:26');
 INSERT INTO Seguidor VALUES(8, 9, '2016-03-23 17:43:52', '2016-04-17 16:00:51');
 INSERT INTO Seguidor VALUES(2, 10, '2016-04-10 19:43:32', '2016-02-24 17:20:53');
 INSERT INTO Seguidor VALUES(7, 10, '2016-03-24 19:40:10', '2016-06-09 04:22:36');
-INSERT INTO Seguidor VALUES(2, 12, '2016-06-06 14:26:04', '2016-06-06 14:27:01');
-INSERT INTO Seguidor VALUES(1, 12, '2016-06-05 00:26:06', '2016-06-05 00:26:06');
-INSERT INTO Seguidor VALUES(3, 14, '2016-06-05 23:48:44', '2016-06-05 23:49:02');
-INSERT INTO Seguidor VALUES(8, 15, '2015-12-24 22:22:22', '2015-12-24 22:22:22');
-INSERT INTO Seguidor VALUES(2, 15, '2016-06-06 11:38:10', '2016-06-06 14:27:23');
+INSERT INTO Seguidor VALUES(2, 11, '2016-06-06 14:26:04', '2016-06-06 14:27:01');
+INSERT INTO Seguidor VALUES(1, 11, '2016-06-05 00:26:06', '2016-06-05 00:26:06');
+INSERT INTO Seguidor VALUES(3, 12, '2016-06-05 23:48:44', '2016-06-05 23:49:02');
+INSERT INTO Seguidor VALUES(8, 13, '2015-12-24 22:22:22', '2015-12-24 22:22:22');
+INSERT INTO Seguidor VALUES(2, 13, '2016-06-06 11:38:10', '2016-06-06 14:27:23');
 
 /*--------------------------------------------*/
 /*             ComentarioPergunta             */
@@ -969,90 +969,7 @@ VALUES(DEFAULT, 3, 6, 'O utilizador estava a tentar pintar como Bob Ross mas esq
 -- +==========================================================================+
 
 /*--------------------------------------------*/
-/* 1. LISTAR PERGUNTAS MAIS RECENTES          */
-/*--------------------------------------------*/
-
-CREATE VIEW PerguntasMaisRecentes AS
-SELECT Pergunta.idPergunta,
-       Utilizador.idUtilizador,
-       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       Pergunta.titulo,
-       Pergunta.dataHora,
-       Pergunta.descricao,
-       Pergunta.ativa,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao
-    FROM Pergunta
-    LEFT JOIN VotoPergunta USING(idPergunta)
-    LEFT JOIN (SELECT idPergunta, COUNT(*)
-        FROM Resposta
-        GROUP BY idPergunta)
-        AS TabelaRespostas
-        USING (idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
-    ORDER BY Pergunta.dataHora DESC;
-
-/*--------------------------------------------*/
-/* 2. LISTAR PERGUNTAS MELHOR CLASSIFICADAS   */
-/*--------------------------------------------*/
-
-CREATE VIEW PerguntasMelhorClassificadas AS
-SELECT Pergunta.idPergunta,
-       Utilizador.idUtilizador,
-       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       Pergunta.titulo,
-       Pergunta.descricao,
-       Pergunta.ativa,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao,
-       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
-    FROM Pergunta
-    LEFT JOIN VotoPergunta USING(idPergunta)
-    LEFT JOIN (SELECT idPergunta, COUNT(*)
-        FROM Resposta
-        GROUP BY idPergunta)
-        AS TabelaRespostas
-        USING (idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
-    ORDER BY pontuacao DESC;
-
-/*--------------------------------------------*/
-/* 3. LISTAR PERGUNTAS NÃO RESPONDIDAS        */
-/*--------------------------------------------*/
-
-CREATE VIEW PerguntasSemResposta AS
-SELECT Pergunta.idPergunta,
-       Utilizador.idUtilizador,
-       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
-       Pergunta.titulo,
-       Pergunta.descricao,
-       Pergunta.ativa,
-       COALESCE(TabelaRespostas.count, 0) AS numeroRespostas,
-       COALESCE(SUM(CASE WHEN valor = 1 THEN 1 ELSE 0 END), 0) AS votosPositivos,
-       COALESCE(SUM(CASE WHEN valor = -1 THEN 1 ELSE 0 END), 0) AS votosNegativos,
-       COALESCE(SUM(valor), 0) AS pontuacao,
-       EXTRACT(EPOCH FROM Pergunta.dataHora) as dataHora
-    FROM Pergunta
-    LEFT JOIN VotoPergunta USING(idPergunta)
-    LEFT JOIN (SELECT idPergunta, COUNT(*)
-        FROM Resposta
-        GROUP BY idPergunta)
-        AS TabelaRespostas
-        USING (idPergunta)
-    LEFT JOIN Resposta USING(idPergunta)
-    JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
-    WHERE Resposta.idPergunta IS NULL
-    GROUP BY TabelaRespostas.count, Pergunta.idPergunta, Utilizador.idUtilizador
-    ORDER BY Pergunta.dataHora DESC;
-
-/*--------------------------------------------*/
-/* 4. PESQUISA FULL-TEXT DE PERGUNTAS         */
+/* 1. PESQUISA FULL-TEXT DE PERGUNTAS         */
 /*--------------------------------------------*/
 
 CREATE MATERIALIZED VIEW PerguntasPesquisa AS
@@ -1072,11 +989,11 @@ FROM (SELECT Pergunta.idPergunta,
 FROM Pergunta
 LEFT JOIN Resposta USING(idPergunta)
 LEFT JOIN Contribuicao ON Contribuicao.idContribuicao = Resposta.idResposta
-LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idAutor
+LEFT JOIN Utilizador ON Utilizador.idUtilizador = Pergunta.idUtilizador
 GROUP BY idPergunta, Utilizador.idUtilizador) AS QueryPrincipal;
 
 /*--------------------------------------------*/
-/* 5. PESQUISA FULL-TEXT DE UTILIZADORES      */
+/* 2. PESQUISA FULL-TEXT DE UTILIZADORES      */
 /*--------------------------------------------*/
 
 CREATE MATERIALIZED VIEW UtilizadoresPesquisa AS
@@ -1084,54 +1001,89 @@ SELECT Utilizador.idUtilizador,
        Utilizador.username,
        Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
        Utilizador.email,
+       Utilizador.ultimaSessao,
        to_tsvector('english', Utilizador.username || ' ' ||
            Utilizador.primeiroNome || ' ' ||
            Utilizador.ultimoNome || ' ' ||
            Utilizador.email) AS pesquisa
     FROM Utilizador;
 
-/*--------------------------------------------*/
-/* 6. LISTAR INSTITUIÇÕES                     */
-/*--------------------------------------------*/
-
-CREATE VIEW VistaInstituicao AS
-SELECT Instituicao.idInstituicao,
-       Instituicao.nome,
-       Instituicao.sigla,
-       COALESCE(COUNT(DISTINCT Utilizador.idUtilizador), 0) AS numeroUtilizadores,
-       COALESCE(COUNT(DISTINCT CategoriaInstituicao.idCategoria), 0) AS numeroCategorias,
-       COALESCE(COUNT(DISTINCT Pergunta.idPergunta), 0) AS numeroPerguntas
-    FROM Instituicao
-    LEFT JOIN Utilizador USING(idInstituicao)
-    LEFT JOIN CategoriaInstituicao USING(idInstituicao)
-    LEFT JOIN Pergunta USING (idCategoria)
-    GROUP BY Instituicao.idInstituicao
-    ORDER BY Instituicao.nome;
-
 -- +==========================================================================+
--- |                                INDEXES.SQL                               |
+-- |                                INDICES.SQL                               |
 -- +==========================================================================+
+
+/*--------------------------------------------*/
+/*           Categoria_IDX_Pesquisa           */
+/*--------------------------------------------*/
 
 CREATE INDEX Categoria_IDX_Pesquisa
 ON Categoria USING hash(nome);
 
+/*--------------------------------------------*/
+/*      CategoriaInstituicao_IDX_Lookup       */
+/*--------------------------------------------*/
+
+CREATE INDEX CategoriaInstituicao_IDX_Lookup
+ON CategoriaInstituicao USING btree(idInstituicao, idCategoria);
+
+ALTER TABLE CategoriaInstituicao CLUSTER ON CategoriaInstituicao_IDX_Lookup;
+
+/*--------------------------------------------*/
+/*          Contribuicao_IDX_Lookup           */
+/*--------------------------------------------*/
+
+CREATE INDEX Contribuicao_IDX_Lookup
+ON Contribuicao USING btree(idUtilizador, idContribuicao);
+
+ALTER TABLE Contribuicao CLUSTER ON Contribuicao_IDX_Lookup;
+
+/*--------------------------------------------*/
+/*       Contribuicao_IDX_MaisRecentes        */
+/*--------------------------------------------*/
+
 CREATE INDEX Contribuicao_IDX_MaisRecentes
 ON Contribuicao USING btree(dataHora);
 
+/*--------------------------------------------*/
+/*            Pergunta_IDX_Lookup             */
+/*--------------------------------------------*/
+
 CREATE INDEX Pergunta_IDX_Lookup
-ON Pergunta USING btree(idPergunta, idAutor);
+ON Pergunta USING btree(idPergunta, idUtilizador);
+
+/*--------------------------------------------*/
+/*         Pergunta_IDX_MaisRecentes          */
+/*--------------------------------------------*/
 
 CREATE INDEX Pergunta_IDX_MaisRecentes
 ON Pergunta USING btree(dataHora);
 
+/*--------------------------------------------*/
+/*           Pergunta_IDX_Pesquisa            */
+/*--------------------------------------------*/
+
 CREATE INDEX Pergunta_IDX_Pesquisa
 ON PerguntasPesquisa USING gin(pesquisa);
+
+/*--------------------------------------------*/
+/*            Resposta_IDX_Lookup             */
+/*--------------------------------------------*/
 
 CREATE INDEX Resposta_IDX_Lookup
 ON Resposta USING btree(idResposta, idPergunta);
 
+ALTER TABLE Resposta CLUSTER ON Resposta_IDX_Lookup;
+
+/*--------------------------------------------*/
+/*          Utilizador_IDX_Pesquisa           */
+/*--------------------------------------------*/
+
 CREATE INDEX Utilizador_IDX_Pesquisa
 ON UtilizadoresPesquisa USING gin(pesquisa);
+
+/*--------------------------------------------*/
+/*          Utilizador_IDX_Username           */
+/*--------------------------------------------*/
 
 CREATE INDEX Utilizador_IDX_Username
 ON Utilizador USING hash(username);
@@ -1226,26 +1178,21 @@ END;
 $visitarPergunta$ LANGUAGE plpgsql;
 
 /*--------------------------------------------*/
-/*                lerMensagens                */
+/*               registarVisita               */
 /*--------------------------------------------*/
 
--- lerMensagens(idConversa, idUtilizador)
+-- registarVisita(idUtilizador)
 
-CREATE OR REPLACE FUNCTION lerMensagens(integer, integer)
-RETURNS VOID AS $lerMensagens$
+CREATE OR REPLACE FUNCTION registarVisita(integer)
+RETURNS VOID AS $registarVisita$
 BEGIN
-    UPDATE Conversa
-    SET ultimoAcesso1 = now()
-    WHERE idConversa = $1 AND idUtilizador1 = $2;
-    IF NOT FOUND THEN
-        UPDATE Conversa
-        SET ultimoAcesso2 = now()
-        WHERE idConversa = $1 AND idUtilizador2 = $2;
-    END IF;
+    UPDATE Utilizador
+    SET ultimaSessao = now()
+    WHERE idUtilizador = $1;
     RETURN;
 END;
 
-$lerMensagens$ LANGUAGE plpgsql;
+$registarVisita$ LANGUAGE plpgsql;
 
 -- +==========================================================================+
 -- |                               TRIGGERS.SQL                               |
