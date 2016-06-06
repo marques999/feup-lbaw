@@ -93,7 +93,7 @@ INSERT INTO Instituicao
 VALUES(DEFAULT, 'Faculdade de Belas Artes da Universidade do Porto', 'fbaup', 'Avenida Rodrigues de Freitas 265, 4049-021 PORTO', '22 519 2400', 'https://sigarra.up.pt/fbaup/pt');
 
 INSERT INTO Instituicao
-VALUES(DEFAULT, 'Faculdade de Ciências da Nutrição e da Alimentação da Universidade do Porto', 'fcnaup', 'Rua Dr. Roberto Frias s/n, 4200-465 PORTO', '22 507 4320', 'https://sigarra.up.pt/fcnaup/pt');
+VALUES(DEFAULT, 'Faculdade de Ciências da Nutrição da Universidade do Porto', 'fcnaup', 'Rua Dr. Roberto Frias s/n, 4200-465 PORTO', '22 507 4320', 'https://sigarra.up.pt/fcnaup/pt');
 
 INSERT INTO Instituicao
 VALUES(DEFAULT, 'Faculdade de Ciências da Universidade do Porto', 'fcup', 'Rua do Campo Alegre 1021, 4169-007 PORTO', '22 040 2900', 'https://sigarra.up.pt/fcup/pt');
@@ -120,7 +120,7 @@ INSERT INTO Instituicao
 VALUES(DEFAULT, 'Faculdade de Medicina da Universidade do Porto', 'fmup', 'Alameda Professor Hernâni Monteiro, 4200-319 PORTO', '22 551 3600', 'https://sigarra.up.pt/fmup/pt');
 
 INSERT INTO Instituicao
-VALUES(DEFAULT, 'Faculdade de Psicologia e de Ciências da Educação da Universidade do Porto', 'fpceup', 'Rua Alfredo Allen 525, 4200-135 PORTO', '22 607 9700', 'https://sigarra.up.pt/fpceup/pt');
+VALUES(DEFAULT, 'Faculdade de Psicologia da Universidade do Porto', 'fpceup', 'Rua Alfredo Allen 525, 4200-135 PORTO', '22 607 9700', 'https://sigarra.up.pt/fpceup/pt');
 
 INSERT INTO Instituicao
 VALUES(DEFAULT, 'Instituto de Ciências Biomédicas Abel Salazar', 'icbas', 'Rua de Jorge Viterbo Ferreira 228, 4050-313 PORTO', '22 042 8000', 'https://sigarra.up.pt/icbas/pt');
@@ -312,7 +312,7 @@ INSERT INTO Pergunta
 VALUES(DEFAULT, 24, 2, 'Como se joga futebol?', 'Há anos que tenho feito esta pergunta, não me consegui convencer com nenhuma resposta até ao momento...', '2016-06-05 00:29:49.051084', true, -1, 0);
 
 INSERT INTO Pergunta
-VALUES(DEFAULT, 51, 3, 'sabes quem eu sou?', NULL, '2016-06-05 23:48:44.672975', true, 0, 1);
+VALUES(DEFAULT, 51, 3, 'Sabes quem eu sou?', NULL, '2016-06-05 23:48:44.672975', true, 0, 1);
 
 /*--------------------------------------------*/
 /*                Contribuiçao                */
@@ -355,7 +355,7 @@ INSERT INTO Contribuicao
 VALUES(12, 2, 'Vai ao Amial, há uma aberta de certeza.', '2016-05-11 20:40:12');
 
 INSERT INTO Contribuicao
-VALUES(13, 5, '<blockquote>ASCII (acrónimo para <em>American Standard Code for Information Interchange</em>, que em português significa "código padrão americano para intercâmbio de informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.</blockquote><p>Fonte: <a href="http://pt.stackoverflow.com/tags/ascii/info">Wikipédia</a></p>', '2016-06-29 21:14:22');
+VALUES(13, 5, '<blockquote>ASCII (acrónimo para <em>American Standard Code for Information Interchange</em>, que em português significa "código padrão americano para intercâmbio de informação", mas comumente utilizamos a sigla em inglês para referencia direta) é uma codificação de caracteres de sete bits baseada no alfabeto inglês.</blockquote><p>Fonte: <a href="http://pt.stackoverflow.com/tags/ascii/info">Wikipédia</a></p>', '2016-05-29 21:14:22');
 
 INSERT INTO Contribuicao
 VALUES(14, 6, '<p>Preciso de fazer algum <em>include</em> para usar no meu c&oacute;digo em C++?</p>', '2016-06-01 09:54:09');
