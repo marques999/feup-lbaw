@@ -1140,7 +1140,7 @@ BEGIN
     IF ($3 = 0) THEN
         RETURN FALSE;
     END IF;
-    SELECT valor INTO VotoActual FROM VotoResposta WHERE idPergunta = $1 AND idUtilizador = $2;
+    SELECT valor INTO VotoActual FROM VotoResposta WHERE idResposta = $1 AND idUtilizador = $2;
     IF FOUND THEN
         IF VotoActual = $3 THEN
             DELETE FROM VotoResposta
