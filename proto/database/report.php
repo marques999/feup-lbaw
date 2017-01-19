@@ -20,30 +20,38 @@ function report_listarReports() {
   global $db;
   $stmt = $db->query("SELECT
       Report.idReport,
+      Report.idModerador,
       Utilizador.idUtilizador,
       Utilizador.username,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.ativo,
       Utilizador.removido,
+      Instituicao.sigla,
       Report.descricao,
       Report.dataHora
     FROM Report
     NATURAL JOIN Utilizador
-    WHERE ativo");
+    NATURAL JOIN Instituicao
+    WHERE NOT removido");
   return $stmt->fetchAll();
 }
 function report_listarModerador($idModerador) {
   global $db;
   $stmt = $db->prepare("SELECT
       Report.idReport,
+      Report.idModerador,
       Utilizador.idUtilizador,
       Utilizador.username,
       Utilizador.primeiroNome || ' ' || Utilizador.ultimoNome AS nomeUtilizador,
+      Utilizador.ativo,
       Utilizador.removido,
+      Instituicao.sigla,
       Report.descricao,
       Report.dataHora
     FROM Report
     NATURAL JOIN Utilizador
-    WHERE idModerador = :idModerador AND ativo");
+    NATURAL JOIN Instituicao
+    WHERE idModerador = :idModerador AND NOT removido");
   $stmt->bindParam(':idModerador', $idModerador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();

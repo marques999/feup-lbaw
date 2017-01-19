@@ -13,17 +13,11 @@
 <li class="sort-option sort-fullname-descending" data-sort="fullname" data-order="descending">
   <a href="#">Nome (Z-A)</a>
 </li>
-<li class="sort-option sort-email-ascending" data-sort="email" data-order="descending">
+<li class="sort-option sort-email-ascending" data-sort="email" data-order="ascending">
   <a href="#">E-mail (A-Z)</a>
 </li>
-<li class="sort-option sort-email-descending" data-sort="email" data-order="ascending">
+<li class="sort-option sort-email-descending" data-sort="email" data-order="descending">
   <a href="#">E-mail (Z-A)</a>
-</li>
-<li class="sort-option sort-questions-ascending" data-sort="questions" data-order="ascending">
-  <a href="#">Perguntas (crescente)</a>
-</li>
-<li class="sort-option sort-questions-descending" data-sort="questions" data-order="descending">
-  <a href="#">Perguntas (decrescente)</a>
 </li>
 <li class="sort-option sort-session-ascending" data-sort="session" data-order="ascending">
   <a href="#">Última sessão (crescente)</a>

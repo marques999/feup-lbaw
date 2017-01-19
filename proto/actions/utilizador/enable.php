@@ -19,11 +19,11 @@
 
   try {
 
-    if (utilizador_banirUtilizador($idUtilizador) > 0) {
+    if (utilizador_activarUtilizador($idUtilizador) > 0) {
       safe_redirect(null);
     }
     else {
-      safe_error('Erro desconhecido: tentou banir um utilizador inexistente?');
+      safe_error('Erro desconhecido: tentou activar um utilizador inexistente?');
     }
   }
   catch (PDOException $e) {

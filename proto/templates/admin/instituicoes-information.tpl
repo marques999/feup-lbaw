@@ -1,5 +1,5 @@
 <div class="message hoverable">
-  <img class="all-100" src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
+  <img src="{$instituicao.sigla|instituicao_getImagem}" alt="{$instituicao.nome}">
   <div class="quarter-vertical-padding">
     <b class="no-margin">
       <a class="black"

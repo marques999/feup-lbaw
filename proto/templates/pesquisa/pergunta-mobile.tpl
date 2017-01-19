@@ -1,5 +1,5 @@
 <li>
-  <a href="{$BASE_URL}pages/pesquisa/utilizador.php">Pesquisar utilizadores</a>
+  <a href="{$BASE_URL}pages/pesquisa/utilizador.php?query={$query}">Pesquisar utilizadores</a>
 </li>
 <li class="heading">
   <i class="fa fa-fw fa-line-chart"></i>

@@ -28,7 +28,9 @@
     {if $conversa.removido}
       {$conversa.nomeautor}
     {else}
-      <a href="{$BASE_URL}pages/utilizador/profile.php?id={$conversa.idutilizador}">{$conversa.nomeautor}</a>
+    <a href="{$BASE_URL}pages/utilizador/profile.php?id={$conversa.idutilizador}">
+      {$conversa.nomeautor}
+    </a>
     {/if}
     <p>
       <small>{$conversa.datahora|date_format:"%A, %e %B %Y %H:%M"}</small>

@@ -1,7 +1,8 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/instituicao.php');
-
+  include_once('../../lib/ImageUpload.php');
+  
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_login();
   }
@@ -10,8 +11,8 @@
     safe_redirect('403.php');
   }
 
-  if (safe_check($_POST, 'idInstituicao')) {
-    $idInstituicao = safe_getId($_POST, 'idInstituicao');
+  if (safe_strcheck($_POST, 'idInstituicao')) {
+    $oldSigla = safe_trimAll($_POST, 'idInstituicao');
   }
   else {
     safe_formerror('Deve especificar uma instituição primeiro!');
@@ -65,7 +66,7 @@
 
   try {
 
-    if (instituicao_editarInstituicao($idInstituicao, $nome, $sigla, $morada, $contacto, $website) <= 0) {
+    if (instituicao_editarInstituicao($oldSigla, $nome, $sigla, $morada, $contacto, $website) <= 0) {
       safe_formerror('Erro desconhecido: tentou alterar uma instituição inexistente?');
     }
   }
@@ -75,10 +76,10 @@
 
   if (image_validateFormat()) {
 
-    $baseFilename = basename($_FILES['image']['name']);
+    $baseFilename = basename($_FILES['avatar']['name']);
     $targetDirectory = "{$BASE_DIR}images/instituicao/";
     $targetFile = "{$targetDirectory}{$baseFilename}";
-    $temporaryPath = $_FILES['image']['tmp_name'];
+    $temporaryPath = $_FILES['avatar']['tmp_name'];
     $fileExtension = pathinfo($targetFile, PATHINFO_EXTENSION);
     $resizedUrl = "{$targetDirectory}{$sigla}.{$fileExtension}";
     $originalUrl = "{$targetDirectory}{$sigla}_original.{$fileExtension}";
@@ -96,7 +97,7 @@
       safe_formerror('Deve especificar um formato de imagem válido!');
     }
 
-    $resizedImage = image_advancedcrop($originalImage, 64, 64);
+    $resizedImage = image_advancedcrop($originalImage, 550, 330);
 
     if (!image_writeFile($resizedImage, $resizedUrl, $fileExtension)) {
       safe_formerror("Erro desconhecido: não foi possível escrever {$sigla}.{$fileExtension} no filesystem!");
@@ -104,6 +105,29 @@
 
     imagedestroy($originalImage);
     imagedestroy($resizedImage);
+  }
+  else if ($sigla != null) {
+    
+    $targetDirectory = "{$BASE_DIR}images/instituicao/";
+    $oldResizedUrl = glob("{$targetDirectory}{$oldSigla}.{jpg,jpeg,gif,png}", GLOB_BRACE);
+    $oldOriginalUrl = glob("{$targetDirectory}{$oldSigla}_original.{jpg,jpeg,gif,png}", GLOB_BRACE);
+    
+    if ($oldResizedUrl !== false && $oldOriginalUrl !== false) {
+      
+      $oldResizedUrl = $oldResizedUrl[0];
+      $oldOriginalUrl = $oldOriginalUrl[0];
+      $fileExtension = pathinfo($oldResizedUrl, PATHINFO_EXTENSION);
+      $newResizedUrl = "{$targetDirectory}{$sigla}.{$fileExtension}";
+      $newOriginalUrl = "{$targetDirectory}{$sigla}_original.{$fileExtension}";
+
+      if ($oldResizedUrl !== $newResizedUrl) {
+        rename($oldResizedUrl, $newResizedUrl);
+      }
+
+      if ($oldOriginalUrl !== $newOriginalUrl) {
+        rename($oldOriginalUrl, $newOriginalUrl);
+      }
+    }
   }
 
   safe_redirect("instituicao/view.php?=$sigla");

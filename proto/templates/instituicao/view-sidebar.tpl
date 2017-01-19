@@ -15,12 +15,13 @@
   {/foreach}
   {/strip}
   </ul>
-{/if}
+  {/if}
   <h5 class="slab half-vertical-space">
     <i class="fa fa-globe fa-fw"></i>
     <span>Ligações Externas</span>
   </h5>
   <ul class="menu vertical white">
+    {if $instituicao.website}
     <li>
       <a href="{$instituicao.website}/web_page.inicial">
         <span>Página Oficial</span>
@@ -33,6 +34,7 @@
         <i class="fa fa-external-link"></i>
       </a>
     </li>
+    {/if}
     <li>
       <a href="https://moodle.up.pt">
         <span>Moodle U.Porto</span>
@@ -40,7 +42,7 @@
       </a>
     </li>
   </ul>
-{if $ADMINISTRADOR}
+  {if $ADMINISTRADOR}
   <h5 class="slab half-vertical-space">
     <i class="fa fa-cog"></i>
     <span>Gestão</span>
@@ -53,8 +55,6 @@
         <span>&nbsp;Editar instituição</span>
       </a>
     </li>
-  {strip}
-  {/strip}
     <li>
       <a href="{$BASE_URL}pages/instituicao/delete.php?id={$instituicao.sigla}">
         <sup><strong>(Admin)</strong></sup>

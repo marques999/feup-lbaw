@@ -1,5 +1,5 @@
 <li>
-  <a href="{$BASE_URL}pages/pesquisa/pergunta.php">Pesquisar perguntas</a>
+  <a href="{$BASE_URL}pages/pesquisa/pergunta.php?query={$query}">Pesquisar perguntas</a>
 </li>
 <li class="heading">
   <i class="fa fa-fw fa-sliders"></i>

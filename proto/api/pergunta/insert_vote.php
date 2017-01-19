@@ -7,7 +7,7 @@
     if (safe_check($_POST, 'idPergunta') && safe_check($_POST, 'votoUtilizador')) {
 
       try {
-        echo pergunta_registarVoto(
+        pergunta_registarVoto(
           safe_getId($_POST, 'idPergunta'),
           safe_getId($_SESSION, 'idUtilizador'),
           safe_getVote($_POST, 'votoUtilizador')

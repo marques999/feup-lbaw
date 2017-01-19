@@ -55,7 +55,7 @@
         </li>
         {else}
         <li>
-          <a href="{$BASE_URL}pages/conversa/view.php?id={$resposta.idutilizador}">
+          <a href="{$BASE_URL}pages/conversa/submit.php?id={$resposta.idutilizador}">
             <i class="fa fa-fw fa-envelope"></i>
             <span>Enviar Mensagem</span>
           </a>
@@ -155,7 +155,7 @@
         <strong>{$resposta.votosnegativos}</strong>
       </button>
     {else}
-      {if $resposta.valor eq 1}
+      {if $respostas.valor eq 1}
       <button class="vote-positive ink-button black active">
         <i class="fa fa-thumbs-up fa-fw"></i>
         <span>Gostei&nbsp;</span>
@@ -168,7 +168,7 @@
         <strong>{$resposta.votospositivos}</strong>
       </button>
       {/if}
-      {if $resposta.valor eq -1}
+      {if $respostas.valor eq -1}
       <button class="vote-negative ink-button black active">
         <i class="fa fa-thumbs-down fa-fw"></i>
         <span>Não gostei&nbsp;</span>

@@ -7,8 +7,8 @@
 {block name=content}
 {include file='common/messages.tpl'}
 <form action="{$BASE_URL}actions/instituicao/submit.php"
-      class="ink-form ink-formvalidator half-vertical-padding all-100 xlarge-60 large-75 medium-85 push-center"
-      method="post" data-lang="pt_PT">
+      class="ink-form ink-formvalidator all-100 xlarge-60 large-75 medium-85 push-center"
+      enctype="multipart/form-data" method="post" data-lang="pt_PT">
   {include file='instituicao/submit-formulario.tpl'}
 </form>
 {/block}

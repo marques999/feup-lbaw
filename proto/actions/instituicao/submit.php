@@ -1,6 +1,7 @@
 <?
   include_once('../../config/init.php');
   include_once('../../database/instituicao.php');
+  include_once('../../lib/ImageUpload.php');
 
   if (!safe_check($_SESSION, 'idUtilizador')) {
     safe_login();
@@ -57,10 +58,10 @@
 
   if (image_validateFormat()) {
 
-    $baseFilename = basename($_FILES['image']['name']);
+    $baseFilename = basename($_FILES['avatar']['name']);
     $targetDirectory = "{$BASE_DIR}images/instituicao/";
     $targetFile = "{$targetDirectory}{$baseFilename}";
-    $temporaryPath = $_FILES['image']['tmp_name'];
+    $temporaryPath = $_FILES['avatar']['tmp_name'];
     $fileExtension = pathinfo($targetFile, PATHINFO_EXTENSION);
     $resizedUrl = "{$targetDirectory}{$sigla}.{$fileExtension}";
     $originalUrl = "{$targetDirectory}{$sigla}_original.{$fileExtension}";
@@ -78,10 +79,10 @@
       safe_formerror('Deve especificar um formato de imagem válido!');
     }
 
-    $resizedImage = image_advancedcrop($originalImage, 64, 64);
+    $resizedImage = image_advancedcrop($originalImage, 550, 330);
 
     if (!image_writeFile($resizedImage, $resizedUrl, $fileExtension)) {
-      safe_formerror("Erro desconhecido: não foi possível escrever {$sigla}.{$fileExtension} no filesystem!");
+      safe_formerror("Erro desconhecido: não foi possível escrever {$fileExtension}.jpg no filesystem!");
     }
 
     imagedestroy($originalImage);

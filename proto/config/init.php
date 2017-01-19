@@ -1,11 +1,11 @@
 <?
   error_reporting(E_ERROR | E_WARNING);
   setlocale(LC_TIME, 'Portuguese_Portugal');
-  session_set_cookie_params(3600, '/~up201305642/proto/');
+  session_set_cookie_params(3600, '/~lbaw1525/final/');
   session_start();
 
-  $BASE_DIR = '/usr/users2/mieic2013/up201305642/public_html/proto/';
-  $BASE_URL = '/~up201305642/proto/';
+  $BASE_DIR = '/opt/lbaw/lbaw1525/public_html/final/';
+  $BASE_URL = '/~lbaw1525/final/';
 
   $db = new PDO('pgsql:host=dbm;dbname=lbaw1525', 'lbaw1525', 'XZ39G6J6');
   $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);

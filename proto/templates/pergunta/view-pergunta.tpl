@@ -46,7 +46,7 @@
       </li>
       {else}
       <li>
-        <a href="{$BASE_URL}pages/conversa/view.php?id={$pergunta.idutilizador}">
+        <a href="{$BASE_URL}pages/conversa/submit.php?id={$pergunta.idutilizador}">
           <i class="fa fa-envelope fa-fw"></i>
           <span>Enviar Mensagem</span>
         </a>

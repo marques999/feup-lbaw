@@ -8,18 +8,6 @@
   </a>
 </li>
 <ul class="push-right">
-  <li class="disabled medium">
-    <a href="#">
-      <i class="fa fa-bell-o"></i>
-      <span>0</span>
-    </a>
-  </li>
-  <li class="disabled medium">
-    <a href="#">
-      <i class="fa fa-envelope-o"></i>
-      <span>0</span>
-    </a>
-  </li>
   <li class="medium">
     <a href="{$BASE_URL}pages/utilizador/login.php">
       <i class="fa fa-fw fa-user"></i>
@@ -37,8 +25,16 @@
 <form action="{$BASE_URL}pages/pesquisa/pergunta.php" class="ink-form ink-search all-20 medium">
   <div class="control-group">
     <div class="control append-button" role="search">
-      <span><input type="text" name="query" id="query"></span>
-      <button class="ink-button"><i class="fa fa-search"></i></button>
+      <span>
+        {if $query}
+        <input type="text" name="query" id="query" value="{$query}">
+        {else}
+        <input type="text" name="query" id="query">
+        {/if}
+      </span>
+      <button class="ink-button">
+        <i class="fa fa-search"></i>
+      </button>
     </div>
   </div>
 </form>

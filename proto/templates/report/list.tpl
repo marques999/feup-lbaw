@@ -4,8 +4,8 @@
   <div class="message half-vertical-space">
     {include file='report/list-navigation.tpl'}
   </div>
-  <div class="column-group half-gutters">
+  <table class="ink-table alternating hover">
     {include file='report/list-report.tpl'}
-  </div>
+  </table>
 </div>
 {/block}

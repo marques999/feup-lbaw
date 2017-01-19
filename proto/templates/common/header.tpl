@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-PT">
 <head>
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
@@ -74,6 +74,18 @@
       <span>Utilizador</span>
     </li>
     <li>
+      <a href="{$BASE_URL}pages/conversa/list.php">
+        <i class="fa fa-fw fa-envelope"></i>
+        <span>Mensagens</span>
+      </a>
+    </li>
+    <li>
+      <a href="{$BASE_URL}pages/utilizador/notifications.php">
+        <i class="fa fa-fw fa-bell"></i>
+        <span>Notificações</span>
+      </a>
+    </li>
+    <li>
       <a href="{$BASE_URL}pages/utilizador/profile.php">
         <i class="fa fa-fw fa-user"></i>
         <span>Ver perfil</span>
@@ -93,7 +105,7 @@
         <span>Gerir publicações</span>
       </a>
     </li>
-    {if $MODERADOR}
+    {if $MODERADOR or $ADMINISTRADOR}
     <li>
       <a href="{$BASE_URL}pages/utilizador/report.php">
         <i class="fa fa-fw fa-cog"></i>
@@ -103,7 +115,7 @@
     {/if}
     <li>
       <a href="{$BASE_URL}actions/utilizador/logout.php">
-        <i class="fa fa-fw fa-door"></i>
+        <i class="fa fa-fw fa-sign-out"></i>
         <span>Terminar sessão</span>
       </a>
     </li>
@@ -124,23 +136,11 @@
 {block name=content}
 {/block}
 {block name=footer}
-<script>
-$(function() {
-  $("#footer-links").hide();
-  $("#footer").hover(function() {
-    $("#footer-links").stop(!0, !0).slideToggle("fast");
-  })
-});
-</script>
 <footer id="footer" class="medium fixed horizontal-padding">
-  <ul id="footer-links" class="unstyled medium inline quarter-vertical-space">
-    <li><a href="{$BASE_URL}pages/about.php">About</a></li>
-    <li><a href="{$BASE_URL}pages/sitemap.php">Sitemap</a></li>
-    <li><a href="{$BASE_URL}pages/contacts.php">Contacts</a></li>
-  </ul>
   <p class="note medium no-margin half-vertical-padding">
     <i class="fa fa-copyright"></i>
     <span>2016 KnowUP! - Collaborative Q&A</span>
+    <a class="push-right" href="{$BASE_URL}pages/faq.php">FAQs</a>
   </p>
 </footer>
 {/block}

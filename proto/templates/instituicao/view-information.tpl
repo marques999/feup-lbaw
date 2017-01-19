@@ -15,15 +15,19 @@
     <span>{$perguntas_count} perguntas</span>
     {/if}
   </p>
+  {if $instituicao.morada}
   <p class="medium quarter-vertical-space">
     <strong>Morada:</strong>
     <addr>{$instituicao.morada}</addr>
   </p>
+  {/if}
+  {if $instituicao.contacto}
   <p class="medium quarter-vertical-space">
     <strong>Contacto:</strong>
     <span>{$instituicao.contacto}</span>
   </p>
+  {/if}
 </div>
 <div class="column all-25 medium-35 quarter-padding">
-  <img src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
+  <img src="{$instituicao.sigla|instituicao_getImagem}" alt="{$instituicao.nome}">
 </div>

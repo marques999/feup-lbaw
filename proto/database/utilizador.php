@@ -23,7 +23,7 @@ function utilizador_registarVisita($idUtilizador) {
 }
 function utilizador_validateLogin($username, $password) {
   global $db;
-  $stmt = $db->prepare('SELECT * FROM Utilizador WHERE username = :username');
+  $stmt = $db->prepare('SELECT * FROM Utilizador WHERE username = :username AND ativo AND NOT removido');
   $stmt->bindParam(':username', $username, PDO::PARAM_STR);
   $stmt->execute();
   $result = $stmt->fetch();
@@ -139,6 +139,13 @@ function utilizador_apagarUtilizador($idUtilizador) {
 function utilizador_banirUtilizador($idUtilizador) {
   global $db;
   $stmt = $db->prepare('UPDATE Utilizador SET ativo = FALSE WHERE idUtilizador = :idUtilizador');
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->rowCount();
+}
+function utilizador_activarUtilizador($idUtilizador) {
+  global $db;
+  $stmt = $db->prepare('UPDATE Utilizador SET ativo = TRUE WHERE idUtilizador = :idUtilizador');
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
@@ -320,7 +327,7 @@ function utilizador_pesquisar($query, $filter, $sort, $order) {
   else if ($order == 'ascending') {
     $queryString .= ' ASC';
   }
-  else {
+  else { 
     if ($sort == 'rank') {
       $queryString .= ' DESC';
     }

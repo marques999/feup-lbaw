@@ -26,7 +26,11 @@
   <div class="control-group">
     <div class="control append-button" role="search">
       <span>
-        <input type="search" name="query" id="query" value="{$FORM_VALUES.query}">
+        {if $query}
+        <input type="search" name="query" id="query" value="{$query}">
+        {else}
+        <input type="search" name="query" id="query">
+        {/if}
       </span>
       <button class="ink-button">
         <i class="fa fa-search"></i>
@@ -56,7 +60,7 @@
   <li>
     <a href="{$BASE_URL}pages/utilizador/profile.php">
       <i class="fa fa-fw fa-user"></i>
-      <span>{$USERNAME}</span><span class="ink-badge red">3</span>
+      <span>{$USERNAME}</span>
     </a>
     <ul class="submenu fw-600">
       <li class="half-vertical-padding align-center">
@@ -73,17 +77,12 @@
       {/if}
       <li>
         <a href="{$BASE_URL}pages/conversa/list.php">
-          <strong>Mensagens (3)</strong>
+          <span>Mensagens</span>
         </a>
       </li>
       <li>
         <a href="{$BASE_URL}pages/utilizador/notifications.php">
-          <strong>Notificações (5)</strong>
-        </a>
-      </li>
-      <li>
-        <a href="{$BASE_URL}pages/utilizador/profile.php">
-          <span>Ver perfil</span>
+          <span>Notificações</span>
         </a>
       </li>
       <li>
@@ -91,7 +90,7 @@
           <span>Gerir publicações</span>
         </a>
       </li>
-      {if $MODERADOR}
+      {if $MODERADOR or $ADMINISTRADOR}
       <li>
         <a href="{$BASE_URL}pages/utilizador/report.php">
           <span> Gerir reports</span>

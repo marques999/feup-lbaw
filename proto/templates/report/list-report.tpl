@@ -1,41 +1,55 @@
+<thead>
+  <th>Utilizador</th>
+  <th>Descrição</th>
+  <th>Data submissão</th>
+  <th>Acções</th>
+</thead>
+<tbody>
 {foreach $reports as $report}
-<div class="column all-50 small-100 tiny-100">
-  <div class="report-entry message">
-    <div class="report-close push-right">
-       <small>
-        <a href="#reply-form" class="black remove-button">
-          <i class="fa fa-fw fa-close"></i>
-        </a>
-      </small>
-    </div>
-    <div class="report-header half-bottom-space">
-      <img class="avatar-small push-left quarter-horizontal-space"
-           src="{$utilizador.idutilizador|utilizador_getAvatar}"
-           alt="{$utilizador.username}">
+<tr>
+  <td class="fw-700">
+    <img class="avatar-medium push-left quarter-padding"
+         src="{$report.idutilizador|utilizador_getAvatar}"
+         alt="{$report.username}">
+    <div class="half-vertical-padding all-50 medium-20 small-30">
       <p class="no-margin">
-        <strong>
         {if $report.removido}
-          {$report.nomeutilizador}
+        {$report.username}
         {else}
-          {strip}
-          <a href="{$BASE_URL}pages/utilizador/profile.php?id={$utilizador.idutilizador}">
-            {$report.nomeutilizador}
-          </a>
-          {/strip}
+        <a href="{$BASE_URL}pages/utilizador/profile.php?id={$report.idutilizador}">{$report.username}</a>
         {/if}
-        </strong>
-        <small>({$report.username})</small>
       </p>
-      <p class="slab">
-        <small>
-          <i class="fa fa-calendar"></i>
-          {$report.datahora|date_format:"%A, %e %B %Y %H:%M"}
-        </small>
-      </p>
+      <note class="medium">{$report.sigla|upper}</note>
     </div>
-    <div class="report-content medium half-bottom-space">
-      {$report.descricao}
-    </div>
-  </div>
-</div>
+  </td>
+  <td class="medium">
+    {$report.descricao}
+  </td>
+  <td class="medium">
+    <i class="fa fa-user"></i>
+    <a href="{$BASE_URL}pages/utilizador/profile.php?id={$report.idmoderador}">{$USERNAME}</a>
+    <p>
+      <small>{$report.datahora|date_format:"%A, %e %B %Y %H:%M"}</small>
+    </p>
+  </td>
+  <td class="fw-700">
+    {if not $ADMINISTRADOR and not $report.ativo}
+    <button class="ink-button medium" disabled>ver perfil</button>
+    {elseif $ADMINISTRADOR}
+      {if $report.ativo}
+      <a href="{$BASE_URL}actions/utilizador/ban.php?id={$report.idutilizador}"
+         class="ink-button medium">banir</a>
+      {else}
+      <a href="{$BASE_URL}actions/utilizador/enable.php?id={$report.idutilizador}"
+         class="ink-button medium">ativar</a>
+      {/if}
+    {else}
+    <a href="{$BASE_URL}pages/utilizador/profile.php?id={$report.idutilizador}"
+       class="ink-button medium">ver perfil</a>
+    {/if}
+    <a href="{$BASE_URL}actions/report/delete.php?id={$report.idreport}"
+       class="ink-button medium">apagar</a>
+  </td>
+</tr>
 {/foreach}
+</tbody>

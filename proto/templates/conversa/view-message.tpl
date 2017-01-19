@@ -28,6 +28,19 @@
       </p>
     </div>
     <div class="medium">{$mensagem.descricao}</div>
+    <div class="button-group medium condensed push-right">
+      {if $mensagem.idutilizador eq $USERID}
+      <a class="ink-button black" href="{$BASE_URL}actions/mensagem/delete.php?id={$mensagem.idmensagem}">
+        <i class="fa fa-fw fa-close"></i>
+        <span>Apagar</span>
+      </a>
+      {else}
+      <a class="ink-button black" href="#reply-form">
+        <i class="fa fa-fw fa-pencil"></i>
+        <span>Responder</span>
+      </a>
+      {/if}
+    </div>
   </div>
 </div>
 {/foreach}

@@ -3,8 +3,8 @@
 <table id="answers" class="ink-table alternating hover">
   <thead>
     <tr>
-      <th style="width:80%"></th>
-      <th style="width:20%"></th>
+      <th style="width:80%">Conteúdo</th>
+      <th style="width:20%">Pontuação</th>
     </tr>
   </thead>
   <tbody>
@@ -13,7 +13,8 @@
       <td class="medium">
         {strip}
         <h5 class="quarter-vertical-space">
-          <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$resposta.idpergunta}#reply-{$resposta.idresposta}">
+          <a class="black"
+             href="{$BASE_URL}pages/pergunta/view.php?id={$resposta.idpergunta}#reply-{$resposta.idresposta}">
             {$resposta.titulo}
           </a>
         </h5>
@@ -22,7 +23,11 @@
           {$resposta.datahora|date_format:"%A, %e %B %Y %H:%M"}
         </small>
         <p class="quarter-vertical-space">
+        {if $resposta.descricao}
           {$resposta.descricao|strip_tags|truncate:210:"...":false:false}
+        {else}
+          <small>Nenhuma descrição disponível.</small>
+        {/if}
         </p>
       </td>
       <td class="align-center">

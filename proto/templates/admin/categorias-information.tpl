@@ -1,7 +1,7 @@
 <div class="message hoverable">
   <a class="condensed black"
      href="{$BASE_URL}pages/categoria/view.php?id={$categoria.idcategoria}">{$categoria.nome}</a>
-  <span class="action-buttons push-right" data-target="{$categoria.idcategoria}">
+  <span class="action-buttons push-right" data-name="{$categoria.nome}" data-target="{$categoria.idcategoria}">
     <a class="black medium ink-tooltip edit-button"
        data-tip-text="Editar categoria"
        data-tip-where="up"

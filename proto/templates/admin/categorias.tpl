@@ -7,10 +7,10 @@
     </h3>
   </div>
   <div class="column all-20 medium-30 small-40 tiny-50 align-right">
-    <a href="{$BASE_URL}pages/categoria/submit.php" class="ink-button medium">
+    <button id="insert-button" class="ink-button medium">
       <i class="fa fa-plus"></i>
       <span>Adicionar categoria</span>
-    </a>
+    </button>
   </div>
 </div>
 {include file='common/messages.tpl'}

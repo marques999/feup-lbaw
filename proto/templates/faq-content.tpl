@@ -79,7 +79,7 @@
 </div>
 <div class="panel-group">
 <div class="panel-heading">
-  <h4 class="panel-title align-center">Gestão de utilizadores</h4>
+  <h4 class="panel-title align-center">Utilizadores</h4>
 </div>
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -111,22 +111,6 @@
   </div>
   <div id="section2_question2" class="panel-collapse collapse in">
     <div class="panel-body medium">Ao aceder à sua <strong>página de perfil</strong> é possível editar as suas informações pessoais, atualizar a sua fotografia, bem como alterar a palavara-passe.</div>
-  </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <p class="ink-toggle panel-title"
-       data-target="#section2_question3"
-       data-close-on-click="false">
-      <strong>3.</strong>
-      <span>Como reporto um utilizador que infringiu as regras?</span>
-      <span class="chevron-icon push-right">
-        <i class="fa fa-chevron-down"></i>
-      </span>
-    </p>
-  </div>
-  <div id="section2_question3" class="panel-collapse collapse in">
-    <div class="panel-body medium">Account registration at <strong>PrepBootstrap</strong> is only required if you will be selling or buying themes. This ensures a valid communication channel for all parties involved in any transactions.</div>
   </div>
 </div>
 </div>

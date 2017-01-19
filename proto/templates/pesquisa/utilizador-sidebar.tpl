@@ -1,7 +1,7 @@
 <div class="message half-vertical-space">
  <b class="condensed no-margin">
     <i class="fa fa-search"></i>
-    <a class="black" href="{$BASE_URL}pages/pesquisa/pergunta.php">Pesquisar perguntas</a>
+    <a class="black" href="{$BASE_URL}pages/pesquisa/pergunta.php?query={$query}">Pesquisar perguntas</a>
   </b>
 </div>
 <nav class="ink-navigation half-vertical-space medium">

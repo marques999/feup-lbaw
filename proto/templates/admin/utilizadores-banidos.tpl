@@ -20,7 +20,8 @@
     <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
   </td>
   <td class="medium">
-    <button class="ink-button medium" disabled>banir</button>
+    <a href="{$BASE_URL}actions/utilizador/enable.php?id={$utilizador.idutilizador}"
+       class="ink-button medium">ativar</a>
     <a href="{$BASE_URL}pages/utilizador/delete.php?id={$utilizador.idutilizador}"
        class="ink-button medium">apagar</a>
   </td>

@@ -1,6 +1,6 @@
 {include file='common/messages.tpl'}
 <h4 class="slab half-vertical-space">Perfil</h4>
-<table id="information" class="ink-table collapse fixed">
+<table class="ink-table collapse fixed">
   <tbody>
     <tr>
       <td class="align-left">Grupo</td>

@@ -19,4 +19,4 @@
   <i class="fa fa-fw fa-sort-alpha-asc"></i>
   <span>Ordenar</span>
 </li>
-{include file='pesquisa/pergunta-sort.tpl'}
+{include file='homepage-sort.tpl'}

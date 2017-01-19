@@ -1,4 +1,4 @@
-{if $USERID neq $pergunta.idutilizador and $pergunta.ativa}
+{if $USERID and $USERID neq $pergunta.idutilizador and $pergunta.ativa}
 <p class="no-margin half-top-padding"><strong>Responder</strong></p>
 <hr class="quarter-vertical-space">
 <section id="reply-form" class="push-center half-vertical-space">

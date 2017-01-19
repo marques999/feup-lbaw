@@ -87,9 +87,9 @@ function pergunta_editarPergunta($idPergunta, $idCategoria, $titulo, $descricao)
   $stmt->execute();
   return $stmt->rowCount();
 }
-function pergunta_apagarPergunta($idPergunta, $idUtilizador) {
+function pergunta_apagarPergunta($idPergunta) {
   global $db;
-  $stmt = $db->prepare("DELETE FROM Pergunta WHERE idPergunta = :idPerguntad");
+  $stmt = $db->prepare("DELETE FROM Pergunta WHERE idPergunta = :idPergunta");
   $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->rowCount();
@@ -264,20 +264,21 @@ function pergunta_informacoesUtilizador($idUtilizador, $idPergunta) {
     WHERE Pergunta.idPergunta = :idPergunta
     LIMIT 1');
   $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
-  $stmt->bindParam(":idUtilizador", $idUtilizador, PDO::PARAM_INT);
+  $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
 }
 function pergunta_fetchVotes($idPergunta) {
   global $db;
   $stmt = $db->prepare("SELECT
+      idPergunta,
       COALESCE(COUNT(valor) FILTER (WHERE valor = 1), 0) AS votosPositivos,
       COALESCE(COUNT(valor) FILTER (WHERE valor = -1), 0) AS votosNegativos,
       COALESCE(SUM(valor), 0) AS pontuacao
     FROM VotoPergunta
     WHERE idPergunta = :idPergunta
     GROUP BY idPergunta");
-  $stmt->bindParam(":idPergunta", $idPergunta, PDO::PARAM_INT);
+  $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetch();
 }
@@ -288,11 +289,11 @@ function pergunta_obterVotosRespostas($idPergunta, $idUtilizador) {
   global $db;
   $stmt = $db->prepare("SELECT
       Resposta.idResposta,
-      VotosUtilizador.valor
+      VotoResposta.valor
     FROM Resposta
-    JOIN VotoResposta VotosUtilizador USING(idResposta)
+    JOIN VotoResposta USING(idResposta)
     WHERE Resposta.idPergunta = :idPergunta
-    AND VotosUtilizador.idUtilizador = :idUtilizador");
+    AND VotoResposta.idUtilizador = :idUtilizador");
   $stmt->bindParam(':idPergunta', $idPergunta, PDO::PARAM_INT);
   $stmt->bindParam(':idUtilizador', $idUtilizador, PDO::PARAM_INT);
   $stmt->execute();
@@ -387,7 +388,8 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
       Utilizador.removido,
       Pergunta.titulo,
       Pergunta.descricao,
-      Pergunta.dataHora,
+      Pergunta.dataHora as dataOriginal,
+      to_char(Pergunta.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
       Pergunta.ativa,
       Pergunta.pontuacao,
       Pergunta.respostas
@@ -401,7 +403,8 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
       PerguntasPesquisa.nomeUtilizador,
       PerguntasPesquisa.removido,
       PerguntasPesquisa.titulo,
-      PerguntasPesquisa.dataHora,
+      PerguntasPesquisa.dataHora as dataOriginal,
+      to_char(PerguntasPesquisa.dataHora, 'FMDay, DD FMMonth YYYY HH24:MI') as dataHora,
       PerguntasPesquisa.ativa,
       PerguntasPesquisa.pontuacao,
       PerguntasPesquisa.respostas,
@@ -454,7 +457,7 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
     $queryString .= ' ORDER BY titulo';
   }
   else if ($sort == 'date') {
-    $queryString .= ' ORDER BY dataHora';
+    $queryString .= ' ORDER BY dataOriginal';
   }
   else if ($sort == 'score') {
     $queryString .= ' ORDER BY pontuacao';
@@ -464,7 +467,7 @@ function pergunta_pesquisar($query, $filter, $sort, $order) {
   }
   else {
     if ($emptyQuery) {
-      $queryString .= ' ORDER BY dataHora';
+      $queryString .= ' ORDER BY dataOriginal';
     }
     else {
       $queryString .= ' ORDER BY rank';

@@ -23,8 +23,8 @@
 
   try {
 
-    if (pergunta_apagarPergunta($idPergunta, $idUtilizador) > 0) {
-      safe_redirect(null);
+    if (pergunta_apagarPergunta($idPergunta) > 0) {
+      safe_redirect('homepage.php');
     }
     else {
       safe_error('Erro desconhecido: tentou apagar uma pergunta inexistente?');

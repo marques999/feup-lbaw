@@ -29,7 +29,9 @@
       {foreach $select as $this}
         <optgroup label="{$this.sigla|upper}">
         {foreach $this.json as $categoria}
-          {if $categoria.idcategoria eq $idCategoria or $categoria.idcategoria eq $FORM_VALUES.idcategoria}
+          {if $categoria.idcategoria eq $FORM_VALUES.idcategoria}
+          <option label="{$categoria.nome}" value="{$categoria.idcategoria}" selected>{$categoria.nome}</option>
+          {else if ($categoria.idcategoria eq $idCategoria) or ($categoria.idcategoria eq $pergunta.idcategoria)}
           <option label="{$categoria.nome}" value="{$categoria.idcategoria}" selected>{$categoria.nome}</option>
           {else}
           <option label="{$categoria.nome}" value="{$categoria.idcategoria}">{$categoria.nome}</option>

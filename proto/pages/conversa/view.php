@@ -31,7 +31,7 @@
     $queryMensagens = conversa_obterMensagens($idConversa);
     $smarty->assign('conversa', $queryConversa);
     $smarty->assign('mensagens', $queryMensagens);
-    $smarty->assign('titulo', $queryConversa.titulo);
+    $smarty->assign('titulo', $queryConversa['titulo']);
     $smarty->display('conversa/view.tpl');
   }
   else {

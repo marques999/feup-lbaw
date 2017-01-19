@@ -20,7 +20,7 @@
     <small>{$utilizador.ultimasessao|date_format:"%d/%m/%Y %H:%M"}</small>
   </td>
   <td class="medium">
-    <a href="{$BASE_URL}pages/utilizador/ban.php?id={$utilizador.idutilizador}"
+    <a href="{$BASE_URL}actions/utilizador/ban.php?id={$utilizador.idutilizador}"
        class="ink-button medium">banir</a>
     <a href="{$BASE_URL}pages/utilizador/delete.php?id={$utilizador.idutilizador}"
        class="ink-button medium">apagar</a>

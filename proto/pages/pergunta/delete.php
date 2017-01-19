@@ -18,12 +18,19 @@
   }
 
   $queryPergunta = pergunta_listarInformacoes($idPergunta);
-  $idAutor = safe_getId($queryPergunta, 'idutilizador');
 
-  if ($idUtilizador == $idAutor || safe_checkModerador() || safe_checkAdministrador()) {
-    $smarty->assign('pergunta', $queryPergunta);
-    $smarty->assign('titulo', 'Apagar Pergunta');
-    $smarty->display('pergunta/delete.tpl');
+  if ($queryPergunta && is_array($queryPergunta)) {
+    
+    $idAutor = safe_getId($queryPergunta, 'idutilizador');
+
+    if ($idUtilizador == $idAutor || safe_checkModerador() || safe_checkAdministrador()) {
+      $smarty->assign('pergunta', $queryPergunta);
+      $smarty->assign('titulo', 'Apagar Pergunta');
+      $smarty->display('pergunta/delete.tpl');
+    }
+    else {
+      safe_redirect('404.php');
+    }
   }
   else {
     safe_redirect('403.php');

@@ -3,7 +3,7 @@
   <h5 class="slab quarter-vertical-space">
   <a class="black" href="{$BASE_URL}pages/pergunta/view.php?id={$pergunta.idpergunta}">{$pergunta.titulo}</a>
   {if not $pergunta.ativa}
-  <div class="push-right positive-score condensed">
+  <div class="push-right condensed">
     <i class="fa fa-check"></i>
     <strong>fechada</strong>
   </div>

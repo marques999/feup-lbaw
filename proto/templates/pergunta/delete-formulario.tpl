@@ -1,4 +1,4 @@
-<input type="hidden" name="idUtilizador" value="{$USERID}">
+<input type="hidden" name="idPergunta" value="{$pergunta.idpergunta}">
 <div class="control-group column-group half-gutters">
   <div class="control all-25">
   </div>

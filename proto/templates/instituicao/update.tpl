@@ -7,7 +7,7 @@
 {block name=content}
 <form action="{$BASE_URL}actions/instituicao/update.php"
       class="ink-form ink-formvalidator all-100 xlarge-60 large-75 medium-85 push-center"
-      method="post" data-lang="pt_PT">
+      enctype="multipart/form-data" method="post" data-lang="pt_PT">
   {include file='instituicao/update-formulario.tpl'}
 </form>
 <script>

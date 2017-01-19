@@ -3,7 +3,7 @@
   {include file='pergunta/view-mobile.tpl'}
 {/block}
 {block name=content}
-<div class="ink-grid content-drawer column-group half-bottom-padding medium-gutters large-gutters xlarge-gutters">
+<div class="ink-grid content-drawer column-group medium-gutters large-gutters xlarge-gutters">
   <div class="column all-20 medium-25 small-100 tiny-100 hide-small hide-tiny">
     {include file='pergunta/view-sidebar.tpl'}
   </div>

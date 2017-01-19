@@ -22,6 +22,7 @@
     $queryComentarios = pergunta_obterComentarios($idPergunta);
     $queryCategorias = pergunta_listarCategorias($idCategoria);
     $queryRelacionadas = pergunta_listarRelacionadas($idCategoria, $idPergunta);
+    $queryVotos = pergunta_obterVotosRespostas($idPergunta, $idUtilizador);
     $queryUtilizador = pergunta_informacoesUtilizador($idUtilizador, $idPergunta);
     $userPrivileges = 'User';
 
@@ -47,6 +48,11 @@
 
       return $a['datahora'] > $b['datahora'];
     });
+
+    for ($i = 0; $i < count($queryVotos); $i++) {
+      $idResposta = $queryVotos[$i]['idresposta'];
+      $queryRespostas[$idResposta]['valor'] = $queryVotos[$i]['valor'];
+    }
 
     if ($queryUtilizador['idseguidor'] > 0) {
       pergunta_visitarPergunta($idPergunta, $idUtilizador);

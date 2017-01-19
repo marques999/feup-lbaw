@@ -29,24 +29,30 @@ function instituicao_adicionarInstituicao($nome, $sigla, $morada, $contacto, $we
 function instituicao_editarInstituicao($idInstituicao, $nome, $sigla, $morada, $contacto, $website) {
   global $db;
   $queryString = "UPDATE Instituicao SET ";
+  $numberColumns = 0;
   if ($nome!=null) {
     $queryString .= "nome = :nome";
+    $numberColumns++;
   }
   if ($sigla!=null) {
     $queryString .= ($numberColumns > 0 ? ', sigla = :sigla' : 'sigla = :sigla');
+    $numberColumns++;
   }
   if ($morada!=null) {
     $queryString .= ($numberColumns > 0 ? ', morada = :morada' : 'morada = :morada');
+    $numberColumns++;
   }
   if ($contacto!=null) {
     $queryString .= ($numberColumns > 0 ? ', contacto = :contacto' : 'contacto = :contacto');
+    $numberColumns++;
   }
   if ($website!=null) {
     $queryString .= ($numberColumns > 0 ? ', website = :website' : 'website = :website');
+    $numberColumns++;
   }
-  $queryString .= ' WHERE idInstituicao = :idInstituicao';
+  $queryString .= ' WHERE sigla = :idInstituicao';
   $stmt = $db->prepare($queryString);
-  $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_INT);
+  $stmt->bindParam(":idInstituicao", $idInstituicao, PDO::PARAM_STR);
   if ($nome!=null) {
     $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
   }
@@ -158,5 +164,9 @@ function instituicao_listarPerguntas($idInstituicao) {
   $stmt->bindParam(':idInstituicao', $idInstituicao, PDO::PARAM_INT);
   $stmt->execute();
   return $stmt->fetchAll();
+}
+function instituicao_getImagem($sigla) {
+  $imageLocation = glob("../../images/instituicao/{$sigla}.{jpg,jpeg,gif,png}", GLOB_BRACE);
+  return $imageLocation != false ? $imageLocation[0] : "holder.js/550x330/auto/ink";
 }
 ?>

@@ -1,7 +1,7 @@
 {foreach $instituicoes as $instituicao}
 <div class="column all-25 large-33 medium-50 small-100 tiny-100">
   <div class="message hoverable">
-    <img src="{$BASE_URL}images/instituicao/{$instituicao.sigla}.jpg" alt="">
+    <img src="{$instituicao.sigla|instituicao_getImagem}" alt="{$instituicao.nome}">
     <div class="quarter-vertical-padding">
       <b class="no-margin">
         <a class="black"

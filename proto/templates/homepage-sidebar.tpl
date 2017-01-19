@@ -44,6 +44,6 @@
     <span>Ordenar</span>
   </h5>
   <ul class="menu vertical white">
-    {include file='pesquisa/pergunta-sort.tpl'}
+    {include file='homepage-sort.tpl'}
   </ul>
 </nav>

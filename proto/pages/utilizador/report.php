@@ -10,18 +10,18 @@
     safe_login();
   }
 
-  if (safe_check($_GET, 'id')) {
-    $idUtilizador = safe_getId($_GET, 'id');
-    $readOnly = false;
-  }
-  else {
-    $readOnly = true;
-  }
-
   if (safe_checkModerador()) {
 
+    if (safe_check($_GET, 'id')) {
+      $idUtilizador = safe_getId($_GET, 'id');
+      $readOnly = false;
+    }
+    else {
+      $readOnly = true;
+    }
+
     if ($readOnly || $idModerador == $idUtilizador) {
-      $queryReports = report_listarReports();
+      $queryReports = report_listarModerador($idModerador);
       $smarty->assign('reports', $queryReports);
       $smarty->assign('reports_count', count($queryReports));
       $smarty->assign('titulo', 'Reports');
@@ -33,6 +33,13 @@
       $smarty->assign('titulo', 'Denunciar Utilizador');
       $smarty->display('report/submit.tpl');
     }
+  }
+  elseif (safe_checkAdministrador()) {
+    $queryReports = report_listarReports();
+    $smarty->assign('reports', $queryReports);
+    $smarty->assign('reports_count', count($queryReports));
+    $smarty->assign('titulo', 'Reports');
+    $smarty->display('report/list.tpl');
   }
   else {
     safe_redirect('403.php');

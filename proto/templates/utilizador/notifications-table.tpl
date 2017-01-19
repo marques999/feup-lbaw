@@ -1,8 +1,8 @@
 <thead>
   <tr>
-    <th style="width:50%"></th>
-    <th style="width:25%"></th>
-    <th style="width:25%"></th>
+    <th style="width:50%">Evento</th>
+    <th style="width:25%">Autor</th>
+    <th style="width:25%">Acções</th>
   </tr>
 </thead>
 <tbody>
